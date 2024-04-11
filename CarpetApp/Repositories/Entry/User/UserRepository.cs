@@ -19,11 +19,13 @@ public class UserRepository : Repository<UserModel>
 
     public async Task<UserModel> Login(string username, string password)
     {
-        var query = 
-            _databaseService.MainDatabase.Table<UserModel>().Where(q=> q.Username.Equals(username) && 
-                                                                       q.Password.Equals(password));
+        var query = _databaseService.MainDatabase.Table<UserEntity>().Where(q=> q.Username.Equals(username) && 
+                                                                               q.Password.Equals(password));
         if (query != null)
-            return await query.FirstOrDefaultAsync();
+        {
+            var test = await query.FirstOrDefaultAsync();
+            return GetEntity(test);
+        }
         
         return null;
     }
@@ -39,11 +41,17 @@ public class UserRepository : Repository<UserModel>
         return _mapper.Map<UserEntity>(userModel);
     }
     
+    private UserModel GetEntity(UserEntity userEntity)
+    {
+        return _mapper.Map<UserModel>(userEntity);
+    }
+    
     private IMapper GetMapper()
     {
         var config = new MapperConfiguration(config =>
         {
             config.CreateMap<UserModel, UserEntity>();
+            config.CreateMap<UserEntity, UserModel>();
         });
 #if DEBUG
         config.AssertConfigurationIsValid();

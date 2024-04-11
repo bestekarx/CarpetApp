@@ -5,10 +5,13 @@
     xmlns:service="clr-namespace:CarpetApp.Service"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Content>
-        <StackLayout Padding="20">
-            <Entry Text="{Binding Username}" />
-            <Entry Text="{Binding Password}" />
-            <Button Command="{Binding LoginCommand}" Text="Login" />
-        </StackLayout>
+        <Grid Padding="20">
+
+            <VerticalStackLayout>
+                <Entry Text="{Binding UserName}" />
+                <Entry Text="{Binding Password}" />
+                <Button Command="{Binding LoginCommand}" Text="Login" />
+            </VerticalStackLayout>
+        </Grid>
     </ContentPage.Content>
 </service:ContentPageBase>

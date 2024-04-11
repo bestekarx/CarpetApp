@@ -1,9 +1,8 @@
-using CarpetApp.Service;
 using CarpetApp.ViewModels;
 
 namespace CarpetApp.Views;
 
-public partial class HomePage : ContentPageBase
+public partial class HomePage
 {
     public HomePage(HomeViewModel model)
     {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Size="300, 300"
+    x:Class="CarpetApp.Views.LoadingPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:core="http://schemas.syncfusion.com/maui"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <VerticalStackLayout BackgroundColor="Transparent">
+        <core:SfBusyIndicator Title="" />
+        <Button Text="Close" />
+    </VerticalStackLayout>
+</mct:Popup>

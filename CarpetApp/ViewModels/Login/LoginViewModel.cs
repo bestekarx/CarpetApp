@@ -11,10 +11,10 @@ namespace CarpetApp.ViewModels.Login;
 
 public partial class LoginViewModel : ViewModelBase
 {
-    private IDialogService _dialogService;
-    private INavigationService _navigationService;
-    private IUserService _userService;
-    public LoginViewModel(INavigationService navigationService, IUserService userService, IDialogService dialogService)
+    private readonly IDialogService _dialogService;
+    private readonly INavigationService _navigationService;
+    private readonly IUserService _userService;
+    public LoginViewModel(INavigationService navigationService, IUserService userService, IDialogService dialogService) : base()
     {
         _navigationService = navigationService;
         _userService = userService;
@@ -22,7 +22,6 @@ public partial class LoginViewModel : ViewModelBase
     }
 
     [ObservableProperty] private string userName;
-    
     [ObservableProperty] private string password;
 
     [RelayCommand]
@@ -30,13 +29,9 @@ public partial class LoginViewModel : ViewModelBase
     {
         await IsBusyFor(LoginTask);
     }
-
+    
     private async Task LoginTask()
     {
-        _dialogService.ShowLoading();
-        await Task.Delay(2500);
-        _dialogService.HideLoading();
-        
         if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
         {
             _= _dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre boş olamaz!");
@@ -54,7 +49,6 @@ public partial class LoginViewModel : ViewModelBase
         var test = await _userService.Register(u);
 
         var result = await _userService.Login(userName, password);
-
         if (result == null)
         {
             _= _dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre yanlış!");

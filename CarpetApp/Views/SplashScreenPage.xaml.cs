@@ -1,9 +1,8 @@
-using CarpetApp.Service;
 using CarpetApp.ViewModels;
 
 namespace CarpetApp.Views;
 
-public partial class SplashScreenPage : ContentPageBase
+public partial class SplashScreenPage
 {
     public SplashScreenPage(SplashScreenViewModel model)
     {

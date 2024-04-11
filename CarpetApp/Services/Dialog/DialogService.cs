@@ -1,16 +1,15 @@
-using CarpetApp.Helpers;
+using CarpetApp.Models;
 using CarpetApp.Resources.Strings;
 using CarpetApp.Views;
 using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace CarpetApp.Service.Dialog;
 
 public class DialogService : Service, IDialogService
 {
-    private IStaticConfigurationService _staticConfigurationService;
-    public DialogService(IStaticConfigurationService staticConfigurationService)
+    public DialogService()
     {
-        _staticConfigurationService = staticConfigurationService;
     }
     public Task PromptAsync(string title, string message, string? confirm = null)
     {
@@ -29,9 +28,11 @@ public class DialogService : Service, IDialogService
 
     public void ShowLoading()
     {
+        Application.Current!.MainPage!.ShowPopupAsync(new LoadingPopup());
     }
 
     public void HideLoading()
     {
+        WeakReferenceMessenger.Default.Send(new CustomWeakModel());
     }
 }

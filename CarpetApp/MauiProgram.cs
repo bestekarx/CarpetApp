@@ -45,7 +45,7 @@ public static class MauiProgram
             .RegisterServices()
             .RegisterViewModels()
             .RegisterViews();
-
+        
         return builder.Build();
     }
     
@@ -72,7 +72,6 @@ public static class MauiProgram
     public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
         builder.Services
-            .AddSingleton<IPopupService, PopupService>()
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IDatabaseService, DatabaseService>()
@@ -110,8 +109,6 @@ public static class MauiProgram
     {
         builder.RegisterTransients(new Type[]
         {
-            typeof(ContentPageBase),
-            typeof(LoadingPage),
             typeof(SplashScreenPage),
             typeof(HomePage),
             typeof(LoginPage),
