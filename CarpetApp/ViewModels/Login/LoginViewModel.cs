@@ -40,13 +40,14 @@ public partial class LoginViewModel : ViewModelBase
         
         var u = new UserModel()
         {
-            Username = userName,
+            UserName = userName,
             Password = password,
             Active = true,
             IsNotification = true,
-            Fullname = "bestx. "+ userName + password
+            FullName = "bestx. "+ userName + password
         };
-        var test = await _userService.Register(u);
+        
+        /*var test = await _userService.Register(u);
 
         var result = await _userService.Login(userName, password);
         if (result == null)
@@ -54,12 +55,15 @@ public partial class LoginViewModel : ViewModelBase
             _= _dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre yanlış!");
             return;
         }
-
-        var parameter = new Dictionary<string, object>
+        */
+        
+        /*var parameter = new Dictionary<string, object>
         {
-            { Consts.LOGIN_PAGE_PARAMETER, result }
+            { Consts.LOGIN_PAGE_PARAMETER, u }
         };
-            
-        await _navigationService.NavigateToAsync(AppShell.Route.HomePage, parameter);
+        
+        await _navigationService.NavigateMainPageAsync(AppShell.Route.HomePage, parameter);
+        */
+        Application.Current!.MainPage = new AppShell();
     }
 }   

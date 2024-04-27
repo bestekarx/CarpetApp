@@ -1,4 +1,3 @@
-using CarpetApp.Helpers;
 using CarpetApp.Models;
 using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.Messaging;

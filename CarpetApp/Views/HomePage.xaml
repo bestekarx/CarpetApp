@@ -4,11 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:service="clr-namespace:CarpetApp.Service"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <ContentPage.Content>
 
-        <StackLayout Orientation="Vertical">
-            <Label Text="{Binding WelcomeText}" />
-            <Button Command="{Binding BackCommand}" Text="Geri" />
-        </StackLayout>
-    </ContentPage.Content>
+    <Shell.TitleView>
+        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="Anasayfa" />
+    </Shell.TitleView>
+
+    <ContentPage.Content />
+
 </service:ContentPageBase>

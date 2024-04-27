@@ -8,5 +8,5 @@ public partial class LoginPage
     {
         BindingContext = model;
         InitializeComponent();
-    }
+    }   
 }

@@ -2,15 +2,75 @@
 <service:ContentPageBase
     x:Class="CarpetApp.Views.Login.LoginPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:core="http://schemas.syncfusion.com/maui"
     xmlns:service="clr-namespace:CarpetApp.Service"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Content>
-        <Grid Padding="20">
+        <Grid RowDefinitions="Auto,*, Auto">
 
-            <VerticalStackLayout>
-                <Entry Text="{Binding UserName}" />
-                <Entry Text="{Binding Password}" />
-                <Button Command="{Binding LoginCommand}" Text="Login" />
+            <VerticalStackLayout
+                Grid.Row="0"
+                Margin="0,50,0,25"
+                Spacing="0"
+                VerticalOptions="Center">
+                <Image
+                    Aspect="AspectFit"
+                    Source="login_logo"
+                    VerticalOptions="Center" />
+                <Label
+                    FontFamily="Bold"
+                    FontSize="40"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="Dehapos"
+                    TextColor="{StaticResource LogoTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="1" Margin="25,25,25,0">
+
+                <core:SfTextInputLayout
+                    ContainerBackground="{StaticResource LoginEntryBg}"
+                    Hint="Kullanıcı adı"
+                    Style="{StaticResource DefaultInput}">
+                    <Entry ReturnType="Next" Text="{Binding UserName}" />
+                </core:SfTextInputLayout>
+
+                <core:SfTextInputLayout
+                    ContainerBackground="{StaticResource LoginEntryBg}"
+                    EnablePasswordVisibilityToggle="True"
+                    Hint="Şifre"
+                    Style="{StaticResource DefaultInput}">
+                    <Entry ReturnType="Done" Text="{Binding Password}" />
+                </core:SfTextInputLayout>
+
+                <Button
+                    BackgroundColor="{StaticResource Blue5}"
+                    Command="{Binding LoginCommand}"
+                    FontFamily="Bold"
+                    FontSize="18"
+                    Text="Giriş Yap"
+                    TextColor="White" />
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Grid.Row="2"
+                HorizontalOptions="Center"
+                Margin="0,0,0,15"
+                VerticalOptions="End">
+                <Label
+                    FontFamily="Regular"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="iletişim"
+                    TextColor="{StaticResource Blue5}" />
+                <Label
+                    FontFamily="Regular"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="www.dehapos.com" />
             </VerticalStackLayout>
         </Grid>
     </ContentPage.Content>

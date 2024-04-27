@@ -1,39 +1,18 @@
 using SQLite;
-using Entry = CarpetApp.Entities.Base.Entry;
 
 namespace CarpetApp.Entities;
 
 [Table("users")]
-public class UserEntity : Entry
+public class UserEntity : CarpetApp.Entities.Base.Entry
 {
-    [Column("id")]
-    public int Id { get; set; }
-
-    [Column("firm_id")]
-    public int FirmId { get; set; }
-
-    [Column("auth_id")]
-    public int AuthId { get; set; }
-  
-    [Column("username")]
-    public string Username { get; set; }
-    
-    [Column("password")]
-    public string Password { get; set; }
-    
-    [Column("fullname")]
-    public string Fullname { get; set; }
-    
-    [Column("active")]
-    public int Active { get; set; }
-
-    [Column("root")] 
-    public int Root { get; set; }
-
-    [Column("notification_id")]
-    public string notification_id { get; set; }
-    
-    [Column("is_notification")]
-    public int IsNotification { get; set; }
-  
+    [Column("auth_id")]  public int AuthId { get; set; }
+    [Column("vehicle_id")]  public int VehicleId { get; set; }
+    [Column("print_tag_id")]  public int PrintTagId { get; set; }
+    [Column("print_normal_id")]  public int PrintNormalId { get; set; }
+    [Column("username")] public string UserName { get; set; }
+    [Column("password")] public string Password { get; set; }
+    [Column("fullname")] public string FullName { get; set; }
+    [Column("root")] public bool Root { get; set; }
+    [Column("onesignal_id")] public string OnesignalId { get; set; }
+    [Column("is_notification")] public bool IsNotification { get; set; }
 }

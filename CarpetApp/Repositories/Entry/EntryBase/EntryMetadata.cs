@@ -13,7 +13,4 @@ public record class EntryMetadata : IEntryComparable
 
     [JsonProperty("updatedAt")]
     public DateTime UpdatedAt { get; set; }
-
-    [JsonProperty("updatedBy")]
-    public Guid UpdatedBy { get; set; }
 }

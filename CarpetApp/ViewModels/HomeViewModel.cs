@@ -66,6 +66,6 @@ public partial class HomeViewModel : ViewModelBase
     public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnViewNavigatedTo(args);
-        WelcomeText = "hoşgeldin " + UserModel.Fullname;
+        WelcomeText = "hoşgeldin " + UserModel.FullName;
     }
 }

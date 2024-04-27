@@ -1,10 +1,5 @@
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CommunityToolkit.Diagnostics;
-using Newtonsoft.Json;
 
 namespace CarpetApp.Repositories.Entry;
 
@@ -20,7 +15,6 @@ public class EntryRepository : IEntryRepository
         public EntryRepository(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
-
             RegisterEntries();
         }
 
@@ -135,42 +129,6 @@ public class EntryRepository : IEntryRepository
                 allMetadata.AddRange(metadata);
             }
             return allMetadata;
-        }
-
-        public EntryContainer BoxEntry(Entities.Base.Entry entry)
-        {
-            string contentType = GetContentTypeStringFromType(entry.GetType());
-            string content = JsonConvert.SerializeObject(entry);
-            return new EntryContainer
-            {
-                Uuid = entry.Uuid,
-                CreatedAt = entry.CreatedAt,
-                CreatedBy = entry.CreatedBy,
-                UpdatedAt = entry.UpdatedAt,
-                UpdatedBy = entry.UpdatedBy,
-                RemovedAt = entry.RemovedAt,
-                ContentType = contentType,
-                Content = content,
-            };
-        }
-
-        public Entities.Base.Entry UnboxEntryContainer(EntryContainer container)
-        {
-            Type type = GetTypeFromContentTypeString(container.ContentType);
-            var entry = (Entities.Base.Entry)JsonConvert.DeserializeObject(container.Content, type)!;
-            Guard.IsNotNull(entry);
-
-            return entry;
-        }
-
-        public List<EntryContainer> BoxEntries(IEnumerable<Entities.Base.Entry> entries)
-        {
-            return entries.AsParallel().Select(BoxEntry).ToList();
-        }
-
-        public List<Entities.Base.Entry> UnboxEntryContainer(IEnumerable<EntryContainer> containers)
-        {
-            return containers.AsParallel().Select(UnboxEntryContainer).ToList();
         }
 
         public async Task SaveEntryAsync(Entities.Base.Entry entry)

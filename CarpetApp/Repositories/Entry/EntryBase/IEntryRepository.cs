@@ -8,14 +8,6 @@ public interface IEntryRepository
 
     Task<List<EntryMetadata>> GetAllMetadataAsync();
 
-    List<EntryContainer> BoxEntries(IEnumerable<Entities.Base.Entry> entries);
-
-    EntryContainer BoxEntry(Entities.Base.Entry entry);
-
-    Entities.Base.Entry UnboxEntryContainer(EntryContainer container);
-
-    List<Entities.Base.Entry> UnboxEntryContainer(IEnumerable<EntryContainer> containers);
-
     Task<Entities.Base.Entry?> FindEntryByUuidAsync(Guid uuid);
 
     Task<List<Entities.Base.Entry>> FindEntriesByUuidsAsync(IEnumerable<Guid> uuids);

@@ -69,7 +69,7 @@ public class EntryRepository<T> : Repository<T>, IEntryRepository<T>
                     continue;
                 }
 
-                if (incomingEntry.UpdatedAt > existsEntry.UpdatedAt)
+                if (incomingEntry.UpdatedDate > existsEntry.UpdatedDate)
                 {
                     await UpdateAsync(incomingEntry);
                     continue;
@@ -81,7 +81,7 @@ public class EntryRepository<T> : Repository<T>, IEntryRepository<T>
         {
             var query = _connection.MainDatabase.Table<T>();
             if (!includeRemoved)
-                query = query.Where(entry => entry.RemovedAt == null);
+                query = query.Where(entry => entry.Active == true);
             return await query.ToListAsync();
         }
 
@@ -89,7 +89,7 @@ public class EntryRepository<T> : Repository<T>, IEntryRepository<T>
         {
             var query = _connection.MainDatabase.Table<T>().Where(entry => entry.Uuid == uuid);
             if (!includeRemoved)
-                query = query.Where(entry => entry.RemovedAt == null);
+                query = query.Where(entry => entry.Active == true);
             return await query.FirstOrDefaultAsync();
         }
 

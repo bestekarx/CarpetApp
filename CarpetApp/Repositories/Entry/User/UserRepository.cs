@@ -19,7 +19,7 @@ public class UserRepository : Repository<UserModel>
 
     public async Task<UserModel> Login(string username, string password)
     {
-        var query = _databaseService.MainDatabase.Table<UserEntity>().Where(q=> q.Username.Equals(username) && 
+        var query = _databaseService.MainDatabase.Table<UserEntity>().Where(q=> q.UserName.Equals(username) && 
                                                                                q.Password.Equals(password));
         if (query != null)
         {
@@ -33,7 +33,10 @@ public class UserRepository : Repository<UserModel>
     public async Task<bool> Register(UserModel userModel)
     {
         var result = await _databaseService.MainDatabase.InsertOrReplaceAsync(GetEntity(userModel));
-        return result == 1;
+        if (result != 1) return false;
+        OnEntityCreated(userModel);
+        return true;
+
     }
 
     private UserEntity GetEntity(UserModel userModel)

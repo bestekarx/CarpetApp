@@ -10,9 +10,8 @@ public static class EntryExtensions
         return new EntryMetadata
         {
             Uuid = entry.Uuid,
-            CreatedAt = entry.CreatedAt,
-            UpdatedAt = entry.UpdatedAt,
-            UpdatedBy = entry.UpdatedBy,
+            CreatedAt = entry.CreateDate,
+            UpdatedAt = entry.UpdatedDate,
         };
     }
 

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Shell
-    NavBarIsVisible="False"
-    Shell.FlyoutBehavior="Disabled"
+    BackgroundColor="White"
+    FlyoutBehavior="Flyout"
+    ForegroundColor="Black"
+    NavBarIsVisible="True"
     x:Class="CarpetApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:local="clr-namespace:CarpetApp.Views.Login"
+    xmlns:views="clr-namespace:CarpetApp.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <ShellContent ContentTemplate="{DataTemplate local:LoginPage}" Route="Login" />
+    <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="Home" />
 
 </Shell>
