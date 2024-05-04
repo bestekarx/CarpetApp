@@ -16,6 +16,11 @@ public class ContentPageBase : ContentPage
                 await model.InitializeAsync();
             }
 
+            if (App.Current.Resources.TryGetValue("MainBgColor", out var colorvalue))
+            {
+                BackgroundColor = (Color)colorvalue;
+            }
+                
             model.OnViewAppearing();
         }
     }

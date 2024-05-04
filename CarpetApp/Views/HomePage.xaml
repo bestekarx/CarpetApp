@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <service:ContentPageBase
+    BackgroundColor="{StaticResource MainBgColor}"
     x:Class="CarpetApp.Views.HomePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
     xmlns:service="clr-namespace:CarpetApp.Service"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
@@ -9,6 +11,53 @@
         <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="Anasayfa" />
     </Shell.TitleView>
 
-    <ContentPage.Content />
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, Auto, Auto">
+            <HorizontalStackLayout
+                BackgroundColor="White"
+                Grid.Row="0"
+                Spacing="0">
+                <Image Aspect="AspectFit" Source="add_customer" />
+                <Image Aspect="AspectFit" Source="speed" />
+                <Image Aspect="AspectFit" Source="sms" />
+                <Image Aspect="AspectFit" Source="notification" />
+            </HorizontalStackLayout>
+
+            <cards:SfCardView
+                BackgroundColor="White"
+                Grid.Row="1"
+                Margin="15"
+                Padding="10">
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto">
+                    <Grid ColumnDefinitions="Auto, *, *" Grid.Row="0">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            HorizontalOptions="Start"
+                            Source="received_big"
+                            VerticalOptions="Center" />
+                        <VerticalStackLayout
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            Spacing="0"
+                            VerticalOptions="Center">
+                            <Label Style="{StaticResource HomePageTitle}" Text="Alınacak" />
+                            <Label Style="{StaticResource HomePageDesc}" Text="Toplam: 8" />
+                        </VerticalStackLayout>
+
+                        <ContentView
+                            Grid.Column="2"
+                            Grid.Row="0"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Image Aspect="AspectFit" Source="big_arrow" />
+                        </ContentView>
+                    </Grid>
+                </Grid>
+            </cards:SfCardView>
+
+        </Grid>
+    </ContentPage.Content>
 
 </service:ContentPageBase>

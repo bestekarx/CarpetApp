@@ -43,6 +43,8 @@
     <Color x:Key="LogoTextColor">#3B5BDB</Color>
     <Color x:Key="Blue5">#339AF0</Color>
     <Color x:Key="LoginEntryBg">#F8F9FA</Color>
-    <Color x:Key="TextInputLayoutStrokeColor">#868E96</Color>
+    <Color x:Key="MainBgColor">#DEE2E6</Color>
+    <Color x:Key="Gray9">#212529</Color>
+    <Color x:Key="Gray10">#868E96</Color>
 
 </ResourceDictionary>

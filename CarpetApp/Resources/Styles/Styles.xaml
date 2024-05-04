@@ -408,7 +408,7 @@
     <Style TargetType="core:SfTextInputLayout" x:Key="DefaultInput">
         <Setter Property="HeightRequest" Value="80" />
         <Setter Property="ContainerType" Value="Outlined" />
-        <Setter Property="Stroke" Value="{StaticResource TextInputLayoutStrokeColor}" />
+        <Setter Property="Stroke" Value="{StaticResource Gray10}" />
         <Setter Property="HintLabelStyle" Value="{DynamicResource DefaultLabelStyle}" />
     </Style>
 
@@ -422,6 +422,26 @@
         <Setter Property="FontSize" Value="Medium" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="HomePageTitle">
+        <Setter Property="FontFamily" Value="Medium" />
+        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="TextColor" Value="{StaticResource Gray9}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="HomePageDesc">
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="{StaticResource Gray10}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
     </Style>
 
 </ResourceDictionary>
