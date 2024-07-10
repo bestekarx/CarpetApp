@@ -8,6 +8,9 @@ public class Entry
     [Column("uuid")]
     public Guid Uuid { get; set; } = Guid.NewGuid();
     
+    [Column("id")]
+    public int Id { get; set; }
+    
     [Column("firm_id")]
     public int FirmId { get; set; }
     

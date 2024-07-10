@@ -1,5 +1,6 @@
-﻿using CarpetApp.Models;
+﻿using CarpetApp.Helpers;
 using CarpetApp.Repositories;
+using CarpetApp.Services.API.Interfaces;
 using CarpetApp.Repositories.Entry;
 using CarpetApp.Repositories.Entry.User;
 using CarpetApp.Resources.Strings;
@@ -15,9 +16,9 @@ using CarpetApp.ViewModels.Login;
 using CarpetApp.Views;
 using CarpetApp.Views.Login;
 using CommunityToolkit.Maui;
-using CommunityToolkit.Maui.Core;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Refit;
 using Syncfusion.Maui.Core.Hosting;
 
 namespace CarpetApp;
@@ -46,6 +47,8 @@ public static class MauiProgram
             .RegisterViewModels()
             .RegisterViews();
         
+        //ConfigureRefit(builder.Services);
+
         return builder.Build();
     }
     
@@ -101,7 +104,6 @@ public static class MauiProgram
             typeof(HomeViewModel),
             typeof(LoginViewModel),
         });
-
         return builder;
     }
     
@@ -113,7 +115,6 @@ public static class MauiProgram
             typeof(HomePage),
             typeof(LoginPage),
         });
-
         return builder;
     }
 
@@ -123,9 +124,31 @@ public static class MauiProgram
         {
             builder.Services.AddTransient(type);
         }
-
         return builder;
     }
- 
     
+    
+    static void ConfigureRefit(IServiceCollection services)
+    {
+        services.AddRefitClient<IAuthentication>(ConfigureRefitSettings)
+            .ConfigureHttpClient(SetHttpClient);
+
+        static RefitSettings ConfigureRefitSettings(IServiceProvider sp)
+        {
+            var messageHandler = sp.GetRequiredService<IPlatformHttpMessageHandler>();
+            var tokenService = sp.GetRequiredService<TokenService>();
+            return new RefitSettings
+            {
+                HttpMessageHandlerFactory = () => messageHandler.GetHttpMessageHandler(),
+                AuthorizationHeaderValueGetter = (_, __) => Task.FromResult(tokenService.Token ?? string.Empty)
+            };
+        }
+        static void SetHttpClient(HttpClient httpClient)
+        {
+            var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
+                ? "https://10.0.2.2:5244"
+                : "https://localhost:5244";
+            httpClient.BaseAddress = new Uri(baseUrl);
+        }
+    }
 }

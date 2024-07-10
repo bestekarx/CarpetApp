@@ -6,9 +6,93 @@
     NavBarIsVisible="True"
     x:Class="CarpetApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
     xmlns:views="clr-namespace:CarpetApp.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <Shell.FlyoutHeader>
+        <cards:SfCardView BackgroundColor="White" Margin="15">
+            <Grid
+                ColumnSpacing="0"
+                RowDefinitions="Auto, 1, Auto, 1"
+                RowSpacing="0">
+                <Grid
+                    ColumnDefinitions="Auto, 1, Auto"
+                    ColumnSpacing="0"
+                    Grid.Row="0"
+                    RowSpacing="0">
+                    <Image
+                        Aspect="AspectFit"
+                        Grid.Column="0"
+                        Source="menu_company_title" />
+                    <BoxView Grid.Column="1" Style="{StaticResource Stroke}" />
+                    <Label
+                        Grid.Column="2"
+                        Margin="8,0,0,0"
+                        Style="{StaticResource HomePageTitle}"
+                        Text="İstanbul Halı" />
+                </Grid>
+                <BoxView Grid.Row="1" Style="{StaticResource Stroke}" />
+                <Grid
+                    ColumnDefinitions="Auto, 1, Auto"
+                    ColumnSpacing="0"
+                    Grid.Row="2"
+                    RowSpacing="0">
+                    <Image
+                        Aspect="AspectFit"
+                        Grid.Column="0"
+                        Source="menu_user" />
+                    <BoxView Grid.Column="1" Style="{StaticResource Stroke}" />
+
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        Margin="8,0,0,0"
+                        VerticalOptions="Center">
+                        <Label
+                            Style="{StaticResource Regular}"
+                            Text="Mehmet"
+                            TextColor="{StaticResource Gray9}" />
+                        <HorizontalStackLayout>
+                            <Label
+                                Style="{StaticResource Regular}"
+                                Text="@mehmet123"
+                                TextColor="{StaticResource Blue5}" />
+                            <Label Text=" - " />
+                            <Label
+                                Style="{StaticResource Regular}"
+                                Text="Ford"
+                                TextColor="{StaticResource Gray9}" />
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+
+                </Grid>
+            </Grid>
+        </cards:SfCardView>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutContent>
+        <ScrollView>
+            <VerticalStackLayout>
+                <cards:SfCardView BackgroundColor="White">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_home" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="Anasayfa" />
+                    </Grid>
+                </cards:SfCardView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Shell.FlyoutContent>
+
+
+
     <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="Home" />
+
 
 </Shell>

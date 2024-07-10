@@ -1,5 +1,3 @@
-using CarpetApp.Helpers;
-
 namespace CarpetApp.Service;
 
 public interface IStaticConfigurationService : IService

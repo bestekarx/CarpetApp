@@ -12,50 +12,224 @@
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <Grid RowDefinitions="Auto, Auto, Auto">
-            <HorizontalStackLayout
-                BackgroundColor="White"
-                Grid.Row="0"
-                Spacing="0">
-                <Image Aspect="AspectFit" Source="add_customer" />
-                <Image Aspect="AspectFit" Source="speed" />
-                <Image Aspect="AspectFit" Source="sms" />
-                <Image Aspect="AspectFit" Source="notification" />
-            </HorizontalStackLayout>
+        <Grid RowDefinitions="Auto, Auto">
 
-            <cards:SfCardView
+            <Grid
                 BackgroundColor="White"
-                Grid.Row="1"
-                Margin="15"
-                Padding="10">
-                <Grid RowDefinitions="Auto, Auto, Auto, Auto">
-                    <Grid ColumnDefinitions="Auto, *, *" Grid.Row="0">
-                        <Image
-                            Aspect="AspectFit"
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            HorizontalOptions="Start"
-                            Source="received_big"
-                            VerticalOptions="Center" />
-                        <VerticalStackLayout
-                            Grid.Column="1"
-                            Margin="8,0,0,0"
-                            Spacing="0"
-                            VerticalOptions="Center">
-                            <Label Style="{StaticResource HomePageTitle}" Text="Alınacak" />
-                            <Label Style="{StaticResource HomePageDesc}" Text="Toplam: 8" />
-                        </VerticalStackLayout>
+                ColumnDefinitions="Auto, 1, Auto, 1, Auto, 1, Auto"
+                ColumnSpacing="0"
+                Grid.Row="0">
 
-                        <ContentView
-                            Grid.Column="2"
-                            Grid.Row="0"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
-                            <Image Aspect="AspectFit" Source="big_arrow" />
-                        </ContentView>
-                    </Grid>
-                </Grid>
-            </cards:SfCardView>
+                <Image
+                    Aspect="AspectFit"
+                    Grid.Column="0"
+                    Source="add_customer" />
+                <BoxView Grid.Column="1" Style="{StaticResource Stroke}" />
+                <Image
+                    Aspect="AspectFit"
+                    Grid.Column="2"
+                    Source="speed" />
+                <BoxView Grid.Column="3" Style="{StaticResource Stroke}" />
+                <Image
+                    Aspect="AspectFit"
+                    Grid.Column="4"
+                    Source="sms" />
+                <BoxView Grid.Column="5" Style="{StaticResource Stroke}" />
+
+                <Image
+                    Aspect="AspectFit"
+                    Grid.Column="6"
+                    Source="notification" />
+            </Grid>
+
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Spacing="0">
+
+                    <cards:SfCardView
+                        BackgroundColor="White"
+                        Margin="15"
+                        Padding="10">
+                        <Grid RowDefinitions="Auto,1, Auto,1, Auto,1, Auto" RowSpacing="12">
+                            <!--  alınacaklar  -->
+                            <Grid ColumnDefinitions="Auto, *, *" Grid.Row="0">
+                                <Image
+                                    Aspect="AspectFit"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    HorizontalOptions="Start"
+                                    Source="received_big"
+                                    VerticalOptions="Center" />
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Spacing="0"
+                                    VerticalOptions="Center">
+                                    <Label Style="{StaticResource HomePageTitle}" Text="Alınacak" />
+                                    <Label Style="{StaticResource HomePageDesc}" Text="Toplam: 8" />
+                                </VerticalStackLayout>
+
+                                <ContentView
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="big_arrow" />
+                                </ContentView>
+                            </Grid>
+                            <BoxView Grid.Row="1" Style="{StaticResource Stroke}" />
+                            <!--  Yıkamada  -->
+                            <Grid ColumnDefinitions="Auto, *, *" Grid.Row="2">
+                                <Image
+                                    Aspect="AspectFit"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    HorizontalOptions="Start"
+                                    Source="washed_big"
+                                    VerticalOptions="Center" />
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Spacing="0"
+                                    VerticalOptions="Center">
+                                    <Label Style="{StaticResource HomePageTitle}" Text="Yıkamada" />
+                                    <Label Style="{StaticResource HomePageDesc}" Text="Toplam: 8" />
+                                </VerticalStackLayout>
+
+                                <ContentView
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="big_arrow" />
+                                </ContentView>
+                            </Grid>
+                            <BoxView Grid.Row="3" Style="{StaticResource Stroke}" />
+                            <!--  Dağıtılacak  -->
+                            <Grid ColumnDefinitions="Auto, *, *" Grid.Row="4">
+                                <Image
+                                    Aspect="AspectFit"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    HorizontalOptions="Start"
+                                    Source="delivered_big"
+                                    VerticalOptions="Center" />
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Spacing="0"
+                                    VerticalOptions="Center">
+                                    <Label Style="{StaticResource HomePageTitle}" Text="Dağıtılacak" />
+                                    <Label Style="{StaticResource HomePageDesc}" Text="Toplam: 8" />
+                                </VerticalStackLayout>
+
+                                <ContentView
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="big_arrow" />
+                                </ContentView>
+                            </Grid>
+                            <BoxView Grid.Row="5" Style="{StaticResource Stroke}" />
+                            <!--  Müşteriler  -->
+                            <Grid ColumnDefinitions="Auto, *, *" Grid.Row="6">
+                                <Image
+                                    Aspect="AspectFit"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    HorizontalOptions="Start"
+                                    Source="users_big"
+                                    VerticalOptions="Center" />
+                                <VerticalStackLayout
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Spacing="0"
+                                    VerticalOptions="Center">
+                                    <Label Style="{StaticResource HomePageTitle}" Text="Müşteriler" />
+                                    <Label Style="{StaticResource HomePageDesc}" Text="Toplam: 8" />
+                                </VerticalStackLayout>
+
+                                <ContentView
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="big_arrow" />
+                                </ContentView>
+                            </Grid>
+                            <BoxView Grid.Row="3" Style="{StaticResource Stroke}" />
+                        </Grid>
+                    </cards:SfCardView>
+
+                    <BoxView Style="{StaticResource Stroke}" />
+
+                    <cards:SfCardView
+                        BackgroundColor="White"
+                        Margin="15"
+                        Padding="10">
+
+                        <Grid RowDefinitions="Auto,1, Auto" RowSpacing="12">
+                            <!--  gelir & gider  -->
+                            <Grid
+                                ColumnDefinitions="Auto, *, *"
+                                Grid.Row="0"
+                                VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    HorizontalOptions="Start"
+                                    Source="try_icon_mainpage"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Style="{StaticResource HomePageTitle}"
+                                    Text="Gelir Gider" />
+
+                                <ContentView
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="big_arrow" />
+                                </ContentView>
+                            </Grid>
+                            <BoxView Grid.Row="1" Style="{StaticResource Stroke}" />
+                            <!--  gün özeti  -->
+                            <Grid
+                                ColumnDefinitions="Auto, *, *"
+                                Grid.Row="2"
+                                VerticalOptions="Center">
+                                <Image
+                                    Aspect="AspectFit"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    HorizontalOptions="Start"
+                                    Source="day_summary_mainpage"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    Style="{StaticResource HomePageTitle}"
+                                    Text="Gün Özeti" />
+
+                                <ContentView
+                                    Grid.Column="2"
+                                    Grid.Row="0"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                    <Image Aspect="AspectFit" Source="big_arrow" />
+                                </ContentView>
+                            </Grid>
+                        </Grid>
+
+                    </cards:SfCardView>
+                </VerticalStackLayout>
+            </ScrollView>
+
 
         </Grid>
     </ContentPage.Content>

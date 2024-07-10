@@ -407,7 +407,7 @@
 
     <Style TargetType="core:SfTextInputLayout" x:Key="DefaultInput">
         <Setter Property="HeightRequest" Value="80" />
-        <Setter Property="ContainerType" Value="Outlined" />
+        <Setter Property="ContainerType" Value="None" />
         <Setter Property="Stroke" Value="{StaticResource Gray10}" />
         <Setter Property="HintLabelStyle" Value="{DynamicResource DefaultLabelStyle}" />
     </Style>
@@ -426,7 +426,7 @@
 
     <Style TargetType="Label" x:Key="HomePageTitle">
         <Setter Property="FontFamily" Value="Medium" />
-        <Setter Property="FontSize" Value="Medium" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="TextColor" Value="{StaticResource Gray9}" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -442,6 +442,33 @@
         <Setter Property="VerticalTextAlignment" Value="Center" />
         <Setter Property="HorizontalOptions" Value="Start" />
         <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="Regular">
+        <Setter Property="FontFamily" Value="Regular" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="{StaticResource Gray10}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="MenuLabel">
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="TextColor" Value="{StaticResource Gray9}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+
+    <Style TargetType="BoxView" x:Key="Stroke">
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource MainBgColor}" />
+        <Setter Property="Color" Value="{StaticResource MainBgColor}" />
     </Style>
 
 </ResourceDictionary>

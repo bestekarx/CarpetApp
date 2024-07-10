@@ -1,11 +1,13 @@
-using CarpetApp.Helpers;
 using CarpetApp.Models;
+using CarpetApp.Models.API.Request;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Service.Entry.User;
 using CarpetApp.Service.Navigation;
+using CarpetApp.Services.API.Interfaces;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Refit;
 
 namespace CarpetApp.ViewModels.Login;
 
@@ -14,11 +16,13 @@ public partial class LoginViewModel : ViewModelBase
     private readonly IDialogService _dialogService;
     private readonly INavigationService _navigationService;
     private readonly IUserService _userService;
+    //private readonly IAuthentication _authentication;
     public LoginViewModel(INavigationService navigationService, IUserService userService, IDialogService dialogService) : base()
     {
         _navigationService = navigationService;
         _userService = userService;
         _dialogService = dialogService;
+        //_authentication = authentication;
     }
 
     [ObservableProperty] private string userName;
@@ -37,13 +41,22 @@ public partial class LoginViewModel : ViewModelBase
             _= _dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre boş olamaz!");
             return;
         }
+        /*
+        var response = await _authentication.Authentication(new RequestLoginModel()
+        {
+            UserName = userName, Password = password
+        });
+        */
+
+        //var gitHubApi = RestService.For<IAuthentication>("https://api.github.com");
+        //var octocat = await gitHubApi.Authentication(new RequestLoginModel(){UserName = userName, Password = password});
         
         var u = new UserModel()
         {
             UserName = userName,
             Password = password,
             Active = true,
-            IsNotification = true,
+            IsNotification =  true,
             FullName = "bestx. "+ userName + password
         };
         

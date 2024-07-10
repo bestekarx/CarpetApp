@@ -8,11 +8,10 @@ using CommunityToolkit.Mvvm.Input;
 namespace CarpetApp.ViewModels;
 
 [QueryProperty(nameof(UserModel), Consts.LOGIN_PAGE_PARAMETER)]
-public partial class HomeViewModel : ViewModelBase
+public partial class HomeViewModel(INavigationService navigationService) : ViewModelBase
 {
     #region Fields
-    
-    private INavigationService _navigationService;
+
     private UserModel _loginModel = new();
 
     #endregion
@@ -38,17 +37,12 @@ public partial class HomeViewModel : ViewModelBase
     }
     #endregion
 
-    public HomeViewModel(INavigationService navigationService)
-    {
-        this._navigationService = navigationService;
-    }
-    
     #region Commands
 
     [RelayCommand]
     async Task Back()
     {
-        await _navigationService.GoBackAsync();
+        await navigationService.GoBackAsync();
     }
 
     #endregion
