@@ -4,9 +4,13 @@
     FlyoutBehavior="Flyout"
     ForegroundColor="Black"
     NavBarIsVisible="True"
+    iOsSpecific:Page.UseSafeArea="True"
     x:Class="CarpetApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:cards="clr-namespace:Syncfusion.Maui.Cards;assembly=Syncfusion.Maui.Cards"
+    xmlns:helpers="clr-namespace:CarpetApp.Helpers"
+    xmlns:iOsSpecific="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
     xmlns:views="clr-namespace:CarpetApp.Views"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
@@ -72,9 +76,10 @@
     </Shell.FlyoutHeader>
 
     <Shell.FlyoutContent>
-        <ScrollView>
+        <ScrollView BackgroundColor="#DEE2E6">
             <VerticalStackLayout>
-                <cards:SfCardView BackgroundColor="White">
+
+                <Frame Margin="8,12,8,4" Style="{StaticResource MenuFrame}">
                     <Grid ColumnDefinitions="50, Auto">
                         <Image
                             Aspect="AspectFit"
@@ -83,16 +88,172 @@
                         <Label
                             Grid.Column="1"
                             Style="{StaticResource MenuLabel}"
-                            Text="Anasayfa" />
+                            Text="{x:Static resx:AppStrings.Anasayfa}" />
                     </Grid>
-                </cards:SfCardView>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_direkt_sale" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Fason}" />
+                    </Grid>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_customers" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Musteriler}" />
+                    </Grid>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_definitions" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Tanimlamalar}" />
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding OpenPageCommand}"
+                            CommandParameter="{x:Static helpers:Consts.DefinitionsPage}"
+                            NumberOfTapsRequired="1" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <BoxView
+                    Color="White"
+                    Margin="12,8,12,8"
+                    Style="{StaticResource Stroke}" />
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_report" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Raporlar}" />
+                    </Grid>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_sms" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.TopluSms}" />
+                    </Grid>
+                </Frame>
+
+                <BoxView
+                    Color="White"
+                    Margin="12,8,12,8"
+                    Style="{StaticResource Stroke}" />
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="databasee" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="Veriler" />
+                    </Grid>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding OpenPageCommand}"
+                            CommandParameter="{x:Static helpers:Consts.DataPage}"
+                            NumberOfTapsRequired="1" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <BoxView
+                    Color="White"
+                    Margin="12,8,12,8"
+                    Style="{StaticResource Stroke}" />
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_users" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Kullanicilar}" />
+                    </Grid>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_info" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Yardim}" />
+                    </Grid>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_settings" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.Ayarlar}" />
+                    </Grid>
+                </Frame>
+
+                <Frame Style="{StaticResource MenuFrame}">
+                    <Grid ColumnDefinitions="50, Auto">
+                        <Image
+                            Aspect="AspectFit"
+                            Grid.Column="0"
+                            Source="menu_exit" />
+                        <Label
+                            Grid.Column="1"
+                            Style="{StaticResource MenuLabel}"
+                            Text="{x:Static resx:AppStrings.CikisYap}" />
+                    </Grid>
+                </Frame>
+
+
             </VerticalStackLayout>
         </ScrollView>
     </Shell.FlyoutContent>
 
-
-
     <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="Home" />
-
 
 </Shell>

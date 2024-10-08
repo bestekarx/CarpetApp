@@ -1,12 +1,10 @@
-namespace CarpetApp.Repositories.Entry;
+namespace CarpetApp.Repositories.Entry.EntryBase;
 
 public interface IEntryRepository
 {
     string GetContentTypeStringFromType(Type type);
 
     Type GetTypeFromContentTypeString(string contentTypeString);
-
-    Task<List<EntryMetadata>> GetAllMetadataAsync();
 
     Task<Entities.Base.Entry?> FindEntryByUuidAsync(Guid uuid);
 

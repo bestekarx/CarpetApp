@@ -1,12 +1,11 @@
 using System.Collections.Concurrent;
 using CommunityToolkit.Diagnostics;
 
-namespace CarpetApp.Repositories.Entry;
+namespace CarpetApp.Repositories.Entry.EntryBase;
 
 public class EntryRepository : IEntryRepository
     {
         private readonly IServiceProvider _serviceProvider;
-
         private readonly List<Type> _entryTypes = new();
         private readonly Dictionary<Type, dynamic> _repos = new();
         private readonly Dictionary<Type, string> _type2str = new();
@@ -119,6 +118,7 @@ public class EntryRepository : IEntryRepository
             return bag.ToList();
         }
 
+        /*
         public async Task<List<EntryMetadata>> GetAllMetadataAsync()
         {
             List<EntryMetadata> allMetadata = new();
@@ -129,7 +129,7 @@ public class EntryRepository : IEntryRepository
                 allMetadata.AddRange(metadata);
             }
             return allMetadata;
-        }
+        } */
 
         public async Task SaveEntryAsync(Entities.Base.Entry entry)
         {

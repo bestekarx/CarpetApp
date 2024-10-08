@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<mct:Popup
-    CanBeDismissedByTappingOutsideOfPopup="False"
-    Size="300, 300"
+<pages:PopupPage
+    BackgroundColor="#80000000"
+    CloseWhenBackgroundIsClicked="False"
     x:Class="CarpetApp.Views.LoadingPopup"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:core="http://schemas.syncfusion.com/maui"
-    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:pages="clr-namespace:Mopups.Pages;assembly=Mopups"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <VerticalStackLayout BackgroundColor="Transparent">
-        <core:SfBusyIndicator Title="" />
-        <Button Text="Close" />
-    </VerticalStackLayout>
-</mct:Popup>
+    <maui:Frame
+        BackgroundColor="WhiteSmoke"
+        CornerRadius="10"
+        HeightRequest="150"
+        WidthRequest="150"
+        xmlns:maui="http://schemas.microsoft.com/dotnet/2021/maui">
+        <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <ActivityIndicator
+                IsEnabled="True"
+                IsRunning="True"
+                IsVisible="True" />
+            <Label
+                HorizontalOptions="Center"
+                Text="Loading..."
+                VerticalOptions="Center" />
+        </VerticalStackLayout>
+    </maui:Frame>
+</pages:PopupPage>

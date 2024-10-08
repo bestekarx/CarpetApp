@@ -80,5 +80,395 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
+        
+        internal static string Alinacaklar {
+            get {
+                return ResourceManager.GetString("Alinacaklar", resourceCulture);
+            }
+        }
+        
+        internal static string Yikamada {
+            get {
+                return ResourceManager.GetString("Yikamada", resourceCulture);
+            }
+        }
+        
+        internal static string Toplam {
+            get {
+                return ResourceManager.GetString("Toplam", resourceCulture);
+            }
+        }
+        
+        internal static string Dagitilacak {
+            get {
+                return ResourceManager.GetString("Dagitilacak", resourceCulture);
+            }
+        }
+        
+        internal static string Musteriler {
+            get {
+                return ResourceManager.GetString("Musteriler", resourceCulture);
+            }
+        }
+        
+        internal static string GelirGider {
+            get {
+                return ResourceManager.GetString("GelirGider", resourceCulture);
+            }
+        }
+        
+        internal static string GunOzeti {
+            get {
+                return ResourceManager.GetString("GunOzeti", resourceCulture);
+            }
+        }
+        
+        internal static string Anasayfa {
+            get {
+                return ResourceManager.GetString("Anasayfa", resourceCulture);
+            }
+        }
+        
+        internal static string Fason {
+            get {
+                return ResourceManager.GetString("Fason", resourceCulture);
+            }
+        }
+        
+        internal static string Tanimlamalar {
+            get {
+                return ResourceManager.GetString("Tanimlamalar", resourceCulture);
+            }
+        }
+        
+        internal static string Raporlar {
+            get {
+                return ResourceManager.GetString("Raporlar", resourceCulture);
+            }
+        }
+        
+        internal static string Sms {
+            get {
+                return ResourceManager.GetString("Sms", resourceCulture);
+            }
+        }
+        
+        internal static string TopluSms {
+            get {
+                return ResourceManager.GetString("TopluSms", resourceCulture);
+            }
+        }
+        
+        internal static string Kullanicilar {
+            get {
+                return ResourceManager.GetString("Kullanicilar", resourceCulture);
+            }
+        }
+        
+        internal static string Ayarlar {
+            get {
+                return ResourceManager.GetString("Ayarlar", resourceCulture);
+            }
+        }
+        
+        internal static string Yardim {
+            get {
+                return ResourceManager.GetString("Yardim", resourceCulture);
+            }
+        }
+        
+        internal static string CikisYap {
+            get {
+                return ResourceManager.GetString("CikisYap", resourceCulture);
+            }
+        }
+        
+        internal static string Urunler {
+            get {
+                return ResourceManager.GetString("Urunler", resourceCulture);
+            }
+        }
+        
+        internal static string Araclar {
+            get {
+                return ResourceManager.GetString("Araclar", resourceCulture);
+            }
+        }
+        
+        internal static string Bolgeler {
+            get {
+                return ResourceManager.GetString("Bolgeler", resourceCulture);
+            }
+        }
+        
+        internal static string Firmalar {
+            get {
+                return ResourceManager.GetString("Firmalar", resourceCulture);
+            }
+        }
+        
+        internal static string SmsSablonlari {
+            get {
+                return ResourceManager.GetString("SmsSablonlari", resourceCulture);
+            }
+        }
+        
+        internal static string Uyari {
+            get {
+                return ResourceManager.GetString("Uyari", resourceCulture);
+            }
+        }
+        
+        internal static string KullaniciAdiVeyaSifreBosOlamaz {
+            get {
+                return ResourceManager.GetString("KullaniciAdiVeyaSifreBosOlamaz", resourceCulture);
+            }
+        }
+        
+        internal static string UrunEkle {
+            get {
+                return ResourceManager.GetString("UrunEkle", resourceCulture);
+            }
+        }
+        
+        internal static string UrunAdi {
+            get {
+                return ResourceManager.GetString("UrunAdi", resourceCulture);
+            }
+        }
+        
+        internal static string Fiyat {
+            get {
+                return ResourceManager.GetString("Fiyat", resourceCulture);
+            }
+        }
+        
+        internal static string UrunTipi {
+            get {
+                return ResourceManager.GetString("UrunTipi", resourceCulture);
+            }
+        }
+        
+        internal static string Tamamla {
+            get {
+                return ResourceManager.GetString("Tamamla", resourceCulture);
+            }
+        }
+        
+        internal static string UrunEkleNot {
+            get {
+                return ResourceManager.GetString("UrunEkleNot", resourceCulture);
+            }
+        }
+        
+        internal static string TumunuDoldur {
+            get {
+                return ResourceManager.GetString("TumunuDoldur", resourceCulture);
+            }
+        }
+        
+        internal static string Basarili {
+            get {
+                return ResourceManager.GetString("Basarili", resourceCulture);
+            }
+        }
+        
+        internal static string Basarisiz {
+            get {
+                return ResourceManager.GetString("Basarisiz", resourceCulture);
+            }
+        }
+        
+        internal static string UrunDuzenle {
+            get {
+                return ResourceManager.GetString("UrunDuzenle", resourceCulture);
+            }
+        }
+        
+        internal static string Hizmet {
+            get {
+                return ResourceManager.GetString("Hizmet", resourceCulture);
+            }
+        }
+        
+        internal static string SabitUrun {
+            get {
+                return ResourceManager.GetString("SabitUrun", resourceCulture);
+            }
+        }
+        
+        internal static string Aktif {
+            get {
+                return ResourceManager.GetString("Aktif", resourceCulture);
+            }
+        }
+        
+        internal static string Pasif {
+            get {
+                return ResourceManager.GetString("Pasif", resourceCulture);
+            }
+        }
+        
+        internal static string Temizle {
+            get {
+                return ResourceManager.GetString("Temizle", resourceCulture);
+            }
+        }
+        
+        internal static string Uygula {
+            get {
+                return ResourceManager.GetString("Uygula", resourceCulture);
+            }
+        }
+        
+        internal static string Durum {
+            get {
+                return ResourceManager.GetString("Durum", resourceCulture);
+            }
+        }
+        
+        internal static string VeriBulunamadi {
+            get {
+                return ResourceManager.GetString("VeriBulunamadi", resourceCulture);
+            }
+        }
+        
+        internal static string AracEkle {
+            get {
+                return ResourceManager.GetString("AracEkle", resourceCulture);
+            }
+        }
+        
+        internal static string AracDuzenle {
+            get {
+                return ResourceManager.GetString("AracDuzenle", resourceCulture);
+            }
+        }
+        
+        internal static string AracIsmi {
+            get {
+                return ResourceManager.GetString("AracIsmi", resourceCulture);
+            }
+        }
+        
+        internal static string BolgeEkle {
+            get {
+                return ResourceManager.GetString("BolgeEkle", resourceCulture);
+            }
+        }
+        
+        internal static string BolgeDuzenle {
+            get {
+                return ResourceManager.GetString("BolgeDuzenle", resourceCulture);
+            }
+        }
+        
+        internal static string BolgeAdi {
+            get {
+                return ResourceManager.GetString("BolgeAdi", resourceCulture);
+            }
+        }
+        
+        internal static string FirmaAdi {
+            get {
+                return ResourceManager.GetString("FirmaAdi", resourceCulture);
+            }
+        }
+        
+        internal static string Aciklama {
+            get {
+                return ResourceManager.GetString("Aciklama", resourceCulture);
+            }
+        }
+        
+        internal static string ParaBirimi {
+            get {
+                return ResourceManager.GetString("ParaBirimi", resourceCulture);
+            }
+        }
+        
+        internal static string TeslimatGunu {
+            get {
+                return ResourceManager.GetString("TeslimatGunu", resourceCulture);
+            }
+        }
+        
+        internal static string TeslimatGunuNot {
+            get {
+                return ResourceManager.GetString("TeslimatGunuNot", resourceCulture);
+            }
+        }
+        
+        internal static string FirmaEkle {
+            get {
+                return ResourceManager.GetString("FirmaEkle", resourceCulture);
+            }
+        }
+        
+        internal static string FirmaDuzenle {
+            get {
+                return ResourceManager.GetString("FirmaDuzenle", resourceCulture);
+            }
+        }
+        
+        internal static string FirmaRengi {
+            get {
+                return ResourceManager.GetString("FirmaRengi", resourceCulture);
+            }
+        }
+        
+        internal static string SmsUyeligiEkle {
+            get {
+                return ResourceManager.GetString("SmsUyeligiEkle", resourceCulture);
+            }
+        }
+        
+        internal static string SmsUyeligiDuzenle {
+            get {
+                return ResourceManager.GetString("SmsUyeligiDuzenle", resourceCulture);
+            }
+        }
+        
+        internal static string Baslik {
+            get {
+                return ResourceManager.GetString("Baslik", resourceCulture);
+            }
+        }
+        
+        internal static string KullaniciAdi {
+            get {
+                return ResourceManager.GetString("KullaniciAdi", resourceCulture);
+            }
+        }
+        
+        internal static string Sifre {
+            get {
+                return ResourceManager.GetString("Sifre", resourceCulture);
+            }
+        }
+        
+        internal static string SmsUyeliks {
+            get {
+                return ResourceManager.GetString("SmsUyeliks", resourceCulture);
+            }
+        }
+        
+        internal static string Icerik {
+            get {
+                return ResourceManager.GetString("Icerik", resourceCulture);
+            }
+        }
+        
+        internal static string Ekle {
+            get {
+                return ResourceManager.GetString("Ekle", resourceCulture);
+            }
+        }
+        
+        internal static string Duzenle {
+            get {
+                return ResourceManager.GetString("Duzenle", resourceCulture);
+            }
+        }
     }
 }

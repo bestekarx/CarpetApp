@@ -1,6 +1,7 @@
+using CarpetApp.Models.API.Filter;
 using CarpetApp.Repositories.Base;
 
-namespace CarpetApp.Repositories.Entry;
+namespace CarpetApp.Repositories.Entry.EntryBase;
 
 public interface IEntryRepository<T> : IRepository<T>
     where T : Entities.Base.Entry, new()
@@ -17,9 +18,7 @@ public interface IEntryRepository<T> : IRepository<T>
 
     Task SaveIfFresherAsync(IEnumerable<T> entries);
 
-    Task<List<T>> FindAllAsync(bool includeRemoved = false);
+    Task<List<T>> FindAllAsync(BaseFilterModel filter = null);
 
-    Task<T?> FindByUuidAsync(Guid uuid, bool includeRemoved = true);
-
-    Task<List<EntryMetadata>> GetAllMetadataAsync();
+    Task<T?> FindByUuidAsync(Guid uuid);
 }

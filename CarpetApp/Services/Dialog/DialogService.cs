@@ -1,16 +1,28 @@
-using CarpetApp.Models;
 using CarpetApp.Resources.Strings;
 using CarpetApp.Views;
-using CommunityToolkit.Maui.Views;
-using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
+using Mopups.Interfaces;
+using Mopups.Services;
 
 namespace CarpetApp.Service.Dialog;
 
-public class DialogService : Service, IDialogService
+public class DialogService : Service, IDialogService, IDisposable
 {
+    private readonly IPopupNavigation _navigation;
+
     public DialogService()
     {
+        _navigation = MopupService.Instance;
     }
+
+    public async Task ShowToast(string message)
+    {
+        var cancellationTokenSource = new CancellationTokenSource();
+        var toast = Toast.Make(message, ToastDuration.Long, 16);
+        await toast.Show(cancellationTokenSource.Token);
+    }
+
     public Task PromptAsync(string title, string message, string? confirm = null)
     {
         confirm ??= AppStrings.Confirm;
@@ -26,13 +38,19 @@ public class DialogService : Service, IDialogService
         return Application.Current!.MainPage!.DisplayAlert(title, message, accept, cancel);
     }
 
-    public void ShowLoading()
+    public async Task<IDisposable> Show()
     {
-        Application.Current!.MainPage!.ShowPopupAsync(new LoadingPopup());
+        await _navigation.PushAsync(new LoadingPopup(), true);
+        return this;    }
+
+    public Task Hide()
+    {
+        Dispose();
+        return Task.CompletedTask;
     }
 
-    public void HideLoading()
+    public async void Dispose()
     {
-        WeakReferenceMessenger.Default.Send(new CustomWeakModel());
+        await _navigation.PopAsync();
     }
 }

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services:ContentPageBase
+    x:Class="CarpetApp.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:core="http://schemas.syncfusion.com/maui"
+    xmlns:services="clr-namespace:CarpetApp.Services"
+    xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <Grid RowDefinitions="Auto, Auto, Auto, *">
+
+            <VerticalStackLayout
+                Grid.Row="0"
+                Margin="0,50,0,25"
+                Spacing="0"
+                VerticalOptions="Center">
+                <Image
+                    Aspect="AspectFit"
+                    Source="login_logo"
+                    VerticalOptions="Center" />
+                <Label
+                    FontFamily="Bold"
+                    FontSize="40"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="Dehapos"
+                    TextColor="{StaticResource LogoTextColor}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <tabView:SfTabView Grid.Row="1">
+                <tabView:SfTabView.Items>
+                    <tabView:SfTabItem Header="Kullanıcı Adı Şifre">
+                        <tabView:SfTabItem.Content>
+
+                            <VerticalStackLayout Grid.Row="1" Margin="25,25,25,0">
+                                <core:SfTextInputLayout
+                                    ContainerBackground="{StaticResource LoginEntryBg}"
+                                    Hint="Kullanıcı adı"
+                                    Style="{StaticResource LoginInput}">
+                                    <Entry ReturnType="Next" Text="{Binding UserName}" />
+                                </core:SfTextInputLayout>
+
+                                <core:SfTextInputLayout
+                                    ContainerBackground="{StaticResource LoginEntryBg}"
+                                    EnablePasswordVisibilityToggle="True"
+                                    Hint="Şifre"
+                                    Style="{StaticResource LoginInput}">
+                                    <Entry ReturnType="Done" Text="{Binding Password}" />
+                                </core:SfTextInputLayout>
+                            </VerticalStackLayout>
+
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+
+                    <tabView:SfTabItem Header="Kullanıcı Kodu">
+                        <tabView:SfTabItem.Content>
+                            <VerticalStackLayout Grid.Row="1" Margin="25,25,25,0">
+                                <core:SfTextInputLayout
+                                    ContainerBackground="{StaticResource LoginEntryBg}"
+                                    Hint="Kod"
+                                    Style="{StaticResource LoginInput}">
+                                    <Entry
+                                        Keyboard="Numeric"
+                                        ReturnType="Next"
+                                        Text="{Binding Code}" />
+                                </core:SfTextInputLayout>
+                            </VerticalStackLayout>
+                        </tabView:SfTabItem.Content>
+                    </tabView:SfTabItem>
+                </tabView:SfTabView.Items>
+            </tabView:SfTabView>
+
+            <buttons:SfButton
+                Background="{StaticResource Blue5}"
+                BackgroundColor="{StaticResource Blue5}"
+                Command="{Binding LoginCommand}"
+                FontFamily="Bold"
+                FontSize="18"
+                Grid.Row="2"
+                Margin="16,0,16,0"
+                Text="Giriş Yap"
+                TextColor="White" />
+
+            <VerticalStackLayout
+                Grid.Row="3"
+                HorizontalOptions="Center"
+                Margin="0,0,0,15"
+                VerticalOptions="End">
+                <Label
+                    FontFamily="Regular"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="iletişim"
+                    TextColor="{StaticResource Blue5}" />
+                <Label
+                    FontFamily="Regular"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    Text="www.dehapos.com" />
+            </VerticalStackLayout>
+        </Grid>
+    </ContentPage.Content>
+</services:ContentPageBase>

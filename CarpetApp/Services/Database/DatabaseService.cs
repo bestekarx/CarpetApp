@@ -1,14 +1,22 @@
 using CarpetApp.Entities;
+using CarpetApp.Service;
+using CarpetApp.Service.Database;
 using SQLite;
 
-namespace CarpetApp.Service.Database;
+namespace CarpetApp.Services.Database;
 
 public class DatabaseService : DatabaseServiceBase, IDatabaseService
 {
     public override Type[] Tables => new Type[] {
         typeof(UserEntity),
+        typeof(ProductEntity),
+        typeof(DataQueueEntity),
+        typeof(VehicleEntity),
+        typeof(AreaEntity),
+        typeof(CompanyEntity),
+        typeof(SmsUsersEntity),
+        typeof(SmsTemplateEntity),
     }.ToArray();
-
 
     public DatabaseService(IStaticConfigurationService staticConfiguration) : base(staticConfiguration)
     {

@@ -1,32 +1,27 @@
 using CarpetApp.Models;
-using CarpetApp.Models.API.Request;
+using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
-using CarpetApp.Service.Entry.User;
-using CarpetApp.Service.Navigation;
-using CarpetApp.Services.API.Interfaces;
+using CarpetApp.Services.Entry;
+using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Refit;
 
 namespace CarpetApp.ViewModels.Login;
 
-public partial class LoginViewModel : ViewModelBase
+public partial class LoginViewModel(
+    INavigationService navigationService,
+    IUserService userService,
+    IDialogService dialogService
+    )
+    : ViewModelBase
 {
-    private readonly IDialogService _dialogService;
-    private readonly INavigationService _navigationService;
-    private readonly IUserService _userService;
-    //private readonly IAuthentication _authentication;
-    public LoginViewModel(INavigationService navigationService, IUserService userService, IDialogService dialogService) : base()
-    {
-        _navigationService = navigationService;
-        _userService = userService;
-        _dialogService = dialogService;
-        //_authentication = authentication;
-    }
+    private readonly IUserService _userService = userService;
+    //private readonly IAuthentication _authentication = authentication;
 
     [ObservableProperty] private string userName;
     [ObservableProperty] private string password;
+    [ObservableProperty] private decimal code;
 
     [RelayCommand]
     async Task Login()
@@ -36,21 +31,23 @@ public partial class LoginViewModel : ViewModelBase
     
     private async Task LoginTask()
     {
-        if (string.IsNullOrWhiteSpace(userName) || string.IsNullOrWhiteSpace(password))
+        try
         {
-            _= _dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre boş olamaz!");
-            return;
+            _= dialogService.Show();
+            //await Task.Delay(3000);
+            
+            /*
+            var response = await _authentication.Authentication(new RequestLoginModel()
+            {
+                UserName = userName,
+                Password = password
+            });*/
         }
-        /*
-        var response = await _authentication.Authentication(new RequestLoginModel()
+        catch (Exception e)
         {
-            UserName = userName, Password = password
-        });
-        */
-
-        //var gitHubApi = RestService.For<IAuthentication>("https://api.github.com");
-        //var octocat = await gitHubApi.Authentication(new RequestLoginModel(){UserName = userName, Password = password});
-        
+            CarpetExceptionLogger.Instance.CrashLog(e);
+        }
+      
         var u = new UserModel()
         {
             UserName = userName,
@@ -77,6 +74,7 @@ public partial class LoginViewModel : ViewModelBase
         
         await _navigationService.NavigateMainPageAsync(AppShell.Route.HomePage, parameter);
         */
-        Application.Current!.MainPage = new AppShell();
+        Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
+        _= dialogService.Hide();
     }
 }   

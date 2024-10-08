@@ -6,7 +6,7 @@ public partial class App
 {
     public App(SplashScreenPage splashScreenPage)
     {
-        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzIwOTY3NEAzMjM1MmUzMDJlMzBVVitSZFJLODUrOE1URjE1MGhtRE9uNXFkY3VZdExadEh4ZEgxU1I2b1FNPQ==");
+        Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzUwMjc2MEAzMjM3MmUzMDJlMzBPNHNGMGpjcHJDVCs2ek5hb1pWQk9WVittNmdBTHZTcmxmbmtleGc1S1R3PQ==\n\n");
         MainPage = splashScreenPage;
         InitializeComponent();
     }

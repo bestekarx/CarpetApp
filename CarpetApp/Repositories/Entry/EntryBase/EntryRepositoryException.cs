@@ -1,4 +1,4 @@
-namespace CarpetApp.Repositories.Entry;
+namespace CarpetApp.Repositories.Entry.EntryBase;
 
 public abstract class EntryRepositoryException
     : Exception

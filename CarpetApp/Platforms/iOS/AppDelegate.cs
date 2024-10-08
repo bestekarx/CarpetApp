@@ -1,4 +1,6 @@
 ﻿using Foundation;
+using Syncfusion.Maui.Core;
+using UIKit;
 
 namespace CarpetApp;
 

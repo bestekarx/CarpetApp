@@ -2,7 +2,9 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:core="http://schemas.syncfusion.com/maui"
+    xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style TargetType="ActivityIndicator">
@@ -112,11 +114,11 @@
     <Style TargetType="Entry">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="OpenSansRegular" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Regular" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="PlaceholderColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
-        <Setter Property="MinimumWidthRequest" Value="44" />
+        <Setter Property="MinimumHeightRequest" Value="54" />
+        <Setter Property="MinimumWidthRequest" Value="54" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="CommonStates">
@@ -405,11 +407,34 @@
 
     <!--  me  -->
 
-    <Style TargetType="core:SfTextInputLayout" x:Key="DefaultInput">
+    <Style TargetType="core:SfTextInputLayout" x:Key="LoginInput">
         <Setter Property="HeightRequest" Value="80" />
         <Setter Property="ContainerType" Value="None" />
         <Setter Property="Stroke" Value="{StaticResource Gray10}" />
         <Setter Property="HintLabelStyle" Value="{DynamicResource DefaultLabelStyle}" />
+    </Style>
+
+
+    <Style TargetType="core:SfTextInputLayout" x:Key="DefaultInput">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HeightRequest" Value="70" />
+        <Setter Property="ContainerType" Value="Outlined" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="ContainerBackground" Value="Transparent" />
+        <Setter Property="ReserveSpaceForAssistiveLabels" Value="False" />
+        <Setter Property="Stroke" Value="{StaticResource Gray400}" />
+        <Setter Property="HintLabelStyle" Value="{DynamicResource DefaultLabelStyle}" />
+        <Setter Property="VisualStateManager.VisualStateGroups">
+            <VisualStateGroupList>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState Name="Error">
+                        <VisualState.Setters>
+                            <Setter Property="Stroke" Value="{StaticResource ErrorStroke}" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateGroupList>
+        </Setter>
     </Style>
 
     <Style TargetType="core:LabelStyle" x:Key="DefaultLabelStyle">
@@ -444,6 +469,26 @@
         <Setter Property="HorizontalTextAlignment" Value="Start" />
     </Style>
 
+    <Style TargetType="Label" x:Key="ListViewLabel">
+        <Setter Property="FontFamily" Value="Regular" />
+        <Setter Property="FontSize" Value="Default" />
+        <Setter Property="TextColor" Value="{StaticResource ListViewLabelColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="InfoLabel">
+        <Setter Property="FontFamily" Value="Light" />
+        <Setter Property="FontSize" Value="Small" />
+        <Setter Property="TextColor" Value="{StaticResource LabelInfoTextColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
     <Style TargetType="Label" x:Key="Regular">
         <Setter Property="FontFamily" Value="Regular" />
         <Setter Property="FontSize" Value="Default" />
@@ -469,6 +514,43 @@
         <Setter Property="HeightRequest" Value="1" />
         <Setter Property="BackgroundColor" Value="{StaticResource MainBgColor}" />
         <Setter Property="Color" Value="{StaticResource MainBgColor}" />
+    </Style>
+
+    <Style TargetType="Frame" x:Key="MenuFrame">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Margin" Value="8,4,8,4" />
+        <Setter Property="Padding" Value="4,2,4,2" />
+    </Style>
+
+    <Style TargetType="buttons:SfButton" x:Key="CircleAddButton">
+        <Setter Property="BackgroundColor" Value="{StaticResource AddColor}" />
+        <Setter Property="Background" Value="{StaticResource AddColor}" />
+        <Setter Property="CornerRadius" Value="35" />
+        <Setter Property="HeightRequest" Value="70" />
+        <Setter Property="WidthRequest" Value="70" />
+        <Setter Property="ImageSize" Value="35" />
+        <Setter Property="ImageAlignment" Value="Default" />
+        <Setter Property="ShowIcon" Value="True" />
+        <Setter Property="ImageSource" Value="plus_white" />
+    </Style>
+
+    <Style TargetType="buttons:SfButton" x:Key="SaveButton">
+        <Setter Property="Margin" Value="8,32,8,8" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontFamily" Value="Regular" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="Background" Value="{StaticResource SaveButtonColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource SaveButtonColor}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="CornerRadius" Value="5" />
+    </Style>
+
+    <Style TargetType="sfComboBox:SfComboBox" x:Key="DefaultComboBox">
+        <Setter Property="DropDownBackground" Value="White" />
+        <Setter Property="DropDownItemFontFamily" Value="Bold" />
+        <Setter Property="FontFamily" Value="Bold" />
+        <Setter Property="IsClearButtonVisible" Value="False" />
+        <Setter Property="SelectionMode" Value="Single" />
     </Style>
 
 </ResourceDictionary>

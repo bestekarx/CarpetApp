@@ -1,24 +1,27 @@
+using System.Threading.Tasks;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
-using CarpetApp.Service.Navigation;
+using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 
 namespace CarpetApp.ViewModels;
 
-[QueryProperty(nameof(UserModel), Consts.LOGIN_PAGE_PARAMETER)]
+[QueryProperty(nameof(UserModel), Consts.LoginPageParameter)]
 public partial class HomeViewModel(INavigationService navigationService) : ViewModelBase
 {
     #region Fields
 
     private UserModel _loginModel = new();
+    
 
     #endregion
     
     #region Properties
 
-    [ObservableProperty] public string welcomeText;
+    [ObservableProperty] private string _welcomeText;
 
     #endregion
 
@@ -47,16 +50,6 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
 
     #endregion
     
-    public override Task InitializeAsync()
-    {
-        return base.InitializeAsync();
-    }
-
-    public override void OnViewAppearing()
-    {
-        base.OnViewAppearing();
-    }
-
     public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnViewNavigatedTo(args);

@@ -19,21 +19,216 @@
         <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
     </resheader>
     <data name="Confirm" xml:space="preserve">
-        <value>Confirm</value>
+        <value>Onayla</value>
     </data>
     <data name="Accept" xml:space="preserve">
-        <value>Accept</value>
+        <value>Kabul Et</value>
     </data>
     <data name="Cancel" xml:space="preserve">
-        <value>Cancel</value>
+        <value>İptal</value>
     </data>
     <data name="LeaveThePage" xml:space="preserve">
-        <value>Do you want to leave the page?</value>
+        <value>Sayfadan ayrılmak istiyor musunuz?</value>
     </data>
     <data name="ModificationWillBeLost" xml:space="preserve">
-        <value>Unsaved modifications will be lost.</value>
+        <value>Kaydedilmemiş değişiklikler kaybolacaktır.</value>
     </data>
     <data name="AppName" xml:space="preserve">
         <value>Carpet App</value>
+    </data>
+    <data name="Alinacaklar" xml:space="preserve">
+        <value>Alınacaklar</value>
+    </data>
+    <data name="Yikamada" xml:space="preserve">
+        <value>Yıkamada</value>
+    </data>
+    <data name="Toplam" xml:space="preserve">
+        <value>Toplam {0}</value>
+    </data>
+    <data name="Dagitilacak" xml:space="preserve">
+        <value>Dağıtılacak</value>
+    </data>
+    <data name="Musteriler" xml:space="preserve">
+        <value>Müşteriler</value>
+    </data>
+    <data name="GelirGider" xml:space="preserve">
+        <value>Gelir &amp; Gider</value>
+    </data>
+    <data name="GunOzeti" xml:space="preserve">
+        <value>Gün Özeti</value>
+    </data>
+    <data name="Anasayfa" xml:space="preserve">
+        <value>Ana Sayfa</value>
+    </data>
+    <data name="Fason" xml:space="preserve">
+        <value>Fason</value>
+    </data>
+    <data name="Tanimlamalar" xml:space="preserve">
+        <value>Tanımlamalar</value>
+    </data>
+    <data name="Raporlar" xml:space="preserve">
+        <value>Raporlar</value>
+    </data>
+    <data name="Sms" xml:space="preserve">
+        <value>Sms</value>
+    </data>
+    <data name="TopluSms" xml:space="preserve">
+        <value>Toplu Sms</value>
+    </data>
+    <data name="Kullanicilar" xml:space="preserve">
+        <value>Kullanicilar</value>
+    </data>
+    <data name="Ayarlar" xml:space="preserve">
+        <value>Ayarlar</value>
+    </data>
+    <data name="Yardim" xml:space="preserve">
+        <value>Yardım</value>
+    </data>
+    <data name="CikisYap" xml:space="preserve">
+        <value>Çıkış Yap</value>
+    </data>
+    <data name="Urunler" xml:space="preserve">
+        <value>Ürünler</value>
+    </data>
+    <data name="Araclar" xml:space="preserve">
+        <value>Araçlar</value>
+    </data>
+    <data name="Bolgeler" xml:space="preserve">
+        <value>Bölgeler</value>
+    </data>
+    <data name="Firmalar" xml:space="preserve">
+        <value>Firmalar</value>
+    </data>
+    <data name="SmsSablonlari" xml:space="preserve">
+        <value>Sms Şablonları</value>
+    </data>
+    <data name="Uyari" xml:space="preserve">
+        <value>Uyarı!</value>
+    </data>
+    <data name="KullaniciAdiVeyaSifreBosOlamaz" xml:space="preserve">
+        <value>Kullanıcı adı veya şifre boş olamaz.</value>
+    </data>
+    <data name="UrunEkle" xml:space="preserve">
+        <value>Ürün Ekle</value>
+    </data>
+    <data name="UrunAdi" xml:space="preserve">
+        <value>Ürün Adı</value>
+    </data>
+    <data name="Fiyat" xml:space="preserve">
+        <value>Fiyat</value>
+    </data>
+    <data name="UrunTipi" xml:space="preserve">
+        <value>Ürün Tipi</value>
+    </data>
+    <data name="Tamamla" xml:space="preserve">
+        <value>Tamamla</value>
+    </data>
+    <data name="UrunEkleNot" xml:space="preserve">
+        <value>Not: Ürün fiyatını tek birimden hesaplayın örnek 1 M2 halı 5 ₺.</value>
+    </data>
+    <data name="TumunuDoldur" xml:space="preserve">
+        <value>Lütfen tüm alanları doldurunuz.</value>
+    </data>
+    <data name="Basarili" xml:space="preserve">
+        <value>Kayıt başarıyla tamamlandı.</value>
+    </data>
+    <data name="Basarisiz" xml:space="preserve">
+        <value>Bir hata oluştu. Lütfen tekrar deneyiniz.</value>
+    </data>
+    <data name="UrunDuzenle" xml:space="preserve">
+        <value>Ürün Düzenle</value>
+    </data>
+    <data name="Hizmet" xml:space="preserve">
+        <value>Hizmet</value>
+    </data>
+    <data name="SabitUrun" xml:space="preserve">
+        <value>Sabit Ürün</value>
+    </data>
+    <data name="Aktif" xml:space="preserve">
+        <value>Aktif</value>
+    </data>
+    <data name="Pasif" xml:space="preserve">
+        <value>Pasif</value>
+    </data>
+    <data name="Temizle" xml:space="preserve">
+        <value>Temizle</value>
+    </data>
+    <data name="Uygula" xml:space="preserve">
+        <value>Uygula</value>
+    </data>
+    <data name="Durum" xml:space="preserve">
+        <value>Durum</value>
+    </data>
+    <data name="VeriBulunamadi" xml:space="preserve">
+        <value>Veri bulunamadı.</value>
+    </data>
+    <data name="AracEkle" xml:space="preserve">
+        <value>Araç Ekle</value>
+    </data>
+    <data name="AracDuzenle" xml:space="preserve">
+        <value>Araç Düzenle</value>
+    </data>
+    <data name="AracIsmi" xml:space="preserve">
+        <value>Araç İsmi</value>
+    </data>
+    <data name="BolgeEkle" xml:space="preserve">
+        <value>Bölge Ekle</value>
+    </data>
+    <data name="BolgeDuzenle" xml:space="preserve">
+        <value>Bölge Düzenle</value>
+    </data>
+    <data name="BolgeAdi" xml:space="preserve">
+        <value>Bölge Adı</value>
+    </data>
+    <data name="FirmaAdi" xml:space="preserve">
+        <value>Firma Adı</value>
+    </data>
+    <data name="Aciklama" xml:space="preserve">
+        <value>Açıklama</value>
+    </data>
+    <data name="ParaBirimi" xml:space="preserve">
+        <value>Para Birimi</value>
+    </data>
+    <data name="TeslimatGunu" xml:space="preserve">
+        <value>Teslimat Günü</value>
+    </data>
+    <data name="TeslimatGunuNot" xml:space="preserve">
+        <value>Yeni 'Alınacak' görevi eklerken tahmini olarak kaç gün sonra teslim edilecek? Örn: Teslimat günü 7 olsun. X müşterisinden 1 Ocak tarihinde teslim alma görevi oluşturduğumuzda teslim alma tarihi: 1 OCAK Teslim Etme tarihi otomatik olarak 8 OCAK olacaktır. Teslim etme tarihini her koşulda değiştirebilirsiniz. Bu veri şablon veridir.</value>
+    </data>
+    <data name="FirmaEkle" xml:space="preserve">
+        <value>Firma Ekle</value>
+    </data>
+    <data name="FirmaDuzenle" xml:space="preserve">
+        <value>Firma Düzenle</value>
+    </data>
+    <data name="FirmaRengi" xml:space="preserve">
+        <value>Firma Rengi</value>
+    </data>
+    <data name="SmsUyeligiEkle" xml:space="preserve">
+        <value>Sms Üyeliği Ekle</value>
+    </data>
+    <data name="SmsUyeligiDuzenle" xml:space="preserve">
+        <value>Sms Üyeliği Düzenle</value>
+    </data>
+    <data name="Baslik" xml:space="preserve">
+        <value>Başlık</value>
+    </data>
+    <data name="KullaniciAdi" xml:space="preserve">
+        <value>Kullanıcı Adı</value>
+    </data>
+    <data name="Sifre" xml:space="preserve">
+        <value>Şifre</value>
+    </data>
+    <data name="SmsUyeliks" xml:space="preserve">
+        <value>Sms Üyelikleri</value>
+    </data>
+    <data name="Icerik" xml:space="preserve">
+        <value>İçerik</value>
+    </data>
+    <data name="Ekle" xml:space="preserve">
+        <value>Ekle</value>
+    </data>
+    <data name="Duzenle" xml:space="preserve">
+        <value>Duzenle</value>
     </data>
 </root>

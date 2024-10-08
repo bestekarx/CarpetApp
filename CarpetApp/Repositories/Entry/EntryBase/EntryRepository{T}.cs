@@ -1,9 +1,9 @@
-
-using CarpetApp.Extensions;
+using CarpetApp.Models.API.Filter;
 using CarpetApp.Repositories.Base;
 using CarpetApp.Service.Database;
+using CommunityToolkit.Diagnostics;
 
-namespace CarpetApp.Repositories.Entry;
+namespace CarpetApp.Repositories.Entry.EntryBase;
 
 public class EntryRepository<T> : Repository<T>, IEntryRepository<T>
         where T : Entities.Base.Entry, new()
@@ -72,30 +72,31 @@ public class EntryRepository<T> : Repository<T>, IEntryRepository<T>
                 if (incomingEntry.UpdatedDate > existsEntry.UpdatedDate)
                 {
                     await UpdateAsync(incomingEntry);
-                    continue;
                 }
             }
         }
 
-        public async Task<List<T>> FindAllAsync(bool includeRemoved = false)
+        public async Task<List<T>> FindAllAsync(BaseFilterModel filter = null)
         {
+            Guard.IsNotNull(filter);
+
             var query = _connection.MainDatabase.Table<T>();
-            if (!includeRemoved)
-                query = query.Where(entry => entry.Active == true);
+
+            if (filter.Uuid != null & filter.Uuid != Guid.Empty)
+                query = query.Where(q => q.Uuid == filter.Uuid);
+            
+            if (filter.Active.HasValue)
+                query = query.Where(q => q.Active == filter.Active.Value);
+
+            if (filter.IsSync.HasValue)
+                query = query.Where(q => q.IsSync == (int) filter.IsSync);
+        
             return await query.ToListAsync();
         }
 
-        public async Task<T?> FindByUuidAsync(Guid uuid, bool includeRemoved = true)
+        public async Task<T?> FindByUuidAsync(Guid uuid)
         {
             var query = _connection.MainDatabase.Table<T>().Where(entry => entry.Uuid == uuid);
-            if (!includeRemoved)
-                query = query.Where(entry => entry.Active == true);
             return await query.FirstOrDefaultAsync();
-        }
-
-        public async Task<List<EntryMetadata>> GetAllMetadataAsync()
-        {
-            var entries = await FindAllAsync(includeRemoved: true);
-            return entries.AsParallel().Select(entry => entry.GetMetadata()).ToList();
         }
     }

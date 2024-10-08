@@ -44,7 +44,21 @@
     <Color x:Key="Blue5">#339AF0</Color>
     <Color x:Key="LoginEntryBg">#F8F9FA</Color>
     <Color x:Key="MainBgColor">#DEE2E6</Color>
+    <Color x:Key="LabelInfoTextColor">#495057</Color>
     <Color x:Key="Gray9">#212529</Color>
     <Color x:Key="Gray10">#868E96</Color>
+    <Color x:Key="AddColor">#20C997</Color>
+    <Color x:Key="SaveButtonColor">#4C6EF5</Color>
+    <Color x:Key="ErrorStroke">#B3261E</Color>
+    <Color x:Key="ClearRed">#FF6B6B</Color>
+    <Color x:Key="ListViewLabelColor">#5E6057</Color>
+
+    <!--  firma rengi  -->
+    <Color x:Key="CompanyColor1">#FFB93B</Color>
+    <Color x:Key="CompanyColor2">#00FF44</Color>
+    <Color x:Key="CompanyColor3">#3784C8</Color>
+    <Color x:Key="CompanyColor4">#0000FF</Color>
+    <Color x:Key="CompanyColor5">#E62236</Color>
+    <Color x:Key="CompanyColor6">#619100</Color>
 
 </ResourceDictionary>

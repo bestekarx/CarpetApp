@@ -1,9 +1,9 @@
 using CarpetApp.Resources.Strings;
 using CarpetApp.Service.Dialog;
 
-namespace CarpetApp.Service.Navigation;
+namespace CarpetApp.Services.Navigation;
 
-public class NavigationService : Service, INavigationService
+public class NavigationService : Service.Service, INavigationService
 {
     private readonly IDialogService _dialogService;
 
@@ -14,7 +14,16 @@ public class NavigationService : Service, INavigationService
 
     public Task NavigateToAsync(string route, IDictionary<string, object>? parameters)
     {
-        return parameters != null ? Shell.Current.GoToAsync(route, parameters) : Shell.Current.GoToAsync(route);
+        try
+        {
+            return parameters != null ? Shell.Current.GoToAsync(route, parameters) : Shell.Current.GoToAsync(route);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return null;
     }
 
     public Task NavigateMainPageAsync(string route, IDictionary<string, object> parameters = null)

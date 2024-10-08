@@ -1,6 +1,8 @@
 using CarpetApp.ViewModels.Base;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 
-namespace CarpetApp.Service;
+namespace CarpetApp.Services;
 
 public class ContentPageBase : ContentPage
 {

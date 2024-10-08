@@ -4,18 +4,12 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace CarpetApp.Views;
 
-public partial class LoadingPopup : Popup
+public partial class LoadingPopup
 {
     public LoadingPopup()
     {
         InitializeComponent();
         
-        WeakReferenceMessenger.Default
-            .Register<CustomWeakModel>(
-                this,
-                (recipient, message) =>
-                {
-                    Close();
-                });
+        
     }
 }

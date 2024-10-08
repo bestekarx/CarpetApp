@@ -1,4 +1,6 @@
-namespace CarpetApp.Service.Navigation;
+using CarpetApp.Service;
+
+namespace CarpetApp.Services.Navigation;
 
 public interface INavigationService : IService
 {
