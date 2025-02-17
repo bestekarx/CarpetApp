@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using WebCarpetApp.Books;
-using WebCarpetApp.Models;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
 using Volo.Abp.Data;
@@ -16,6 +15,17 @@ using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.TenantManagement;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using WebCarpetApp.Areas;
+using WebCarpetApp.Companies;
+using WebCarpetApp.Customers;
+using WebCarpetApp.Invoices;
+using WebCarpetApp.Messages;
+using WebCarpetApp.Orders;
+using WebCarpetApp.Printers;
+using WebCarpetApp.Products;
+using WebCarpetApp.Receiveds;
+using WebCarpetApp.UserTenants;
+using WebCarpetApp.Vehicles;
 
 namespace WebCarpetApp.EntityFrameworkCore;
 
@@ -148,9 +158,6 @@ public class WebCarpetAppDbContext :
             b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageLogs",
                 WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
-            b.Property(x => x.MessageContent).IsRequired();
-            b.Property(x => x.CustomerName).HasMaxLength(256);
-            b.Property(x => x.MessagedPhone).HasMaxLength(20);
         });
 
         builder.Entity<MessageSettings>(b =>

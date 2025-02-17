@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Domain.Repositories;
-using WebCarpetApp.Models;
 using WebCarpetApp.Orders.Dtos;
 using WebCarpetApp.Permissions;
 

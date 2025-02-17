@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Domain.Repositories;
-using WebCarpetApp.Models;
 using WebCarpetApp.Permissions;
 using WebCarpetApp.Receiveds.Dtos;
 
@@ -24,5 +21,12 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
     {
         var received = await _receivedRepository.GetAsync(id);
         return ObjectMapper.Map<Received, ReceivedDto>(received);
+    }
+    
+    public async Task<ReceivedDto> AddReceived(ReceivedDto model)
+    {
+        var received = ObjectMapper.Map<ReceivedDto, Received>(model);
+        var result = await _receivedRepository.InsertAsync(received);
+        return ObjectMapper.Map<Received, ReceivedDto>(result);
     }
 } 

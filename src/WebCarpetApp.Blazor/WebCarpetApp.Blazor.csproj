@@ -13,4 +13,9 @@
     <ProjectReference Include="..\WebCarpetApp.Blazor.Client\WebCarpetApp.Blazor.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Menus\" />
+    <Folder Include="Pages\Vehicles\" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,6 @@
 using System;
 using Volo.Abp.Application.Dtos;
 using WebCarpetApp.Companies.Dtos;
-using WebCarpetApp.Models;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using WebCarpetApp.Permissions;

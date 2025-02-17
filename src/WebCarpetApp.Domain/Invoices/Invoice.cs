@@ -1,0 +1,21 @@
+using System;
+using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.MultiTenancy;
+
+namespace WebCarpetApp.Invoices;
+
+public class Invoice : FullAuditedAggregateRoot<Guid>, IMultiTenant
+{
+    public Guid? TenantId { get; set; }
+    public Guid OrderId { get; set; }
+    public Guid? UserId { get; set; }
+    public Guid CustomerId { get; set; }
+    public decimal TotalPrice { get; set; }
+    public decimal PaidPrice { get; set; }
+    public int PaymentType { get; set; }
+    public string? InvoiceNote { get; set; }
+    public bool Active { get; set; }
+    public Guid? UpdatedUserId { get; set; }
+
+    Guid? IMultiTenant.TenantId => TenantId;
+}

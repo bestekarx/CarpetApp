@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Domain.Repositories;
 using WebCarpetApp.Invoices.Dtos;
-using WebCarpetApp.Models;
 using WebCarpetApp.Permissions;
 
 namespace WebCarpetApp.Invoices;
