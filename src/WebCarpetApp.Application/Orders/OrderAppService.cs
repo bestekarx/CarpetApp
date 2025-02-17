@@ -1,13 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Domain.Repositories;
 using WebCarpetApp.Orders.Dtos;
-using WebCarpetApp.Permissions;
 
 namespace WebCarpetApp.Orders;
 
-[Authorize(WebCarpetAppPermissions.Orders.Default)]
 public class OrderAppService : WebCarpetAppAppService, IOrderAppService
 {
     private readonly IRepository<Order, Guid> _orderRepository;

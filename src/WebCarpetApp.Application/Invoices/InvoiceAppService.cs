@@ -1,13 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Domain.Repositories;
 using WebCarpetApp.Invoices.Dtos;
 using WebCarpetApp.Permissions;
 
 namespace WebCarpetApp.Invoices;
 
-[Authorize(WebCarpetAppPermissions.Invoices.Default)]
 public class InvoiceAppService : WebCarpetAppAppService, IInvoiceAppService
 {
     private readonly IRepository<Invoice, Guid> _invoiceRepository;
