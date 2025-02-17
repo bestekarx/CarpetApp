@@ -52,6 +52,30 @@ public static class WebCarpetAppPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+
+    public static class Receiveds
+    {
+        public const string Default = GroupName + ".Receiveds";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public static class Orders
+    {
+        public const string Default = GroupName + ".Orders";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public static class Invoices
+    {
+        public const string Default = GroupName + ".Invoices";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
     
     //Add your own permission names. Example:
     //public const string MyPermission1 = GroupName + ".MyPermission1";

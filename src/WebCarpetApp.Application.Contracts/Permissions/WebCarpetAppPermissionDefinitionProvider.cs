@@ -40,6 +40,21 @@ public class WebCarpetAppPermissionDefinitionProvider : PermissionDefinitionProv
         vehiclesPermission.AddChild(WebCarpetAppPermissions.Vehicles.Edit, L("Permission:Vehicles.Edit"));
         vehiclesPermission.AddChild(WebCarpetAppPermissions.Vehicles.Delete, L("Permission:Vehicles.Delete"));
 
+        var receivedsPermission = myGroup.AddPermission(WebCarpetAppPermissions.Receiveds.Default, L("Permission:Receiveds"));
+        receivedsPermission.AddChild(WebCarpetAppPermissions.Receiveds.Create, L("Permission:Receiveds.Create"));
+        receivedsPermission.AddChild(WebCarpetAppPermissions.Receiveds.Edit, L("Permission:Receiveds.Edit"));
+        receivedsPermission.AddChild(WebCarpetAppPermissions.Receiveds.Delete, L("Permission:Receiveds.Delete"));
+
+        var ordersPermission = myGroup.AddPermission(WebCarpetAppPermissions.Orders.Default, L("Permission:Orders"));
+        ordersPermission.AddChild(WebCarpetAppPermissions.Orders.Create, L("Permission:Orders.Create"));
+        ordersPermission.AddChild(WebCarpetAppPermissions.Orders.Edit, L("Permission:Orders.Edit"));
+        ordersPermission.AddChild(WebCarpetAppPermissions.Orders.Delete, L("Permission:Orders.Delete"));
+
+        var invoicesPermission = myGroup.AddPermission(WebCarpetAppPermissions.Invoices.Default, L("Permission:Invoices"));
+        invoicesPermission.AddChild(WebCarpetAppPermissions.Invoices.Create, L("Permission:Invoices.Create"));
+        invoicesPermission.AddChild(WebCarpetAppPermissions.Invoices.Edit, L("Permission:Invoices.Edit"));
+        invoicesPermission.AddChild(WebCarpetAppPermissions.Invoices.Delete, L("Permission:Invoices.Delete"));
+
         //Define your own permissions here. Example:
         //myGroup.AddPermission(WebCarpetAppPermissions.MyPermission1, L("Permission:MyPermission1"));
     }
