@@ -1,0 +1,47 @@
+using WebCarpetApp.Localization;
+using Volo.Abp.Authorization.Permissions;
+using Volo.Abp.Localization;
+using Volo.Abp.MultiTenancy;
+
+namespace WebCarpetApp.Permissions;
+
+public class WebCarpetAppPermissionDefinitionProvider : PermissionDefinitionProvider
+{
+    public override void Define(IPermissionDefinitionContext context)
+    {
+        var myGroup = context.AddGroup(WebCarpetAppPermissions.GroupName);
+
+        var booksPermission = myGroup.AddPermission(WebCarpetAppPermissions.Books.Default, L("Permission:Books"));
+        booksPermission.AddChild(WebCarpetAppPermissions.Books.Create, L("Permission:Books.Create"));
+        booksPermission.AddChild(WebCarpetAppPermissions.Books.Edit, L("Permission:Books.Edit"));
+        booksPermission.AddChild(WebCarpetAppPermissions.Books.Delete, L("Permission:Books.Delete"));
+
+        var areasPermission = myGroup.AddPermission(WebCarpetAppPermissions.Areas.Default, L("Permission:Areas"));
+        areasPermission.AddChild(WebCarpetAppPermissions.Areas.Create, L("Permission:Areas.Create"));
+        areasPermission.AddChild(WebCarpetAppPermissions.Areas.Edit, L("Permission:Areas.Edit"));
+        areasPermission.AddChild(WebCarpetAppPermissions.Areas.Delete, L("Permission:Areas.Delete"));
+
+        var companiesPermission = myGroup.AddPermission(WebCarpetAppPermissions.Companies.Default, L("Permission:Companies"));
+        companiesPermission.AddChild(WebCarpetAppPermissions.Companies.Create, L("Permission:Companies.Create"));
+        companiesPermission.AddChild(WebCarpetAppPermissions.Companies.Edit, L("Permission:Companies.Edit"));
+        companiesPermission.AddChild(WebCarpetAppPermissions.Companies.Delete, L("Permission:Companies.Delete"));
+
+        var productsPermission = myGroup.AddPermission(WebCarpetAppPermissions.Products.Default, L("Permission:Products"));
+        productsPermission.AddChild(WebCarpetAppPermissions.Products.Create, L("Permission:Products.Create"));
+        productsPermission.AddChild(WebCarpetAppPermissions.Products.Edit, L("Permission:Products.Edit"));
+        productsPermission.AddChild(WebCarpetAppPermissions.Products.Delete, L("Permission:Products.Delete"));
+
+        var customersPermission = myGroup.AddPermission(WebCarpetAppPermissions.Customers.Default, L("Permission:Customers"));
+        customersPermission.AddChild(WebCarpetAppPermissions.Customers.Create, L("Permission:Customers.Create"));
+        customersPermission.AddChild(WebCarpetAppPermissions.Customers.Edit, L("Permission:Customers.Edit"));
+        customersPermission.AddChild(WebCarpetAppPermissions.Customers.Delete, L("Permission:Customers.Delete"));
+
+        //Define your own permissions here. Example:
+        //myGroup.AddPermission(WebCarpetAppPermissions.MyPermission1, L("Permission:MyPermission1"));
+    }
+
+    private static LocalizableString L(string name)
+    {
+        return LocalizableString.Create<WebCarpetAppResource>(name);
+    }
+}
