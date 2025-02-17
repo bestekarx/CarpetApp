@@ -1,7 +1,6 @@
 using WebCarpetApp.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
-using Volo.Abp.MultiTenancy;
 
 namespace WebCarpetApp.Permissions;
 
@@ -35,6 +34,11 @@ public class WebCarpetAppPermissionDefinitionProvider : PermissionDefinitionProv
         customersPermission.AddChild(WebCarpetAppPermissions.Customers.Create, L("Permission:Customers.Create"));
         customersPermission.AddChild(WebCarpetAppPermissions.Customers.Edit, L("Permission:Customers.Edit"));
         customersPermission.AddChild(WebCarpetAppPermissions.Customers.Delete, L("Permission:Customers.Delete"));
+
+        var vehiclesPermission = myGroup.AddPermission(WebCarpetAppPermissions.Vehicles.Default, L("Permission:Vehicles"));
+        vehiclesPermission.AddChild(WebCarpetAppPermissions.Vehicles.Create, L("Permission:Vehicles.Create"));
+        vehiclesPermission.AddChild(WebCarpetAppPermissions.Vehicles.Edit, L("Permission:Vehicles.Edit"));
+        vehiclesPermission.AddChild(WebCarpetAppPermissions.Vehicles.Delete, L("Permission:Vehicles.Delete"));
 
         //Define your own permissions here. Example:
         //myGroup.AddPermission(WebCarpetAppPermissions.MyPermission1, L("Permission:MyPermission1"));
