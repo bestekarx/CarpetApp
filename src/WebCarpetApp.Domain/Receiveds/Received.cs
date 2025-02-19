@@ -29,19 +29,9 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
         Status = status;
         Note = note;
         RowNumber = rowNumber;
-        Active = true; // Default to active on creation
+        Active = true;
         PurchaseDate = purchaseDate;
         ReceivedDate = receivedDate;
-        UpdatedDate = DateTime.Now;
-    }
-
-    public void Close()
-    {
-        if (!Active)
-        {
-            throw new InvalidOperationException("Received is already closed.");
-        }
-        Active = false;
         UpdatedDate = DateTime.Now;
     }
 }

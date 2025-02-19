@@ -19,5 +19,7 @@ public class Customer : AuditedEntity<Guid>, IMultiTenant
     public decimal Balance { get; set; }
     public bool Active { get; set; }
     public bool CompanyPermission { get; set; }
+    public bool IsConfirmed { get; set; } 
+    public DateTime? ConfirmedAt { get; set; }
     Guid? IMultiTenant.TenantId => TenantId;
 }
