@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebCarpetApp.Areas.Dtos;
+namespace WebCarpetApp.Areas;
 
 public class CreateUpdateAreaDto
 {
     [Required]
     [StringLength(128)]
-    public required string Name { get; set; }
+    public string Name { get; set; }
     
     public bool Active { get; set; }
 } 

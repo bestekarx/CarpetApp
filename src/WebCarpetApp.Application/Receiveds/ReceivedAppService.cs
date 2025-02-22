@@ -1,11 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
 using WebCarpetApp.Receiveds.Dtos;
 
 namespace WebCarpetApp.Receiveds;
 
+[RemoteService(IsEnabled = true)] //or simply [RemoteService(false)]
 public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
 {
     private readonly IRepository<Received, Guid> _receivedRepository;
@@ -23,7 +25,7 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         return ObjectMapper.Map<Received, ReceivedDto>(received);
     }
 
-    public async Task<ReceivedDto> CreateReceivedAsync(ReceivedDto model)
+    public async Task<ReceivedDto> TestReceivedAsync(ReceivedDto model)
     {   
         var received = ObjectMapper.Map<ReceivedDto, Received>(model);
         await _receivedRepository.InsertAsync(received);

@@ -7,7 +7,7 @@ namespace WebCarpetApp.Areas;
 public class Area : AuditedEntity<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; set; }
-    public required string Name { get; set; }
+    public string Name { get; set; }
     public bool Active { get; set; }
     Guid? IMultiTenant.TenantId => TenantId;
 } 

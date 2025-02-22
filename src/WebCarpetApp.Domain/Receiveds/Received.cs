@@ -1,6 +1,7 @@
 using System;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.Users;
 
 namespace WebCarpetApp.Receiveds;
 
@@ -34,4 +35,17 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
         ReceivedDate = receivedDate;
         UpdatedDate = DateTime.Now;
     }
+    
+    public void Update(Guid vehicleId, Guid customerId, int status, string? note, int rowNumber, DateTime receivedDate, Guid? updatedUserId = null)
+    {
+        VehicleId = vehicleId;
+        CustomerId = customerId;
+        Status = status;
+        Note = note;
+        RowNumber = rowNumber;
+        ReceivedDate = receivedDate;
+        UpdatedDate = DateTime.Now;
+        UpdatedUserId = updatedUserId; // Bu, Application katmanından geçecek
+    }
+
 }

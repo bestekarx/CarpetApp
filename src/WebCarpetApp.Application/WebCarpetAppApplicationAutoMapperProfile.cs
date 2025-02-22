@@ -1,7 +1,6 @@
 using AutoMapper;
 using WebCarpetApp.Areas;
 using WebCarpetApp.Books;
-using WebCarpetApp.Areas.Dtos;
 using WebCarpetApp.Companies;
 using WebCarpetApp.Companies.Dtos;
 using WebCarpetApp.Customers;

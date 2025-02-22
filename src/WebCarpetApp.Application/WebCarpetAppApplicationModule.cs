@@ -26,6 +26,7 @@ public class WebCarpetAppApplicationModule : AbpModule
         Configure<AbpAutoMapperOptions>(options =>
         {
             options.AddMaps<WebCarpetAppApplicationModule>();
+            options.AddMaps<WebCarpetAppApplicationAutoMapperProfile>();
         });
     }
 }
