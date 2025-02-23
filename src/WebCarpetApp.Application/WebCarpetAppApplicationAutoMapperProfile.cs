@@ -7,9 +7,6 @@ using WebCarpetApp.Customers;
 using WebCarpetApp.Customers.Dtos;
 using WebCarpetApp.Invoices;
 using WebCarpetApp.Invoices.Dtos;
-using WebCarpetApp.MessageLogs.Dtos;
-using WebCarpetApp.MessageSettings.Dtos;
-using WebCarpetApp.MessageTemplates.Dtos;
 using WebCarpetApp.Messaging;
 using WebCarpetApp.Messaging.Dtos;
 using WebCarpetApp.OrderedProducts.Dtos;
@@ -59,6 +56,9 @@ public class WebCarpetAppApplicationAutoMapperProfile : Profile
 
         CreateMap<MessageTask, MessageTaskDto>();
         CreateMap<CreateUpdateMessageTaskDto, MessageTask>();
+
+        CreateMap<MessageTemplate, MessageTemplateDto>();
+        CreateMap<CreateUpdateMessageTemplateDto, MessageTemplate>();
 
         CreateMap<Order, OrderDto>();
         CreateMap<CreateUpdateOrderDto, Order>();

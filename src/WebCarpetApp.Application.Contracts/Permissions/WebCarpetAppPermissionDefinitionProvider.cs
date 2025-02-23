@@ -65,6 +65,11 @@ public class WebCarpetAppPermissionDefinitionProvider : PermissionDefinitionProv
         messageUserPermission.AddChild(WebCarpetAppPermissions.MessageUsers.Edit, L("Permission:Edit"));
         messageUserPermission.AddChild(WebCarpetAppPermissions.MessageUsers.Delete, L("Permission:Delete"));
 
+        var messageTemplatePermission = myGroup.AddPermission(WebCarpetAppPermissions.MessageTemplates.Default, L("Permission:MessageTemplates"));
+        messageTemplatePermission.AddChild(WebCarpetAppPermissions.MessageTemplates.Create, L("Permission:Create"));
+        messageTemplatePermission.AddChild(WebCarpetAppPermissions.MessageTemplates.Edit, L("Permission:Edit"));
+        messageTemplatePermission.AddChild(WebCarpetAppPermissions.MessageTemplates.Delete, L("Permission:Delete"));
+
         //Define your own permissions here. Example:
         //myGroup.AddPermission(WebCarpetAppPermissions.MyPermission1, L("Permission:MyPermission1"));
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using WebCarpetApp.Books;
@@ -27,6 +28,7 @@ using WebCarpetApp.Receiveds;
 using WebCarpetApp.UserTenants;
 using WebCarpetApp.Vehicles;
 using MessageUser = WebCarpetApp.Messages.MessageUser;
+using System.Text.Json;
 
 namespace WebCarpetApp.EntityFrameworkCore;
 
@@ -47,6 +49,7 @@ public class WebCarpetAppDbContext :
     public DbSet<MessageUser> MessageUsers { get; set; }
     public DbSet<MessageConfiguration> MessageConfigurations { get; set; }
     public DbSet<MessageTask> MessageTasks { get; set; }
+    public DbSet<MessageTemplate> MessageTemplates { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderedProduct> OrderedProducts { get; set; }
     public DbSet<OrderImage> OrderImages { get; set; }
@@ -233,6 +236,18 @@ public class WebCarpetAppDbContext :
             b.ConfigureByConvention();
             b.Property(x => x.VehicleName).IsRequired().HasMaxLength(256);
             b.Property(x => x.PlateNumber).IsRequired().HasMaxLength(20);
+        });
+
+        builder.Entity<MessageTemplate>(b =>
+        {
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageTemplates", WebCarpetAppConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Name).IsRequired().HasMaxLength(200);
+            b.Property(x => x.Template).IsRequired();
+            b.Property(x => x.PlaceholderMappings).HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions)null));
+            b.Property(x => x.CultureCode).IsRequired().HasMaxLength(10);
         });
     }
 }
