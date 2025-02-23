@@ -19,13 +19,14 @@ using WebCarpetApp.Areas;
 using WebCarpetApp.Companies;
 using WebCarpetApp.Customers;
 using WebCarpetApp.Invoices;
-using WebCarpetApp.Messages;
+using WebCarpetApp.Messaging;
 using WebCarpetApp.Orders;
 using WebCarpetApp.Printers;
 using WebCarpetApp.Products;
 using WebCarpetApp.Receiveds;
 using WebCarpetApp.UserTenants;
 using WebCarpetApp.Vehicles;
+using MessageUser = WebCarpetApp.Messages.MessageUser;
 
 namespace WebCarpetApp.EntityFrameworkCore;
 
@@ -43,10 +44,9 @@ public class WebCarpetAppDbContext :
     public DbSet<Company> Companies { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
-    public DbSet<MessageLog> MessageLogs { get; set; }
-    public DbSet<MessageSettings> MessageSettings { get; set; }
-    public DbSet<MessageTemplate> MessageTemplates { get; set; }
     public DbSet<MessageUser> MessageUsers { get; set; }
+    public DbSet<MessageConfiguration> MessageConfigurations { get; set; }
+    public DbSet<MessageTask> MessageTasks { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderedProduct> OrderedProducts { get; set; }
     public DbSet<OrderImage> OrderImages { get; set; }
@@ -153,33 +153,22 @@ public class WebCarpetAppDbContext :
             b.Property(x => x.InvoiceNote).HasMaxLength(500);
         });
 
-        builder.Entity<MessageLog>(b =>
+        builder.Entity<MessageConfiguration>(b =>
         {
-            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageLogs",
-                WebCarpetAppConsts.DbSchema);
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageConfigurations", WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
+            b.HasMany(x => x.MessageTasks).WithOne().HasForeignKey(x => x.MessageConfigurationId);
         });
 
-        builder.Entity<MessageSettings>(b =>
+        builder.Entity<MessageTask>(b =>
         {
-            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageSettings",
-                WebCarpetAppConsts.DbSchema);
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageTasks", WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
-        });
-
-        builder.Entity<MessageTemplate>(b =>
-        {
-            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageTemplates",
-                WebCarpetAppConsts.DbSchema);
-            b.ConfigureByConvention();
-            b.Property(x => x.MessageTitle).IsRequired().HasMaxLength(256);
-            b.Property(x => x.MessageContent).IsRequired();
         });
 
         builder.Entity<MessageUser>(b =>
         {
-            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageUsers",
-                WebCarpetAppConsts.DbSchema);
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageUsers", WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
         });
 

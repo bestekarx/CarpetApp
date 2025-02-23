@@ -4,7 +4,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace WebCarpetApp.Messages;
 
-public class MessageUser : FullAuditedAggregateRoot<Guid>, IMultiTenant
+public class MessageUser : AuditedEntity<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; set; }
     public Guid UserId { get; set; } // Foreign key to AbpUsers

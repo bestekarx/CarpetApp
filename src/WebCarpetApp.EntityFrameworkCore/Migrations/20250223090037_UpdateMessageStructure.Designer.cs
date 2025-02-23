@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 using WebCarpetApp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using WebCarpetApp.EntityFrameworkCore;
 namespace WebCarpetApp.Migrations
 {
     [DbContext(typeof(WebCarpetAppDbContext))]
-    partial class WebCarpetAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250223090037_UpdateMessageStructure")]
+    partial class UpdateMessageStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2200,93 +2203,6 @@ namespace WebCarpetApp.Migrations
                     b.ToTable("MessageUsers", (string)null);
                 });
 
-            modelBuilder.Entity("WebCarpetApp.Messaging.MessageConfiguration", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<Guid>("MessageUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("TenantId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MessageConfigurations", (string)null);
-                });
-
-            modelBuilder.Entity("WebCarpetApp.Messaging.MessageTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Behavior")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomMessage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MessageConfigurationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TaskType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MessageConfigurationId");
-
-                    b.ToTable("MessageTasks", (string)null);
-                });
-
             modelBuilder.Entity("WebCarpetApp.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2909,15 +2825,6 @@ namespace WebCarpetApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebCarpetApp.Messaging.MessageTask", b =>
-                {
-                    b.HasOne("WebCarpetApp.Messaging.MessageConfiguration", null)
-                        .WithMany("MessageTasks")
-                        .HasForeignKey("MessageConfigurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
                     b.Navigation("Actions");
@@ -2956,11 +2863,6 @@ namespace WebCarpetApp.Migrations
             modelBuilder.Entity("Volo.Abp.TenantManagement.Tenant", b =>
                 {
                     b.Navigation("ConnectionStrings");
-                });
-
-            modelBuilder.Entity("WebCarpetApp.Messaging.MessageConfiguration", b =>
-                {
-                    b.Navigation("MessageTasks");
                 });
 #pragma warning restore 612, 618
         }

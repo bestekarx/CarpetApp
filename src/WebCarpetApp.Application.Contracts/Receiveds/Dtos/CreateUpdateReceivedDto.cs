@@ -12,7 +12,7 @@ public class CreateUpdateReceivedDto
     public Guid CustomerId { get; set; }
 
     [Required]
-    public int Status { get; set; }
+    public ReceivedStatus Status { get; set; }
 
     [StringLength(500)]
     public string? Note { get; set; }

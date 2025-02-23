@@ -9,18 +9,7 @@ using System.Linq.Dynamic.Core;
 using Microsoft.AspNetCore.Authorization;
 using WebCarpetApp.Permissions;
 
-
 namespace WebCarpetApp.Areas;
-
-/*
-CrudAppService<
-    Area,
-    AreaDto,
-    Guid,
-    PagedAndSortedResultRequestDto,
-    CreateUpdateAreaDto,
-    CreateUpdateAreaDto>,
-IAreaAppService*/
 
 public class AreaAppService : ApplicationService, IAreaAppService
 {

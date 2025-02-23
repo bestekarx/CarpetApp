@@ -10,7 +10,7 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
     public Guid? TenantId { get; set; }
     public Guid VehicleId { get; private set; }  
     public Guid CustomerId { get; private set; }
-    public int Status { get; private set; }
+    public ReceivedStatus Status { get; private set; }
     public string? Note { get; private set; }
     public int RowNumber { get; private set; }
     public bool Active { get; private set; }
@@ -23,7 +23,7 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
 
     private Received() { }
 
-    public Received(Guid vehicleId, Guid customerId, int status, string? note, int rowNumber, DateTime purchaseDate, DateTime receivedDate)
+    public Received(Guid vehicleId, Guid customerId, ReceivedStatus status, string? note, int rowNumber, DateTime purchaseDate, DateTime receivedDate)
     {
         VehicleId = vehicleId;
         CustomerId = customerId;
@@ -35,17 +35,16 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
         ReceivedDate = receivedDate;
         UpdatedDate = DateTime.Now;
     }
-    
-    public void Update(Guid vehicleId, Guid customerId, int status, string? note, int rowNumber, DateTime receivedDate, Guid? updatedUserId = null)
+
+    public void CancelReceive()
     {
-        VehicleId = vehicleId;
-        CustomerId = customerId;
-        Status = status;
-        Note = note;
-        RowNumber = rowNumber;
-        ReceivedDate = receivedDate;
-        UpdatedDate = DateTime.Now;
-        UpdatedUserId = updatedUserId; // Bu, Application katmanından geçecek
+        Status = ReceivedStatus.Passive;
+        Active = false;
     }
 
+    internal void UpdateRowNumber(int newRowNumber)
+    {
+        RowNumber = newRowNumber;
+        UpdatedDate = DateTime.Now;
+    }
 }

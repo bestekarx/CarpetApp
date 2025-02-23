@@ -76,6 +76,22 @@ public static class WebCarpetAppPermissions
         public const string Edit = Default + ".Edit";
         public const string Delete = Default + ".Delete";
     }
+
+    public static class MessageConfigurations
+    {
+        public const string Default = GroupName + ".MessageConfigurations";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
+
+    public static class MessageUsers
+    {
+        public const string Default = GroupName + ".MessageUsers";
+        public const string Create = Default + ".Create";
+        public const string Edit = Default + ".Edit";
+        public const string Delete = Default + ".Delete";
+    }
     
     //Add your own permission names. Example:
     //public const string MyPermission1 = GroupName + ".MyPermission1";

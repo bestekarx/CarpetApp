@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace WebCarpetApp.MessageUsers.Dtos;
 
-public class MessageUserDto : FullAuditedEntityDto<Guid>
+public class MessageUserDto : AuditedEntityDto<Guid>
 {
     public Guid UserId { get; set; }
     public string Username { get; set; }

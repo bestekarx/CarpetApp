@@ -7,7 +7,7 @@ public class ReceivedDto : FullAuditedEntityDto<Guid>
 {
     public Guid VehicleId { get; set; }
     public Guid CustomerId { get; set; }
-    public int Status { get; set; }
+    public ReceivedStatus Status { get; set; }
     public string? Note { get; set; }
     public int RowNumber { get; set; }
     public bool Active { get; set; }

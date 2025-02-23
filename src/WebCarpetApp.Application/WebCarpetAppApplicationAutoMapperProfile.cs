@@ -8,10 +8,10 @@ using WebCarpetApp.Customers.Dtos;
 using WebCarpetApp.Invoices;
 using WebCarpetApp.Invoices.Dtos;
 using WebCarpetApp.MessageLogs.Dtos;
-using WebCarpetApp.Messages;
 using WebCarpetApp.MessageSettings.Dtos;
 using WebCarpetApp.MessageTemplates.Dtos;
-using WebCarpetApp.MessageUsers.Dtos;
+using WebCarpetApp.Messaging;
+using WebCarpetApp.Messaging.Dtos;
 using WebCarpetApp.OrderedProducts.Dtos;
 using WebCarpetApp.OrderImages.Dtos;
 using WebCarpetApp.Orders;
@@ -26,6 +26,9 @@ using WebCarpetApp.UserTenantMappings.Dtos;
 using WebCarpetApp.UserTenants;
 using WebCarpetApp.Vehicles;
 using WebCarpetApp.Vehicles.Dtos;
+using CreateUpdateMessageUserDto = WebCarpetApp.MessageUsers.Dtos.CreateUpdateMessageUserDto;
+using MessageUser = WebCarpetApp.Messages.MessageUser;
+using MessageUserDto = WebCarpetApp.MessageUsers.Dtos.MessageUserDto;
 
 namespace WebCarpetApp;
 
@@ -48,17 +51,14 @@ public class WebCarpetAppApplicationAutoMapperProfile : Profile
         CreateMap<Invoice, InvoiceDto>();
         CreateMap<CreateUpdateInvoiceDto, Invoice>();
 
-        CreateMap<MessageLog, MessageLogDto>();
-        CreateMap<CreateUpdateMessageLogDto, MessageLog>();
-
-        CreateMap<Messages.MessageSettings, MessageSettingsDto>();
-        CreateMap<CreateUpdateMessageSettingsDto, Messages.MessageSettings>();
-
-        CreateMap<MessageTemplate, MessageTemplateDto>();
-        CreateMap<CreateUpdateMessageTemplateDto, MessageTemplate>();
-
         CreateMap<MessageUser, MessageUserDto>();
         CreateMap<CreateUpdateMessageUserDto, MessageUser>();
+
+        CreateMap<MessageConfiguration, MessageConfigurationDto>();
+        CreateMap<CreateUpdateMessageConfigurationDto, MessageConfiguration>();
+
+        CreateMap<MessageTask, MessageTaskDto>();
+        CreateMap<CreateUpdateMessageTaskDto, MessageTask>();
 
         CreateMap<Order, OrderDto>();
         CreateMap<CreateUpdateOrderDto, Order>();
