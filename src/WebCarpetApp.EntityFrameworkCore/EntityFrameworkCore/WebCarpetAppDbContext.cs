@@ -27,7 +27,6 @@ using WebCarpetApp.Products;
 using WebCarpetApp.Receiveds;
 using WebCarpetApp.UserTenants;
 using WebCarpetApp.Vehicles;
-using MessageUser = WebCarpetApp.Messages.MessageUser;
 using System.Text.Json;
 
 namespace WebCarpetApp.EntityFrameworkCore;

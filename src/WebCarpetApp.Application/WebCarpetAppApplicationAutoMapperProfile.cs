@@ -24,7 +24,6 @@ using WebCarpetApp.UserTenants;
 using WebCarpetApp.Vehicles;
 using WebCarpetApp.Vehicles.Dtos;
 using CreateUpdateMessageUserDto = WebCarpetApp.MessageUsers.Dtos.CreateUpdateMessageUserDto;
-using MessageUser = WebCarpetApp.Messages.MessageUser;
 using MessageUserDto = WebCarpetApp.MessageUsers.Dtos.MessageUserDto;
 
 namespace WebCarpetApp;

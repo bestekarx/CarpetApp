@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.MultiTenancy;
 
 namespace WebCarpetApp.Messaging;
 
-public class MessageTemplate : AuditedAggregateRoot<Guid>, IMultiTenant
+public class MessageTemplate : Entity<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; private set; }
     public MessageTaskType TaskType { get; private set; }

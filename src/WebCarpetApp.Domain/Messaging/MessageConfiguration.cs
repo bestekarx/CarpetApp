@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Volo.Abp.Domain.Entities.Auditing;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.MultiTenancy;
 
 namespace WebCarpetApp.Messaging;
 
-public class MessageConfiguration : AuditedAggregateRoot<Guid>, IMultiTenant
+public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; private set; }
     public Guid CompanyId { get; private set; }

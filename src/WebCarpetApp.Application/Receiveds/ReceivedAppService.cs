@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Uow;
-using WebCarpetApp.Permissions;
+using WebCarpetApp.Customers;
 using WebCarpetApp.Receiveds.Dtos;
 
 namespace WebCarpetApp.Receiveds;
@@ -19,6 +18,7 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
     private readonly IRepository<Received, Guid> _repository;
     private readonly IUnitOfWorkManager _unitOfWorkManager;
     private readonly ReceivedManager _receivedManager;
+    private readonly IRepository<Customer, Guid> _customerRepository;
 
     public ReceivedAppService(
         IRepository<Received, Guid> repository, 
@@ -128,5 +128,39 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
     public async Task UpdateOrderAsync(UpdateReceivedOrderDto input)
     {
         await _receivedManager.ReorderReceivedItemsAsync(input.OrderedIds);
+    }
+    
+    public async Task<ReceivedDto> CreateWithSmsAsync(CreateReceivedWithSmsDto input)
+    {
+        // 1. Müşteri varlığını kontrol et
+        var customer = await _customerRepository.GetAsync(input.CustomerId);
+            
+        // 2. Received oluştur ve gerekiyorsa SMS gönder
+        var received = await _receivedManager.CreateReceivedAsync(
+            input.VehicleId,
+            input.CustomerId,
+            input.Note,
+            input.RowNumber,
+            input.PurchaseDate,
+            input.SendSms,
+            input.CultureCode
+        );
+            
+        // 3. Sonucu DTO'ya dönüştür ve döndür
+        return ObjectMapper.Map<Received, ReceivedDto>(received);
+    }
+        
+    public async Task<bool> SendReceivedNotificationAsync(Guid receivedId)
+    {
+        // 1. Received kaydını bul
+        var received = await _repository.GetAsync(receivedId);
+            
+        // 2. Customer bilgilerini getir
+        var customer = await _customerRepository.GetAsync(received.CustomerId);
+            
+        // 3. SMS gönderme işlemini başlat
+        await _receivedManager.SendReceivedNotificationAsync(received, customer);
+            
+        return true;
     }
 } 
