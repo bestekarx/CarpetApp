@@ -34,6 +34,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
 using Microsoft.AspNetCore.Hosting;
 using WebCarpetApp.HealthChecks;
 using Volo.Abp.AspNetCore.Serilog;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Identity;
 using Volo.Abp.OpenIddict;
 using Volo.Abp.Swashbuckle;

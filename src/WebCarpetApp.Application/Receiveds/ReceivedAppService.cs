@@ -29,18 +29,7 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         _unitOfWorkManager = unitOfWorkManager;
         _receivedManager = receivedManager;
     }
-    
-    public async Task<ReceivedDto> GetAsync(Guid id)
-    {
-        var Received = await _repository.GetAsync(id);
-        return ObjectMapper.Map<Received, ReceivedDto>(Received);
-    }
-
-    public async Task<PagedResultDto<ReceivedDto>> GetListAsync(PagedAndSortedResultRequestDto input)
-    {
-        throw new NotImplementedException();
-    }
-
+   
     public async Task<PagedResultDto<ReceivedDto>> GetFilteredListAsync(GetReceivedListFilterDto input)
     {
         var queryable = await _repository.GetQueryableAsync();
@@ -101,11 +90,6 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         return ObjectMapper.Map<Received, ReceivedDto>(Received);
     }
 
-    public async Task DeleteAsync(Guid id)
-    {
-        await _repository.DeleteAsync(id);
-    }
-    
     public async Task<ReceivedDto> GetByIdAsync(Guid id)
     {
         var received = await _repository.GetAsync(id);
@@ -118,49 +102,43 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         return ObjectMapper.Map<Received, ReceivedDto>(received);
     }
 
-    public async Task<ReceivedDto> TestReceivedAsync(ReceivedDto model)
-    {   
-        var received = ObjectMapper.Map<ReceivedDto, Received>(model);
-        await _repository.InsertAsync(received);
-        return ObjectMapper.Map<Received, ReceivedDto>(received);
-    }
-
-    public async Task UpdateOrderAsync(UpdateReceivedOrderDto input)
+    public async Task UpdateReceivedSortListAsync(UpdateReceivedOrderDto input)
     {
         await _receivedManager.ReorderReceivedItemsAsync(input.OrderedIds);
     }
     
-    public async Task<ReceivedDto> CreateWithSmsAsync(CreateReceivedWithSmsDto input)
-    {
-        // 1. Müşteri varlığını kontrol et
-        var customer = await _customerRepository.GetAsync(input.CustomerId);
-            
-        // 2. Received oluştur ve gerekiyorsa SMS gönder
-        var received = await _receivedManager.CreateReceivedAsync(
-            input.VehicleId,
-            input.CustomerId,
-            input.Note,
-            input.RowNumber,
-            input.PurchaseDate,
-            input.SendSms,
-            input.CultureCode
-        );
-            
-        // 3. Sonucu DTO'ya dönüştür ve döndür
-        return ObjectMapper.Map<Received, ReceivedDto>(received);
-    }
-        
     public async Task<bool> SendReceivedNotificationAsync(Guid receivedId)
     {
-        // 1. Received kaydını bul
         var received = await _repository.GetAsync(receivedId);
-            
-        // 2. Customer bilgilerini getir
         var customer = await _customerRepository.GetAsync(received.CustomerId);
-            
-        // 3. SMS gönderme işlemini başlat
         await _receivedManager.SendReceivedNotificationAsync(received, customer);
             
         return true;
+    }
+    
+    
+    [RemoteService(IsEnabled = false)]
+    public Task UpdateOrderAsync(UpdateReceivedOrderDto input)
+    {
+        throw new NotImplementedException();
+    }
+
+    [RemoteService(IsEnabled = false)]
+    public async Task<ReceivedDto> GetAsync(Guid id)
+    {
+        var Received = await _repository.GetAsync(id);
+        return ObjectMapper.Map<Received, ReceivedDto>(Received);
+    }
+
+    [RemoteService(IsEnabled = false)]
+    public Task<PagedResultDto<ReceivedDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+    {
+        throw new NotImplementedException();
+    }
+
+    [RemoteService(IsEnabled = false)]
+    public Task DeleteAsync(Guid id)
+    {
+        throw new NotImplementedException();
     }
 } 

@@ -6,7 +6,6 @@ using Volo.Abp.Domain.Services;
 
 namespace WebCarpetApp.Messaging
 {
-    // Bu sınıf zaten vardı, ama yeni metotlar ekleniyor
     public class MessageManager : DomainService
     {
         private readonly IRepository<MessageConfiguration, Guid> _configurationRepository;
@@ -23,7 +22,6 @@ namespace WebCarpetApp.Messaging
             _templateRepository = templateRepository;
         }
 
-        // Bu metot zaten vardı
         public async Task<MessageBehavior?> GetMessageBehaviorAsync(Guid companyId, MessageTaskType taskType)
         {
             var configuration = await _configurationRepository.FirstOrDefaultAsync(x => 
@@ -43,7 +41,6 @@ namespace WebCarpetApp.Messaging
             return task?.Behavior;
         }
 
-        // Bu metot zaten vardı
         public async Task<bool> ShouldSendMessageAsync(Guid companyId, MessageTaskType taskType)
         {
             var behavior = await GetMessageBehaviorAsync(companyId, taskType);
@@ -57,14 +54,12 @@ namespace WebCarpetApp.Messaging
             };
         }
 
-        // Bu metot zaten vardı
         public async Task<bool> RequiresConfirmationAsync(Guid companyId, MessageTaskType taskType)
         {
             var behavior = await GetMessageBehaviorAsync(companyId, taskType);
             return behavior == MessageBehavior.AskBeforeSend;
         }
         
-        // YENİ METOT: Mesaj formatlamak için
         public async Task<string> FormatMessageAsync(
             Guid companyId, 
             MessageTaskType taskType, 

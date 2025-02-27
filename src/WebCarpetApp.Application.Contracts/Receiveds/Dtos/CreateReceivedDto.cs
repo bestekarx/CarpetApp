@@ -17,4 +17,5 @@ public class CreateReceivedDto
     public int RowNumber { get; set; }
         
     public DateTime? PurchaseDate { get; set; }
+    public DateTime? ReceivedDate { get; set; }
 }

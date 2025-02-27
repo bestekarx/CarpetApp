@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
+using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using WebCarpetApp.Companies;
@@ -20,7 +21,7 @@ namespace WebCarpetApp.Receiveds
         private readonly IRepository<Company, Guid> _companyRepository;
         private readonly MessageManager _messageManager;
         private readonly IMessageSender _messageSender;
-        
+
         public ReceivedManager(
             IRepository<Received, Guid> receivedRepository,
             IRepository<Customer, Guid> customerRepository,
@@ -42,23 +43,21 @@ namespace WebCarpetApp.Receiveds
             Guid customerId,
             string note,
             int rowNumber,
-            DateTime? purchaseDate = null,
-            bool sendSms = true,
-            string cultureCode = "tr-TR")
+            DateTime purchaseDate,
+            bool sendSms,
+            string cultureCode,
+            DateTime receivedDate)
         {
-            // 1. Müşteri ve araç bilgilerini doğrula
             var customer = await _customerRepository.GetAsync(customerId);
-            var vehicle = await _vehicleRepository.GetAsync(vehicleId);
             
-            // 2. Received kaydını oluştur
             var received = new Received(
                 vehicleId,
                 customerId, 
                 ReceivedStatus.Active,
                 note, 
                 rowNumber,
-                purchaseDate ?? DateTime.Now,
-                DateTime.Now);
+                purchaseDate,
+                receivedDate);
             
             await _receivedRepository.InsertAsync(received);
             
@@ -132,7 +131,6 @@ namespace WebCarpetApp.Receiveds
         {
             var receivedItems = await _receivedRepository.GetListAsync(x => orderedIds.Contains(x.Id));
         
-            // Validate that all items exist
             if (receivedItems.Count != orderedIds.Count)
             {
                 throw new BusinessException(
@@ -141,10 +139,8 @@ namespace WebCarpetApp.Receiveds
                 );
             }
 
-            // Create a dictionary for quick lookup of items
             var itemsDictionary = receivedItems.ToDictionary(x => x.Id);
 
-            // Update row numbers based on the new order
             for (int i = 0; i < orderedIds.Count; i++)
             {
                 var item = itemsDictionary[orderedIds[i]];
