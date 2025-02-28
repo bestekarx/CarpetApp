@@ -59,14 +59,20 @@ public class WebCarpetAppApplicationAutoMapperProfile : Profile
         CreateMap<MessageTemplate, MessageTemplateDto>();
         CreateMap<CreateUpdateMessageTemplateDto, MessageTemplate>();
 
+        // Order Mappings - Enhanced
         CreateMap<Order, OrderDto>();
         CreateMap<CreateUpdateOrderDto, Order>();
+        CreateMap<CreateOrderDto, Order>();
 
+        // OrderedProduct Mappings - Enhanced
         CreateMap<OrderedProduct, OrderedProductDto>();
         CreateMap<CreateUpdateOrderedProductDto, OrderedProduct>();
+        CreateMap<OrderedProductDto, OrderedProduct>();
 
+        // OrderImage Mappings - Enhanced
         CreateMap<OrderImage, OrderImageDto>();
         CreateMap<CreateUpdateOrderImageDto, OrderImage>();
+        CreateMap<OrderImageDto, OrderImage>();
 
         CreateMap<Printer, PrinterDto>();
         CreateMap<CreateUpdatePrinterDto, Printer>();

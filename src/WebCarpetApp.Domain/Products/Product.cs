@@ -10,7 +10,7 @@ public class Product : AuditedEntity<Guid>, IMultiTenant
     public Guid UserId { get; set; }
     public decimal Price { get; set; }
     public required string Name { get; set; }
-    public int Type { get; set; }
+    public ProductType ProductType { get; set; }
     public bool Active { get; set; }
 
     Guid? IMultiTenant.TenantId => TenantId;

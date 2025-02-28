@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
-using Volo.Abp.Application.Dtos;
+using System.ComponentModel.DataAnnotations;
 using WebCarpetApp.OrderedProducts.Dtos;
 using WebCarpetApp.OrderImages.Dtos;
+using WebCarpetApp.Products.Dtos;
 
 namespace WebCarpetApp.Orders.Dtos;
-public class OrderDto : EntityDto<Guid>
+public class CreateOrderDto
 {
     public Guid UserId { get; set; }
+    [Required]
     public Guid? ReceivedId { get; set; }
     public int OrderDiscount { get; set; }
     public decimal OrderAmount { get; set; }
@@ -17,8 +19,9 @@ public class OrderDto : EntityDto<Guid>
     public bool Active { get; set; }
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
+
+    [Required]
+    public List<OrderedProductDto> Products { get; set; } = new List<OrderedProductDto>();
     
-    // İlişkili koleksiyonlar
-    public List<OrderedProductDto> Products { get; set; }
-    public List<OrderImageDto> Images { get; set; }
-} 
+    public List<OrderImageDto> Images { get; set; } = new List<OrderImageDto>();
+}

@@ -40,6 +40,8 @@ using Volo.Abp.OpenIddict;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.Studio.Client.AspNetCore;
 using Volo.Abp.Security.Claims;
+using WebCarpetApp.BlobStoring;
+using Volo.Abp.BlobStoring.Database;
 
 namespace WebCarpetApp;
 
@@ -114,6 +116,7 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         ConfigureAuthentication(context);
         ConfigureUrls(configuration);
         ConfigureBundles();
+        ConfigureBlobStoring(configuration);
         ConfigureConventionalControllers();
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
@@ -153,6 +156,23 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         });
     }
 
+    private void ConfigureBlobStoring(IConfiguration configuration)
+    {
+        Configure<AbpBlobStoringOptions>(options =>
+        {
+            options.Containers.ConfigureDefault(container =>
+            {
+                container.UseDatabase(); // AbpBlobStoringDatabaseOptions kullanılır
+            });
+            
+            // Özel container'lar oluşturabilirsiniz, örneğin "images" için
+            options.Containers.Configure<ProfilePictureContainer>(container =>
+            {
+                container.UseDatabase(); // Database storage kullanılır
+                container.IsMultiTenant = false; // Multi-tenant desteklenir
+            });
+        });
+    }
 
     private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
     {

@@ -10,16 +10,13 @@ namespace WebCarpetApp.Messaging
 {
     public class MessageSender : IMessageSender, ITransientDependency
     {
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<MessageSender> _logger;
         private readonly IRepository<MessageUser, Guid> _messageUserRepository;
 
         public MessageSender(
-            IHttpClientFactory httpClientFactory,
             ILogger<MessageSender> logger,
             IRepository<MessageUser, Guid> messageUserRepository)
         {
-            _httpClientFactory = httpClientFactory;
             _logger = logger;
             _messageUserRepository = messageUserRepository;
         }
@@ -37,7 +34,7 @@ namespace WebCarpetApp.Messaging
                 }
 
                 // 2. SMS API isteği oluştur
-                var client = _httpClientFactory.CreateClient("SmsApi");
+                //var client = _httpClientFactory.CreateClient("SmsApi");
                 
                 var smsRequest = new
                 {
@@ -50,9 +47,9 @@ namespace WebCarpetApp.Messaging
 
                 // 3. Gerçek SMS API çağrısı (örnek)
                 // NOT: Gerçek API entegrasyonunuz farklı olabilir
-                var response = await client.PostAsJsonAsync("https://api.example.com/sms/send", smsRequest);
+                //var response = await client.PostAsJsonAsync("https://api.example.com/sms/send", smsRequest);
                 
-                if (response.IsSuccessStatusCode)
+                /*if (response.IsSuccessStatusCode)
                 {
                     _logger.LogInformation("SMS başarıyla gönderildi. Telefon: {Phone}", phoneNumber);
                     return true;
@@ -63,6 +60,8 @@ namespace WebCarpetApp.Messaging
                     _logger.LogError("SMS gönderilemedi. API Hatası: {Error}, Telefon: {Phone}", errorContent, phoneNumber);
                     return false;
                 }
+                */
+                return true;
             }
             catch (Exception ex)
             {

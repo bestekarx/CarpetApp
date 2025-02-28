@@ -77,17 +77,17 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
 
     public async Task<ReceivedDto> CreateAsync(CreateUpdateReceivedDto input)
     {
-        var Received = ObjectMapper.Map<CreateUpdateReceivedDto, Received>(input);
-        await _repository.InsertAsync(Received);
-        return ObjectMapper.Map<Received, ReceivedDto>(Received);
+        var received = ObjectMapper.Map<CreateUpdateReceivedDto, Received>(input);
+        await _repository.InsertAsync(received);
+        return ObjectMapper.Map<Received, ReceivedDto>(received);
     }
 
     public async Task<ReceivedDto> UpdateAsync(Guid id, CreateUpdateReceivedDto input)
     {
-        var Received = await _repository.GetAsync(id);
-        ObjectMapper.Map(input, Received);
-        await _repository.UpdateAsync(Received);
-        return ObjectMapper.Map<Received, ReceivedDto>(Received);
+        var received = await _repository.GetAsync(id);
+        ObjectMapper.Map(input, received);
+        await _repository.UpdateAsync(received);
+        return ObjectMapper.Map<Received, ReceivedDto>(received);
     }
 
     public async Task<ReceivedDto> GetByIdAsync(Guid id)

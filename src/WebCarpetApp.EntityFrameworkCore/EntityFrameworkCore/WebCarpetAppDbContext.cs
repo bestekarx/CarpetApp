@@ -194,7 +194,6 @@ public class WebCarpetAppDbContext :
             b.ToTable(WebCarpetAppConsts.DbTablePrefix + "OrderImages",
                 WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
-            b.Property(x => x.ImagePath).IsRequired().HasMaxLength(500);
         });
 
         builder.Entity<Printer>(b =>

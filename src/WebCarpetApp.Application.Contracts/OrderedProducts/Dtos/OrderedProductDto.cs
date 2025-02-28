@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace WebCarpetApp.OrderedProducts.Dtos;
 
-public class OrderedProductDto : FullAuditedEntityDto<Guid>
+public class OrderedProductDto : EntityDto<Guid>
 {
     public Guid OrderId { get; set; }
     public Guid ProductId { get; set; }

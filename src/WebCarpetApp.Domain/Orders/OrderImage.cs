@@ -10,8 +10,6 @@ public class OrderImage : Entity<Guid>, IMultiTenant
     public Guid? TenantId { get; set; }
     public Guid OrderId { get; set; }
     public Guid UserId { get; set; }
-    public required string ImagePath { get; set; }
-    public DateTime CreatedDate { get; set; }
-
+    public Guid BlobId { get; set; }
     Guid? IMultiTenant.TenantId => TenantId;
 }
