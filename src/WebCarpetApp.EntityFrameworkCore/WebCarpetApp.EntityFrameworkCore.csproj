@@ -39,4 +39,9 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\WebCarpetAppDbContextModelSnapshot.cs" />
+    <Compile Remove="Migrations\20250228213027_OrderModelUpdates.Designer.cs" />
+  </ItemGroup>
+
 </Project>

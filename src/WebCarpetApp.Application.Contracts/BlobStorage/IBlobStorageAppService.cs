@@ -8,7 +8,7 @@ public interface IBlobStorageAppService : IApplicationService
 {
     Task<BlobDto> GetBlobAsync(string containerName, string blobName);
     
-    Task SaveBlobAsync(string containerName, string blobName, BlobInfoDto input);
+    Task<BlobResponseDto> SaveBlobAsync(string containerName, string blobName, BlobInfoDto input);
     
     Task DeleteBlobAsync(string containerName, string blobName);
 } 

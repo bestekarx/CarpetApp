@@ -29,7 +29,7 @@ public class BlobStorageController : AbpController
 
     [HttpPost]
     [Route("{containerName}/{blobName}")]
-    public async Task<IActionResult> SaveBlobAsync(string containerName, string blobName, IFormFile file)
+    public async Task<ActionResult<BlobResponseDto>> SaveBlobAsync(string containerName, string blobName, IFormFile file)
     {
         Check.NotNull(file, nameof(file));
 
@@ -43,9 +43,9 @@ public class BlobStorageController : AbpController
                 ContentType = file.ContentType
             };
             
-            await _blobStorageAppService.SaveBlobAsync(containerName, blobName, blobInfoDto);
+            var result = await _blobStorageAppService.SaveBlobAsync(containerName, blobName, blobInfoDto);
             
-            return Ok();
+            return Ok(result);
         }
     }
 
