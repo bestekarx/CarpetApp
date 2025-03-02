@@ -30,4 +30,7 @@ public class CreateUpdateReceivedDto
     public DateTime UpdatedDate { get; set; }
 
     public Guid? UpdatedUserId { get; set; }
+    
+    [StringLength(50)]
+    public string FicheNo { get; set; }
 } 

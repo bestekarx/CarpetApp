@@ -13,8 +13,8 @@ using WebCarpetApp.EntityFrameworkCore;
 namespace WebCarpetApp.Migrations
 {
     [DbContext(typeof(WebCarpetAppDbContext))]
-    [Migration("20250228213440_ChangeOrderImagePathToBlobId")]
-    partial class ChangeOrderImagePathToBlobId
+    [Migration("20250302195712_Add_FicheNo_To_Received")]
+    partial class Add_FicheNo_To_Received
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2561,6 +2561,10 @@ namespace WebCarpetApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<string>("FicheNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()

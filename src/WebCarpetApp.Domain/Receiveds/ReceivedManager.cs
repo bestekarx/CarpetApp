@@ -21,6 +21,7 @@ namespace WebCarpetApp.Receiveds
         private readonly IRepository<Company, Guid> _companyRepository;
         private readonly MessageManager _messageManager;
         private readonly IMessageSender _messageSender;
+        private readonly FicheNoManager _ficheNoManager;
 
         public ReceivedManager(
             IRepository<Received, Guid> receivedRepository,
@@ -28,7 +29,8 @@ namespace WebCarpetApp.Receiveds
             IRepository<Vehicle, Guid> vehicleRepository,
             IRepository<Company, Guid> companyRepository,
             MessageManager messageManager,
-            IMessageSender messageSender)
+            IMessageSender messageSender,
+            FicheNoManager ficheNoManager)
         {
             _receivedRepository = receivedRepository;
             _customerRepository = customerRepository;
@@ -36,6 +38,7 @@ namespace WebCarpetApp.Receiveds
             _companyRepository = companyRepository;
             _messageManager = messageManager;
             _messageSender = messageSender;
+            _ficheNoManager = ficheNoManager;
         }
         
         public async Task<Received> CreateReceivedAsync(
@@ -50,6 +53,9 @@ namespace WebCarpetApp.Receiveds
         {
             var customer = await _customerRepository.GetAsync(customerId);
             
+            // Bir sonraki FicheNo değerini al
+            var ficheNo = await _ficheNoManager.GenerateNextFicheNoAsync();
+            
             var received = new Received(
                 vehicleId,
                 customerId, 
@@ -57,7 +63,8 @@ namespace WebCarpetApp.Receiveds
                 note, 
                 rowNumber,
                 purchaseDate,
-                receivedDate);
+                receivedDate,
+                ficheNo);
             
             await _receivedRepository.InsertAsync(received);
             
@@ -107,7 +114,8 @@ namespace WebCarpetApp.Receiveds
                 { "CustomerName", customer.FullName },
                 { "ReceivedDate", received.ReceivedDate.ToString("dd.MM.yyyy") },
                 { "CarpetNumber", received.RowNumber.ToString() }, // Örnek, gerçek uygulama farklı olabilir
-                { "CompanyPhone", company.Name } // Şirket telefonu için gerçek uygulamada ilgili alan kullanılmalı
+                { "CompanyPhone", company.Name }, // Şirket telefonu için gerçek uygulamada ilgili alan kullanılmalı
+                { "FicheNo", received.FicheNo } // FicheNo'yu da mesaj değeri olarak ekleyelim
             };
             
             // 4. Formatlanmış mesajı oluştur ve gönder

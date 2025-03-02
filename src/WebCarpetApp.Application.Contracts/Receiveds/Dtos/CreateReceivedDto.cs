@@ -18,4 +18,7 @@ public class CreateReceivedDto
         
     public DateTime? PurchaseDate { get; set; }
     public DateTime? ReceivedDate { get; set; }
+    
+    [StringLength(50)]
+    public string FicheNo { get; set; }
 }

@@ -15,4 +15,5 @@ public class ReceivedDto : FullAuditedEntityDto<Guid>
     public DateTime ReceivedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
     public Guid? UpdatedUserId { get; set; }
+    public string FicheNo { get; set; }
 } 

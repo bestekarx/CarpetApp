@@ -18,12 +18,13 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
     public DateTime ReceivedDate { get; private set; }
     public DateTime UpdatedDate { get; private set; }
     public Guid? UpdatedUserId { get; private set; }
+    public string FicheNo { get; private set; }
 
     Guid? IMultiTenant.TenantId => TenantId;
 
     private Received() { }
 
-    public Received(Guid vehicleId, Guid customerId, ReceivedStatus status, string? note, int rowNumber, DateTime purchaseDate, DateTime receivedDate)
+    public Received(Guid vehicleId, Guid customerId, ReceivedStatus status, string? note, int rowNumber, DateTime purchaseDate, DateTime receivedDate, string ficheNo = null)
     {
         VehicleId = vehicleId;
         CustomerId = customerId;
@@ -34,6 +35,7 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
         PurchaseDate = purchaseDate;
         ReceivedDate = receivedDate;
         UpdatedDate = DateTime.Now;
+        FicheNo = ficheNo;
     }
 
     public void CancelReceive()
@@ -45,6 +47,12 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
     internal void UpdateRowNumber(int newRowNumber)
     {
         RowNumber = newRowNumber;
+        UpdatedDate = DateTime.Now;
+    }
+    
+    internal void UpdateFicheNo(string ficheNo)
+    {
+        FicheNo = ficheNo;
         UpdatedDate = DateTime.Now;
     }
 }

@@ -97,8 +97,7 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
         throw new NotImplementedException();
     }
 
-    [Authorize(WebCarpetAppPermissions.Orders.Delete)]
-    public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(Guid id)
     {
         await _orderRepository.DeleteAsync(id);
     }
