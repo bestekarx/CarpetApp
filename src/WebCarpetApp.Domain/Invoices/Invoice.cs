@@ -4,7 +4,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace WebCarpetApp.Invoices;
 
-public class Invoice : FullAuditedAggregateRoot<Guid>, IMultiTenant
+public class Invoice : AuditedAggregateRoot<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; set; }
     public Guid OrderId { get; set; }

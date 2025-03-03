@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace WebCarpetApp.Invoices.Dtos;
 
-public class InvoiceDto : FullAuditedEntityDto<Guid>
+public class InvoiceDto : AuditedEntityDto<Guid>
 {
     public Guid OrderId { get; set; }
     public Guid? UserId { get; set; }
