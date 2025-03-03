@@ -3,7 +3,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace WebCarpetApp.Receiveds.Dtos;
 
-public class ReceivedDto : FullAuditedEntityDto<Guid>
+public class ReceivedDto : AuditedEntityDto<Guid>
 {
     public Guid VehicleId { get; set; }
     public Guid CustomerId { get; set; }
@@ -15,5 +15,5 @@ public class ReceivedDto : FullAuditedEntityDto<Guid>
     public DateTime ReceivedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
     public Guid? UpdatedUserId { get; set; }
-    public string FicheNo { get; set; }
+    public string? FicheNo { get; set; }
 } 

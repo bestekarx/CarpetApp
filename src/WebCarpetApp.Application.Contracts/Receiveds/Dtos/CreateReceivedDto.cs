@@ -20,5 +20,5 @@ public class CreateReceivedDto
     public DateTime? ReceivedDate { get; set; }
     
     [StringLength(50)]
-    public string FicheNo { get; set; }
+    public string? FicheNo { get; set; }
 }

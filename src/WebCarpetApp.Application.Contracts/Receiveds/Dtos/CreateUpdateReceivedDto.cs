@@ -32,5 +32,5 @@ public class CreateUpdateReceivedDto
     public Guid? UpdatedUserId { get; set; }
     
     [StringLength(50)]
-    public string FicheNo { get; set; }
+    public string? FicheNo { get; set; }
 } 

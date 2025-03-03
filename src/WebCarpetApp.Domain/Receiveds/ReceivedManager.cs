@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
-using Volo.Abp.BlobStoring;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using WebCarpetApp.Companies;
@@ -53,7 +52,6 @@ namespace WebCarpetApp.Receiveds
         {
             var customer = await _customerRepository.GetAsync(customerId);
             
-            // Bir sonraki FicheNo değerini al
             var ficheNo = await _ficheNoManager.GenerateNextFicheNoAsync();
             
             var received = new Received(
@@ -68,11 +66,8 @@ namespace WebCarpetApp.Receiveds
             
             await _receivedRepository.InsertAsync(received);
             
-            // 3. SMS gönderimi gerekiyorsa işle
             if (sendSms)
-            {
                 await SendReceivedNotificationAsync(received, customer, cultureCode);
-            }
             
             return received;
         }

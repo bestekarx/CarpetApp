@@ -5,7 +5,7 @@ using Volo.Abp.Users;
 
 namespace WebCarpetApp.Receiveds;
 
-public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
+public class Received : AuditedAggregateRoot<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; set; }
     public Guid VehicleId { get; private set; }  
@@ -16,8 +16,6 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
     public bool Active { get; private set; }
     public DateTime PurchaseDate { get; private set; }
     public DateTime ReceivedDate { get; private set; }
-    public DateTime UpdatedDate { get; private set; }
-    public Guid? UpdatedUserId { get; private set; }
     public string FicheNo { get; private set; }
 
     Guid? IMultiTenant.TenantId => TenantId;
@@ -34,7 +32,6 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
         Active = true;
         PurchaseDate = purchaseDate;
         ReceivedDate = receivedDate;
-        UpdatedDate = DateTime.Now;
         FicheNo = ficheNo;
     }
 
@@ -47,12 +44,10 @@ public class Received : FullAuditedAggregateRoot<Guid>, IMultiTenant
     internal void UpdateRowNumber(int newRowNumber)
     {
         RowNumber = newRowNumber;
-        UpdatedDate = DateTime.Now;
     }
     
     internal void UpdateFicheNo(string ficheNo)
     {
         FicheNo = ficheNo;
-        UpdatedDate = DateTime.Now;
     }
 }

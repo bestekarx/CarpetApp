@@ -34,23 +34,19 @@ namespace WebCarpetApp.Receiveds
             var prefix = await _settingProvider.GetOrNullAsync(WebCarpetAppSettings.FicheNoPrefix);
             var lastNumberStr = await _settingProvider.GetOrNullAsync(WebCarpetAppSettings.FicheNoLastNumber);
 
-            // Eğer lastNumber ayarı yoksa veya geçersizse, varsayılan değeri kullan
             if (!int.TryParse(lastNumberStr, out int lastNumber))
             {
                 lastNumber = 1;
             }
 
-            // Bir sonraki numarayı oluştur
             int nextNumber = lastNumber + 1;
             
-            // Yeni değeri ayarlara kaydet
             await _settingManager.SetForTenantAsync(
                 _currentTenant.Id.Value,
                 WebCarpetAppSettings.FicheNoLastNumber,
                 nextNumber.ToString()
             );
 
-            // Ön ek ve sayıyı birleştir
             var ficheNo = string.IsNullOrEmpty(prefix) 
                 ? nextNumber.ToString() 
                 : $"{prefix}{nextNumber}";
@@ -67,7 +63,6 @@ namespace WebCarpetApp.Receiveds
                 throw new InvalidOperationException("Tenant ID is required to reset FicheNo settings");
             }
 
-            // Ayarları güncelle
             await _settingManager.SetForTenantAsync(
                 _currentTenant.Id.Value,
                 WebCarpetAppSettings.FicheNoPrefix,
