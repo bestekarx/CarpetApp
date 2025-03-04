@@ -6,4 +6,5 @@ public static class WebCarpetAppDomainErrorCodes
     public const string EntityNotFound = "WebCarpetApp:00001";
     public const string InvalidOperation = "WebCarpetApp:00002";
     public const string OrderCreationFailed = "WebCarpetApp:00003";
+    public const string ReceivedCreationFailed = "WebCarpetApp:00004";
 }

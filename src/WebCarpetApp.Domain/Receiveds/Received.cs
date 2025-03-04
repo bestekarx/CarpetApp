@@ -16,7 +16,7 @@ public class Received : AuditedAggregateRoot<Guid>, IMultiTenant
     public bool Active { get; private set; }
     public DateTime PurchaseDate { get; private set; }
     public DateTime ReceivedDate { get; private set; }
-    public string FicheNo { get; private set; }
+    public string? FicheNo { get; private set; }
 
     Guid? IMultiTenant.TenantId => TenantId;
 

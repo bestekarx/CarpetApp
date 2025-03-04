@@ -56,6 +56,11 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
             queryable = queryable.Where(x => x.CustomerId == input.CustomerId.Value);
         }
 
+        if (!string.IsNullOrWhiteSpace(input.FicheNo))
+        {
+            queryable = queryable.Where(x => x.FicheNo == input.FicheNo);
+        }
+
         if (input.VehicleId.HasValue)
         {
             queryable = queryable.Where(x => x.VehicleId == input.VehicleId.Value);
@@ -77,9 +82,14 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
 
     public async Task<ReceivedDto> CreateAsync(CreateUpdateReceivedDto input)
     {
-        var received = ObjectMapper.Map<CreateUpdateReceivedDto, Received>(input);
-        await _repository.InsertAsync(received);
-        return ObjectMapper.Map<Received, ReceivedDto>(received);
+        var result = await _receivedManager.CreateReceivedAsync(input.VehicleId, 
+            input.CustomerId, 
+            input.Note,
+            input.RowNumber,
+            input.PurchaseDate,
+            input.ReceivedDate);
+        
+        return ObjectMapper.Map<Received, ReceivedDto>(result);
     }
 
     public async Task<ReceivedDto> UpdateAsync(Guid id, CreateUpdateReceivedDto input)

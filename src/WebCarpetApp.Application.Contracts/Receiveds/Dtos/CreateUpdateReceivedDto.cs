@@ -20,7 +20,7 @@ public class CreateUpdateReceivedDto
     public int RowNumber { get; set; }
 
     public bool Active { get; set; }
-
+    
     [Required]
     public DateTime PurchaseDate { get; set; }
 
@@ -33,4 +33,6 @@ public class CreateUpdateReceivedDto
     
     [StringLength(50)]
     public string? FicheNo { get; set; }
+    
+    
 } 

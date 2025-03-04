@@ -5,71 +5,58 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
+using Volo.Abp.Uow;
 using WebCarpetApp.Companies;
 using WebCarpetApp.Customers;
 using WebCarpetApp.Messaging;
-using WebCarpetApp.Vehicles;
 
 namespace WebCarpetApp.Receiveds
 {
-    public class ReceivedManager : DomainService
+    public class ReceivedManager(
+        IRepository<Received, Guid> receivedRepository,
+        IRepository<Company, Guid> companyRepository,
+        MessageManager messageManager,
+        IMessageSender messageSender,
+        FicheNoManager ficheNoManager,
+        IUnitOfWorkManager unitOfWorkManager)
+        : DomainService
     {
-        private readonly IRepository<Received, Guid> _receivedRepository;
-        private readonly IRepository<Customer, Guid> _customerRepository;
-        private readonly IRepository<Vehicle, Guid> _vehicleRepository;
-        private readonly IRepository<Company, Guid> _companyRepository;
-        private readonly MessageManager _messageManager;
-        private readonly IMessageSender _messageSender;
-        private readonly FicheNoManager _ficheNoManager;
-
-        public ReceivedManager(
-            IRepository<Received, Guid> receivedRepository,
-            IRepository<Customer, Guid> customerRepository,
-            IRepository<Vehicle, Guid> vehicleRepository,
-            IRepository<Company, Guid> companyRepository,
-            MessageManager messageManager,
-            IMessageSender messageSender,
-            FicheNoManager ficheNoManager)
-        {
-            _receivedRepository = receivedRepository;
-            _customerRepository = customerRepository;
-            _vehicleRepository = vehicleRepository;
-            _companyRepository = companyRepository;
-            _messageManager = messageManager;
-            _messageSender = messageSender;
-            _ficheNoManager = ficheNoManager;
-        }
-        
         public async Task<Received> CreateReceivedAsync(
             Guid vehicleId,
             Guid customerId,
-            string note,
+            string? note,
             int rowNumber,
             DateTime purchaseDate,
-            bool sendSms,
-            string cultureCode,
             DateTime receivedDate)
         {
-            var customer = await _customerRepository.GetAsync(customerId);
+            using var uow = unitOfWorkManager.Begin(requiresNew: true, isTransactional: true);
+
+            try
+            {
+                var ficheNo = await ficheNoManager.GenerateNextFicheNoAsync();
             
-            var ficheNo = await _ficheNoManager.GenerateNextFicheNoAsync();
-            
-            var received = new Received(
-                vehicleId,
-                customerId, 
-                ReceivedStatus.Active,
-                note, 
-                rowNumber,
-                purchaseDate,
-                receivedDate,
-                ficheNo);
-            
-            await _receivedRepository.InsertAsync(received);
-            
-            if (sendSms)
-                await SendReceivedNotificationAsync(received, customer, cultureCode);
-            
-            return received;
+                var received = new Received(
+                    vehicleId,
+                    customerId, 
+                    ReceivedStatus.Active,
+                    note, 
+                    rowNumber,
+                    purchaseDate,
+                    receivedDate,
+                    ficheNo);
+                
+                await receivedRepository.InsertAsync(received);
+
+                await uow.CompleteAsync();
+                return received;
+            }
+            catch (Exception ex)
+            {
+                await uow.RollbackAsync();
+                throw new BusinessException(
+                    WebCarpetAppDomainErrorCodes.ReceivedCreationFailed,
+                    "Received creation failed: " + ex.Message);
+            }
         }
         
         public async Task SendReceivedNotificationAsync(
@@ -77,8 +64,7 @@ namespace WebCarpetApp.Receiveds
             Customer customer, 
             string cultureCode = "tr-TR")
         {
-            // 1. Bu şirket için SMS gönderilmeli mi kontrol et
-            var shouldSend = await _messageManager.ShouldSendMessageAsync(
+            var shouldSend = await messageManager.ShouldSendMessageAsync(
                 customer.CompanyId, 
                 MessageTaskType.ReceivedCreated);
             
@@ -88,7 +74,7 @@ namespace WebCarpetApp.Receiveds
             }
             
             // 2. Onay gerekiyor mu kontrol et
-            var requiresConfirmation = await _messageManager.RequiresConfirmationAsync(
+            var requiresConfirmation = await messageManager.RequiresConfirmationAsync(
                 customer.CompanyId, 
                 MessageTaskType.ReceivedCreated);
             
@@ -102,7 +88,7 @@ namespace WebCarpetApp.Receiveds
             }
             
             // 3. Mesaj şablonunu formatlamak için değerleri hazırla
-            var company = await _companyRepository.GetAsync(customer.CompanyId);
+            var company = await companyRepository.GetAsync(customer.CompanyId);
             
             var values = new Dictionary<string, object>
             {
@@ -114,7 +100,7 @@ namespace WebCarpetApp.Receiveds
             };
             
             // 4. Formatlanmış mesajı oluştur ve gönder
-            var message = await _messageManager.FormatMessageAsync(
+            var message = await messageManager.FormatMessageAsync(
                 customer.CompanyId,
                 MessageTaskType.ReceivedCreated,
                 values,
@@ -123,16 +109,16 @@ namespace WebCarpetApp.Receiveds
             if (!string.IsNullOrEmpty(message))
             {
                 // 5. MessageUser bilgilerini al ve SMS gönder
-                var messageUserId = await _messageManager.GetMessageUserIdAsync(customer.CompanyId);
+                var messageUserId = await messageManager.GetMessageUserIdAsync(customer.CompanyId);
                 if (messageUserId.HasValue)
                 {
-                    await _messageSender.SendMessageAsync(customer.Phone, message, messageUserId.Value);
+                    await messageSender.SendMessageAsync(customer.Phone, message, messageUserId.Value);
                 }
             }
         }
         public async Task ReorderReceivedItemsAsync(List<Guid> orderedIds)
         {
-            var receivedItems = await _receivedRepository.GetListAsync(x => orderedIds.Contains(x.Id));
+            var receivedItems = await receivedRepository.GetListAsync(x => orderedIds.Contains(x.Id));
         
             if (receivedItems.Count != orderedIds.Count)
             {
@@ -150,12 +136,12 @@ namespace WebCarpetApp.Receiveds
                 item.UpdateRowNumber(i);
             }
 
-            await _receivedRepository.UpdateManyAsync(receivedItems);
+            await receivedRepository.UpdateManyAsync(receivedItems);
         }
 
         public async Task<Received> CancelReceivedAsync(Guid id)
         {
-            var received = await _receivedRepository.GetAsync(id);
+            var received = await receivedRepository.GetAsync(id);
         
             if (received == null)
             {
@@ -166,7 +152,7 @@ namespace WebCarpetApp.Receiveds
             }
 
             received.CancelReceive();
-            await _receivedRepository.UpdateAsync(received);
+            await receivedRepository.UpdateAsync(received);
         
             return received;
         }

@@ -40,22 +40,20 @@ namespace WebCarpetApp.Receiveds
             }
 
             int nextNumber = lastNumber + 1;
-            
-            await _settingManager.SetForTenantAsync(
-                _currentTenant.Id.Value,
-                WebCarpetAppSettings.FicheNoLastNumber,
-                nextNumber.ToString()
-            );
 
+            await _settingManager.SetForTenantOrGlobalAsync(tenantId ?? Guid.Empty,
+                WebCarpetAppSettings.FicheNoLastNumber,
+                nextNumber.ToString());
+                
             var ficheNo = string.IsNullOrEmpty(prefix) 
                 ? nextNumber.ToString() 
                 : $"{prefix}{nextNumber}";
                 
             _logger.LogInformation($"Generated new FicheNo: {ficheNo} for tenant: {tenantId}");
-            
+                
             return ficheNo;
         }
-
+    
         public async Task ResetFicheNoSettingsAsync(string prefix, int startNumber)
         {
             if (!_currentTenant.Id.HasValue)
@@ -66,7 +64,7 @@ namespace WebCarpetApp.Receiveds
             await _settingManager.SetForTenantAsync(
                 _currentTenant.Id.Value,
                 WebCarpetAppSettings.FicheNoPrefix,
-                prefix ?? string.Empty
+                prefix
             );
 
             await _settingManager.SetForTenantAsync(
