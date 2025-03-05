@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\common.props" />
+  <Import Project="..\..\common.props"/>
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -9,12 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\WebCarpetApp.Application\WebCarpetApp.Application.csproj" />
-    <ProjectReference Include="..\WebCarpetApp.Domain.Tests\WebCarpetApp.Domain.Tests.csproj" />
+    <ProjectReference Include="..\..\src\WebCarpetApp.Application\WebCarpetApp.Application.csproj"/>
+    <ProjectReference Include="..\WebCarpetApp.Domain.Tests\WebCarpetApp.Domain.Tests.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0"/>
   </ItemGroup>
 
 </Project>

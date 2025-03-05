@@ -11,4 +11,4 @@ public class OrderedProductDto : EntityDto<Guid>
     public decimal ProductPrice { get; set; }
     public int Number { get; set; }
     public int SquareMeter { get; set; }
-} 
+}

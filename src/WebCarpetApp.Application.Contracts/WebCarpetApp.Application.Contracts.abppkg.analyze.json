@@ -141,6 +141,6 @@
       "contentType": "permission",
       "name": "WebCarpetApp.Books.Delete",
       "summary": null
-    },
+    }
   ]
 }

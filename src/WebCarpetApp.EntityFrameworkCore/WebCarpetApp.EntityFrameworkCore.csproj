@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\common.props" />
+  <Import Project="..\..\common.props"/>
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -9,23 +9,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebCarpetApp.Domain\WebCarpetApp.Domain.csproj" />
+    <ProjectReference Include="..\WebCarpetApp.Domain\WebCarpetApp.Domain.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.BackgroundJobs.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.FeatureManagement.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.BlobStoring.Database.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.PermissionManagement.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.SettingManagement.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.BackgroundJobs.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.AuditLogging.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.FeatureManagement.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.BlobStoring.Database.EntityFrameworkCore" Version="9.0.4"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.OpenIddict.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="9.0.4" />
-    <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="9.0.4" />
+    <PackageReference Include="Volo.Abp.OpenIddict.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.Identity.EntityFrameworkCore" Version="9.0.4"/>
+    <PackageReference Include="Volo.Abp.TenantManagement.EntityFrameworkCore" Version="9.0.4"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,12 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Migrations\"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\WebCarpetAppDbContextModelSnapshot.cs" />
-    <Compile Remove="Migrations\20250228213027_OrderModelUpdates.Designer.cs" />
+    <Compile Remove="Migrations\WebCarpetAppDbContextModelSnapshot.cs"/>
+    <Compile Remove="Migrations\20250228213027_OrderModelUpdates.Designer.cs"/>
   </ItemGroup>
 
 </Project>

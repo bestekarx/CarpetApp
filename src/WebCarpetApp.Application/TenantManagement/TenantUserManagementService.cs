@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
@@ -15,14 +14,14 @@ namespace WebCarpetApp.TenantManagement;
 
 public class TenantUserManagementService : ITenantUserManagementService, ITransientDependency
 {
-    private readonly ITenantManager _tenantManager;
-    private readonly ITenantRepository _tenantRepository;
-    private readonly IIdentityUserRepository _userRepository;
-    private readonly IdentityUserManager _userManager;
-    private readonly IRepository<UserTenantMapping, Guid> _userTenantRepository;
     private readonly ICurrentTenant _currentTenant;
     private readonly IGuidGenerator _guidGenerator;
     private readonly ILogger<TenantUserManagementService> _logger;
+    private readonly ITenantManager _tenantManager;
+    private readonly ITenantRepository _tenantRepository;
+    private readonly IdentityUserManager _userManager;
+    private readonly IIdentityUserRepository _userRepository;
+    private readonly IRepository<UserTenantMapping, Guid> _userTenantRepository;
 
     public TenantUserManagementService(
         ITenantManager tenantManager,
@@ -69,7 +68,7 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
             tenant.Id);
 
         var result = await _userManager.CreateAsync(adminUser, adminPassword);
-        
+
         if (!result.Succeeded)
         {
             var errorMessage = string.Join(", ", result.Errors);
@@ -84,7 +83,8 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
         }
         catch (Exception ex)
         {
-            _logger.LogWarning("Admin role assignment failed: {ErrorMessage}. Will continue without role assignment.", ex.Message);
+            _logger.LogWarning("Admin role assignment failed: {ErrorMessage}. Will continue without role assignment.",
+                ex.Message);
         }
 
         _logger.LogInformation("Admin user created with ID: {UserId}", adminUser.Id);
@@ -102,9 +102,9 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
 
     [UnitOfWork]
     public async Task<Guid> AddUserToTenantAsync(
-        Guid tenantId, 
-        string email, 
-        string password, 
+        Guid tenantId,
+        string email,
+        string password,
         string userName)
     {
         _logger.LogInformation("Adding user to tenant {TenantId}", tenantId);
@@ -126,7 +126,7 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
             tenantId);
 
         var result = await _userManager.CreateAsync(user, password);
-        
+
         if (!result.Succeeded)
         {
             var errorMessage = string.Join(", ", result.Errors);
@@ -146,4 +146,65 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
 
         return user.Id;
     }
-} 
+
+    [UnitOfWork]
+    public async Task<Guid> MapUserToTenantAsync(
+        Guid tenantId,
+        Guid userId,
+        bool isActive = true)
+    {
+        _logger.LogInformation("Mapping existing user {UserId} to tenant {TenantId}", userId, tenantId);
+
+        // Host işlemleri için
+        using var tenantChange = _currentTenant.Change(tenantId);
+        // 1. Tenant'ın var olduğunu kontrol et
+        var tenant = await _tenantRepository.FindAsync(tenantId);
+        if (tenant == null)
+        {
+            _logger.LogError("Tenant with ID {TenantId} does not exist", tenantId);
+            throw new Exception($"Tenant with ID {tenantId} does not exist.");
+        }
+
+        // 2. Kullanıcının var olduğunu kontrol et
+        var user = await _userRepository.FindAsync(userId);
+        if (user == null)
+        {
+            _logger.LogError("User with ID {UserId} does not exist", userId);
+            throw new Exception($"User with ID {userId} does not exist.");
+        }
+
+        // 3. Bu kullanıcı-tenant ilişkisinin zaten var olup olmadığını kontrol et
+        var existingMapping = await _userTenantRepository.FindAsync(
+            x => x.UserId == userId && ((IMultiTenant)x).TenantId == tenantId);
+
+        if (existingMapping != null)
+        {
+            _logger.LogWarning("User {UserId} is already mapped to tenant {TenantId}", userId, tenantId);
+
+            // Eğer isActive durumu değiştiyse güncelle
+            if (existingMapping.IsActive != isActive)
+            {
+                existingMapping.IsActive = isActive;
+                await _userTenantRepository.UpdateAsync(existingMapping);
+                _logger.LogInformation(
+                    "Updated existing mapping for user {UserId} and tenant {TenantId} with active status: {IsActive}",
+                    userId, tenantId, isActive);
+            }
+
+            return existingMapping.Id;
+        }
+
+        // 4. Yeni UserTenantMapping oluştur
+        var userTenantMapping = new UserTenantMapping
+        {
+            UserId = userId,
+            IsActive = isActive,
+        };
+
+        await _userTenantRepository.InsertAsync(userTenantMapping);
+        _logger.LogInformation("Created new mapping for user {UserId} and tenant {TenantId} with ID: {MappingId}",
+            userId, tenantId, userTenantMapping.Id);
+
+        return userTenantMapping.Id;
+    }
+}

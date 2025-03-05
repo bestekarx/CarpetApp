@@ -1,5 +1,5 @@
-﻿using WebCarpetApp.Localization;
-using Volo.Abp.Application.Services;
+﻿using Volo.Abp.Application.Services;
+using WebCarpetApp.Localization;
 
 namespace WebCarpetApp;
 

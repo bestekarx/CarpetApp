@@ -14,7 +14,7 @@
     height: 100vh;
     z-index: 999;
     background-color: #f1f1f2;
-  }
+}
 
 #ApplicationContainer > div:first-child:not(:only-child) {
     display: none !important;

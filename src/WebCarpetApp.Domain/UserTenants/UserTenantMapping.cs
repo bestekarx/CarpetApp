@@ -5,7 +5,7 @@ using Volo.Abp.MultiTenancy;
 
 namespace WebCarpetApp.UserTenants;
 
-public class UserTenantMapping : Entity<Guid>, IMultiTenant
+public class UserTenantMapping : Entity<Guid>
 {
     public Guid UserId { get; set; }
     public bool IsActive { get; set; }

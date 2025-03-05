@@ -129,7 +129,7 @@
           "name": "WebCarpetApp.Books.Book",
           "summary": null
         }
-        ],
+      ],
       "replacedDbContexts": [
         {
           "name": "ITenantManagementDbContext",
