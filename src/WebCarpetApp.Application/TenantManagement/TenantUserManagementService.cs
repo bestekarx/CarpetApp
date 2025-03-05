@@ -92,7 +92,8 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
         // 4. UserTenantMapping oluştur
         var userTenantMapping = new UserTenantMapping
         {
-            UserId = adminUser.Id
+            UserId = adminUser.Id,
+            CarpetTenantId = tenant.Id
         };
 
         await _userTenantRepository.InsertAsync(userTenantMapping);
@@ -139,7 +140,8 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
         // 3. UserTenantMapping oluştur
         var userTenantMapping = new UserTenantMapping
         {
-            UserId = user.Id
+            UserId = user.Id,
+            CarpetTenantId = tenantId
         };
 
         await _userTenantRepository.InsertAsync(userTenantMapping);
@@ -175,7 +177,7 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
 
         // 3. Bu kullanıcı-tenant ilişkisinin zaten var olup olmadığını kontrol et
         var existingMapping = await _userTenantRepository.FindAsync(
-            x => x.UserId == userId && ((IMultiTenant)x).TenantId == tenantId);
+            x => x.UserId == userId && x.CarpetTenantId == tenantId);
 
         if (existingMapping != null)
         {
@@ -199,6 +201,7 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
         {
             UserId = userId,
             IsActive = isActive,
+            CarpetTenantId = tenantId
         };
 
         await _userTenantRepository.InsertAsync(userTenantMapping);

@@ -36,12 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Migrations\WebCarpetAppDbContextModelSnapshot.cs"/>
     <Compile Remove="Migrations\20250228213027_OrderModelUpdates.Designer.cs"/>
+    <Compile Remove="Migrations\20250305221340_RenameUserTenantMappingField.cs" />
+    <Compile Remove="Migrations\20250305221340_RenameUserTenantMappingField.Designer.cs" />
   </ItemGroup>
 
 </Project>

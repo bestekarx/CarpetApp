@@ -17,5 +17,5 @@ public class UserTenantMapping : Entity<Guid>
         IsActive = true;
     }
 
-    public Guid? TenantId { get; }
+    public Guid? CarpetTenantId { get; set; }
 }
