@@ -42,6 +42,7 @@ using Volo.Abp.Studio.Client.AspNetCore;
 using Volo.Abp.Security.Claims;
 using WebCarpetApp.BlobStoring;
 using Volo.Abp.BlobStoring.Database;
+using WebCarpetApp.Middleware;
 
 namespace WebCarpetApp;
 
@@ -260,6 +261,9 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         {
             app.UseErrorPage();
         }
+        
+        // Custom error handling middleware
+        app.UseMiddleware<ErrorHandlingMiddleware>();
         
         app.MapAbpStaticAssets();
         app.UseAbpStudioLink();

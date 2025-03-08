@@ -7,3 +7,4 @@ globs:
 - Türkçe yaz.
 - Model değişikliklerimde ilgili model değişikliklerini anla.
 - Model değişikliklerimden sonra migration oluştururken sadece ilgili model değişiklikerine ait migration oluştur. Örneğin: [Received.cs](mdc:src/WebCarpetApp.Domain/Receiveds/Received.cs) modelimde ki PurchaseDate propertyName i 'PickupDate' yaptıysak bu alanın değişikliğini migration'a ekle.
+- Daha önce yazılan business kurallarını asla bozma. Sadece senden istenilen değişiklikleri yap.
