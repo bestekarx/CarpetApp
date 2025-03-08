@@ -41,6 +41,11 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         {
             queryable = queryable.Where(x => x.Status == input.Status.Value);
         }
+        
+        if (input.Active.HasValue)
+        {
+            queryable = queryable.Where(x => x.Active == input.Active.Value);
+        }
 
         if (input.StartDate.HasValue && input.EndDate.HasValue)
         {
@@ -113,15 +118,13 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         return result;
     }
 
-    public async Task<bool> UpdateReceivedLocationAsync(UpdateReceivedLocationDto updateReceivedLocationDto)
+    public async Task<bool> UpdateLocationReceivedAsync(UpdateReceivedLocationDto updateReceivedLocationDto)
     {
         var received = await _repository.GetAsync(updateReceivedLocationDto.Id);
         var customer = await _customerRepository.GetAsync(received.CustomerId);
 
-        // Update customer's coordinate
         customer.Coordinate = updateReceivedLocationDto.Coordinate;
         
-        // Save changes
         await _customerRepository.UpdateAsync(customer);
         
         return true;
@@ -160,13 +163,12 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         return ObjectMapper.Map<Received, ReceivedDto>(received);
     }
 
-    public async Task<ReceivedDto> CancelReceivedAsync(Guid id)
+    public async Task<bool> UpdateCancelReceivedAsync(Guid id)
     {   
         // Burada try-catch kullanmaya devam ediyorum çünkü ReceivedManager'ı çağırıyoruz
         try
         {
-            var received = await _receivedManager.CancelReceivedAsync(id);
-            return ObjectMapper.Map<Received, ReceivedDto>(received);
+            return await _receivedManager.CancelReceivedAsync(id);
         }
         catch (Exception ex)
         {
@@ -177,12 +179,11 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         }
     }
 
-    public async Task UpdateReceivedSortListAsync(UpdateReceivedOrderDto input)
+    public async Task<bool> UpdateReceivedSortListAsync(UpdateReceivedOrderDto input)
     {
-        // Burada try-catch kullanmaya devam ediyorum çünkü ReceivedManager'ı çağırıyoruz
         try
         {
-            await _receivedManager.ReorderReceivedItemsAsync(input.OrderedIds);
+            return await _receivedManager.ReorderReceivedItemsAsync(input.OrderedIds);
         }
         catch (Exception ex)
         {
@@ -192,6 +193,7 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
                 "Failed to update received sort list: " + ex.Message);
         }
     }
+    
     
     public async Task<bool> SendReceivedNotificationAsync(Guid receivedId)
     {
@@ -214,12 +216,6 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
     }
     
     
-    [RemoteService(IsEnabled = false)]
-    public Task UpdateOrderAsync(UpdateReceivedOrderDto input)
-    {
-        throw new NotImplementedException();
-    }
-
     [RemoteService(IsEnabled = false)]
     public async Task<ReceivedDto> GetAsync(Guid id)
     {

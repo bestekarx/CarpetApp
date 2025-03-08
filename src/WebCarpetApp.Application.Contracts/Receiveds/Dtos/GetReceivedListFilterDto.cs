@@ -9,6 +9,7 @@ public class GetReceivedListFilterDto : PagedAndSortedResultRequestDto
     public string? Address { get; set; }
     public string? FicheNo { get; set; }
     public ReceivedStatus? Status { get; set; }
+    public bool? Active { get; set; }
     public ReceivedType? Type { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }

@@ -118,7 +118,7 @@ namespace WebCarpetApp.Receiveds
                 }
             }
         }
-        public async Task ReorderReceivedItemsAsync(List<Guid> orderedIds)
+        public async Task<bool> ReorderReceivedItemsAsync(List<Guid> orderedIds)
         {
             var receivedItems = await receivedRepository.GetListAsync(x => orderedIds.Contains(x.Id));
         
@@ -139,9 +139,10 @@ namespace WebCarpetApp.Receiveds
             }
 
             await receivedRepository.UpdateManyAsync(receivedItems);
+            return true;
         }
 
-        public async Task<Received> CancelReceivedAsync(Guid id)
+        public async Task<bool> CancelReceivedAsync(Guid id)
         {
             var received = await receivedRepository.GetAsync(id);
         
@@ -156,7 +157,7 @@ namespace WebCarpetApp.Receiveds
             received.CancelReceive();
             await receivedRepository.UpdateAsync(received);
         
-            return received;
+            return true;
         }
     }
 }
