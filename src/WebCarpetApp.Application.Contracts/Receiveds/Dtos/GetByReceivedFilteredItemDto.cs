@@ -8,5 +8,5 @@ public class GetByReceivedFilteredItemDto
     public required string FicheNo { get; set; }
     public required string CustomerGsm { get; set; }
     public required string CustomerPhone { get; set; }
-    public required string RowNumber { get; set; }
+    public required int RowNumber { get; set; }
 }

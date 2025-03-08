@@ -16,6 +16,7 @@ public interface IReceivedAppService :
 {
     Task<PagedResultDto<ReceivedDto>> GetFilteredListAsync(GetReceivedListFilterDto input);
     Task<GetByReceivedFilteredItemDto> GetByIdFilteredItemAsync(Guid id);
+    Task<bool> UpdateReceivedLocationAsync(UpdateReceivedLocationDto updateReceivedLocationDto);
     Task<ReceivedDto> CancelReceivedAsync(Guid id);
     Task UpdateOrderAsync(UpdateReceivedOrderDto input);
 } 
