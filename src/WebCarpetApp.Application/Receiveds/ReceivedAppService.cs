@@ -80,6 +80,12 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         );
     }
 
+    public async Task<GetByReceivedFilteredItemDto> GetByIdFilteredItemAsync(Guid id)
+    {
+        var received = await _repository.GetAsync(id);
+        return ObjectMapper.Map<Received, GetByReceivedFilteredItemDto>(received);
+    }
+    
     public async Task<ReceivedDto> CreateAsync(CreateUpdateReceivedDto input)
     {
         var result = await _receivedManager.CreateReceivedAsync(input.VehicleId, 
@@ -101,11 +107,7 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         return ObjectMapper.Map<Received, ReceivedDto>(received);
     }
 
-    public async Task<ReceivedDto> GetByIdAsync(Guid id)
-    {
-        var received = await _repository.GetAsync(id);
-        return ObjectMapper.Map<Received, ReceivedDto>(received);
-    }
+
 
     public async Task<ReceivedDto> CancelReceivedAsync(Guid id)
     {   
