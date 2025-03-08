@@ -41,13 +41,13 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
 
         if (input.StartDate.HasValue && input.EndDate.HasValue)
         {
-            if (input.DateFilterType?.ToLower() == "purchasedate")
+            if (input.DateFilterType?.ToLower() == "pickupdate")
             {
-                queryable = queryable.Where(x => x.PurchaseDate >= input.StartDate && x.PurchaseDate <= input.EndDate);
+                queryable = queryable.Where(x => x.PickupDate >= input.StartDate && x.PickupDate <= input.EndDate);
             }
-            else if (input.DateFilterType?.ToLower() == "receiveddate")
+            else if (input.DateFilterType?.ToLower() == "deliverydate")
             {
-                queryable = queryable.Where(x => x.ReceivedDate >= input.StartDate && x.ReceivedDate <= input.EndDate);
+                queryable = queryable.Where(x => x.DeliveryDate >= input.StartDate && x.DeliveryDate <= input.EndDate);
             }
         }
 
@@ -85,9 +85,10 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         var result = await _receivedManager.CreateReceivedAsync(input.VehicleId, 
             input.CustomerId, 
             input.Note,
+            (int)input.Type,
             input.RowNumber,
-            input.PurchaseDate,
-            input.ReceivedDate);
+            input.PickupDate,
+            input.DeliveryDate);
         
         return ObjectMapper.Map<Received, ReceivedDto>(result);
     }

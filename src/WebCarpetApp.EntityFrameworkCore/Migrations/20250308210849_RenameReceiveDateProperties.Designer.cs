@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 using WebCarpetApp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using WebCarpetApp.EntityFrameworkCore;
 namespace WebCarpetApp.Migrations
 {
     [DbContext(typeof(WebCarpetAppDbContext))]
-    partial class WebCarpetAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250308210849_RenameReceiveDateProperties")]
+    partial class RenameReceiveDateProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -50,7 +50,6 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
         
         return new PagedResultDto<OrderDto>(totalCount, dtos);
     }
-
     
     public async Task<OrderDto> GetAsync(Guid id)
     {
@@ -78,11 +77,6 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
             
             return await GetAsync(createdOrder.Id);
         }
-        catch (BusinessException ex)
-        {
-            // İş mantığı hataları - doğrudan client'a iletilir
-            throw;
-        }
         catch (Exception ex)
         {
             Logger.LogError(ex, "Order creation failed.");
@@ -97,7 +91,7 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
         throw new NotImplementedException();
     }
 
-        public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
         await _orderRepository.DeleteAsync(id);
     }

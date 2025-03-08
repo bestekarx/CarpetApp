@@ -12,12 +12,14 @@ public class CreateReceivedDto
     public Guid CustomerId { get; set; }
         
     public string Note { get; set; }
+    [Required]
+    public ReceivedType Type { get; set; }
         
     [Required]
     public int RowNumber { get; set; }
         
-    public DateTime? PurchaseDate { get; set; }
-    public DateTime? ReceivedDate { get; set; }
+    public DateTime? PickupDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
     
     [StringLength(50)]
     public string? FicheNo { get; set; }

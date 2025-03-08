@@ -25,9 +25,10 @@ namespace WebCarpetApp.Receiveds
             Guid vehicleId,
             Guid customerId,
             string? note,
+            int receivedType,
             int rowNumber,
-            DateTime purchaseDate,
-            DateTime receivedDate)
+            DateTime pickupDate,
+            DateTime deliveryDate)
         {
             using var uow = unitOfWorkManager.Begin(requiresNew: true, isTransactional: true);
 
@@ -39,10 +40,11 @@ namespace WebCarpetApp.Receiveds
                     vehicleId,
                     customerId, 
                     ReceivedStatus.Active,
+                    (ReceivedType) receivedType,
                     note, 
                     rowNumber,
-                    purchaseDate,
-                    receivedDate,
+                    pickupDate,
+                    deliveryDate,
                     ficheNo);
                 
                 await receivedRepository.InsertAsync(received);
@@ -93,7 +95,7 @@ namespace WebCarpetApp.Receiveds
             var values = new Dictionary<string, object>
             {
                 { "CustomerName", customer.FullName },
-                { "ReceivedDate", received.ReceivedDate.ToString("dd.MM.yyyy") },
+                { "ReceivedDate", received.DeliveryDate.ToString("dd.MM.yyyy") },
                 { "CarpetNumber", received.RowNumber.ToString() }, // Örnek, gerçek uygulama farklı olabilir
                 { "CompanyPhone", company.Name }, // Şirket telefonu için gerçek uygulamada ilgili alan kullanılmalı
                 { "FicheNo", received.FicheNo } // FicheNo'yu da mesaj değeri olarak ekleyelim

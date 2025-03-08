@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Volo.Abp.EntityFrameworkCore;
 using WebCarpetApp.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using WebCarpetApp.EntityFrameworkCore;
 namespace WebCarpetApp.Migrations
 {
     [DbContext(typeof(WebCarpetAppDbContext))]
-    partial class WebCarpetAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250307194115_ReceivedType")]
+    partial class ReceivedType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2518,9 +2521,6 @@ namespace WebCarpetApp.Migrations
                     b.Property<Guid>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("ExtraProperties")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -2540,7 +2540,10 @@ namespace WebCarpetApp.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("PickupDate")
+                    b.Property<DateTime>("PurchaseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReceivedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("RowNumber")
@@ -2552,9 +2555,6 @@ namespace WebCarpetApp.Migrations
                     b.Property<Guid?>("TenantId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("TenantId");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("VehicleId")
                         .HasColumnType("uniqueidentifier");

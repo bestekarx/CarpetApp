@@ -13,6 +13,8 @@ public class CreateUpdateReceivedDto
 
     [Required]
     public ReceivedStatus Status { get; set; }
+    [Required]
+    public ReceivedType Type { get; set; }
 
     [StringLength(500)]
     public string? Note { get; set; }
@@ -22,10 +24,10 @@ public class CreateUpdateReceivedDto
     public bool Active { get; set; }
     
     [Required]
-    public DateTime PurchaseDate { get; set; }
+    public DateTime PickupDate { get; set; }
 
     [Required]
-    public DateTime ReceivedDate { get; set; }
+    public DateTime DeliveryDate { get; set; }
 
     public DateTime UpdatedDate { get; set; }
 
