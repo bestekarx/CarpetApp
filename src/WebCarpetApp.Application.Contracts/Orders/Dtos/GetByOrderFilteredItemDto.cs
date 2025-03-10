@@ -12,4 +12,4 @@ namespace WebCarpetApp.Orders.Dtos
         public int OrderRowNumber { get; set; }
         public Guid OrderId { get; set; }
     }
-} 
+}

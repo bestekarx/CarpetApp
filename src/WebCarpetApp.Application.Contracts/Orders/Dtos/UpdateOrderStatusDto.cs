@@ -7,4 +7,4 @@ namespace WebCarpetApp.Orders.Dtos
         public Guid Id { get; set; }
         public OrderStatus OrderStatus { get; set; }
     }
-} 
+}

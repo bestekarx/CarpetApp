@@ -165,33 +165,21 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
 
     public async Task<bool> UpdateCancelReceivedAsync(Guid id)
     {   
-        // Burada try-catch kullanmaya devam ediyorum çünkü ReceivedManager'ı çağırıyoruz
-        try
-        {
-            return await _receivedManager.CancelReceivedAsync(id);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Failed to cancel received with ID: {Id}", id);
-            throw new BusinessException(
-                WebCarpetAppDomainErrorCodes.InvalidOperation,
-                "Failed to cancel received: " + ex.Message);
-        }
+        return await _receivedManager.CancelReceivedAsync(id);
+    }
+    
+    public async Task<bool> UpdateVehicleReceivedAsync(Guid id, Guid vehicleId)
+    {   
+        return await _receivedManager.UpdateVehicleReceivedAsync(id, vehicleId);
+    }
+    public async Task<bool> UpdateNoteReceivedAsync(Guid id, string note)
+    {   
+        return await _receivedManager.UpdateNoteReceivedAsync(id, note);
     }
 
     public async Task<bool> UpdateReceivedSortListAsync(UpdateReceivedOrderDto input)
     {
-        try
-        {
-            return await _receivedManager.ReorderReceivedItemsAsync(input.OrderedIds);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Failed to update received sort list");
-            throw new BusinessException(
-                WebCarpetAppDomainErrorCodes.InvalidOperation,
-                "Failed to update received sort list: " + ex.Message);
-        }
+        return await _receivedManager.ReorderReceivedItemsAsync(input.OrderedIds);
     }
     
     public async Task<bool> UpdateOrderAsync(UpdateReceivedOrderDto input)
@@ -201,7 +189,6 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
 
     public async Task<bool> SendReceivedNotificationAsync(Guid receivedId)
     {
-        // Burada try-catch kullanmaya devam ediyorum çünkü ReceivedManager'ı çağırıyoruz
         try
         {
             var received = await _repository.GetAsync(receivedId);

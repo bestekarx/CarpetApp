@@ -20,7 +20,6 @@ namespace WebCarpetApp.Orders
         private readonly IRepository<Received, Guid> _receivedRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
-        
         public OrderManager(
             IRepository<Order, Guid> orderRepository,
             IRepository<OrderedProduct, Guid> orderedProductRepository,
@@ -74,78 +73,6 @@ namespace WebCarpetApp.Orders
                     WebCarpetAppDomainErrorCodes.OrderCreationFailed,
                     "Order creation failed: " + ex.Message);
             }
-        }
-        
-        public async Task<bool> UpdateReceivedNoteAsync(Guid orderId, string note)
-        {
-            using var uow = _unitOfWorkManager.Begin(requiresNew: true, isTransactional: true);
-            
-            try
-            {
-                var order = await _orderRepository.GetAsync(orderId);
-                if (!order.ReceivedId.HasValue)
-                {
-                    throw new BusinessException(
-                        WebCarpetAppDomainErrorCodes.InvalidOperation,
-                        "Order has no associated received record.");
-                }
-                
-                var received = await _receivedRepository.GetAsync(order.ReceivedId.Value);
-                received.UpdateNote(note);
-                
-                await _receivedRepository.UpdateAsync(received);
-                await uow.CompleteAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                await uow.RollbackAsync();
-                throw new BusinessException(
-                    WebCarpetAppDomainErrorCodes.InvalidOperation,
-                    "Failed to update received note: " + ex.Message);
-            }
-        }
-        
-        private async Task UpdateReceivedNoteInternalAsync(Received received, string note)
-        {
-            received.UpdateNote(note);
-            await _receivedRepository.UpdateAsync(received);
-        }
-        
-        public async Task<bool> UpdateReceivedVehicleAsync(Guid orderId, Guid vehicleId)
-        {
-            using var uow = _unitOfWorkManager.Begin(requiresNew: true, isTransactional: true);
-            
-            try
-            {
-                var order = await _orderRepository.GetAsync(orderId);
-                if (!order.ReceivedId.HasValue)
-                {
-                    throw new BusinessException(
-                        WebCarpetAppDomainErrorCodes.InvalidOperation,
-                        "Order has no associated received record.");
-                }
-                
-                var received = await _receivedRepository.GetAsync(order.ReceivedId.Value);
-                received.UpdateVehicle(vehicleId);
-                
-                await _receivedRepository.UpdateAsync(received);
-                await uow.CompleteAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                await uow.RollbackAsync();
-                throw new BusinessException(
-                    WebCarpetAppDomainErrorCodes.InvalidOperation,
-                    "Failed to update received vehicle: " + ex.Message);
-            }
-        }
-        
-        private async Task UpdateReceivedVehicleInternalAsync(Received received, Guid vehicleId)
-        {
-            received.UpdateVehicle(vehicleId);
-            await _receivedRepository.UpdateAsync(received);
         }
         
         public async Task<bool> UpdateOrderStatusAsync(Guid orderId, OrderStatus status)

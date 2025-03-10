@@ -15,11 +15,8 @@ public interface IOrderAppService : IApplicationService
     Task<OrderDto> UpdateAsync(Guid id, CreateUpdateOrderDto input);
     Task DeleteAsync(Guid id);
     
-    // Yeni eklenen metodlar
     Task<PagedResultDto<OrderDto>> GetFilteredListAsync(GetOrderListFilterDto input);
     Task<GetByOrderFilteredItemDto> GetByIdFilteredItemAsync(Guid id);
-    Task<bool> UpdateReceivedNoteAsync(UpdateOrderNoteDto updateOrderNoteDto);
-    Task<bool> UpdateReceivedVehicleAsync(UpdateOrderVehicleDto updateOrderVehicleDto);
     Task<bool> UpdateStatusOrderAsync(UpdateOrderStatusDto updateOrderStatusDto);
     Task<OrderCardDto> GetOrderCardListAsync(Guid id);
     Task<bool> UpdateOrderCardListAsync(UpdateOrderCardDto updateOrderCardDto);

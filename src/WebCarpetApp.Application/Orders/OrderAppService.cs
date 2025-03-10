@@ -164,36 +164,6 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
         return result;
     }
     
-    public async Task<bool> UpdateReceivedNoteAsync(UpdateOrderNoteDto updateOrderNoteDto)
-    {
-        try
-        {
-            return await _orderManager.UpdateReceivedNoteAsync(updateOrderNoteDto.Id, updateOrderNoteDto.ReceivedNote);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Failed to update received note for order ID: {Id}", updateOrderNoteDto.Id);
-            throw new BusinessException(
-                WebCarpetAppDomainErrorCodes.InvalidOperation,
-                "Failed to update received note: " + ex.Message);
-        }
-    }
-    
-    public async Task<bool> UpdateReceivedVehicleAsync(UpdateOrderVehicleDto updateOrderVehicleDto)
-    {
-        try
-        {
-            return await _orderManager.UpdateReceivedVehicleAsync(updateOrderVehicleDto.Id, updateOrderVehicleDto.VehicleId);
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError(ex, "Failed to update received vehicle for order ID: {Id}", updateOrderVehicleDto.Id);
-            throw new BusinessException(
-                WebCarpetAppDomainErrorCodes.InvalidOperation,
-                "Failed to update received vehicle: " + ex.Message);
-        }
-    }
-    
     public async Task<bool> UpdateStatusOrderAsync(UpdateOrderStatusDto updateOrderStatusDto)
     {
         try

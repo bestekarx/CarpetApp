@@ -159,5 +159,40 @@ namespace WebCarpetApp.Receiveds
         
             return true;
         }
+
+        public async Task<bool> UpdateVehicleReceivedAsync(Guid id, Guid vehicleId)
+        {
+            var received = await receivedRepository.GetAsync(id);
+        
+            if (received == null)
+            {
+                throw new BusinessException(
+                    WebCarpetAppDomainErrorCodes.EntityNotFound,
+                    "Received item not found."
+                );
+            }
+
+            received.UpdateVehicle(vehicleId);
+            await receivedRepository.UpdateAsync(received);
+        
+            return true;
+        }
+        public async Task<bool> UpdateNoteReceivedAsync(Guid id, string note)
+        {
+            var received = await receivedRepository.GetAsync(id);
+        
+            if (received == null)
+            {
+                throw new BusinessException(
+                    WebCarpetAppDomainErrorCodes.EntityNotFound,
+                    "Received item not found."
+                );
+            }
+
+            received.UpdateNote(note);
+            await receivedRepository.UpdateAsync(received);
+        
+            return true;
+        }
     }
 }

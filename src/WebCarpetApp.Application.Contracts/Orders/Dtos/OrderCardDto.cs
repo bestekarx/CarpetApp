@@ -19,4 +19,4 @@ namespace WebCarpetApp.Orders.Dtos
         public List<OrderedProductDto> Products { get; set; }
         public List<OrderImageDto> Images { get; set; }
     }
-} 
+}
