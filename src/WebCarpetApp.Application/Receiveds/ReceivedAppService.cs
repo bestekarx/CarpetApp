@@ -194,7 +194,11 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
         }
     }
     
-    
+    public async Task<bool> UpdateOrderAsync(UpdateReceivedOrderDto input)
+    {
+        return await UpdateReceivedSortListAsync(input);
+    }
+
     public async Task<bool> SendReceivedNotificationAsync(Guid receivedId)
     {
         // Burada try-catch kullanmaya devam ediyorum çünkü ReceivedManager'ı çağırıyoruz
@@ -213,25 +217,5 @@ public class ReceivedAppService : WebCarpetAppAppService, IReceivedAppService
                 WebCarpetAppDomainErrorCodes.InvalidOperation,
                 "Failed to send notification: " + ex.Message);
         }
-    }
-    
-    
-    [RemoteService(IsEnabled = false)]
-    public async Task<ReceivedDto> GetAsync(Guid id)
-    {
-        var Received = await _repository.GetAsync(id);
-        return ObjectMapper.Map<Received, ReceivedDto>(Received);
-    }
-
-    [RemoteService(IsEnabled = false)]
-    public Task<PagedResultDto<ReceivedDto>> GetListAsync(PagedAndSortedResultRequestDto input)
-    {
-        throw new NotImplementedException();
-    }
-
-    [RemoteService(IsEnabled = false)]
-    public Task DeleteAsync(Guid id)
-    {
-        throw new NotImplementedException();
     }
 } 
