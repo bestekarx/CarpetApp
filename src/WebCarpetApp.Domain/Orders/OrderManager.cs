@@ -92,10 +92,11 @@ namespace WebCarpetApp.Orders
                 
                 var received = await _receivedRepository.GetAsync(order.ReceivedId.Value);
                 received.UpdateNote(note);
+                
                 await _receivedRepository.UpdateAsync(received);
                 await uow.CompleteAsync();
                 return true;
-            }   
+            }
             catch (Exception ex)
             {
                 await uow.RollbackAsync();
@@ -103,6 +104,12 @@ namespace WebCarpetApp.Orders
                     WebCarpetAppDomainErrorCodes.InvalidOperation,
                     "Failed to update received note: " + ex.Message);
             }
+        }
+        
+        private async Task UpdateReceivedNoteInternalAsync(Received received, string note)
+        {
+            received.UpdateNote(note);
+            await _receivedRepository.UpdateAsync(received);
         }
         
         public async Task<bool> UpdateReceivedVehicleAsync(Guid orderId, Guid vehicleId)
@@ -121,8 +128,8 @@ namespace WebCarpetApp.Orders
                 
                 var received = await _receivedRepository.GetAsync(order.ReceivedId.Value);
                 received.UpdateVehicle(vehicleId);
-                await _receivedRepository.UpdateAsync(received);
                 
+                await _receivedRepository.UpdateAsync(received);
                 await uow.CompleteAsync();
                 return true;
             }
@@ -135,6 +142,12 @@ namespace WebCarpetApp.Orders
             }
         }
         
+        private async Task UpdateReceivedVehicleInternalAsync(Received received, Guid vehicleId)
+        {
+            received.UpdateVehicle(vehicleId);
+            await _receivedRepository.UpdateAsync(received);
+        }
+        
         public async Task<bool> UpdateOrderStatusAsync(Guid orderId, OrderStatus status)
         {
             using var uow = _unitOfWorkManager.Begin(requiresNew: true, isTransactional: true);
@@ -142,7 +155,7 @@ namespace WebCarpetApp.Orders
             try
             {
                 var order = await _orderRepository.GetAsync(orderId);
-                order.OrderStatus = status;
+                order.UpdateStatus(status);
                 await _orderRepository.UpdateAsync(order);
                 await uow.CompleteAsync();
                 
@@ -166,10 +179,8 @@ namespace WebCarpetApp.Orders
             {
                 var order = await _orderRepository.GetAsync(orderId);
                 
-                order.OrderDiscount = orderDiscount;
-                order.OrderAmount = orderAmount;
-                
-                order.OrderTotalPrice = orderAmount * (1 - (decimal)orderDiscount / 100);
+                order.UpdateDiscount(orderDiscount);
+                order.UpdateAmount(orderAmount);
                 
                 await _orderRepository.UpdateAsync(order);
                 
