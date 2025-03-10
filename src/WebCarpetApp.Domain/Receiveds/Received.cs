@@ -52,4 +52,12 @@ public class Received : AuditedAggregateRoot<Guid>, IMultiTenant
     {
         FicheNo = ficheNo;
     }
+    internal void UpdateNote(string note)
+    {
+        Note = note;
+    }
+    internal void UpdateVehicle(Guid vehicleId)
+    {
+        VehicleId = vehicleId;
+    }
 }

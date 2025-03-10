@@ -166,50 +166,39 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
     
     public async Task<bool> UpdateReceivedNoteAsync(UpdateOrderNoteDto updateOrderNoteDto)
     {
-        var order = await _orderRepository.GetAsync(updateOrderNoteDto.Id);
-        if (!order.ReceivedId.HasValue)
+        try
         {
+            return await _orderManager.UpdateReceivedNoteAsync(updateOrderNoteDto.Id, updateOrderNoteDto.ReceivedNote);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to update received note for order ID: {Id}", updateOrderNoteDto.Id);
             throw new BusinessException(
                 WebCarpetAppDomainErrorCodes.InvalidOperation,
-                "Order has no associated received record.");
+                "Failed to update received note: " + ex.Message);
         }
-        
-        var received = await _receivedRepository.GetAsync(order.ReceivedId.Value);
-        received.Note = updateOrderNoteDto.ReceivedNote;
-        
-        await _receivedRepository.UpdateAsync(received);
-        
-        return true;
     }
     
     public async Task<bool> UpdateReceivedVehicleAsync(UpdateOrderVehicleDto updateOrderVehicleDto)
     {
-        var order = await _orderRepository.GetAsync(updateOrderVehicleDto.Id);
-        if (!order.ReceivedId.HasValue)
+        try
         {
+            return await _orderManager.UpdateReceivedVehicleAsync(updateOrderVehicleDto.Id, updateOrderVehicleDto.VehicleId);
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Failed to update received vehicle for order ID: {Id}", updateOrderVehicleDto.Id);
             throw new BusinessException(
                 WebCarpetAppDomainErrorCodes.InvalidOperation,
-                "Order has no associated received record.");
+                "Failed to update received vehicle: " + ex.Message);
         }
-        
-        var received = await _receivedRepository.GetAsync(order.ReceivedId.Value);
-        received.VehicleId = updateOrderVehicleDto.VehicleId;
-        
-        await _receivedRepository.UpdateAsync(received);
-        
-        return true;
     }
     
     public async Task<bool> UpdateStatusOrderAsync(UpdateOrderStatusDto updateOrderStatusDto)
     {
         try
         {
-            var order = await _orderRepository.GetAsync(updateOrderStatusDto.Id);
-            order.OrderStatus = updateOrderStatusDto.OrderStatus;
-            
-            await _orderRepository.UpdateAsync(order);
-            
-            return true;
+            return await _orderManager.UpdateOrderStatusAsync(updateOrderStatusDto.Id, updateOrderStatusDto.OrderStatus);
         }
         catch (Exception ex)
         {
@@ -246,48 +235,16 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
     {
         try
         {
-            var order = await _orderRepository.GetAsync(updateOrderCardDto.Id);
+            // Convert DTOs to domain entities
+            var products = ObjectMapper.Map<List<OrderedProductDto>, List<OrderedProduct>>(updateOrderCardDto.Products);
+            var imageIds = updateOrderCardDto.Images.Select(i => i.BlobId).ToList();
             
-            // Update order details
-            order.OrderDiscount = updateOrderCardDto.OrderDiscount;
-            order.OrderAmount = updateOrderCardDto.OrderAmount;
-            
-            // Calculate total price - Discount uygulandıktan sonraki toplam fiyat
-            order.OrderTotalPrice = updateOrderCardDto.OrderAmount * (1 - (decimal)updateOrderCardDto.OrderDiscount / 100);
-            
-            await _orderRepository.UpdateAsync(order);
-            
-            // Existing products'ları sil
-            var existingProducts = await _orderedProductRepository.GetListAsync(p => p.OrderId == order.Id);
-            foreach (var product in existingProducts)
-            {
-                await _orderedProductRepository.DeleteAsync(product);
-            }
-            
-            // Yeni products'ları ekle
-            var newProducts = ObjectMapper.Map<List<OrderedProductDto>, List<OrderedProduct>>(updateOrderCardDto.Products);
-            foreach (var product in newProducts)
-            {
-                product.OrderId = order.Id;
-            }
-            await _orderedProductRepository.InsertManyAsync(newProducts);
-            
-            // Existing images'ları sil
-            var existingImages = await _orderImageRepository.GetListAsync(i => i.OrderId == order.Id);
-            foreach (var image in existingImages)
-            {
-                await _orderImageRepository.DeleteAsync(image);
-            }
-            
-            // Yeni images'ları ekle
-            var newImages = updateOrderCardDto.Images.Select(i => new OrderImage
-            {
-                OrderId = order.Id,
-                BlobId = i.BlobId
-            }).ToList();
-            await _orderImageRepository.InsertManyAsync(newImages);
-            
-            return true;
+            return await _orderManager.UpdateOrderCardAsync(
+                updateOrderCardDto.Id,
+                updateOrderCardDto.OrderDiscount,
+                updateOrderCardDto.OrderAmount,
+                products,
+                imageIds);
         }
         catch (Exception ex)
         {

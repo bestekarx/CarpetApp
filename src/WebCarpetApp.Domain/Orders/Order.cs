@@ -17,4 +17,5 @@ public class Order : AuditedAggregateRoot<Guid>, IMultiTenant
     public bool Active { get; set; }
     public bool CalculatedUsed { get; set; }
     Guid? IMultiTenant.TenantId => TenantId;
+    
 }
