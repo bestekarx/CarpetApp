@@ -75,14 +75,5 @@ namespace WebCarpetApp.Orders
                     "Order creation failed: " + ex.Message);
             }
         }
-
-
-        /// <summary>
-        /// Siparişten resim siler
-        /// </summary>
-        public async Task RemoveImageFromOrderAsync(Guid orderImageId)
-        {
-            await _orderImageRepository.DeleteAsync(orderImageId);
-        }
     }
 } 

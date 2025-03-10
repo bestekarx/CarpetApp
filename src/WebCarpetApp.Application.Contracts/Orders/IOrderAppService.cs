@@ -9,10 +9,18 @@ namespace WebCarpetApp.Orders;
 
 public interface IOrderAppService : IApplicationService
 {
-    Task<OrderDto> GetAsync(Guid id);
-    //Task<PagedResultDto<OrderDto>> GetFilteredListAsync(GetOrderListFilterDto input);
-    Task<PagedResultDto<OrderDto>> GetListAsync(PagedAndSortedResultRequestDto input);
     Task<OrderDto> CreateAsync(CreateOrderDto input);
+    Task<PagedResultDto<OrderDto>> GetListAsync(PagedAndSortedResultRequestDto input);
+    Task<OrderDto> GetAsync(Guid id);
     Task<OrderDto> UpdateAsync(Guid id, CreateUpdateOrderDto input);
     Task DeleteAsync(Guid id);
+    
+    // Yeni eklenen metodlar
+    Task<PagedResultDto<OrderDto>> GetFilteredListAsync(GetOrderListFilterDto input);
+    Task<GetByOrderFilteredItemDto> GetByIdFilteredItemAsync(Guid id);
+    Task<bool> UpdateReceivedNoteAsync(UpdateOrderNoteDto updateOrderNoteDto);
+    Task<bool> UpdateReceivedVehicleAsync(UpdateOrderVehicleDto updateOrderVehicleDto);
+    Task<bool> UpdateStatusOrderAsync(UpdateOrderStatusDto updateOrderStatusDto);
+    Task<OrderCardDto> GetOrderCardListAsync(Guid id);
+    Task<bool> UpdateOrderCardListAsync(UpdateOrderCardDto updateOrderCardDto);
 } 

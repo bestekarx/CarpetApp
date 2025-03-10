@@ -17,8 +17,6 @@ public class CreateOrderDto
     public OrderStatus OrderStatus { get; set; }
     public int OrderRowNumber { get; set; }
     public bool Active { get; set; }
-    public DateTime CreationTime { get; set; }
-    public DateTime? LastModificationTime { get; set; }
 
     [Required]
     public List<OrderedProductDto> Products { get; set; } = new List<OrderedProductDto>();
