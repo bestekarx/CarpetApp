@@ -21,9 +21,9 @@ public partial class LoginViewModel(
     private readonly IUserService _userService = userService;
     [ObservableProperty] private decimal code;
 
-    [ObservableProperty] private string password;
-    [ObservableProperty] private string userName;
-    [ObservableProperty] private string tenantName;
+    [ObservableProperty] private string password = "1q2w3E*";
+    [ObservableProperty] private string userName = "admin";
+    [ObservableProperty] private string tenantName = "test_tenant";
 
     [RelayCommand]
     private async Task Login()
@@ -36,34 +36,31 @@ public partial class LoginViewModel(
         try
         {
             _ = dialogService.Show();
-            var response = await userService.GetTenant(TenantName);
+            var request = new RequestLoginModel()
+            {
+                UserNameOrEmailAddress = UserName,
+                Password = Password
+            };
+            var loginResponse = await userService.Login(request);
+            if (loginResponse.Result == 1)
+            {
+                // doğru
+            }
+            else
+            {
+                
+            }
+            /*var response = await userService.GetTenant(TenantName);
             if(response != null && response.Success)
             {
-                var request = new RequestLoginModel()
-                {
-                    UserNameOrEmailAddress = UserName,
-                    Password = Password
-                };
-                var loginResponse = await userService.Login(request);
-                if (loginResponse.Result == 1)
-                {
-                    // doğru
-                }
-            }
+               
+            }*/
         }
         catch (Exception e)
         {
             CarpetExceptionLogger.Instance.CrashLog(e);
         }
 
-        var u = new UserModel
-        {
-            UserName = userName,
-            Password = password,
-            Active = true,
-            IsNotification = true,
-            FullName = "bestx. " + userName + password
-        };
 
         /*var test = await _userService.Register(u);
 
@@ -83,7 +80,7 @@ public partial class LoginViewModel(
         await _navigationService.NavigateMainPageAsync(AppShell.Route.HomePage, parameter);
         */
         
-        Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
+        //Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
         _ = dialogService.Hide();
     }
 }

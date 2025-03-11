@@ -22,6 +22,7 @@ public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabas
 
     public async Task<LoginResponse> Login(RequestLoginModel req)
     {
+        await LogOut();
         var result = await apiService.Login(req);
         return result;
         /*
@@ -37,6 +38,11 @@ public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabas
         */
     }
 
+    public async Task<bool> LogOut()
+    {
+        return await apiService.Logout();
+    }
+
     public async Task<bool> Register(UserModel u)
     {
         Guard.IsNotNull(u);
@@ -49,6 +55,7 @@ public interface IUserService : IEntryService<UserEntity, UserModel>
 {
     Task<TenantModel> GetTenant(string tenantName);
     Task<LoginResponse> Login(RequestLoginModel req);
+    Task<bool> LogOut();
 
     Task<bool> Register(UserModel u);
 }

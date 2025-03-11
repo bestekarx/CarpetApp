@@ -11,7 +11,15 @@ public class AndroidHttpMessageHandler : IPlatformHttpMessageHandler
         return new AndroidMessageHandler
         {
             ServerCertificateCustomValidationCallback = (httpRequestMessage, certificate, chain, sslPolicyErrors) =>
-                certificate?.Issuer == "CN=localhost" || sslPolicyErrors == SslPolicyErrors.None
+            {
+                // For development, we can allow all certificates
+                // In production, you should implement proper certificate validation
+#if DEBUG
+                return true; // Accept all certificates in DEBUG mode
+#else
+                return certificate?.Issuer == "CN=localhost" || sslPolicyErrors == SslPolicyErrors.None;
+#endif
+            }
         };
     }
 }

@@ -7,12 +7,14 @@ namespace CarpetApp.Services.API.Interfaces;
 
 public interface IBaseApiService
 {
-    [Post("/abp/multi-tenancy/tenants/by-name/{name")]
+    [Get("/abp/multi-tenancy/tenants/by-name/{name}")]
     Task<TenantModel> GetTenant(string name);
     
     [Post("/account/login")]
     Task<LoginResponse> Login(RequestLoginModel model);
     
+    [Get("/account/logout")]
+    Task<bool> Logout();
     
     
     
