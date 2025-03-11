@@ -37,7 +37,6 @@ public class Order : AuditedAggregateRoot<Guid>, IMultiTenant
         Active = true;
         CalculatedUsed = false;
         
-        // Discount hesaplama
         CalculateOrderTotalPrice();
     }
     

@@ -86,19 +86,12 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
             queryable = queryable.Where(o => o.ReceivedId.HasValue && receivedIds.Contains(o.ReceivedId.Value));
         }
         
-        if (input.ReceivedId.HasValue)
-        {
-            queryable = queryable.Where(x => x.ReceivedId == input.ReceivedId.Value);
-        }
-        
         if (input.CustomerId.HasValue)
         {
-            // İlgili customer'a ait received'ları bul
             var receiveds = await _receivedRepository.GetQueryableAsync();
             var filteredReceiveds = receiveds.Where(r => r.CustomerId == input.CustomerId.Value);
             var receivedIds = filteredReceiveds.Select(r => r.Id).ToList();
             
-            // Bu received'larla ilişkili order'ları filtrele
             queryable = queryable.Where(o => o.ReceivedId.HasValue && receivedIds.Contains(o.ReceivedId.Value));
         }
         
@@ -116,7 +109,6 @@ public class OrderAppService : WebCarpetAppAppService, IOrderAppService
 
         var dtos = ObjectMapper.Map<List<Order>, List<OrderDto>>(items);
         
-        // OrderDto'larına ürün ve resim bilgilerini ekleyelim
         foreach (var dto in dtos)
         {
             var products = await _orderedProductRepository.GetListAsync(p => p.OrderId == dto.Id);
