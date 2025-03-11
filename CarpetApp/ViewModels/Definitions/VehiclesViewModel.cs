@@ -12,19 +12,22 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-public partial class VehiclesViewModel(INavigationService navigationService, IVehicleService vehicleService, IDialogService dialogService) : ViewModelBase
+public partial class VehiclesViewModel(
+    INavigationService navigationService,
+    IVehicleService vehicleService,
+    IDialogService dialogService) : ViewModelBase
 {
     #region Properties
 
-    [ObservableProperty]
-    private List<VehicleModel> _vehicleList;
+    [ObservableProperty] private List<VehicleModel> _vehicleList;
 
-    [ObservableProperty]
-    private string _searchText;
+    [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private int? _stateSelectedIndex = -1;
-    [ObservableProperty] private NameValueModel? _selectedState = null;
+    [ObservableProperty] private NameValueModel? _selectedState;
 
     #endregion
 
@@ -44,7 +47,7 @@ public partial class VehiclesViewModel(INavigationService navigationService, IVe
             {
                 { Consts.Type, DetailPageType.Edit },
                 { Consts.VehicleModel, obj }
-            }); 
+            });
     }
 
     [RelayCommand]
@@ -65,8 +68,8 @@ public partial class VehiclesViewModel(INavigationService navigationService, IVe
             var isActive = true;
             if (SelectedState != null)
                 isActive = SelectedState.Value == 1;
-            
-            var filter = new BaseFilterModel()
+
+            var filter = new BaseFilterModel
             {
                 Active = isActive,
                 Search = SearchText
@@ -83,7 +86,8 @@ public partial class VehiclesViewModel(INavigationService navigationService, IVe
 
     private async Task OnVehicleAddTapped()
     {
-        await navigationService.NavigateToAsync(Consts.VehicleDetail, new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+        await navigationService.NavigateToAsync(Consts.VehicleDetail,
+            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
     }
 
     #endregion

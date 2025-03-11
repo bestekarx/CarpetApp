@@ -1,11 +1,11 @@
 ﻿using CarpetApp.Helpers;
 using CarpetApp.Repositories;
-using CarpetApp.Services.API.Interfaces;
 using CarpetApp.Repositories.Entry.EntryBase;
 using CarpetApp.Resources.Strings;
 using CarpetApp.Service;
 using CarpetApp.Service.Database;
 using CarpetApp.Service.Dialog;
+using CarpetApp.Services.API.Interfaces;
 using CarpetApp.Services.Database;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
@@ -27,6 +27,8 @@ namespace CarpetApp;
 
 public static class MauiProgram
 {
+    private static HttpClient _httpClient;
+    private static RefitSettings _refitSettings;
     public static StaticConfigurationService StaticConfiguration { get; } = new();
 
     public static MauiApp CreateMauiApp()
@@ -35,7 +37,7 @@ public static class MauiProgram
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
-            .ConfigureSyncfusionCore() 
+            .ConfigureSyncfusionCore()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("Comfortaa-Bold.ttf", "Bold");
@@ -52,7 +54,7 @@ public static class MauiProgram
             .ConfigureMopups();
 
         FormHandler.RemoveBorders();
-        
+
         builder.Services.AddSingleton<IPlatformHttpMessageHandler>(_ =>
         {
 #if ANDROID
@@ -68,7 +70,7 @@ public static class MauiProgram
 
         return builder.Build();
     }
-    
+
     public static MauiAppBuilder ConfigureLocalization(this MauiAppBuilder builder)
     {
         builder.Services
@@ -77,18 +79,15 @@ public static class MauiProgram
 
         return builder;
     }
-    
+
     public static MauiAppBuilder ConfigureLogging(this MauiAppBuilder builder)
     {
 #if DEBUG
-        builder.Services.AddLogging(configure =>
-        {
-            configure.AddDebug();
-        });
+        builder.Services.AddLogging(configure => { configure.AddDebug(); });
 #endif
         return builder;
     }
-    
+
     public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
         builder.Services
@@ -109,7 +108,7 @@ public static class MauiProgram
 
         return builder;
     }
-    
+
     public static MauiAppBuilder RegisterRepositories(this MauiAppBuilder builder)
     {
         builder.Services
@@ -120,10 +119,10 @@ public static class MauiProgram
 
         return builder;
     }
-    
+
     public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
     {
-        builder.RegisterTransients(new Type[]
+        builder.RegisterTransients(new[]
         {
             typeof(SplashScreenViewModel),
             typeof(HomeViewModel),
@@ -142,14 +141,14 @@ public static class MauiProgram
             typeof(SmsUsersViewModel),
             typeof(SmsUserDetailViewModel),
             typeof(SmsTemplatesViewModel),
-            typeof(SmsTemplateDetailViewModel),
+            typeof(SmsTemplateDetailViewModel)
         });
         return builder;
     }
-    
+
     public static MauiAppBuilder RegisterViews(this MauiAppBuilder builder)
     {
-        builder.RegisterTransients(new Type[]
+        builder.RegisterTransients(new[]
         {
             typeof(SplashScreenPage),
             typeof(HomePage),
@@ -168,22 +167,56 @@ public static class MauiProgram
             typeof(SmsUsersPage),
             typeof(SmsUserDetailPage),
             typeof(SmsTemplatesPage),
-            typeof(SmsTemplateDetailPage),
+            typeof(SmsTemplateDetailPage)
         });
         return builder;
     }
 
     private static MauiAppBuilder RegisterTransients(this MauiAppBuilder builder, IList<Type> types)
     {
-        foreach (var type in types)
-        {
-            builder.Services.AddTransient(type);
-        }
+        foreach (var type in types) builder.Services.AddTransient(type);
         return builder;
     }
-    
-    
-    static void ConfigureRefit(IServiceCollection services)
+    /*
+    private static void ConfigureRefit(IServiceCollection services)
+    {
+        var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
+            ? "http://192.168.1.9:5244/api"
+            : "http://localhost:5244/api";
+
+        services.AddTransient(provider =>
+        {
+            var tokenService = provider.GetRequiredService<TokenService>();
+            var messageHandler = provider.GetRequiredService<IPlatformHttpMessageHandler>();
+
+            _httpClient = new HttpClient(new CustomHttpMessageHandler
+            {
+                /*InnerHandler = new SentryHttpMessageHandler
+                {
+                    InnerHandler = messageHandler.GetHttpMessageHandler()
+                }
+            })
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
+
+            /*
+            _refitSettings = new RefitSettings
+            {
+              AuthorizationHeaderValueGetter = (_, _) => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.ToString())
+            };
+
+            tokenService.TokenUpdated += () =>
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenService.Token);
+            };
+
+            return RestService.For<IBaseApiService>(_httpClient, _refitSettings);
+        });
+    }*/
+
+
+    private static void ConfigureRefit(IServiceCollection services)
     {
         services.AddRefitClient<IBaseApiService>(ConfigureRefitSettings).ConfigureHttpClient(SetHttpClient);
 
@@ -197,11 +230,12 @@ public static class MauiProgram
                 AuthorizationHeaderValueGetter = (_, __) => Task.FromResult(tokenService.Token ?? string.Empty)
             };
         }
+
         static void SetHttpClient(HttpClient httpClient)
         {
             var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-                ? "http://10.0.2.2:5244/api"
-                : "http://localhost:5244/api";
+                ? "http://192.168.1.9:44302/api"
+                : "https://localhost:44302/api";
             httpClient.BaseAddress = new Uri(baseUrl);
         }
     }

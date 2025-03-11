@@ -10,20 +10,21 @@ public abstract class EntryRepositoryException
 
 public class ContentTypeStringUnknownException : EntryRepositoryException
 {
-    public string ContentTypeString { get; set; }
-
-    public ContentTypeStringUnknownException(string contentTypeString) : base($"Content Type string '{contentTypeString}' is unknown.")
+    public ContentTypeStringUnknownException(string contentTypeString) : base(
+        $"Content Type string '{contentTypeString}' is unknown.")
     {
         ContentTypeString = contentTypeString;
     }
+
+    public string ContentTypeString { get; set; }
 }
 
 public class EntryTypeUnknownException : EntryRepositoryException
 {
-    public Type Type { get; set; }
-
     public EntryTypeUnknownException(Type type) : base($"Entity Type '{type.FullName}' is unknown.")
     {
         Type = type;
     }
+
+    public Type Type { get; set; }
 }

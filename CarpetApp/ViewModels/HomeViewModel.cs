@@ -1,11 +1,9 @@
-using System.Threading.Tasks;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
 using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
 
 namespace CarpetApp.ViewModels;
 
@@ -15,10 +13,9 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
     #region Fields
 
     private UserModel _loginModel = new();
-    
 
     #endregion
-    
+
     #region Properties
 
     [ObservableProperty] private string _welcomeText;
@@ -32,24 +29,22 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
         get => _loginModel;
         set
         {
-            if (SetProperty(ref _loginModel, value with { }))
-            {
-                OnPropertyChanged();
-            }
+            if (SetProperty(ref _loginModel, value with { })) OnPropertyChanged();
         }
     }
+
     #endregion
 
     #region Commands
 
     [RelayCommand]
-    async Task Back()
+    private async Task Back()
     {
         await navigationService.GoBackAsync();
     }
 
     #endregion
-    
+
     public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnViewNavigatedTo(args);

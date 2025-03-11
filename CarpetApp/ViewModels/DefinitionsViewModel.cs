@@ -4,12 +4,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CarpetApp.ViewModels;
 
-public partial class DefinitionsViewModel(INavigationService navigationService) : ViewModelBase 
+public partial class DefinitionsViewModel(INavigationService navigationService) : ViewModelBase
 {
     #region Commands
 
     [RelayCommand]
-    async Task OpenPage(string page)
+    private async Task OpenPage(string page)
     {
         await OpenPageTapped(page);
     }
@@ -22,6 +22,6 @@ public partial class DefinitionsViewModel(INavigationService navigationService) 
     {
         await navigationService.NavigateToAsync(page);
     }
-    
+
     #endregion
 }

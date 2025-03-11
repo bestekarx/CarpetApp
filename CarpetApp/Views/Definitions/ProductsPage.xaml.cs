@@ -8,6 +8,6 @@ public partial class ProductsPage : ContentPageBase
     public ProductsPage(ProductsViewModel viewModel)
     {
         InitializeComponent();
-        this.BindingContext = viewModel;
+        BindingContext = viewModel;
     }
 }

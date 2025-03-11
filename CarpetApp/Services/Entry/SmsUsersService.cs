@@ -20,14 +20,15 @@ public class SmsUsersService(IEntryRepository<SmsUsersEntity> entityRepository)
             query = query.Where(q => q.Title.ToLower().Contains(filter.Search.ToLower()));
 
         if (filter.Types?.Any() == true)
-            query = filter.Types.Aggregate(query, (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
+            query = filter.Types.Aggregate(query,
+                (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
 
         if (filter.IsSync.HasValue)
-            query = query.Where(q => q.IsSync == (int) filter.IsSync);
-        
+            query = query.Where(q => q.IsSync == (int)filter.IsSync);
+
         return query.ToList();
     }
-    
+
     public async Task<bool> SaveAsync(SmsUsersModel model)
     {
         try
@@ -39,10 +40,12 @@ public class SmsUsersService(IEntryRepository<SmsUsersEntity> entityRepository)
             CarpetExceptionLogger.Instance.CrashLog(e);
             return false;
         }
+
         return true;
     }
 }
-public interface ISmsUsersService: IEntryService<SmsUsersEntity, SmsUsersModel>
+
+public interface ISmsUsersService : IEntryService<SmsUsersEntity, SmsUsersModel>
 {
     public Task<bool> SaveAsync(SmsUsersModel model);
     public Task<List<SmsUsersModel>> GetAsync(BaseFilterModel filter);

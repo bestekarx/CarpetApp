@@ -40,8 +40,9 @@ public class DialogService : Service, IDialogService, IDisposable
 
     public async Task<IDisposable> Show()
     {
-        await _navigation.PushAsync(new LoadingPopup(), true);
-        return this;    }
+        await _navigation.PushAsync(new LoadingPopup());
+        return this;
+    }
 
     public Task Hide()
     {

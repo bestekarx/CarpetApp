@@ -12,19 +12,22 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-public partial class SmsUsersViewModel(INavigationService navigationService, ISmsUsersService smsUserservice, IDialogService dialogService) : ViewModelBase
+public partial class SmsUsersViewModel(
+    INavigationService navigationService,
+    ISmsUsersService smsUserservice,
+    IDialogService dialogService) : ViewModelBase
 {
     #region Properties
 
-    [ObservableProperty]
-    private List<SmsUsersModel> _smsUsersList;
+    [ObservableProperty] private List<SmsUsersModel> _smsUsersList;
 
-    [ObservableProperty]
-    private string _searchText;
+    [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private int? _stateSelectedIndex = -1;
-    [ObservableProperty] private NameValueModel? _selectedState = null;
+    [ObservableProperty] private NameValueModel? _selectedState;
 
     #endregion
 
@@ -44,7 +47,7 @@ public partial class SmsUsersViewModel(INavigationService navigationService, ISm
             {
                 { Consts.Type, DetailPageType.Edit },
                 { Consts.SmsUsersModel, obj }
-            }); 
+            });
     }
 
     [RelayCommand]
@@ -65,8 +68,8 @@ public partial class SmsUsersViewModel(INavigationService navigationService, ISm
             var isActive = true;
             if (SelectedState != null)
                 isActive = SelectedState.Value == 1;
-            
-            var filter = new BaseFilterModel()
+
+            var filter = new BaseFilterModel
             {
                 Active = isActive,
                 Search = SearchText
@@ -83,7 +86,8 @@ public partial class SmsUsersViewModel(INavigationService navigationService, ISm
 
     private async Task OnSmsUsersAddTapped()
     {
-        await navigationService.NavigateToAsync(Consts.SmsUserDetail, new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+        await navigationService.NavigateToAsync(Consts.SmsUserDetail,
+            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
     }
 
     #endregion

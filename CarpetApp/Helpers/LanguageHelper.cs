@@ -8,9 +8,6 @@ public static class LanguageHelper
     {
         CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-        MainThread.BeginInvokeOnMainThread(() =>
-        {
-            Thread.CurrentThread.CurrentUICulture = culture;
-        });
+        MainThread.BeginInvokeOnMainThread(() => { Thread.CurrentThread.CurrentUICulture = culture; });
     }
 }

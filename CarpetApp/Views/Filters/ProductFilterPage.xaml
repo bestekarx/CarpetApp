@@ -1,102 +1,103 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <the49:BottomSheet
-    BackgroundColor="White"
-    HasBackdrop="True"
-    HasHandle="True"
-    x:Class="CarpetApp.Views.Filters.ProductFilterPage"
-    x:DataType="viewModels:ProductFilterViewModel"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-    xmlns:core="http://schemas.syncfusion.com/maui"
-    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    xmlns:strings="clr-namespace:CarpetApp.Resources.Strings"
-    xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
-    xmlns:viewModels="clr-namespace:CarpetApp.ViewModels"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <the49:BottomSheet.BindingContext>
-        <viewModels:ProductFilterViewModel />
-    </the49:BottomSheet.BindingContext>
-    <the49:BottomSheet.Detents>
-        <!--  Stop at the height of the screen  -->
-        <!--  Stop at the height of the page content  -->
-        <the49:ContentDetent />
-        <!--  Stop at 120dp  -->
-        <the49:HeightDetent Height="50" />
-        <!--  Stop at 45% of the screen height  -->
-        <the49:RatioDetent Ratio="0.45" />
-        <!--  Stop at the height of the divider view  -->
-        <the49:AnchorDetent Anchor="{x:Reference divider}" />
-    </the49:BottomSheet.Detents>
-    <VerticalStackLayout Spacing="16">
-        <VerticalStackLayout>
-            <!--  some content  -->
-        </VerticalStackLayout>
-        <BoxView x:Name="divider" />
-        <Grid RowDefinitions="Auto, *">
-
-            <Grid ColumnDefinitions="*, *" Grid.Row="0">
-
-                <buttons:SfButton
-                    Background="Transparent"
-                    Clicked="OnFilterClear_OnClicked"
-                    Grid.Column="0"
-                    HorizontalOptions="Start"
-                    Margin="16,0,16,0"
-                    Style="{StaticResource SaveButton}"
-                    Text="{x:Static strings:AppStrings.Temizle}"
-                    TextColor="{StaticResource ClearRed}"
-                    WidthRequest="100" />
-
-                <buttons:SfButton
-                    Clicked="OnFilterApplied_OnClicked"
-                    Grid.Column="1"
-                    HorizontalOptions="End"
-                    Margin="16,0,16,0"
-                    Style="{StaticResource SaveButton}"
-                    Text="{x:Static strings:AppStrings.Uygula}"
-                    WidthRequest="100" />
-            </Grid>
-
-            <Grid Grid.Row="1">
-                <VerticalStackLayout>
-                    <core:SfTextInputLayout
-                        HeightRequest="60"
-                        Hint="{x:Static strings:AppStrings.Durum}"
-                        Style="{StaticResource DefaultInput}">
-
-                        <editors:SfComboBox
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding StateList}"
-                            SelectedIndex="{Binding StateSelectedIndex}"
-                            SelectedItem="{Binding SelectedState}"
-                            SelectedValuePath="Value"
-                            Style="{StaticResource DefaultComboBox}" />
-
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                    </core:SfTextInputLayout>
-
-                    <core:SfTextInputLayout
-                        HeightRequest="60"
-                        Hint="{x:Static strings:AppStrings.UrunTipi}"
-                        Style="{StaticResource DefaultInput}">
-
-                        <editors:SfComboBox
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding ProductTypes}"
-                            SelectedIndex="{Binding ProductTypeSelectedIndex}"
-                            SelectedItem="{Binding SelectedProductType}"
-                            SelectedValuePath="Value"
-                            Style="{StaticResource DefaultComboBox}" />
-
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                    </core:SfTextInputLayout>
-                </VerticalStackLayout>
-            </Grid>
-
-        </Grid>
+  x:Class="CarpetApp.Views.Filters.ProductFilterPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+  xmlns:core="http://schemas.syncfusion.com/maui"
+  xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:strings="clr-namespace:CarpetApp.Resources.Strings"
+  xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+  xmlns:viewModels="clr-namespace:CarpetApp.ViewModels"
+  x:DataType="viewModels:ProductFilterViewModel"
+  BackgroundColor="White"
+  HasBackdrop="True"
+  HasHandle="True">
+  <the49:BottomSheet.BindingContext>
+    <viewModels:ProductFilterViewModel />
+  </the49:BottomSheet.BindingContext>
+  <the49:BottomSheet.Detents>
+    <!--  Stop at the height of the screen  -->
+    <!--  Stop at the height of the page content  -->
+    <the49:ContentDetent />
+    <!--  Stop at 120dp  -->
+    <the49:HeightDetent Height="50" />
+    <!--  Stop at 45% of the screen height  -->
+    <the49:RatioDetent Ratio="0.45" />
+    <!--  Stop at the height of the divider view  -->
+    <the49:AnchorDetent Anchor="{x:Reference divider}" />
+  </the49:BottomSheet.Detents>
+  <VerticalStackLayout Spacing="16">
+    <VerticalStackLayout>
+      <!--  some content  -->
     </VerticalStackLayout>
+    <BoxView x:Name="divider" />
+    <Grid RowDefinitions="Auto, *">
+
+      <Grid Grid.Row="0" ColumnDefinitions="*, *">
+
+        <buttons:SfButton
+          Grid.Column="0"
+          Margin="16,0,16,0"
+          Background="Transparent"
+          Clicked="OnFilterClear_OnClicked"
+          HorizontalOptions="Start"
+          Style="{StaticResource SaveButton}"
+          Text="{x:Static strings:AppStrings.Temizle}"
+          TextColor="{StaticResource ClearRed}"
+          WidthRequest="100" />
+
+        <buttons:SfButton
+          Grid.Column="1"
+          Margin="16,0,16,0"
+          Clicked="OnFilterApplied_OnClicked"
+          HorizontalOptions="End"
+          Style="{StaticResource SaveButton}"
+          Text="{x:Static strings:AppStrings.Uygula}"
+          WidthRequest="100" />
+      </Grid>
+
+      <Grid Grid.Row="1">
+        <VerticalStackLayout>
+          <core:SfTextInputLayout
+            HeightRequest="60"
+            Hint="{x:Static strings:AppStrings.Durum}"
+            Style="{StaticResource DefaultInput}">
+
+            <editors:SfComboBox
+              DisplayMemberPath="Name"
+              ItemsSource="{Binding StateList}"
+              SelectedIndex="{Binding StateSelectedIndex}"
+              SelectedItem="{Binding SelectedState}"
+              SelectedValuePath="Value"
+              Style="{StaticResource DefaultComboBox}" />
+
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+          </core:SfTextInputLayout>
+
+          <core:SfTextInputLayout
+            HeightRequest="60"
+            Hint="{x:Static strings:AppStrings.UrunTipi}"
+            Style="{StaticResource DefaultInput}">
+
+            <editors:SfComboBox
+              DisplayMemberPath="Name"
+              ItemsSource="{Binding ProductTypes}"
+              SelectedIndex="{Binding ProductTypeSelectedIndex}"
+              SelectedItem="{Binding SelectedProductType}"
+              SelectedValuePath="Value"
+              Style="{StaticResource DefaultComboBox}" />
+
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+          </core:SfTextInputLayout>
+        </VerticalStackLayout>
+      </Grid>
+
+    </Grid>
+  </VerticalStackLayout>
 </the49:BottomSheet>

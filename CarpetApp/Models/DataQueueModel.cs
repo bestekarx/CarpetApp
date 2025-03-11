@@ -8,8 +8,8 @@ public record DataQueueModel : Entry
     public EnSyncDataType Type { get; set; }
     public string JsonData { get; set; }
     public DateTime Date { get; set; }
-    
-    
+
+
     private static string Generator()
     {
         const string result = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

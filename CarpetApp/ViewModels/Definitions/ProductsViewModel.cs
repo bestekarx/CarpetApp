@@ -13,26 +13,26 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-public partial class ProductsViewModel(INavigationService navigationService, IProductService productService, IDialogService dialogService) : ViewModelBase
+public partial class ProductsViewModel(
+    INavigationService navigationService,
+    IProductService productService,
+    IDialogService dialogService) : ViewModelBase
 {
     #region Fields
 
     private bool _isActive = true;
     private NameValueModel _selectedProductType;
-    private ProductFilterParameters _selectedFilter; 
-    
+    private ProductFilterParameters _selectedFilter;
+
     #endregion
-    
+
     #region Properties
 
-    [ObservableProperty]
-    private List<ProductModel> _productList;
+    [ObservableProperty] private List<ProductModel> _productList;
 
-    [ObservableProperty]
-    private string _searchText;
+    [ObservableProperty] private string _searchText;
 
-    [ObservableProperty]
-    private bool _isFilter;
+    [ObservableProperty] private bool _isFilter;
 
     #endregion
 
@@ -76,7 +76,7 @@ public partial class ProductsViewModel(INavigationService navigationService, IPr
     {
         using (await dialogService.Show())
         {
-            BaseFilterModel filter = new BaseFilterModel()
+            var filter = new BaseFilterModel
             {
                 Active = _isActive,
                 Type = _selectedProductType,
@@ -107,7 +107,7 @@ public partial class ProductsViewModel(INavigationService navigationService, IPr
         bottomSheet.FilterApplied += OnFilterApplied;
         await bottomSheet.ShowAsync();
     }
-    
+
     private async void OnFilterApplied(ProductFilterParameters filterParameters)
     {
         var (isActive, selectedProductType) = ExtractFilterParameters(filterParameters);
@@ -116,7 +116,8 @@ public partial class ProductsViewModel(INavigationService navigationService, IPr
         await Init();
     }
 
-    private (bool isActive, NameValueModel selectedProductType) ExtractFilterParameters(ProductFilterParameters filterParameters)
+    private (bool isActive, NameValueModel selectedProductType) ExtractFilterParameters(
+        ProductFilterParameters filterParameters)
     {
         var isActive = true;
         IsFilter = false;
@@ -124,7 +125,6 @@ public partial class ProductsViewModel(INavigationService navigationService, IPr
         var selectedProductType = filterParameters?.ProductType;
 
         if (filterParameters?.State != null)
-        {
             switch (filterParameters.State.Value)
             {
                 case 0:
@@ -135,7 +135,6 @@ public partial class ProductsViewModel(INavigationService navigationService, IPr
                     IsFilter = true;
                     break;
             }
-        }
 
         if (selectedProductType != null)
             IsFilter = true;

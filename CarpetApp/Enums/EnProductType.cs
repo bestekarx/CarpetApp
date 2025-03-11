@@ -1,8 +1,8 @@
 namespace CarpetApp.Enums;
 
-public enum EnProductType : int
+public enum EnProductType
 {
-     Hizmet = 0, 
-     SabitUrun = 1,
-     Fason = 2
+    Hizmet = 0,
+    SabitUrun = 1,
+    Fason = 2
 }

@@ -4,10 +4,16 @@ namespace CarpetApp.ViewModels.Base;
 
 public class ViewModelBase : ObservableObject, IViewModelBase, IDisposable
 {
-    private bool _disposed = false;
     private readonly SemaphoreSlim _isBusyLock = new(1, 1);
-    private bool _isBusy = false;
-    private bool _isInitialized = false;
+    private bool _disposed;
+    private bool _isBusy;
+    private bool _isInitialized;
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     public bool IsBusy
     {
@@ -27,42 +33,7 @@ public class ViewModelBase : ObservableObject, IViewModelBase, IDisposable
     }
 
     public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
-    { }
-
-    public async Task IsBusyFor(Func<Task> unitOfWork)
     {
-        await _isBusyLock.WaitAsync();
-
-        try
-        {
-            IsBusy = true;
-            await unitOfWork();
-        }
-        finally
-        {
-            IsBusy = false;
-            _isBusyLock.Release();
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-
-    public virtual void Dispose(bool disposing)
-    {
-        if (_disposed)
-        {
-            return;
-        }
-        _disposed = true;
-
-        if (disposing)
-        {
-            _isBusyLock.Dispose();
-        }
     }
 
     public virtual void OnViewAppearing()
@@ -83,5 +54,29 @@ public class ViewModelBase : ObservableObject, IViewModelBase, IDisposable
 
     public virtual void OnViewNavigatedTo(NavigatedToEventArgs args)
     {
+    }
+
+    public async Task IsBusyFor(Func<Task> unitOfWork)
+    {
+        await _isBusyLock.WaitAsync();
+
+        try
+        {
+            IsBusy = true;
+            await unitOfWork();
+        }
+        finally
+        {
+            IsBusy = false;
+            _isBusyLock.Release();
+        }
+    }
+
+    public virtual void Dispose(bool disposing)
+    {
+        if (_disposed) return;
+        _disposed = true;
+
+        if (disposing) _isBusyLock.Dispose();
     }
 }

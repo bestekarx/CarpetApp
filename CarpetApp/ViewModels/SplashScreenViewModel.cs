@@ -26,24 +26,22 @@ public class SplashScreenViewModel(
     {
         await databaseService.InitializeAsync().ConfigureAwait(false);
     }
-    
+
     private async Task SetupAppLanguageAsync()
     {
-        var preferredLanguageCode = await metadataService.GetMetadataAsync(Consts.LanguageCode, Consts.DefaultLanguageCode);
+        var preferredLanguageCode =
+            await metadataService.GetMetadataAsync(Consts.LanguageCode, Consts.DefaultLanguageCode);
         if (preferredLanguageCode != null)
             LanguageHelper.SwitchLanguage(new CultureInfo(preferredLanguageCode));
     }
-    
+
     private async Task InitializeAdvancedServicesAsync()
     {
         await databaseService.CreateTablesAsync().ConfigureAwait(false);
     }
-    
+
     private void NavigateToAppShell()
     {
-        MainThread.InvokeOnMainThreadAsync(() =>
-        {
-            Application.Current!.MainPage = new LoginPage(loginViewModel);
-        });
+        MainThread.InvokeOnMainThreadAsync(() => { Application.Current!.MainPage = new LoginPage(loginViewModel); });
     }
 }

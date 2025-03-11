@@ -1,4 +1,5 @@
 using CarpetApp.ViewModels.Definitions;
+using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
 namespace CarpetApp.Views.Definitions;
 
@@ -10,7 +11,7 @@ public partial class CompaniesPage
         BindingContext = viewModel;
     }
 
-    private void IsActiveComboBox_OnSelectionChanged(object sender, Syncfusion.Maui.Inputs.SelectionChangedEventArgs e)
+    private void IsActiveComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var viewModel = (CompaniesViewModel)BindingContext;
         _ = viewModel.Init();

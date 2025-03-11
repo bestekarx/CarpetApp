@@ -4,7 +4,7 @@ using CarpetApp.Models.API.Response;
 
 namespace CarpetApp.Services.API;
 
-public class ApiService 
+public class ApiService
 {
     public Task<List<ProductModel>> GetProductAsync()
     {

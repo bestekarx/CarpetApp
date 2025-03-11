@@ -11,19 +11,30 @@ using Newtonsoft.Json;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-
 [QueryProperty(nameof(DetailPageType), Consts.Type)]
 [QueryProperty(nameof(SmsTemplateModel), Consts.SmsTemplateModel)]
-
-public partial class SmsTemplateDetailViewModel(IDialogService dialogService, ISmsTemplateService smsTemplateService, IDataQueueService dataQueueService) : ViewModelBase
+public partial class SmsTemplateDetailViewModel(
+    IDialogService dialogService,
+    ISmsTemplateService smsTemplateService,
+    IDataQueueService dataQueueService) : ViewModelBase
 {
-    #region Fields
-    
-    private DetailPageType _detailPageType = Enums.DetailPageType.Add;
-    private SmsTemplateModel _smsTemplateModel;
-        
+    #region Commands
+
+    [RelayCommand]
+    private async Task CompleteAsync()
+    {
+        await IsBusyFor(Complete);
+    }
+
     #endregion
-    
+
+    #region Fields
+
+    private DetailPageType _detailPageType = DetailPageType.Add;
+    private SmsTemplateModel _smsTemplateModel;
+
+    #endregion
+
     #region GetParameters
 
     public DetailPageType DetailPageType
@@ -37,31 +48,24 @@ public partial class SmsTemplateDetailViewModel(IDialogService dialogService, IS
         get => _smsTemplateModel;
         set => SetProperty(ref _smsTemplateModel, value);
     }
-    
+
     #endregion
-    
+
     #region Properties
 
     [ObservableProperty] private string _title;
-    [ObservableProperty] private  bool _isTitleError;
-    
+    [ObservableProperty] private bool _isTitleError;
+
     [ObservableProperty] private string _content;
-    [ObservableProperty] private  bool _isContentError;
-    
-    [ObservableProperty] private int _dataTypeSelectedIndex = 0;
-    [ObservableProperty] private int _stateSelectedIndex = 0;
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+    [ObservableProperty] private bool _isContentError;
+
+    [ObservableProperty] private int _dataTypeSelectedIndex;
+    [ObservableProperty] private int _stateSelectedIndex;
+
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private NameValueModel _selectedState;
-
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    async Task CompleteAsync()
-    {
-        await IsBusyFor(Complete);
-    }
 
     #endregion
 
@@ -72,7 +76,7 @@ public partial class SmsTemplateDetailViewModel(IDialogService dialogService, IS
         InitializeDetails();
         return base.InitializeAsync();
     }
-    
+
     private void InitializeDetails()
     {
         if (DetailPageType == DetailPageType.Edit && SmsTemplateModel != null)
@@ -91,12 +95,12 @@ public partial class SmsTemplateDetailViewModel(IDialogService dialogService, IS
             return;
         }
 
-        if (DetailPageType == Enums.DetailPageType.Add)
+        if (DetailPageType == DetailPageType.Add)
         {
-            SmsTemplateModel = new SmsTemplateModel()
+            SmsTemplateModel = new SmsTemplateModel
             {
                 Title = Title,
-                Content = Content,
+                Content = Content
             };
         }
         else
@@ -108,23 +112,23 @@ public partial class SmsTemplateDetailViewModel(IDialogService dialogService, IS
 
         var result = await smsTemplateService.SaveAsync(SmsTemplateModel);
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
-        _= dialogService.ShowToast(message);
+        _ = dialogService.ShowToast(message);
 
         if (result)
         {
-            var dataQueueModel = new DataQueueModel()
+            var dataQueueModel = new DataQueueModel
             {
                 Type = EnSyncDataType.SmsTemplate,
                 JsonData = JsonConvert.SerializeObject(SmsTemplateModel),
-                Date = DateTime.Now,
+                Date = DateTime.Now
             };
-            _= dataQueueService.SaveAsync(dataQueueModel);
+            _ = dataQueueService.SaveAsync(dataQueueModel);
         }
 
-        if (result && DetailPageType == Enums.DetailPageType.Add)
+        if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
     }
-    
+
     private bool ValidateInputs()
     {
         IsTitleError = string.IsNullOrWhiteSpace(Title);
@@ -132,7 +136,7 @@ public partial class SmsTemplateDetailViewModel(IDialogService dialogService, IS
 
         return !(IsTitleError || IsContentError);
     }
-    
+
     private void ResetForm()
     {
         Title = string.Empty;

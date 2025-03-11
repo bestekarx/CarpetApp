@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using CarpetApp.Models.FilterParameterModels;
 using CarpetApp.ViewModels;
 using The49.Maui.BottomSheet;
@@ -8,12 +6,12 @@ namespace CarpetApp.Views.Filters;
 
 public partial class ProductFilterPage : BottomSheet
 {
-    public event Action<ProductFilterParameters> FilterApplied;
-
     public ProductFilterPage()
     {
         InitializeComponent();
     }
+
+    public event Action<ProductFilterParameters> FilterApplied;
 
     public async Task Init(ProductFilterParameters filterParameters)
     {
@@ -21,7 +19,7 @@ public partial class ProductFilterPage : BottomSheet
 
         viewModel.SelectedState = filterParameters.State;
         viewModel.StateSelectedIndex = filterParameters.State?.Value ?? null;
-        
+
         viewModel.SelectedProductType = filterParameters.ProductType;
         viewModel.ProductTypeSelectedIndex = filterParameters.ProductType?.Value ?? null;
     }

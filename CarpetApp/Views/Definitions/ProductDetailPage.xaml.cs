@@ -7,6 +7,6 @@ public partial class ProductDetailPage
     public ProductDetailPage(ProductDetailViewModel model)
     {
         InitializeComponent();
-        this.BindingContext = model;
+        BindingContext = model;
     }
 }

@@ -20,16 +20,15 @@ public class CompanyService(IEntryRepository<CompanyEntity> entityRepository)
             query = query.Where(q => q.Name.ToLower().Contains(filter.Search.ToLower()));
 
         if (filter.Types?.Any() == true)
-        {
-            query = filter.Types.Aggregate(query, (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
-        }
+            query = filter.Types.Aggregate(query,
+                (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
 
         if (filter.IsSync.HasValue)
-            query = query.Where(q => q.IsSync == (int) filter.IsSync);
-        
+            query = query.Where(q => q.IsSync == (int)filter.IsSync);
+
         return query.ToList();
     }
-    
+
     public async Task<bool> SaveAsync(CompanyModel model)
     {
         try
@@ -41,10 +40,12 @@ public class CompanyService(IEntryRepository<CompanyEntity> entityRepository)
             CarpetExceptionLogger.Instance.CrashLog(e);
             return false;
         }
+
         return true;
     }
 }
-public interface ICompanyService: IEntryService<CompanyEntity, CompanyModel>
+
+public interface ICompanyService : IEntryService<CompanyEntity, CompanyModel>
 {
     public Task<bool> SaveAsync(CompanyModel model);
     public Task<List<CompanyModel>> GetAsync(BaseFilterModel filter);

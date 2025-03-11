@@ -1,12 +1,13 @@
 using SQLite;
+using Entry = CarpetApp.Entities.Base.Entry;
 
 namespace CarpetApp.Entities;
 
 [Table("company")]
-public class CompanyEntity : CarpetApp.Entities.Base.Entry
+public class CompanyEntity : Entry
 {
-    [Column("message_settings_id")]  public int MessageSettingsId { get; set; }
-    [Column("name")]  public string Name { get; set; }
+    [Column("message_settings_id")] public int MessageSettingsId { get; set; }
+    [Column("name")] public string Name { get; set; }
     [Column("description")] public string Description { get; set; }
     [Column("color")] public string FirmColor { get; set; }
     [Column("money_unit")] public string MoneyUnit { get; set; }

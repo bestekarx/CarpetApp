@@ -14,7 +14,7 @@ public partial class AppShell
         InitializeRouting();
         BindingContext = model;
     }
-    
+
     private static void InitializeRouting()
     {
         Routing.RegisterRoute(Consts.LoadingPage, typeof(LoadingPopup));
@@ -35,6 +35,4 @@ public partial class AppShell
         Routing.RegisterRoute(Consts.SmsTemplatesPage, typeof(SmsTemplatesPage));
         Routing.RegisterRoute(Consts.SmsTemplateDetail, typeof(SmsTemplateDetailPage));
     }
-    
-   
 }

@@ -4,7 +4,7 @@ using CarpetApp.Service;
 namespace CarpetApp.Services.Entry;
 
 public interface IEntryService<TEntity, TModel> : IService
-    where TEntity : CarpetApp.Entities.Base.Entry, new()
+    where TEntity : Entities.Base.Entry, new()
     where TModel : Models.Entry, new()
 {
     public event EventHandler<EntryServiceEventArgs<TModel>>? ModelCreated;

@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace CarpetApp.Service;
 
 public class CarpetExceptionLogger
 {
-    private static readonly CarpetExceptionLogger _instance = new CarpetExceptionLogger();
-    public static CarpetExceptionLogger Instance
-    {
-        get { return _instance; }
-    }
-    public void CrashLog(Exception exception, Dictionary<string, string> properties = null, string customError = null, bool globalException = false)
+    public static CarpetExceptionLogger Instance { get; } = new();
+
+    public void CrashLog(Exception exception, Dictionary<string, string> properties = null, string customError = null,
+        bool globalException = false)
     {
         try
-        { 
+        {
             if (properties is null)
                 properties = new Dictionary<string, string>();
-                
+
             var methodName = new StackTrace(exception).GetFrame(0).GetMethod().Name;
             var pageName = new StackTrace(exception).GetFrame(0).GetMethod().DeclaringType.FullName;
             /*

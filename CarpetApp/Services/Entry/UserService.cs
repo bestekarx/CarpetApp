@@ -1,29 +1,42 @@
 using CarpetApp.Entities;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
+using CarpetApp.Models.API.Request;
+using CarpetApp.Models.API.Response;
 using CarpetApp.Repositories.Entry.EntryBase;
 using CarpetApp.Service.Database;
+using CarpetApp.Services.API.Interfaces;
 using CommunityToolkit.Diagnostics;
 
 namespace CarpetApp.Services.Entry;
 
-public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabaseService databaseService)
+public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabaseService databaseService, IBaseApiService apiService)
     : EntryService<UserEntity, UserModel>(entityRepository), IUserService
 {
-    
-    public async Task<UserModel> Login(string username, string password)
+    public Task<TenantModel> GetTenant(string tenantName)
     {
+        Guard.IsNotNullOrWhiteSpace(tenantName);
+        var result = apiService.GetTenant(tenantName);
+        return result;
+    }
+
+    public async Task<LoginResponse> Login(RequestLoginModel req)
+    {
+        var result = await apiService.Login(req);
+        return result;
+        /*
         Guard.IsNotNullOrWhiteSpace(username);
         Guard.IsNotNullOrWhiteSpace(password);
-        
-        var result = await base.FindAllAsync(new BaseFilterModel(){Active = true});
+
+        var result = await base.FindAllAsync(new BaseFilterModel { Active = true });
         var query = result.AsQueryable();
 
         query = query.Where(q => q.UserName == username && q.Password == password);
 
         return query.FirstOrDefault();
+        */
     }
-    
+
     public async Task<bool> Register(UserModel u)
     {
         Guard.IsNotNull(u);
@@ -32,9 +45,10 @@ public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabas
     }
 }
 
-public interface IUserService: IEntryService<UserEntity, UserModel>
+public interface IUserService : IEntryService<UserEntity, UserModel>
 {
-    Task<UserModel> Login(string userName, string password);
+    Task<TenantModel> GetTenant(string tenantName);
+    Task<LoginResponse> Login(RequestLoginModel req);
 
     Task<bool> Register(UserModel u);
 }

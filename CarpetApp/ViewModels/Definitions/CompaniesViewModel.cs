@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CarpetApp.Enums;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
@@ -11,23 +9,25 @@ using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-public partial class CompaniesViewModel(INavigationService navigationService, ICompanyService companyService, IDialogService dialogService) : ViewModelBase
+public partial class CompaniesViewModel(
+    INavigationService navigationService,
+    ICompanyService companyService,
+    IDialogService dialogService) : ViewModelBase
 {
     #region Properties
 
-    [ObservableProperty]
-    private List<CompanyModel> _companyList;
+    [ObservableProperty] private List<CompanyModel> _companyList;
 
-    [ObservableProperty]
-    private string _searchText;
+    [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private int? _stateSelectedIndex = -1;
-    [ObservableProperty] private NameValueModel? _selectedState = null;
+    [ObservableProperty] private NameValueModel? _selectedState;
 
     #endregion
 
@@ -47,7 +47,7 @@ public partial class CompaniesViewModel(INavigationService navigationService, IC
             {
                 { Consts.Type, DetailPageType.Edit },
                 { Consts.CompanyModel, obj }
-            }); 
+            });
     }
 
     [RelayCommand]
@@ -68,8 +68,8 @@ public partial class CompaniesViewModel(INavigationService navigationService, IC
             var isActive = true;
             if (SelectedState != null)
                 isActive = SelectedState.Value == 1;
-            
-            var filter = new BaseFilterModel()
+
+            var filter = new BaseFilterModel
             {
                 Active = isActive,
                 Search = SearchText
@@ -86,7 +86,8 @@ public partial class CompaniesViewModel(INavigationService navigationService, IC
 
     private async Task OnCompanyAddTapped()
     {
-        await navigationService.NavigateToAsync(Consts.CompanyDetail, new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+        await navigationService.NavigateToAsync(Consts.CompanyDetail,
+            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
     }
 
     #endregion

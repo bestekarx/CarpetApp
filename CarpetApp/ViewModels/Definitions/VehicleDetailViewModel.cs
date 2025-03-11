@@ -11,18 +11,30 @@ using Newtonsoft.Json;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-
 [QueryProperty(nameof(DetailPageType), Consts.Type)]
 [QueryProperty(nameof(VehicleModel), Consts.VehicleModel)]
-public partial class VehicleDetailViewModel(IDialogService dialogService, IVehicleService vehicleService, IDataQueueService dataQueueService) : ViewModelBase
+public partial class VehicleDetailViewModel(
+    IDialogService dialogService,
+    IVehicleService vehicleService,
+    IDataQueueService dataQueueService) : ViewModelBase
 {
+    #region Commands
+
+    [RelayCommand]
+    private async Task CompleteAsync()
+    {
+        await IsBusyFor(Complete);
+    }
+
+    #endregion
+
     #region Fields
-    
+
     private DetailPageType _detailPageType = DetailPageType.Add;
     private VehicleModel _vehicleModel;
-        
+
     #endregion
-    
+
     #region GetParameters
 
     public DetailPageType DetailPageType
@@ -36,27 +48,20 @@ public partial class VehicleDetailViewModel(IDialogService dialogService, IVehic
         get => _vehicleModel;
         set => SetProperty(ref _vehicleModel, value);
     }
-    
+
     #endregion
-    
+
     #region Properties
 
     [ObservableProperty] private string _name;
-    [ObservableProperty] private  bool _isNameError;
-    [ObservableProperty] private int _dataTypeSelectedIndex = 0;
-    [ObservableProperty] private int _stateSelectedIndex = 0;
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+    [ObservableProperty] private bool _isNameError;
+    [ObservableProperty] private int _dataTypeSelectedIndex;
+    [ObservableProperty] private int _stateSelectedIndex;
+
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private NameValueModel _selectedState;
-
-    #endregion
-
-    #region Commands
-
-    [RelayCommand]
-    async Task CompleteAsync()
-    {
-        await IsBusyFor(Complete);
-    }
 
     #endregion
 
@@ -67,7 +72,7 @@ public partial class VehicleDetailViewModel(IDialogService dialogService, IVehic
         InitializeDetails();
         return base.InitializeAsync();
     }
-    
+
     private void InitializeDetails()
     {
         if (DetailPageType == DetailPageType.Edit && VehicleModel != null)
@@ -87,9 +92,9 @@ public partial class VehicleDetailViewModel(IDialogService dialogService, IVehic
 
         if (DetailPageType == DetailPageType.Add)
         {
-            VehicleModel = new VehicleModel()
+            VehicleModel = new VehicleModel
             {
-                Name = Name,
+                Name = Name
             };
         }
         else
@@ -100,30 +105,30 @@ public partial class VehicleDetailViewModel(IDialogService dialogService, IVehic
 
         var result = await vehicleService.SaveAsync(VehicleModel);
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
-        _= dialogService.ShowToast(message);
+        _ = dialogService.ShowToast(message);
 
         if (result)
         {
-            var dataQueueModel = new DataQueueModel()
+            var dataQueueModel = new DataQueueModel
             {
                 Type = EnSyncDataType.Vehicle,
                 JsonData = JsonConvert.SerializeObject(VehicleModel),
-                Date = DateTime.Now,
+                Date = DateTime.Now
             };
-            _= dataQueueService.SaveAsync(dataQueueModel);
+            _ = dataQueueService.SaveAsync(dataQueueModel);
         }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
     }
-    
+
     private bool ValidateInputs()
     {
         IsNameError = string.IsNullOrWhiteSpace(Name);
 
-        return !(IsNameError);
+        return !IsNameError;
     }
-    
+
     private void ResetForm()
     {
         Name = string.Empty;

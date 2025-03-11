@@ -29,10 +29,15 @@ public class NavigationService : Service.Service, INavigationService
     public Task NavigateMainPageAsync(string route, IDictionary<string, object> parameters = null)
     {
         Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
-        return parameters != null ? Shell.Current.GoToAsync($"{route}", parameters) : Shell.Current.GoToAsync($"{route}");
+        return parameters != null
+            ? Shell.Current.GoToAsync($"{route}", parameters)
+            : Shell.Current.GoToAsync($"{route}");
     }
 
-    public Task GoBackAsync() => Shell.Current.GoToAsync("..");
+    public Task GoBackAsync()
+    {
+        return Shell.Current.GoToAsync("..");
+    }
 
     public async Task ConfirmForLeaveAsync(string? title = null, string? message = null)
     {
@@ -41,9 +46,6 @@ public class NavigationService : Service.Service, INavigationService
 
         var shouldGoBack = await _dialogService.RequestAsync(title, message);
 
-        if (shouldGoBack)
-        {
-            await GoBackAsync();
-        }
+        if (shouldGoBack) await GoBackAsync();
     }
 }

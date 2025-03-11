@@ -1,228 +1,229 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <services:ContentPageBase
-    BackgroundColor="{StaticResource MainBgColor}"
-    x:Class="CarpetApp.Views.Definitions.CompanyDetailPage"
-    x:DataType="vm:CompanyDetailViewModel"
-    x:Name="CompanyDetailPageKey"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-    xmlns:core="http://schemas.syncfusion.com/maui"
-    xmlns:myEnum="clr-namespace:CarpetApp.Enums"
-    xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
-    xmlns:services="clr-namespace:CarpetApp.Services"
-    xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+  x:Class="CarpetApp.Views.Definitions.CompanyDetailPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+  xmlns:core="http://schemas.syncfusion.com/maui"
+  xmlns:myEnum="clr-namespace:CarpetApp.Enums"
+  xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
+  xmlns:services="clr-namespace:CarpetApp.Services"
+  xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
+  x:Name="CompanyDetailPageKey"
+  x:DataType="vm:CompanyDetailViewModel"
+  BackgroundColor="{StaticResource MainBgColor}">
 
-    <Shell.TitleView>
-        <Label Style="{StaticResource NavBarTitleLabelStyle}">
-            <Label.Triggers>
-                <DataTrigger
-                    Binding="{Binding DetailPageType}"
-                    TargetType="Label"
-                    Value="{x:Static myEnum:DetailPageType.Add}">
-                    <Setter Property="Text" Value="{x:Static resx:AppStrings.FirmaEkle}" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding DetailPageType}"
-                    TargetType="Label"
-                    Value="{x:Static myEnum:DetailPageType.Edit}">
-                    <Setter Property="Text" Value="{x:Static resx:AppStrings.FirmaDuzenle}" />
-                </DataTrigger>
-            </Label.Triggers>
-        </Label>
-    </Shell.TitleView>
+  <Shell.TitleView>
+    <Label Style="{StaticResource NavBarTitleLabelStyle}">
+      <Label.Triggers>
+        <DataTrigger
+          Binding="{Binding DetailPageType}"
+          TargetType="Label"
+          Value="{x:Static myEnum:DetailPageType.Add}">
+          <Setter Property="Text" Value="{x:Static resx:AppStrings.FirmaEkle}" />
+        </DataTrigger>
+        <DataTrigger
+          Binding="{Binding DetailPageType}"
+          TargetType="Label"
+          Value="{x:Static myEnum:DetailPageType.Edit}">
+          <Setter Property="Text" Value="{x:Static resx:AppStrings.FirmaDuzenle}" />
+        </DataTrigger>
+      </Label.Triggers>
+    </Label>
+  </Shell.TitleView>
 
-    <ContentPage.Content>
+  <ContentPage.Content>
 
-        <Grid RowDefinitions="Auto, Auto, Auto">
+    <Grid RowDefinitions="Auto, Auto, Auto">
 
-            <Frame
-                BackgroundColor="White"
-                BorderColor="{StaticResource Gray400}"
-                Grid.Row="0"
-                Margin="16,24,16,16"
-                Padding="8"
-                VerticalOptions="Center">
+      <Frame
+        Grid.Row="0"
+        Margin="16,24,16,16"
+        Padding="8"
+        BackgroundColor="White"
+        BorderColor="{StaticResource Gray400}"
+        VerticalOptions="Center">
 
-                <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto">
 
-                    <!--  renkler  -->
-                    <VerticalStackLayout
-                        Grid.Row="0"
-                        Margin="8,0,8,0"
-                        Spacing="8">
-                        <Label
-                            FontFamily="Bold"
-                            FontSize="16"
-                            Text="{x:Static resx:AppStrings.FirmaRengi}" />
-                        <Grid
-                            ColumnDefinitions="*, *, *, *, *,* "
-                            ColumnSpacing="4"
-                            HeightRequest="50">
-                            <BoxView
-                                Color="{StaticResource CompanyColor1}"
-                                CornerRadius="4"
-                                Grid.Column="0">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor1}" />
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-                            <BoxView
-                                Color="{StaticResource CompanyColor2}"
-                                CornerRadius="4"
-                                Grid.Column="1">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor2}" />
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-                            <BoxView
-                                Color="{StaticResource CompanyColor3}"
-                                CornerRadius="4"
-                                Grid.Column="2">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor3}" />
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-                            <BoxView
-                                Color="{StaticResource CompanyColor4}"
-                                CornerRadius="4"
-                                Grid.Column="3">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor4}" />
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-                            <BoxView
-                                Color="{StaticResource CompanyColor5}"
-                                CornerRadius="4"
-                                Grid.Column="4">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor5}" />
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-                            <BoxView
-                                Color="{StaticResource CompanyColor6}"
-                                CornerRadius="4"
-                                Grid.Column="5">
-                                <BoxView.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor6}" />
-                                </BoxView.GestureRecognizers>
-                            </BoxView>
-                        </Grid>
-                    </VerticalStackLayout>
+          <!--  renkler  -->
+          <VerticalStackLayout
+            Grid.Row="0"
+            Margin="8,0,8,0"
+            Spacing="8">
+            <Label
+              FontFamily="Bold"
+              FontSize="16"
+              Text="{x:Static resx:AppStrings.FirmaRengi}" />
+            <Grid
+              ColumnDefinitions="*, *, *, *, *,* "
+              ColumnSpacing="4"
+              HeightRequest="50">
+              <BoxView
+                Grid.Column="0"
+                CornerRadius="4"
+                Color="{StaticResource CompanyColor1}">
+                <BoxView.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor1}" />
+                </BoxView.GestureRecognizers>
+              </BoxView>
+              <BoxView
+                Grid.Column="1"
+                CornerRadius="4"
+                Color="{StaticResource CompanyColor2}">
+                <BoxView.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor2}" />
+                </BoxView.GestureRecognizers>
+              </BoxView>
+              <BoxView
+                Grid.Column="2"
+                CornerRadius="4"
+                Color="{StaticResource CompanyColor3}">
+                <BoxView.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor3}" />
+                </BoxView.GestureRecognizers>
+              </BoxView>
+              <BoxView
+                Grid.Column="3"
+                CornerRadius="4"
+                Color="{StaticResource CompanyColor4}">
+                <BoxView.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor4}" />
+                </BoxView.GestureRecognizers>
+              </BoxView>
+              <BoxView
+                Grid.Column="4"
+                CornerRadius="4"
+                Color="{StaticResource CompanyColor5}">
+                <BoxView.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor5}" />
+                </BoxView.GestureRecognizers>
+              </BoxView>
+              <BoxView
+                Grid.Column="5"
+                CornerRadius="4"
+                Color="{StaticResource CompanyColor6}">
+                <BoxView.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference CompanyDetailPageKey}, Path=BindingContext.SelectCompanyColorCommand}" CommandParameter="{StaticResource CompanyColor6}" />
+                </BoxView.GestureRecognizers>
+              </BoxView>
+            </Grid>
+          </VerticalStackLayout>
 
 
-                    <!--  name  -->
-                    <core:SfTextInputLayout
-                        ContainerType="Outlined"
-                        Grid.Row="1"
-                        HasError="{Binding IsNameError}"
-                        Hint="{x:Static resx:AppStrings.FirmaAdi}"
-                        Style="{StaticResource DefaultInput}">
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                        <Entry ReturnType="Next" Text="{Binding Name}" />
-                    </core:SfTextInputLayout>
+          <!--  name  -->
+          <core:SfTextInputLayout
+            Grid.Row="1"
+            ContainerType="Outlined"
+            HasError="{Binding IsNameError}"
+            Hint="{x:Static resx:AppStrings.FirmaAdi}"
+            Style="{StaticResource DefaultInput}">
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+            <Entry ReturnType="Next" Text="{Binding Name}" />
+          </core:SfTextInputLayout>
 
-                    <!--  description  -->
-                    <core:SfTextInputLayout
-                        ContainerType="Outlined"
-                        Grid.Row="2"
-                        Hint="{x:Static resx:AppStrings.Aciklama}"
-                        Style="{StaticResource DefaultInput}">
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                        <Entry ReturnType="Next" Text="{Binding Description}" />
-                    </core:SfTextInputLayout>
+          <!--  description  -->
+          <core:SfTextInputLayout
+            Grid.Row="2"
+            ContainerType="Outlined"
+            Hint="{x:Static resx:AppStrings.Aciklama}"
+            Style="{StaticResource DefaultInput}">
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+            <Entry ReturnType="Next" Text="{Binding Description}" />
+          </core:SfTextInputLayout>
 
-                    <!--  money unit  -->
-                    <core:SfTextInputLayout
-                        ContainerType="Outlined"
-                        Grid.Row="3"
-                        HasError="{Binding IsMoneyError}"
-                        Hint="{x:Static resx:AppStrings.ParaBirimi}"
-                        Style="{StaticResource DefaultInput}">
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                        <Entry ReturnType="Next" Text="{Binding MoneyUnit}" />
-                    </core:SfTextInputLayout>
+          <!--  money unit  -->
+          <core:SfTextInputLayout
+            Grid.Row="3"
+            ContainerType="Outlined"
+            HasError="{Binding IsMoneyError}"
+            Hint="{x:Static resx:AppStrings.ParaBirimi}"
+            Style="{StaticResource DefaultInput}">
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+            <Entry ReturnType="Next" Text="{Binding MoneyUnit}" />
+          </core:SfTextInputLayout>
 
-                    <!--  hmd Process  -->
-                    <core:SfTextInputLayout
-                        ContainerType="Outlined"
-                        Grid.Row="4"
-                        HasError="{Binding IsHmdProcessError}"
-                        Hint="{x:Static resx:AppStrings.TeslimatGunu}"
-                        Style="{StaticResource DefaultInput}">
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                        <Entry
-                            Keyboard="Numeric"
-                            ReturnType="Next"
-                            Text="{Binding HmdProcess}" />
-                    </core:SfTextInputLayout>
+          <!--  hmd Process  -->
+          <core:SfTextInputLayout
+            Grid.Row="4"
+            ContainerType="Outlined"
+            HasError="{Binding IsHmdProcessError}"
+            Hint="{x:Static resx:AppStrings.TeslimatGunu}"
+            Style="{StaticResource DefaultInput}">
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+            <Entry
+              Keyboard="Numeric"
+              ReturnType="Next"
+              Text="{Binding HmdProcess}" />
+          </core:SfTextInputLayout>
 
-                    <Label
-                        Grid.Row="5"
-                        Margin="16,8,16,0"
-                        Style="{StaticResource InfoLabel}"
-                        Text="{x:Static resx:AppStrings.TeslimatGunuNot}" />
+          <Label
+            Grid.Row="5"
+            Margin="16,8,16,0"
+            Style="{StaticResource InfoLabel}"
+            Text="{x:Static resx:AppStrings.TeslimatGunuNot}" />
 
-                    <!--  durum  -->
-                    <core:SfTextInputLayout
-                        Grid.Row="6"
-                        HeightRequest="60"
-                        Hint="{x:Static resx:AppStrings.Durum}"
-                        Style="{StaticResource DefaultInput}">
+          <!--  durum  -->
+          <core:SfTextInputLayout
+            Grid.Row="6"
+            HeightRequest="60"
+            Hint="{x:Static resx:AppStrings.Durum}"
+            Style="{StaticResource DefaultInput}">
 
-                        <sfComboBox:SfComboBox
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding StateList}"
-                            SelectedIndex="{Binding StateSelectedIndex}"
-                            SelectedItem="{Binding SelectedState}"
-                            SelectedValuePath="Value"
-                            Style="{StaticResource DefaultComboBox}" />
+            <sfComboBox:SfComboBox
+              DisplayMemberPath="Name"
+              ItemsSource="{Binding StateList}"
+              SelectedIndex="{Binding StateSelectedIndex}"
+              SelectedItem="{Binding SelectedState}"
+              SelectedValuePath="Value"
+              Style="{StaticResource DefaultComboBox}" />
 
-                        <core:SfTextInputLayout.Triggers>
-                            <DataTrigger
-                                Binding="{Binding DetailPageType}"
-                                TargetType="core:SfTextInputLayout"
-                                Value="{x:Static myEnum:DetailPageType.Add}">
-                                <Setter Property="IsVisible" Value="False" />
-                            </DataTrigger>
-                            <DataTrigger
-                                Binding="{Binding DetailPageType}"
-                                TargetType="core:SfTextInputLayout"
-                                Value="{x:Static myEnum:DetailPageType.Edit}">
-                                <Setter Property="IsVisible" Value="True" />
-                            </DataTrigger>
-                        </core:SfTextInputLayout.Triggers>
+            <core:SfTextInputLayout.Triggers>
+              <DataTrigger
+                Binding="{Binding DetailPageType}"
+                TargetType="core:SfTextInputLayout"
+                Value="{x:Static myEnum:DetailPageType.Add}">
+                <Setter Property="IsVisible" Value="False" />
+              </DataTrigger>
+              <DataTrigger
+                Binding="{Binding DetailPageType}"
+                TargetType="core:SfTextInputLayout"
+                Value="{x:Static myEnum:DetailPageType.Edit}">
+                <Setter Property="IsVisible" Value="True" />
+              </DataTrigger>
+            </core:SfTextInputLayout.Triggers>
 
-                        <core:SfTextInputLayout.HintLabelStyle>
-                            <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                        </core:SfTextInputLayout.HintLabelStyle>
-                    </core:SfTextInputLayout>
-
-                </Grid>
-            </Frame>
-
-            <!--  tamamla  -->
-            <buttons:SfButton
-                Background="{Binding SelectedFirmColor}"
-                BackgroundColor="{Binding SelectedFirmColor}"
-                Command="{Binding CompleteCommand}"
-                Grid.Row="1"
-                Margin="16,0,16,0"
-                Style="{StaticResource SaveButton}"
-                Text="{x:Static resx:AppStrings.Tamamla}"
-                TextColor="White" />
+            <core:SfTextInputLayout.HintLabelStyle>
+              <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+            </core:SfTextInputLayout.HintLabelStyle>
+          </core:SfTextInputLayout>
 
         </Grid>
+      </Frame>
 
-    </ContentPage.Content>
+      <!--  tamamla  -->
+      <buttons:SfButton
+        Grid.Row="1"
+        Margin="16,0,16,0"
+        Background="{Binding SelectedFirmColor}"
+        BackgroundColor="{Binding SelectedFirmColor}"
+        Command="{Binding CompleteCommand}"
+        Style="{StaticResource SaveButton}"
+        Text="{x:Static resx:AppStrings.Tamamla}"
+        TextColor="White" />
+
+    </Grid>
+
+  </ContentPage.Content>
 
 </services:ContentPageBase>

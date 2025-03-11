@@ -1,14 +1,15 @@
 using SQLite;
+using Entry = CarpetApp.Entities.Base.Entry;
 
 namespace CarpetApp.Entities;
 
 [Table("users")]
-public class UserEntity : CarpetApp.Entities.Base.Entry
+public class UserEntity : Entry
 {
-    [Column("auth_id")]  public int AuthId { get; set; }
-    [Column("vehicle_id")]  public int VehicleId { get; set; }
-    [Column("print_tag_id")]  public int PrintTagId { get; set; }
-    [Column("print_normal_id")]  public int PrintNormalId { get; set; }
+    [Column("auth_id")] public int AuthId { get; set; }
+    [Column("vehicle_id")] public int VehicleId { get; set; }
+    [Column("print_tag_id")] public int PrintTagId { get; set; }
+    [Column("print_normal_id")] public int PrintNormalId { get; set; }
     [Column("username")] public string UserName { get; set; }
     [Column("login_code")] public int LoginCode { get; set; }
     [Column("password")] public string Password { get; set; }

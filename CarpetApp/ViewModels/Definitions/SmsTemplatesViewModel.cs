@@ -12,19 +12,22 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace CarpetApp.ViewModels.Definitions;
 
-public partial class SmsTemplatesViewModel(INavigationService navigationService, ISmsTemplateService smsTemplateservice, IDialogService dialogService) : ViewModelBase
+public partial class SmsTemplatesViewModel(
+    INavigationService navigationService,
+    ISmsTemplateService smsTemplateservice,
+    IDialogService dialogService) : ViewModelBase
 {
     #region Properties
 
-    [ObservableProperty]
-    private List<SmsTemplateModel> _smsTemplateList;
+    [ObservableProperty] private List<SmsTemplateModel> _smsTemplateList;
 
-    [ObservableProperty]
-    private string _searchText;
+    [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private int? _stateSelectedIndex = -1;
-    [ObservableProperty] private NameValueModel? _selectedState = null;
+    [ObservableProperty] private NameValueModel? _selectedState;
 
     #endregion
 
@@ -44,7 +47,7 @@ public partial class SmsTemplatesViewModel(INavigationService navigationService,
             {
                 { Consts.Type, DetailPageType.Edit },
                 { Consts.SmsTemplateModel, obj }
-            }); 
+            });
     }
 
     [RelayCommand]
@@ -65,8 +68,8 @@ public partial class SmsTemplatesViewModel(INavigationService navigationService,
             var isActive = true;
             if (SelectedState != null)
                 isActive = SelectedState.Value == 1;
-            
-            var filter = new BaseFilterModel()
+
+            var filter = new BaseFilterModel
             {
                 Active = isActive,
                 Search = SearchText
@@ -83,7 +86,8 @@ public partial class SmsTemplatesViewModel(INavigationService navigationService,
 
     private async Task OnSmsTemplateAddTapped()
     {
-        await navigationService.NavigateToAsync(Consts.SmsTemplateDetail, new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+        await navigationService.NavigateToAsync(Consts.SmsTemplateDetail,
+            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
     }
 
     #endregion

@@ -1,5 +1,3 @@
-using CarpetApp.Repositories.Entry;
-
 namespace CarpetApp.Extensions;
 
 public static class EntryExtensions

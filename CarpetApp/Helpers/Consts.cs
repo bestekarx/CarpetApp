@@ -17,7 +17,7 @@ public static class Consts
     public const string SmsTemplateModel = nameof(SmsTemplateModel);
 
     #endregion
-    
+
     #region ParamModelKey
 
     public const string State = nameof(State);
@@ -47,5 +47,4 @@ public static class Consts
     public const string DataPage = "DataPage";
 
     #endregion
-    
 }

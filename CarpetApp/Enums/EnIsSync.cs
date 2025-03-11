@@ -1,6 +1,6 @@
 namespace CarpetApp.Enums;
 
-public enum EnIsSync : int
+public enum EnIsSync
 {
     Waiting = 0,
     Send = 1

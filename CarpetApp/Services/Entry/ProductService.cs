@@ -24,16 +24,15 @@ public class ProductService(IEntryRepository<ProductEntity> entityRepository)
             query = query.Where(q => q.Type == (EnProductType)filter.Type.Value);
 
         if (filter.Types?.Any() == true)
-        {
-            query = filter.Types.Aggregate(query, (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
-        }
+            query = filter.Types.Aggregate(query,
+                (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
 
         if (filter.IsSync.HasValue)
-            query = query.Where(q => q.IsSync == (int) filter.IsSync);
-        
+            query = query.Where(q => q.IsSync == (int)filter.IsSync);
+
         return query.ToList();
     }
-    
+
     public async Task<bool> SaveAsync(ProductModel model)
     {
         try
@@ -45,10 +44,12 @@ public class ProductService(IEntryRepository<ProductEntity> entityRepository)
             CarpetExceptionLogger.Instance.CrashLog(e);
             return false;
         }
+
         return true;
     }
 }
-public interface IProductService: IEntryService<ProductEntity, ProductModel>
+
+public interface IProductService : IEntryService<ProductEntity, ProductModel>
 {
     public Task<bool> SaveAsync(ProductModel model);
     public Task<List<ProductModel>> GetAsync(BaseFilterModel filter);

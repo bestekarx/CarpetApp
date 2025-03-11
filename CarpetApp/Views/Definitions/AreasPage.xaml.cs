@@ -17,5 +17,4 @@ public partial class AreasPage
         var viewModel = (AreasViewModel)BindingContext;
         _ = viewModel.Init();
     }
-    
 }

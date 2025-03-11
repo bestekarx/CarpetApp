@@ -13,15 +13,18 @@ namespace CarpetApp.ViewModels.Definitions;
 
 [QueryProperty(nameof(DetailPageType), Consts.Type)]
 [QueryProperty(nameof(CompanyModel), Consts.CompanyModel)]
-public partial class CompanyDetailViewModel(IDialogService dialogService, ICompanyService companyService, IDataQueueService dataQueueService) : ViewModelBase
+public partial class CompanyDetailViewModel(
+    IDialogService dialogService,
+    ICompanyService companyService,
+    IDataQueueService dataQueueService) : ViewModelBase
 {
     #region Fields
-    
-    private DetailPageType _detailPageType = Enums.DetailPageType.Add;
+
+    private DetailPageType _detailPageType = DetailPageType.Add;
     private CompanyModel _companyModel;
-        
+
     #endregion
-    
+
     #region GetParameters
 
     public DetailPageType DetailPageType
@@ -35,29 +38,32 @@ public partial class CompanyDetailViewModel(IDialogService dialogService, ICompa
         get => _companyModel;
         set => SetProperty(ref _companyModel, value);
     }
-    
+
     #endregion
-    
+
     #region Properties
 
     [ObservableProperty] private string _name;
-    [ObservableProperty] private  bool _isNameError;
+    [ObservableProperty] private bool _isNameError;
 
     [ObservableProperty] private string _description;
     [ObservableProperty] private bool _isDescriptionError;
-    
+
     [ObservableProperty] private string _selectedColor;
     [ObservableProperty] private string _moneyUnit;
     [ObservableProperty] private bool _isMoneyError;
-    
+
     [ObservableProperty] private Color _selectedFirmColor = Color.FromArgb("#FFB93B");
     [ObservableProperty] private string _hmdProcess;
     [ObservableProperty] private bool _isHmdProcessError;
-    
-    
-    [ObservableProperty] private int _dataTypeSelectedIndex = 0;
-    [ObservableProperty] private int _stateSelectedIndex = 0;
-    [ObservableProperty] private List<NameValueModel> _stateList = [new NameValueModel{Name = AppStrings.Pasif, Value = 0}, new NameValueModel{Name = AppStrings.Aktif, Value = 1} ];
+
+
+    [ObservableProperty] private int _dataTypeSelectedIndex;
+    [ObservableProperty] private int _stateSelectedIndex;
+
+    [ObservableProperty] private List<NameValueModel> _stateList =
+        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+
     [ObservableProperty] private NameValueModel _selectedState;
 
     #endregion
@@ -65,13 +71,13 @@ public partial class CompanyDetailViewModel(IDialogService dialogService, ICompa
     #region Commands
 
     [RelayCommand]
-    async Task CompleteAsync()
+    private async Task CompleteAsync()
     {
         await IsBusyFor(Complete);
     }
-    
+
     [RelayCommand]
-    async Task SelectCompanyColor(Color color)
+    private async Task SelectCompanyColor(Color color)
     {
         SelectedFirmColor = color;
     }
@@ -85,7 +91,7 @@ public partial class CompanyDetailViewModel(IDialogService dialogService, ICompa
         InitializeDetails();
         return base.InitializeAsync();
     }
-    
+
     private void InitializeDetails()
     {
         if (DetailPageType == DetailPageType.Edit && CompanyModel != null)
@@ -94,7 +100,7 @@ public partial class CompanyDetailViewModel(IDialogService dialogService, ICompa
             Description = CompanyModel.Description;
             MoneyUnit = CompanyModel.MoneyUnit;
             HmdProcess = CompanyModel.HmdProcess.ToString();
-            SelectedFirmColor =  Color.FromArgb(CompanyModel.FirmColor); 
+            SelectedFirmColor = Color.FromArgb(CompanyModel.FirmColor);
             StateSelectedIndex = CompanyModel.Active ? 1 : 0;
         }
     }
@@ -109,7 +115,7 @@ public partial class CompanyDetailViewModel(IDialogService dialogService, ICompa
 
         if (DetailPageType == DetailPageType.Add)
         {
-            CompanyModel = new CompanyModel()
+            CompanyModel = new CompanyModel
             {
                 Name = Name,
                 Description = Description,
@@ -130,32 +136,32 @@ public partial class CompanyDetailViewModel(IDialogService dialogService, ICompa
 
         var result = await companyService.SaveAsync(CompanyModel);
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
-        _= dialogService.ShowToast(message);
+        _ = dialogService.ShowToast(message);
 
         if (result)
         {
-            var dataQueueModel = new DataQueueModel()
+            var dataQueueModel = new DataQueueModel
             {
                 Type = EnSyncDataType.Company,
                 JsonData = JsonConvert.SerializeObject(CompanyModel),
-                Date = DateTime.Now,
+                Date = DateTime.Now
             };
-            _= dataQueueService.SaveAsync(dataQueueModel);
+            _ = dataQueueService.SaveAsync(dataQueueModel);
         }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
     }
-    
+
     private bool ValidateInputs()
     {
         IsNameError = string.IsNullOrWhiteSpace(Name);
-        IsHmdProcessError = string.IsNullOrWhiteSpace(HmdProcess); 
-        IsMoneyError = string.IsNullOrWhiteSpace(MoneyUnit); 
+        IsHmdProcessError = string.IsNullOrWhiteSpace(HmdProcess);
+        IsMoneyError = string.IsNullOrWhiteSpace(MoneyUnit);
 
         return !(IsNameError || IsHmdProcessError);
     }
-    
+
     private void ResetForm()
     {
         Name = string.Empty;

@@ -8,7 +8,7 @@ public class StaticConfigurationService : Service, IStaticConfigurationService
     {
         get
         {
-            string title = AppStrings.AppName;
+            var title = AppStrings.AppName;
 #if DEBUG
             title += " (DEV)";
 #endif
@@ -17,5 +17,4 @@ public class StaticConfigurationService : Service, IStaticConfigurationService
     }
 
     public string MainDatabasePath => Path.Combine(FileSystem.AppDataDirectory, "MainDatabase.sqlite3");
-
 }

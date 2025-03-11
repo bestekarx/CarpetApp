@@ -10,26 +10,26 @@ public abstract class Repository<T> : IRepository<T>
 
     protected virtual void OnEntityCreated(T entityCreated)
     {
-        EntityCreated?.Invoke(this, new(entityCreated));
+        EntityCreated?.Invoke(this, new RepositoryEventArgs<T>(entityCreated));
     }
 
     protected virtual void OnEntityUpdated(T entityUpdated)
     {
-        EntityUpdated?.Invoke(this, new(entityUpdated));
+        EntityUpdated?.Invoke(this, new RepositoryEventArgs<T>(entityUpdated));
     }
 
     protected virtual void OnEntityRemoved(T entityRemoved)
     {
-        EntityRemoved?.Invoke(this, new(entityRemoved));
+        EntityRemoved?.Invoke(this, new RepositoryEventArgs<T>(entityRemoved));
     }
 }
 
 public class RepositoryEventArgs<T> : EventArgs
 {
-    public T Entity { get; }
-
     public RepositoryEventArgs(T entity)
     {
         Entity = entity;
     }
+
+    public T Entity { get; }
 }

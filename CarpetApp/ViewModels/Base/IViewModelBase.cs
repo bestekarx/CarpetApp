@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-
 namespace CarpetApp.ViewModels.Base;
 
 public interface IViewModelBase : IQueryAttributable

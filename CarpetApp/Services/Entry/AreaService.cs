@@ -20,16 +20,15 @@ public class AreaService(IEntryRepository<AreaEntity> entityRepository)
             query = query.Where(q => q.Name.ToLower().Contains(filter.Search.ToLower()));
 
         if (filter.Types?.Any() == true)
-        {
-            query = filter.Types.Aggregate(query, (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
-        }
+            query = filter.Types.Aggregate(query,
+                (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
 
         if (filter.IsSync.HasValue)
-            query = query.Where(q => q.IsSync == (int) filter.IsSync);
-        
+            query = query.Where(q => q.IsSync == (int)filter.IsSync);
+
         return query.ToList();
     }
-    
+
     public async Task<bool> SaveAsync(AreaModel model)
     {
         try
@@ -41,10 +40,12 @@ public class AreaService(IEntryRepository<AreaEntity> entityRepository)
             CarpetExceptionLogger.Instance.CrashLog(e);
             return false;
         }
+
         return true;
     }
 }
-public interface IAreaService: IEntryService<AreaEntity, AreaModel>
+
+public interface IAreaService : IEntryService<AreaEntity, AreaModel>
 {
     public Task<bool> SaveAsync(AreaModel model);
     public Task<List<AreaModel>> GetAsync(BaseFilterModel filter);
