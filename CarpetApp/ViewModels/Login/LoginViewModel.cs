@@ -1,4 +1,3 @@
-using CarpetApp.Models;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
@@ -7,7 +6,6 @@ using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Syncfusion.Maui.Graphics.Internals;
 
 namespace CarpetApp.ViewModels.Login;
 
@@ -44,11 +42,13 @@ public partial class LoginViewModel(
             var loginResponse = await userService.Login(request);
             if (loginResponse.Result == 1)
             {
-                // doğru
+                var myProfile = await userService.MyProfile();
+                
+                Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
             }
             else
             {
-                
+                _= dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre yanlış!");
             }
             /*var response = await userService.GetTenant(TenantName);
             if(response != null && response.Success)

@@ -10,8 +10,8 @@ using CommunityToolkit.Diagnostics;
 
 namespace CarpetApp.Services.Entry;
 
-public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabaseService databaseService, IBaseApiService apiService)
-    : EntryService<UserEntity, UserModel>(entityRepository), IUserService
+public class UserService(IDatabaseService databaseService, IBaseApiService apiService)
+    :  IUserService
 {
     public Task<TenantModel> GetTenant(string tenantName)
     {
@@ -22,7 +22,7 @@ public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabas
 
     public async Task<LoginResponse> Login(RequestLoginModel req)
     {
-        await LogOut();
+        //await LogOut();
         var result = await apiService.Login(req);
         return result;
         /*
@@ -38,6 +38,11 @@ public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabas
         */
     }
 
+    public async Task<UserModel> MyProfile()
+    {
+        return await apiService.MyProfile();
+    }
+
     public async Task<bool> LogOut()
     {
         return await apiService.Logout();
@@ -51,10 +56,11 @@ public class UserService(IEntryRepository<UserEntity> entityRepository, IDatabas
     }
 }
 
-public interface IUserService : IEntryService<UserEntity, UserModel>
+public interface IUserService
 {
     Task<TenantModel> GetTenant(string tenantName);
     Task<LoginResponse> Login(RequestLoginModel req);
+    Task<UserModel> MyProfile();
     Task<bool> LogOut();
 
     Task<bool> Register(UserModel u);

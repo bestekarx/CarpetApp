@@ -27,10 +27,7 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
     public UserModel UserModel
     {
         get => _loginModel;
-        set
-        {
-            if (SetProperty(ref _loginModel, value with { })) OnPropertyChanged();
-        }
+        set => SetProperty(ref _loginModel, value);
     }
 
     #endregion
@@ -48,6 +45,6 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
     public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnViewNavigatedTo(args);
-        WelcomeText = "hoşgeldin " + UserModel.FullName;
+        //WelcomeText = "hoşgeldin " + UserModel.FullName;
     }
 }

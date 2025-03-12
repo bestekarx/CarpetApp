@@ -13,6 +13,9 @@ public interface IBaseApiService
     [Post("/account/login")]
     Task<LoginResponse> Login(RequestLoginModel model);
     
+    [Get("/account/my-profile")]
+    Task<UserModel> MyProfile();
+    
     [Get("/account/logout")]
     Task<bool> Logout();
     

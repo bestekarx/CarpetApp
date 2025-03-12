@@ -21,7 +21,6 @@ public class DatabaseService : DatabaseServiceBase, IDatabaseService
 
     public override Type[] Tables => new[]
     {
-        typeof(UserEntity),
         typeof(ProductEntity),
         typeof(DataQueueEntity),
         typeof(VehicleEntity),

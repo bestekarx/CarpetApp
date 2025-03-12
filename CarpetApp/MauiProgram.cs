@@ -224,9 +224,16 @@ public static class MauiProgram
         {
             var messageHandler = sp.GetRequiredService<IPlatformHttpMessageHandler>();
             var tokenService = sp.GetRequiredService<TokenService>();
+            
+            var platformHandler = messageHandler.GetHttpMessageHandler();
+            var customHandler = new CustomHttpMessageHandler
+            {
+                InnerHandler = platformHandler
+            };
+            
             return new RefitSettings
             {
-                HttpMessageHandlerFactory = () => messageHandler.GetHttpMessageHandler(),
+                HttpMessageHandlerFactory = () => customHandler,
                 AuthorizationHeaderValueGetter = (_, __) => Task.FromResult(tokenService.Token ?? string.Empty)
             };
         }
