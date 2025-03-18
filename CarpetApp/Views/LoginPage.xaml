@@ -37,12 +37,13 @@
                         <tabView:SfTabItem.Content>
 
                             <VerticalStackLayout Grid.Row="1" Margin="25,25,25,0">
+                                <!--
                                 <core:SfTextInputLayout
                                     ContainerBackground="{StaticResource LoginEntryBg}"
                                     Hint="İşletme Adı"
                                     Style="{StaticResource LoginInput}">
                                     <Entry ReturnType="Next" Text="{Binding TenantName}" />
-                                </core:SfTextInputLayout>
+                                </core:SfTextInputLayout>-->
 
                                 <core:SfTextInputLayout
                                     ContainerBackground="{StaticResource LoginEntryBg}"

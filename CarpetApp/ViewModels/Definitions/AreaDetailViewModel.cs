@@ -78,7 +78,7 @@ public partial class AreaDetailViewModel(
         if (DetailPageType == DetailPageType.Edit && AreaModel != null)
         {
             Name = AreaModel.Name;
-            StateSelectedIndex = AreaModel.Active ? 1 : 0;
+            StateSelectedIndex = AreaModel.IsActive ? 1 : 0;
         }
     }
 
@@ -100,7 +100,7 @@ public partial class AreaDetailViewModel(
         else
         {
             AreaModel.Name = Name;
-            AreaModel.Active = SelectedState.Value == 1;
+            AreaModel.IsActive = SelectedState.Value == 1;
         }
 
         var result = await areaService.SaveAsync(AreaModel);

@@ -9,6 +9,7 @@ public class BaseFilterModel
     public bool? Active { get; set; }
     public string? Search { get; set; }
     public EnIsSync? IsSync { get; set; }
-    public NameValueModel? Type { get; set; }
+    //public NameValueModel? Type { get; set; }
+    public int? Type { get; set; }
     public List<NameValueModel>? Types { get; set; }
 }

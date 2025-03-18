@@ -1,6 +1,6 @@
 namespace CarpetApp.Models;
 
-public class UserModel
+public record UserModel : AuditedEntity
 {
     public string UserName { get; set; }
     public string Email { get; set; }

@@ -1,17 +1,14 @@
-using CarpetApp.Entities;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
-using CarpetApp.Repositories.Entry.EntryBase;
-using CarpetApp.Service;
 
 namespace CarpetApp.Services.Entry;
 
-public class AreaService(IEntryRepository<AreaEntity> entityRepository)
-    : EntryService<AreaEntity, AreaModel>(entityRepository), IAreaService
+public class AreaService()
+    :  IAreaService
 {
     public async Task<List<AreaModel>> GetAsync(BaseFilterModel filter)
     {
-        var result = await base.FindAllAsync(filter);
+        /*var result = await base.FindAllAsync(filter);
         var query = result.AsQueryable();
         if (filter.Active.HasValue)
             query = query.Where(q => q.Active == filter.Active.Value);
@@ -27,25 +24,18 @@ public class AreaService(IEntryRepository<AreaEntity> entityRepository)
             query = query.Where(q => q.IsSync == (int)filter.IsSync);
 
         return query.ToList();
+        */
+        return new List<AreaModel>();
     }
 
     public async Task<bool> SaveAsync(AreaModel model)
     {
-        try
-        {
-            await UpdateOrInsertAsync(model).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            CarpetExceptionLogger.Instance.CrashLog(e);
-            return false;
-        }
 
         return true;
     }
 }
 
-public interface IAreaService : IEntryService<AreaEntity, AreaModel>
+public interface IAreaService
 {
     public Task<bool> SaveAsync(AreaModel model);
     public Task<List<AreaModel>> GetAsync(BaseFilterModel filter);

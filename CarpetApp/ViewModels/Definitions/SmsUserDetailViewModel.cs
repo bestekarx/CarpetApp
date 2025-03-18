@@ -88,7 +88,7 @@ public partial class SmsUserDetailViewModel(
             Title = SmsUserModel.Title;
             Username = SmsUserModel.UserName;
             Password = SmsUserModel.Password;
-            StateSelectedIndex = SmsUserModel.Active ? 1 : 0;
+            StateSelectedIndex = SmsUserModel.IsActive ? 1 : 0;
         }
     }
 
@@ -114,7 +114,7 @@ public partial class SmsUserDetailViewModel(
             SmsUserModel.Title = SmsUserModel.Title;
             SmsUserModel.UserName = SmsUserModel.UserName;
             SmsUserModel.Password = SmsUserModel.Password;
-            SmsUserModel.Active = SelectedState.Value == 1;
+            SmsUserModel.IsActive = SelectedState.Value == 1;
         }
 
         var result = await smsUserService.SaveAsync(SmsUserModel);

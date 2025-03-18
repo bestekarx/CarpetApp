@@ -1,6 +1,6 @@
 namespace CarpetApp.Models;
 
-public record CompanyModel : Entry
+public record CompanyModel : AuditedEntity
 {
     public int MessageSettingsId { get; set; }
     public string Name { get; set; }

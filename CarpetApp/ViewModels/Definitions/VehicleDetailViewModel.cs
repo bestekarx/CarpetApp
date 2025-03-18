@@ -78,7 +78,7 @@ public partial class VehicleDetailViewModel(
         if (DetailPageType == DetailPageType.Edit && VehicleModel != null)
         {
             Name = VehicleModel.Name;
-            StateSelectedIndex = VehicleModel.Active ? 1 : 0;
+            StateSelectedIndex = VehicleModel.IsActive ? 1 : 0;
         }
     }
 
@@ -100,7 +100,7 @@ public partial class VehicleDetailViewModel(
         else
         {
             VehicleModel.Name = Name;
-            VehicleModel.Active = SelectedState.Value == 1;
+            VehicleModel.IsActive = SelectedState.Value == 1;
         }
 
         var result = await vehicleService.SaveAsync(VehicleModel);

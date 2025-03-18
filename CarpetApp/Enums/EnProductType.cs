@@ -2,7 +2,8 @@ namespace CarpetApp.Enums;
 
 public enum EnProductType
 {
-    Hizmet = 0,
-    SabitUrun = 1,
-    Fason = 2
+    Service = 0,
+    Product = 1,
+    Fason = 2,
+    SeatClean = 3
 }

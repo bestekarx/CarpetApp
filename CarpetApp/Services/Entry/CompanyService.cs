@@ -1,17 +1,14 @@
-using CarpetApp.Entities;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
-using CarpetApp.Repositories.Entry.EntryBase;
-using CarpetApp.Service;
 
 namespace CarpetApp.Services.Entry;
 
-public class CompanyService(IEntryRepository<CompanyEntity> entityRepository)
-    : EntryService<CompanyEntity, CompanyModel>(entityRepository), ICompanyService
+public class CompanyService()
+    :  ICompanyService
 {
     public async Task<List<CompanyModel>> GetAsync(BaseFilterModel filter)
     {
-        var result = await base.FindAllAsync(filter);
+        /*var result = await base.FindAllAsync(filter);
         var query = result.AsQueryable();
         if (filter.Active.HasValue)
             query = query.Where(q => q.Active == filter.Active.Value);
@@ -26,26 +23,18 @@ public class CompanyService(IEntryRepository<CompanyEntity> entityRepository)
         if (filter.IsSync.HasValue)
             query = query.Where(q => q.IsSync == (int)filter.IsSync);
 
-        return query.ToList();
+        return query.ToList();*/
+        return new List<CompanyModel>();
     }
 
     public async Task<bool> SaveAsync(CompanyModel model)
     {
-        try
-        {
-            await UpdateOrInsertAsync(model).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            CarpetExceptionLogger.Instance.CrashLog(e);
-            return false;
-        }
 
         return true;
     }
 }
 
-public interface ICompanyService : IEntryService<CompanyEntity, CompanyModel>
+public interface ICompanyService 
 {
     public Task<bool> SaveAsync(CompanyModel model);
     public Task<List<CompanyModel>> GetAsync(BaseFilterModel filter);

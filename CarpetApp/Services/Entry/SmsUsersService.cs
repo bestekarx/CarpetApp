@@ -1,16 +1,14 @@
-using CarpetApp.Entities;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
-using CarpetApp.Repositories.Entry.EntryBase;
-using CarpetApp.Service;
 
 namespace CarpetApp.Services.Entry;
 
-public class SmsUsersService(IEntryRepository<SmsUsersEntity> entityRepository)
-    : EntryService<SmsUsersEntity, SmsUsersModel>(entityRepository), ISmsUsersService
+public class SmsUsersService()
+    :  ISmsUsersService
 {
     public async Task<List<SmsUsersModel>> GetAsync(BaseFilterModel filter)
     {
+        /*
         var result = await base.FindAllAsync(filter);
         var query = result.AsQueryable();
         if (filter.Active.HasValue)
@@ -27,25 +25,17 @@ public class SmsUsersService(IEntryRepository<SmsUsersEntity> entityRepository)
             query = query.Where(q => q.IsSync == (int)filter.IsSync);
 
         return query.ToList();
+        */
+        return new List<SmsUsersModel>();
     }
 
     public async Task<bool> SaveAsync(SmsUsersModel model)
     {
-        try
-        {
-            await UpdateOrInsertAsync(model).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            CarpetExceptionLogger.Instance.CrashLog(e);
-            return false;
-        }
-
         return true;
     }
 }
 
-public interface ISmsUsersService : IEntryService<SmsUsersEntity, SmsUsersModel>
+public interface ISmsUsersService
 {
     public Task<bool> SaveAsync(SmsUsersModel model);
     public Task<List<SmsUsersModel>> GetAsync(BaseFilterModel filter);

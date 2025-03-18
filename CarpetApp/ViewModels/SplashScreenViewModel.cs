@@ -1,7 +1,10 @@
 using System.Globalization;
 using CarpetApp.Helpers;
+using CarpetApp.Models;
 using CarpetApp.Service.Database;
+using CarpetApp.Services.Akavache;
 using CarpetApp.Services.Entry;
+using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CarpetApp.ViewModels.Login;
 using CarpetApp.Views;
@@ -10,8 +13,8 @@ namespace CarpetApp.ViewModels;
 
 public class SplashScreenViewModel(
     IDatabaseService databaseService,
-    IMetadataService metadataService,
-    LoginViewModel loginViewModel)
+    LoginViewModel loginViewModel,
+    INavigationService navigationService)
     : ViewModelBase
 {
     public override async Task InitializeAsync()
@@ -29,10 +32,9 @@ public class SplashScreenViewModel(
 
     private async Task SetupAppLanguageAsync()
     {
-        var preferredLanguageCode =
-            await metadataService.GetMetadataAsync(Consts.LanguageCode, Consts.DefaultLanguageCode);
+        var preferredLanguageCode = await CacheService.Instance.GetLocalDataAsync<CultureInfo>(Consts.LanguageCode);
         if (preferredLanguageCode != null)
-            LanguageHelper.SwitchLanguage(new CultureInfo(preferredLanguageCode));
+            LanguageHelper.SwitchLanguage(new CultureInfo(preferredLanguageCode.Name));
     }
 
     private async Task InitializeAdvancedServicesAsync()
@@ -40,8 +42,19 @@ public class SplashScreenViewModel(
         await databaseService.CreateTablesAsync().ConfigureAwait(false);
     }
 
-    private void NavigateToAppShell()
+    private async void NavigateToAppShell()
     {
-        MainThread.InvokeOnMainThreadAsync(() => { Application.Current!.MainPage = new LoginPage(loginViewModel); });
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            var userData = await CacheService.Instance.GetUserDataAsync<UserModel>();
+            if (userData != null) 
+            {
+                Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
+            }
+            else
+            {
+                Application.Current!.MainPage = new LoginPage(loginViewModel);    
+            }
+        });
     }
 }
