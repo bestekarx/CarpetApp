@@ -1,9 +1,12 @@
+using CarpetApp.Helpers;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
+using CarpetApp.Services.Akavache;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
+using CommunityToolkit.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -34,6 +37,10 @@ public partial class LoginViewModel(
         try
         {
             _ = dialogService.Show();
+            
+            Guard.IsNotNullOrWhiteSpace(UserName);
+            Guard.IsNotNullOrWhiteSpace(Password);
+            
             var request = new RequestLoginModel()
             {
                 UserNameOrEmailAddress = UserName,
@@ -43,7 +50,8 @@ public partial class LoginViewModel(
             if (loginResponse.Result == 1)
             {
                 var myProfile = await userService.MyProfile();
-                
+                await CacheService.Instance.SaveUserDataAsync(myProfile);
+
                 Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
             }
             else

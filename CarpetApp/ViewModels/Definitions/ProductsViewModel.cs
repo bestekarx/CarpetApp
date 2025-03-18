@@ -3,6 +3,7 @@ using CarpetApp.Helpers;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.FilterParameterModels;
+using CarpetApp.Models.Products;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
@@ -76,13 +77,17 @@ public partial class ProductsViewModel(
     {
         using (await dialogService.Show())
         {
-            var filter = new BaseFilterModel
+            var filter = new BaseFilterModel()
             {
                 Active = _isActive,
-                Type = _selectedProductType,
+                Type = _selectedProductType?.Value ?? null,
                 Search = SearchText
             };
-            ProductList = await productService.GetAsync(filter);
+            var result = await productService.GetAsync(filter);
+            if (result != null)
+            {
+                ProductList = result.Items;
+            }
         }
     }
 

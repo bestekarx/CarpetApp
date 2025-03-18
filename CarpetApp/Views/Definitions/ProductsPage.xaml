@@ -1,171 +1,172 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <services:ContentPageBase
-  x:Class="CarpetApp.Views.Definitions.ProductsPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-  xmlns:customControls="clr-namespace:CarpetApp.CustomControls"
-  xmlns:definitions="clr-namespace:CarpetApp.ViewModels.Definitions"
-  xmlns:models="clr-namespace:CarpetApp.Models"
-  xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
-  xmlns:services="clr-namespace:CarpetApp.Services"
-  xmlns:sfListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
-  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-  x:Name="ProductPageKey"
-  x:DataType="definitions:ProductsViewModel"
-  BackgroundColor="{StaticResource MainBgColor}">
+    BackgroundColor="{StaticResource MainBgColor}"
+    x:Class="CarpetApp.Views.Definitions.ProductsPage"
+    x:DataType="definitions:ProductsViewModel"
+    x:Name="ProductPageKey"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:customControls="clr-namespace:CarpetApp.CustomControls"
+    xmlns:definitions="clr-namespace:CarpetApp.ViewModels.Definitions"
+    xmlns:models="clr-namespace:CarpetApp.Models"
+    xmlns:products="clr-namespace:CarpetApp.Models.Products"
+    xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
+    xmlns:services="clr-namespace:CarpetApp.Services"
+    xmlns:sfListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-  <Shell.TitleView>
-    <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.Urunler}" />
-  </Shell.TitleView>
+    <Shell.TitleView>
+        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.Urunler}" />
+    </Shell.TitleView>
 
-  <ContentPage.Resources>
-    <ResourceDictionary>
-      <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
-      <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
-    </ResourceDictionary>
-  </ContentPage.Resources>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:IsListNullOrEmptyConverter x:Key="IsListNullOrEmptyConverter" />
+            <toolkit:IsListNotNullOrEmptyConverter x:Key="IsListNotNullOrEmptyConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
-  <ContentPage.Content>
-    <AbsoluteLayout>
-      <Grid
-        AbsoluteLayout.LayoutBounds="1,1,1,1"
-        AbsoluteLayout.LayoutFlags="All"
-        RowDefinitions="1, 50, *">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <Grid
+                AbsoluteLayout.LayoutBounds="1,1,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                RowDefinitions="1, 50, *">
 
-        <BoxView Style="{StaticResource Stroke}" />
+                <BoxView Style="{StaticResource Stroke}" />
 
-        <Grid
-          Grid.Row="1"
-          BackgroundColor="White"
-          ColumnDefinitions="7*, 1, 75"
-          RowDefinitions="*, 1">
-
-          <!--  entry  -->
-          <Grid
-            Grid.Column="0"
-            Margin="16,0,0,0"
-            ColumnDefinitions="Auto, *">
-
-            <Image Grid.Column="0" Source="search" />
-
-            <Entry
-              Grid.Column="1"
-              Margin="4,0,0,0"
-              ClearButtonVisibility="WhileEditing"
-              Placeholder="Ara"
-              ReturnType="Next"
-              Text="{Binding SearchText}">
-              <Entry.Behaviors>
-                <toolkit:UserStoppedTypingBehavior
-                  Command="{Binding Source={x:Reference ProductPageKey}, Path=BindingContext.SearchCommand}"
-                  ShouldDismissKeyboardAutomatically="True"
-                  StoppedTypingTimeThreshold="1000" />
-              </Entry.Behaviors>
-            </Entry>
-
-          </Grid>
-
-          <BoxView
-            Grid.Column="1"
-            HeightRequest="50"
-            HorizontalOptions="Fill"
-            Style="{StaticResource Stroke}"
-            VerticalOptions="Fill" />
-
-          <!--  filter  -->
-          <ContentView Grid.Column="2" Margin="10,0,16,0">
-            <Image
-              Aspect="AspectFit"
-              HeightRequest="32"
-              Source="filter"
-              WidthRequest="32">
-              <Image.Triggers>
-                <DataTrigger
-                  Binding="{Binding IsFilter}"
-                  TargetType="Image"
-                  Value="True">
-                  <Setter Property="Source" Value="filtered" />
-                </DataTrigger>
-                <DataTrigger
-                  Binding="{Binding IsFilter}"
-                  TargetType="Image"
-                  Value="False">
-                  <Setter Property="Source" Value="filter" />
-                </DataTrigger>
-              </Image.Triggers>
-            </Image>
-            <ContentView.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding FilterCommand}" />
-            </ContentView.GestureRecognizers>
-          </ContentView>
-
-          <BoxView
-            Grid.Row="1"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            HorizontalOptions="Fill"
-            Style="{StaticResource Stroke}"
-            VerticalOptions="Fill" />
-        </Grid>
-
-        <sfListView:SfListView
-          Grid.Row="2"
-          Margin="0,16,0,0"
-          IsVisible="{Binding ProductList, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
-          ItemSize="80"
-          ItemsSource="{Binding ProductList}">
-          <sfListView:SfListView.ItemTemplate>
-            <DataTemplate x:DataType="models:ProductModel">
-              <Frame
-                Margin="8"
-                Padding="8"
-                BorderColor="Transparent"
-                CornerRadius="2">
                 <Grid
-                  ColumnDefinitions="*, Auto, 24"
-                  ColumnSpacing="16"
-                  VerticalOptions="Center">
-                  <Label
-                    Grid.Column="0"
-                    Margin="8,0,0,0"
-                    Style="{StaticResource ListViewLabel}"
-                    Text="{Binding Name}" />
-                  <Label
-                    Grid.Column="1"
-                    Style="{StaticResource ListViewLabel}"
-                    Text="{Binding Price}" />
+                    BackgroundColor="White"
+                    ColumnDefinitions="7*, 1, 75"
+                    Grid.Row="1"
+                    RowDefinitions="*, 1">
 
-                  <Image
-                    Grid.Column="2"
-                    Aspect="AspectFit"
-                    Source="edit" />
+                    <!--  entry  -->
+                    <Grid
+                        ColumnDefinitions="Auto, *"
+                        Grid.Column="0"
+                        Margin="16,0,0,0">
+
+                        <Image Grid.Column="0" Source="search" />
+
+                        <Entry
+                            ClearButtonVisibility="WhileEditing"
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            Placeholder="Ara"
+                            ReturnType="Next"
+                            Text="{Binding SearchText}">
+                            <Entry.Behaviors>
+                                <toolkit:UserStoppedTypingBehavior
+                                    Command="{Binding Source={x:Reference ProductPageKey}, Path=BindingContext.SearchCommand}"
+                                    ShouldDismissKeyboardAutomatically="True"
+                                    StoppedTypingTimeThreshold="1000" />
+                            </Entry.Behaviors>
+                        </Entry>
+
+                    </Grid>
+
+                    <BoxView
+                        Grid.Column="1"
+                        HeightRequest="50"
+                        HorizontalOptions="Fill"
+                        Style="{StaticResource Stroke}"
+                        VerticalOptions="Fill" />
+
+                    <!--  filter  -->
+                    <ContentView Grid.Column="2" Margin="10,0,16,0">
+                        <Image
+                            Aspect="AspectFit"
+                            HeightRequest="32"
+                            Source="filter"
+                            WidthRequest="32">
+                            <Image.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsFilter}"
+                                    TargetType="Image"
+                                    Value="True">
+                                    <Setter Property="Source" Value="filtered" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding IsFilter}"
+                                    TargetType="Image"
+                                    Value="False">
+                                    <Setter Property="Source" Value="filter" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <ContentView.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FilterCommand}" />
+                        </ContentView.GestureRecognizers>
+                    </ContentView>
+
+                    <BoxView
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Grid.Row="1"
+                        HorizontalOptions="Fill"
+                        Style="{StaticResource Stroke}"
+                        VerticalOptions="Fill" />
                 </Grid>
-                <Frame.GestureRecognizers>
-                  <TapGestureRecognizer Command="{Binding Source={x:Reference ProductPageKey}, Path=BindingContext.SelectedItemCommand}" CommandParameter="{Binding .}" />
-                </Frame.GestureRecognizers>
-              </Frame>
 
-            </DataTemplate>
-          </sfListView:SfListView.ItemTemplate>
-        </sfListView:SfListView>
+                <sfListView:SfListView
+                    Grid.Row="2"
+                    IsVisible="{Binding ProductList, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
+                    ItemSize="80"
+                    ItemsSource="{Binding ProductList}"
+                    Margin="0,16,0,0">
+                    <sfListView:SfListView.ItemTemplate>
+                        <DataTemplate x:DataType="products:ProductModel">
+                            <Frame
+                                BorderColor="Transparent"
+                                CornerRadius="2"
+                                Margin="8"
+                                Padding="8">
+                                <Grid
+                                    ColumnDefinitions="*, Auto, 24"
+                                    ColumnSpacing="16"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        Grid.Column="0"
+                                        Margin="8,0,0,0"
+                                        Style="{StaticResource ListViewLabel}"
+                                        Text="{Binding Name}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Style="{StaticResource ListViewLabel}"
+                                        Text="{Binding Price}" />
 
-        <customControls:CustomInfoView
-          Title="{x:Static resx:AppStrings.VeriBulunamadi}"
-          Grid.Row="2"
-          ImageSource="data_not_found"
-          IsVisible="{Binding ProductList, Converter={StaticResource IsListNullOrEmptyConverter}}"
-          VerticalOptions="Center" />
+                                    <Image
+                                        Aspect="AspectFit"
+                                        Grid.Column="2"
+                                        Source="edit" />
+                                </Grid>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference ProductPageKey}, Path=BindingContext.SelectedItemCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                            </Frame>
 
-      </Grid>
+                        </DataTemplate>
+                    </sfListView:SfListView.ItemTemplate>
+                </sfListView:SfListView>
 
-      <buttons:SfButton
-        AbsoluteLayout.LayoutBounds="0.5,1,0.1,0.1"
-        AbsoluteLayout.LayoutFlags="All"
-        Command="{Binding ProductAddCommand}"
-        Style="{StaticResource CircleAddButton}" />
+                <customControls:CustomInfoView
+                    Grid.Row="2"
+                    ImageSource="data_not_found"
+                    IsVisible="{Binding ProductList, Converter={StaticResource IsListNullOrEmptyConverter}}"
+                    Title="{x:Static resx:AppStrings.VeriBulunamadi}"
+                    VerticalOptions="Center" />
 
-    </AbsoluteLayout>
-  </ContentPage.Content>
+            </Grid>
+
+            <buttons:SfButton
+                AbsoluteLayout.LayoutBounds="0.5,1,0.1,0.1"
+                AbsoluteLayout.LayoutFlags="All"
+                Command="{Binding ProductAddCommand}"
+                Style="{StaticResource CircleAddButton}" />
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
 </services:ContentPageBase>

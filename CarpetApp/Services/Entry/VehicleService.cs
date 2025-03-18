@@ -1,16 +1,14 @@
-using CarpetApp.Entities;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
-using CarpetApp.Repositories.Entry.EntryBase;
-using CarpetApp.Service;
 
 namespace CarpetApp.Services.Entry;
 
-public class VehicleService(IEntryRepository<VehicleEntity> entityRepository)
-    : EntryService<VehicleEntity, VehicleModel>(entityRepository), IVehicleService
+public class VehicleService()
+    :  IVehicleService
 {
     public async Task<List<VehicleModel>> GetAsync(BaseFilterModel filter)
     {
+        /*
         var result = await base.FindAllAsync(filter);
         var query = result.AsQueryable();
         if (filter.Active.HasValue)
@@ -27,25 +25,17 @@ public class VehicleService(IEntryRepository<VehicleEntity> entityRepository)
             query = query.Where(q => q.IsSync == (int)filter.IsSync);
 
         return query.ToList();
+        */
+        return new List<VehicleModel>();
     }
 
     public async Task<bool> SaveAsync(VehicleModel model)
     {
-        try
-        {
-            await UpdateOrInsertAsync(model).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            CarpetExceptionLogger.Instance.CrashLog(e);
-            return false;
-        }
-
         return true;
     }
 }
 
-public interface IVehicleService : IEntryService<VehicleEntity, VehicleModel>
+public interface IVehicleService
 {
     public Task<bool> SaveAsync(VehicleModel model);
     public Task<List<VehicleModel>> GetAsync(BaseFilterModel filter);

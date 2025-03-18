@@ -1,9 +1,6 @@
-using CarpetApp.Entities;
 using CarpetApp.Models;
-using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Models.API.Response;
-using CarpetApp.Repositories.Entry.EntryBase;
 using CarpetApp.Service.Database;
 using CarpetApp.Services.API.Interfaces;
 using CommunityToolkit.Diagnostics;
@@ -40,7 +37,7 @@ public class UserService(IDatabaseService databaseService, IBaseApiService apiSe
 
     public async Task<UserModel> MyProfile()
     {
-        return await apiService.MyProfile();
+        return await apiService.GetMyProfile();
     }
 
     public async Task<bool> LogOut()

@@ -1,6 +1,4 @@
 ﻿using CarpetApp.Helpers;
-using CarpetApp.Repositories;
-using CarpetApp.Repositories.Entry.EntryBase;
 using CarpetApp.Resources.Strings;
 using CarpetApp.Service;
 using CarpetApp.Service.Database;
@@ -46,7 +44,6 @@ public static class MauiProgram
             })
             .ConfigureLocalization()
             .ConfigureLogging()
-            .RegisterRepositories()
             .RegisterServices()
             .RegisterViewModels()
             .UseBottomSheet()
@@ -94,7 +91,6 @@ public static class MauiProgram
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<INavigationService, NavigationService>()
             .AddSingleton<IDatabaseService, DatabaseService>()
-            .AddSingleton<IMetadataService, MetadataService>()
             .AddSingleton<IStaticConfigurationService>(StaticConfiguration)
             .AddSingleton<IUserService, UserService>()
             .AddSingleton<IProductService, ProductService>()
@@ -105,17 +101,6 @@ public static class MauiProgram
             .AddSingleton<ISmsUsersService, SmsUsersService>()
             .AddSingleton<ISmsTemplateService, SmsTemplateService>()
             .AddSingleton<TokenService>();
-
-        return builder;
-    }
-
-    public static MauiAppBuilder RegisterRepositories(this MauiAppBuilder builder)
-    {
-        builder.Services
-            .AddSingleton<MetadataRepository>()
-            .AddSingleton<IEntryRepository, EntryRepository>()
-            .AddSingleton(typeof(IEntryRepository<>), typeof(EntryRepository<>))
-            .AddSingleton(typeof(IEntryService<,>), typeof(EntryService<,>));
 
         return builder;
     }
@@ -177,6 +162,7 @@ public static class MauiProgram
         foreach (var type in types) builder.Services.AddTransient(type);
         return builder;
     }
+    
     /*
     private static void ConfigureRefit(IServiceCollection services)
     {
@@ -214,8 +200,7 @@ public static class MauiProgram
             return RestService.For<IBaseApiService>(_httpClient, _refitSettings);
         });
     }*/
-
-
+    
     private static void ConfigureRefit(IServiceCollection services)
     {
         services.AddRefitClient<IBaseApiService>(ConfigureRefitSettings).ConfigureHttpClient(SetHttpClient);
@@ -241,7 +226,7 @@ public static class MauiProgram
         static void SetHttpClient(HttpClient httpClient)
         {
             var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-                ? "http://192.168.1.2:44302/api"
+                ? "http://192.168.1.31:44302/api"
                 : "https://localhost:44302/api";
             httpClient.BaseAddress = new Uri(baseUrl);
         }

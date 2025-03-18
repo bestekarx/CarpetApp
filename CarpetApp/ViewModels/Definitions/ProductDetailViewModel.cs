@@ -1,6 +1,7 @@
 using CarpetApp.Enums;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
+using CarpetApp.Models.Products;
 using CarpetApp.Resources.Strings;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.Entry;

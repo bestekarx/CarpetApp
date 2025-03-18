@@ -2,7 +2,7 @@ using CarpetApp.Enums;
 
 namespace CarpetApp.Models;
 
-public record DataQueueModel : Entry
+public record DataQueueModel
 {
     public string PackageNo { get; set; } = Generator();
     public EnSyncDataType Type { get; set; }

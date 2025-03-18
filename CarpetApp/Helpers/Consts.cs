@@ -47,4 +47,10 @@ public static class Consts
     public const string DataPage = "DataPage";
 
     #endregion
+    
+    #region Akavache Key
+
+    public const string UserData = nameof(UserData);
+
+    #endregion
 }
