@@ -5,7 +5,6 @@ namespace WebCarpetApp.Products.Dtos;
 
 public class CreateUpdateProductDto
 {
-    public Guid UserId { get; set; }
     public decimal Price { get; set; }
     [Required]
     public required string Name { get; set; }

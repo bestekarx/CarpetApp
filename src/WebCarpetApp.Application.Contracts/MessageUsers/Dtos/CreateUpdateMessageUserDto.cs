@@ -6,9 +6,6 @@ namespace WebCarpetApp.MessageUsers.Dtos;
 public class CreateUpdateMessageUserDto
 {
     [Required]
-    public Guid UserId { get; set; }
-
-    [Required]
     [StringLength(256)]
     public string Username { get; set; }
 

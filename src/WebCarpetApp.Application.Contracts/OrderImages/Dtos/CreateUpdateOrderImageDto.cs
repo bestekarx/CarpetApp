@@ -9,9 +9,6 @@ public class CreateUpdateOrderImageDto
     public Guid OrderId { get; set; }
 
     [Required]
-    public Guid UserId { get; set; }
-
-    [Required]
     [StringLength(500)]
     public string ImagePath { get; set; }
 

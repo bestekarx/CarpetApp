@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using WebCarpetApp.Products.Dtos;
@@ -13,4 +14,5 @@ public interface IProductAppService :
         CreateUpdateProductDto,
         CreateUpdateProductDto>
 {
+    Task<PagedResultDto<ProductDto>> GetFilteredListAsync(GetProductListFilterDto input);
 } 

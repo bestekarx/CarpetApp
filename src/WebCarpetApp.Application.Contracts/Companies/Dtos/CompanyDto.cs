@@ -6,7 +6,6 @@ namespace WebCarpetApp.Companies.Dtos;
 public class CompanyDto : AuditedEntityDto<Guid>
 {
     public Guid? MessageSettingsId { get; set; }
-    public Guid UserId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string Color { get; set; }

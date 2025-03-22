@@ -8,9 +8,6 @@ public class CreateUpdateCompanyDto
     public Guid? MessageSettingsId { get; set; }
     
     [Required]
-    public Guid UserId { get; set; }
-    
-    [Required]
     [StringLength(256)]
     public string Name { get; set; }
 

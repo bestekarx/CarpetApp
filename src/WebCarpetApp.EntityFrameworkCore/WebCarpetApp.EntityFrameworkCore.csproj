@@ -42,4 +42,8 @@
     <Compile Remove="Migrations\20250305221340_RenameUserTenantMappingField.Designer.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

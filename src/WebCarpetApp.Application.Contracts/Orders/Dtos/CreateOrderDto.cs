@@ -8,7 +8,6 @@ using WebCarpetApp.Products.Dtos;
 namespace WebCarpetApp.Orders.Dtos;
 public class CreateOrderDto
 {
-    public Guid UserId { get; set; }
     [Required]
     public Guid? ReceivedId { get; set; }
     public int OrderDiscount { get; set; }

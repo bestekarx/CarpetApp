@@ -7,7 +7,7 @@ namespace WebCarpetApp.Products;
 public class Product : AuditedEntity<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; set; }
-    public Guid UserId { get; set; }
+    
     public decimal Price { get; set; }
     public required string Name { get; set; }
     public ProductType ProductType { get; set; }

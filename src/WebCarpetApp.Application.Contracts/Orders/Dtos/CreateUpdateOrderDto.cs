@@ -5,9 +5,6 @@ namespace WebCarpetApp.Orders.Dtos;
 
 public class CreateUpdateOrderDto
 {
-    [Required]
-    public Guid UserId { get; set; }
-
     public Guid? ReceivedId { get; set; }
 
     public int OrderDiscount { get; set; }

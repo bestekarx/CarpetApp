@@ -7,7 +7,6 @@ using WebCarpetApp.OrderImages.Dtos;
 namespace WebCarpetApp.Orders.Dtos;
 public class OrderDto : EntityDto<Guid>
 {
-    public Guid UserId { get; set; }
     public Guid? ReceivedId { get; set; }
     public int OrderDiscount { get; set; }
     public decimal OrderAmount { get; set; }
