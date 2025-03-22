@@ -40,6 +40,8 @@
     <Compile Remove="Migrations\20250228213027_OrderModelUpdates.Designer.cs"/>
     <Compile Remove="Migrations\20250305221340_RenameUserTenantMappingField.cs" />
     <Compile Remove="Migrations\20250305221340_RenameUserTenantMappingField.Designer.cs" />
+    <Compile Remove="Migrations\20250318182644_DeleteUserId.cs" />
+    <Compile Remove="Migrations\20250318182644_DeleteUserId.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

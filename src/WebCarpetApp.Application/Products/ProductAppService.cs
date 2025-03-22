@@ -73,6 +73,12 @@ public class ProductAppService :
         return new PagedResultDto<ProductDto>(totalCount, dtos);
     }
 
+    protected override Task CheckCreatePolicyAsync()
+    {
+        // Politika kontrolünü atla
+        return Task.CompletedTask;
+    }
+    
     protected override Product MapToEntity(CreateUpdateProductDto createInput)
     {
         var entity = base.MapToEntity(createInput);

@@ -26,4 +26,8 @@
     <Folder Include="Interfaces\"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Products\Dtos\GetProductListFilterDto.cs" />
+  </ItemGroup>
+
 </Project>
