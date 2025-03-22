@@ -1,9 +1,7 @@
 using System;
 using Volo.Abp.Application.Dtos;
-using WebCarpetApp.Orders;
 
 namespace WebCarpetApp.Products.Dtos;
-
 
 public class GetProductListFilterDto : PagedAndSortedResultRequestDto
 { 
