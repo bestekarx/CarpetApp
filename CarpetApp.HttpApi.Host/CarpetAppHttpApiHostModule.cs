@@ -4,6 +4,7 @@ using CarpetApp.Middleware;
 using Volo.Abp.Modularity;
 using Volo.Abp.Authorization;
 using Volo.Abp.ExceptionHandling;
+using CarpetApp.Filters;
 
 namespace CarpetApp
 {
@@ -16,19 +17,29 @@ namespace CarpetApp
         {
             var services = context.Services;
             
-            // ... mevcut servis konfigürasyonları ...
+            // Mevcut middleware kaldır (sorun çıkardığı için)
+            // services.AddApiAuthenticationMiddleware();
             
-            // API Authentication Middleware'i kaydet
-            services.AddApiAuthenticationMiddleware();
+            // MVC filtresi olarak ekle
+            services.AddMvcCore(options =>
+            {
+                options.Filters.Add<AbpSecurityRedirectFilter>();
+                options.Filters.Add<ApiAuthenticationFilter>();
+            });
             
-            // API özel hata yönetimi
-            context.Services.AddTransient<IExceptionToErrorInfoConverter, ApiAuthorizationExceptionHandler>();
-            context.Services.AddExceptionHandler<ApiExceptionHandler>();
+            // API Controller konfigürasyonu
+            Configure<AbpAspNetCoreMvcOptions>(options =>
+            {
+                options.ConventionalControllers.Create(typeof(CarpetAppHttpApiModule).Assembly, opts =>
+                {
+                    opts.RootPath = "api";
+                    opts.UseStatusCodePages = false; // Redirect yerine durum kodu kullan
+                });
+            });
             
-            // ABP yetkilendirme ayarları
+            // API şemaları için kimlik doğrulama ayarları
             Configure<AbpAuthorizationOptions>(options =>
             {
-                // API isteklerinde yetkilendirme başarısız olduğunda 401 döndür
                 options.DefaultPolicy.RequireAuthenticatedUser();
             });
         }
@@ -37,17 +48,21 @@ namespace CarpetApp
         {
             var app = context.GetApplicationBuilder();
             
-            // ... diğer middleware konfigürasyonları ...
-            
-            // Önemli: Bu sıralamaya dikkat edin!
+            // Normal middleware akışı
             app.UseAuthentication();
             
-            // API Authentication Middleware'i UseAuthentication ile UseAuthorization arasına yerleştirin
-            app.UseApiAuthenticationMiddleware();
+            // Artık middleware'i burada çağırmıyoruz
+            // app.UseApiAuthenticationMiddleware();
             
             app.UseAuthorization();
             
-            // ... diğer middleware konfigürasyonları ...
+            // Normal MVC middleware
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapDefaultControllerRoute();
+                // Diğer endpoint konfigürasyonları...
+            });
         }
     }
 } 
