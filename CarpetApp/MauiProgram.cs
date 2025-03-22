@@ -226,7 +226,7 @@ public static class MauiProgram
         static void SetHttpClient(HttpClient httpClient)
         {
             var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-                ? "http://192.168.1.31:44302/api"
+                ? "http://192.168.1.2:44302/api"
                 : "https://localhost:44302/api";
             httpClient.BaseAddress = new Uri(baseUrl);
         }

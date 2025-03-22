@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
 <services:ContentPageBase
     BackgroundColor="{StaticResource MainBgColor}"
     x:Class="CarpetApp.Views.Definitions.ProductsPage"
@@ -9,7 +8,6 @@
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:customControls="clr-namespace:CarpetApp.CustomControls"
     xmlns:definitions="clr-namespace:CarpetApp.ViewModels.Definitions"
-    xmlns:models="clr-namespace:CarpetApp.Models"
     xmlns:products="clr-namespace:CarpetApp.Models.Products"
     xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
     xmlns:services="clr-namespace:CarpetApp.Services"

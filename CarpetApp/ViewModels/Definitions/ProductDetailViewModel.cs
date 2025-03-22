@@ -103,6 +103,8 @@ public partial class ProductDetailViewModel(
             return;
         }
 
+        await dialogService.Show();
+
         if (DetailPageType == DetailPageType.Add)
         {
             ProductModel = new ProductModel
@@ -126,6 +128,7 @@ public partial class ProductDetailViewModel(
 
         if (result)
         {
+            /*
             var dataQueueModel = new DataQueueModel
             {
                 Type = EnSyncDataType.Product,
@@ -133,10 +136,13 @@ public partial class ProductDetailViewModel(
                 Date = DateTime.Now
             };
             _ = dataQueueService.SaveAsync(dataQueueModel);
+            */
         }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
+        
+        await dialogService.Hide();
     }
 
     private bool ValidateInputs()

@@ -77,17 +77,15 @@ public partial class ProductsViewModel(
     {
         using (await dialogService.Show())
         {
-            var filter = new BaseFilterModel()
+            var filter = new BaseFilterModel
             {
                 Active = _isActive,
-                Type = _selectedProductType?.Value ?? null,
+                Type = _selectedProductType?.Value,
                 Search = SearchText
             };
             var result = await productService.GetAsync(filter);
             if (result != null)
-            {
                 ProductList = result.Items;
-            }
         }
     }
 

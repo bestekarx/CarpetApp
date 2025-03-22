@@ -28,7 +28,7 @@ public interface IBaseApiService
 
     #region Product
 
-    [Get("/app/product")]
+    [Get("/app/product/filtered-list")]
     Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filterProduct);
     
     [Post("/app/product")]
