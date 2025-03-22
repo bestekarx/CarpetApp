@@ -8,8 +8,6 @@ using Volo.Abp;
 using Volo.Abp.AspNetCore.ExceptionHandling;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Entities;
-using Volo.Abp.ExceptionHandling;
-using Volo.Abp.Http;
 using Volo.Abp.Validation;
 
 namespace WebCarpetApp.Middleware
