@@ -111,14 +111,14 @@ public partial class ProductDetailViewModel(
             {
                 Name = Name,
                 Price = Price,
-                Type = (EnProductType)SelectedProductType.Value
+                Type = (int)SelectedProductType.Value
             };
         }
         else
         {
             ProductModel.Name = Name;
             ProductModel.Price = Price;
-            ProductModel.Type = (EnProductType)SelectedProductType.Value;
+            ProductModel.Type = (int)SelectedProductType.Value;
             ProductModel.Active = SelectedState.Value == 1;
         }
 

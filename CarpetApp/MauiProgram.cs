@@ -1,10 +1,8 @@
 ﻿using CarpetApp.Helpers;
 using CarpetApp.Resources.Strings;
 using CarpetApp.Service;
-using CarpetApp.Service.Database;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.API.Interfaces;
-using CarpetApp.Services.Database;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels;
@@ -90,7 +88,6 @@ public static class MauiProgram
         builder.Services
             .AddSingleton<IDialogService, DialogService>()
             .AddSingleton<INavigationService, NavigationService>()
-            .AddSingleton<IDatabaseService, DatabaseService>()
             .AddSingleton<IStaticConfigurationService>(StaticConfiguration)
             .AddSingleton<IUserService, UserService>()
             .AddSingleton<IProductService, ProductService>()

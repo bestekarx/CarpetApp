@@ -50,6 +50,7 @@ public partial class LoginViewModel(
             if (loginResponse.Result == 1)
             {
                 var myProfile = await userService.MyProfile();
+                myProfile.Password = Password;
                 await CacheService.Instance.SaveUserDataAsync(myProfile);
 
                 Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));

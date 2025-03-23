@@ -1,14 +1,12 @@
 using CarpetApp.Models;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Models.API.Response;
-using CarpetApp.Service.Database;
 using CarpetApp.Services.API.Interfaces;
 using CommunityToolkit.Diagnostics;
 
 namespace CarpetApp.Services.Entry;
 
-public class UserService(IDatabaseService databaseService, IBaseApiService apiService)
-    :  IUserService
+public class UserService(IBaseApiService apiService) :  IUserService
 {
     public Task<TenantModel> GetTenant(string tenantName)
     {
@@ -19,25 +17,22 @@ public class UserService(IDatabaseService databaseService, IBaseApiService apiSe
 
     public async Task<LoginResponse> Login(RequestLoginModel req)
     {
-        //await LogOut();
         var result = await apiService.Login(req);
         return result;
-        /*
-        Guard.IsNotNullOrWhiteSpace(username);
-        Guard.IsNotNullOrWhiteSpace(password);
-
-        var result = await base.FindAllAsync(new BaseFilterModel { Active = true });
-        var query = result.AsQueryable();
-
-        query = query.Where(q => q.UserName == username && q.Password == password);
-
-        return query.FirstOrDefault();
-        */
     }
 
     public async Task<UserModel> MyProfile()
     {
-        return await apiService.GetMyProfile();
+        try
+        {
+            return await apiService.GetMyProfile();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return null;
     }
 
     public async Task<bool> LogOut()
@@ -45,12 +40,17 @@ public class UserService(IDatabaseService databaseService, IBaseApiService apiSe
         return await apiService.Logout();
     }
 
-    public async Task<bool> Register(UserModel u)
+    public Task<bool> Register(UserModel u)
+    {
+        throw new NotImplementedException();
+    }
+
+    /*public async Task<bool> Register(UserModel u)
     {
         Guard.IsNotNull(u);
         var result = await databaseService.MainDatabase.InsertOrReplaceAsync(u);
         return result == 1;
-    }
+    }*/
 }
 
 public interface IUserService

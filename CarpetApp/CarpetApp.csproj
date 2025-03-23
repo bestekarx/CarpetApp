@@ -62,7 +62,6 @@
         <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.3"/>
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0"/>
         <PackageReference Include="Mopups" Version="1.3.1"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
         <PackageReference Include="Refit" Version="7.2.1"/>
         <PackageReference Include="Refit.HttpClientFactory" Version="7.2.1"/>
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172"/>
@@ -92,6 +91,7 @@
             <DependentUpon>LoginPage.xaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+        <Compile Remove="Helpers\ServiceHelper.cs" />
     </ItemGroup>
 
     <ItemGroup>

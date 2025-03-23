@@ -1,6 +1,6 @@
 namespace CarpetApp.Models;
 
-public record class AuditedEntity
+public record AuditedEntity
 {
     public bool IsActive { get; set; }
     public DateTime CreationTime { get; protected set; }

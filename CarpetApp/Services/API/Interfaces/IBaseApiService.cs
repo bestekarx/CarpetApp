@@ -36,9 +36,6 @@ public interface IBaseApiService
 
     #endregion
     
-    
-    
-    
     [Post("/DataQueue/Save")]
     Task<ApiResponse<BaseResponse<DataQueueModel>>> DataQueueSave(DataQueueModel req);
 

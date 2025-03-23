@@ -1,7 +1,10 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.Products;
 using CarpetApp.Services.API.Interfaces;
+using Exception = Java.Lang.Exception;
 
 namespace CarpetApp.Services.Entry;
 
@@ -16,8 +19,15 @@ public class ProductService(IBaseApiService apiService)
 
     public async Task<bool> SaveAsync(ProductModel model)
     {
-        var result = await apiService.AddProduct(model);
-        return result != null;
+        try
+        {
+            var result = await apiService.AddProduct(model);
+            return result != null;
+        }
+        catch(Exception ex)
+        {
+            return false;
+        }
     }
 }
 
