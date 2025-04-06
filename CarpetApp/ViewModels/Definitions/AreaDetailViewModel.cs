@@ -7,7 +7,6 @@ using CarpetApp.Services.Entry;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 
 namespace CarpetApp.ViewModels.Definitions;
 
@@ -15,8 +14,7 @@ namespace CarpetApp.ViewModels.Definitions;
 [QueryProperty(nameof(AreaModel), Consts.AreaModel)]
 public partial class AreaDetailViewModel(
     IDialogService dialogService,
-    IAreaService areaService,
-    IDataQueueService dataQueueService) : ViewModelBase
+    IAreaService areaService) : ViewModelBase
 {
     #region Commands
 
@@ -79,6 +77,12 @@ public partial class AreaDetailViewModel(
         {
             Name = AreaModel.Name;
             StateSelectedIndex = AreaModel.Active ? 1 : 0;
+            SelectedState = AreaModel.Active ? StateList[1] : StateList[0];
+        }
+        else
+        {
+            SelectedState = StateList[1];
+            StateSelectedIndex = 1;
         }
     }
 
@@ -94,7 +98,8 @@ public partial class AreaDetailViewModel(
         {
             AreaModel = new AreaModel
             {
-                Name = Name
+                Name = Name,
+                Active = true
             };
         }
         else
@@ -103,20 +108,12 @@ public partial class AreaDetailViewModel(
             AreaModel.Active = SelectedState.Value == 1;
         }
 
-        var result = await areaService.SaveAsync(AreaModel);
+        var result = DetailPageType == DetailPageType.Add
+            ? await areaService.SaveAsync(AreaModel)
+            : await areaService.UpdateAsync(AreaModel);
+
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
         _ = dialogService.ShowToast(message);
-
-        if (result)
-        {
-            var dataQueueModel = new DataQueueModel
-            {
-                Type = EnSyncDataType.Area,
-                JsonData = JsonConvert.SerializeObject(AreaModel),
-                Date = DateTime.Now
-            };
-            _ = dataQueueService.SaveAsync(dataQueueModel);
-        }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
@@ -125,7 +122,6 @@ public partial class AreaDetailViewModel(
     private bool ValidateInputs()
     {
         IsNameError = string.IsNullOrWhiteSpace(Name);
-
         return !IsNameError;
     }
 

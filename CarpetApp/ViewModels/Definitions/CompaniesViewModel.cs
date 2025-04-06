@@ -3,6 +3,7 @@ using CarpetApp.Helpers;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Resources.Strings;
+using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
@@ -74,7 +75,17 @@ public partial class CompaniesViewModel(
                 Active = isActive,
                 Name = SearchText
             };
-            CompanyList = await companyService.GetAsync(filter);
+
+            try
+            {
+                var result = await companyService.GetAsync(filter);
+                if (result != null)
+                    CompanyList = result.Items;
+            }
+            catch (Exception e)
+            {
+                CarpetExceptionLogger.Instance.CrashLog(e);
+            }
         }
     }
 

@@ -7,7 +7,6 @@ using CarpetApp.Services.Entry;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 
 namespace CarpetApp.ViewModels.Definitions;
 
@@ -15,8 +14,7 @@ namespace CarpetApp.ViewModels.Definitions;
 [QueryProperty(nameof(SmsUserModel), Consts.SmsUsersModel)]
 public partial class SmsUserDetailViewModel(
     IDialogService dialogService,
-    ISmsUsersService smsUserService,
-    IDataQueueService dataQueueService) : ViewModelBase
+    ISmsUsersService smsUserService) : ViewModelBase
 {
     #region Commands
 
@@ -120,17 +118,6 @@ public partial class SmsUserDetailViewModel(
         var result = await smsUserService.SaveAsync(SmsUserModel);
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
         _ = dialogService.ShowToast(message);
-
-        if (result)
-        {
-            var dataQueueModel = new DataQueueModel
-            {
-                Type = EnSyncDataType.SmsUsers,
-                JsonData = JsonConvert.SerializeObject(SmsUserModel),
-                Date = DateTime.Now
-            };
-            _ = dataQueueService.SaveAsync(dataQueueModel);
-        }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();

@@ -14,12 +14,20 @@ public class AreaService(IBaseApiService apiService) : IAreaService
 
     public async Task<bool> SaveAsync(AreaModel model)
     {
-        return true;
+        var result = await apiService.AddArea(model);
+        return result != null;
+    }
+
+    public async Task<bool> UpdateAsync(AreaModel model)
+    {
+        var result = await apiService.UpdateArea(model.Id, model);
+        return result != null;
     }
 }
 
 public interface IAreaService
 {
     public Task<bool> SaveAsync(AreaModel model);
+    public Task<bool> UpdateAsync(AreaModel model);
     public Task<BaseListResponse<AreaModel>> GetAsync(BaseFilterModel filter);
 }

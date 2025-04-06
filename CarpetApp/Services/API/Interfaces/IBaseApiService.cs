@@ -72,4 +72,17 @@ public interface IBaseApiService
     Task<AreaModel> UpdateArea(Guid id, AreaModel model);
 
     #endregion
+
+    #region Company
+
+    [Get("/app/Area/filtered-list")]
+    Task<BaseListResponse<CompanyModel>> GetCompanyList(BaseFilterModel filter);
+
+    [Post("/app/company")]
+    Task<CompanyModel> AddCompany(CompanyModel model);
+
+    [Put("/app/company/{id}")]
+    Task<CompanyModel> UpdateCompany(Guid id, CompanyModel model);
+
+    #endregion
 }

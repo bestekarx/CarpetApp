@@ -15,8 +15,7 @@ namespace CarpetApp.ViewModels.Definitions;
 [QueryProperty(nameof(ProductModel), Consts.ProductModel)]
 public partial class ProductDetailViewModel(
     IDialogService dialogService,
-    IProductService productService,
-    IDataQueueService dataQueueService) : ViewModelBase
+    IProductService productService) : ViewModelBase
 {
     #region Commands
 

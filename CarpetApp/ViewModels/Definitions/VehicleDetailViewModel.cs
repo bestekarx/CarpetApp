@@ -14,8 +14,7 @@ namespace CarpetApp.ViewModels.Definitions;
 [QueryProperty(nameof(VehicleModel), Consts.VehicleModel)]
 public partial class VehicleDetailViewModel(
     IDialogService dialogService,
-    IVehicleService vehicleService,
-    IDataQueueService dataQueueService) : ViewModelBase
+    IVehicleService vehicleService) : ViewModelBase
 {
     #region Commands
 
