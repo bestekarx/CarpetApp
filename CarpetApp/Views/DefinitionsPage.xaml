@@ -1,230 +1,230 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <services:ContentPageBase
-  x:Class="CarpetApp.Views.DefinitionsPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:helpers="clr-namespace:CarpetApp.Helpers"
-  xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
-  xmlns:services="clr-namespace:CarpetApp.Services"
-  BackgroundColor="{StaticResource MainBgColor}">
+    BackgroundColor="{StaticResource MainBgColor}"
+    x:Class="CarpetApp.Views.DefinitionsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:helpers="clr-namespace:CarpetApp.Helpers"
+    xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
+    xmlns:services="clr-namespace:CarpetApp.Services"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-  <Shell.TitleView>
-    <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.Tanimlamalar}" />
-  </Shell.TitleView>
+    <Shell.TitleView>
+        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.Tanimlamalar}" />
+    </Shell.TitleView>
 
-  <ContentPage.Content>
-    <ScrollView Grid.Row="1">
-      <VerticalStackLayout Spacing="0">
+    <ContentPage.Content>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
 
-        <Grid
-          Margin="8,16,8,16"
-          RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto "
-          RowSpacing="12">
+                <Grid
+                    Margin="8,16,8,16"
+                    RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto "
+                    RowSpacing="12">
 
-          <!--  ürünler  -->
-          <Frame Grid.Row="0" Padding="8">
-            <Grid ColumnDefinitions="Auto, *, *">
-              <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HorizontalOptions="Start"
-                Source="d_products"
-                VerticalOptions="Center" />
+                    <!--  ürünler  -->
+                    <Frame Grid.Row="0" Padding="8">
+                        <Grid ColumnDefinitions="Auto, *, *">
+                            <Image
+                                Aspect="AspectFit"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                Source="d_products"
+                                VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                Margin="8,0,0,0"
-                Style="{StaticResource HomePageTitle}"
-                Text="{x:Static resx:AppStrings.Urunler}" />
+                            <Label
+                                Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource HomePageTitle}"
+                                Text="{x:Static resx:AppStrings.Urunler}" />
 
-              <ContentView
-                Grid.Row="0"
-                Grid.Column="2"
-                HorizontalOptions="End"
-                VerticalOptions="Center">
-                <Image Aspect="AspectFit" Source="big_arrow" />
-              </ContentView>
-            </Grid>
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer
-                Command="{Binding OpenPageCommand}"
-                CommandParameter="{x:Static helpers:Consts.ProductsPage}"
-                NumberOfTapsRequired="1" />
-            </Frame.GestureRecognizers>
-          </Frame>
+                            <ContentView
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="big_arrow" />
+                            </ContentView>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenPageCommand}"
+                                CommandParameter="{x:Static helpers:Consts.ProductsPage}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-          <!--  Araçlar  -->
-          <Frame Grid.Row="1" Padding="8">
-            <Grid ColumnDefinitions="Auto, *, *">
-              <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HorizontalOptions="Start"
-                Source="d_vehicles"
-                VerticalOptions="Center" />
+                    <!--  Araçlar  -->
+                    <Frame Grid.Row="1" Padding="8">
+                        <Grid ColumnDefinitions="Auto, *, *">
+                            <Image
+                                Aspect="AspectFit"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                Source="d_vehicles"
+                                VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                Margin="8,0,0,0"
-                Style="{StaticResource HomePageTitle}"
-                Text="{x:Static resx:AppStrings.Araclar}" />
+                            <Label
+                                Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource HomePageTitle}"
+                                Text="{x:Static resx:AppStrings.Araclar}" />
 
-              <ContentView
-                Grid.Row="0"
-                Grid.Column="2"
-                HorizontalOptions="End"
-                VerticalOptions="Center">
-                <Image Aspect="AspectFit" Source="big_arrow" />
-              </ContentView>
-            </Grid>
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer
-                Command="{Binding OpenPageCommand}"
-                CommandParameter="{x:Static helpers:Consts.VehiclesPage}"
-                NumberOfTapsRequired="1" />
-            </Frame.GestureRecognizers>
-          </Frame>
+                            <ContentView
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="big_arrow" />
+                            </ContentView>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenPageCommand}"
+                                CommandParameter="{x:Static helpers:Consts.VehiclesPage}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-          <!--  Bölgeler  -->
-          <Frame Grid.Row="2" Padding="8">
-            <Grid ColumnDefinitions="Auto, *, *">
-              <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HorizontalOptions="Start"
-                Source="d_areas"
-                VerticalOptions="Center" />
+                    <!--  Bölgeler  -->
+                    <Frame Grid.Row="2" Padding="8">
+                        <Grid ColumnDefinitions="Auto, *, *">
+                            <Image
+                                Aspect="AspectFit"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                Source="d_areas"
+                                VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                Margin="8,0,0,0"
-                Style="{StaticResource HomePageTitle}"
-                Text="{x:Static resx:AppStrings.Bolgeler}" />
+                            <Label
+                                Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource HomePageTitle}"
+                                Text="{x:Static resx:AppStrings.Bolgeler}" />
 
-              <ContentView
-                Grid.Row="0"
-                Grid.Column="2"
-                HorizontalOptions="End"
-                VerticalOptions="Center">
-                <Image Aspect="AspectFit" Source="big_arrow" />
-              </ContentView>
-            </Grid>
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer
-                Command="{Binding OpenPageCommand}"
-                CommandParameter="{x:Static helpers:Consts.AreasPage}"
-                NumberOfTapsRequired="1" />
-            </Frame.GestureRecognizers>
-          </Frame>
+                            <ContentView
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="big_arrow" />
+                            </ContentView>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenPageCommand}"
+                                CommandParameter="{x:Static helpers:Consts.AreasPage}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-          <!--  Firmalar  -->
-          <Frame Grid.Row="3" Padding="8">
-            <Grid ColumnDefinitions="Auto, *, *">
-              <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HorizontalOptions="Start"
-                Source="d_firms"
-                VerticalOptions="Center" />
+                    <!--  Firmalar  -->
+                    <Frame Grid.Row="3" Padding="8">
+                        <Grid ColumnDefinitions="Auto, *, *">
+                            <Image
+                                Aspect="AspectFit"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                Source="d_firms"
+                                VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                Margin="8,0,0,0"
-                Style="{StaticResource HomePageTitle}"
-                Text="{x:Static resx:AppStrings.Firmalar}" />
+                            <Label
+                                Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource HomePageTitle}"
+                                Text="{x:Static resx:AppStrings.Firmalar}" />
 
-              <ContentView
-                Grid.Row="0"
-                Grid.Column="2"
-                HorizontalOptions="End"
-                VerticalOptions="Center">
-                <Image Aspect="AspectFit" Source="big_arrow" />
-              </ContentView>
-            </Grid>
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer
-                Command="{Binding OpenPageCommand}"
-                CommandParameter="{x:Static helpers:Consts.CompaniesPage}"
-                NumberOfTapsRequired="1" />
-            </Frame.GestureRecognizers>
-          </Frame>
+                            <ContentView
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="big_arrow" />
+                            </ContentView>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenPageCommand}"
+                                CommandParameter="{x:Static helpers:Consts.CompaniesPage}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-          <!--  Sms Üyelikleri  -->
-          <Frame Grid.Row="4" Padding="8">
-            <Grid ColumnDefinitions="Auto, *, *">
-              <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HorizontalOptions="Start"
-                Source="d_sms_users"
-                VerticalOptions="Center" />
+                    <!--  Sms Üyelikleri  -->
+                    <Frame Grid.Row="4" Padding="8">
+                        <Grid ColumnDefinitions="Auto, *, *">
+                            <Image
+                                Aspect="AspectFit"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                Source="d_sms_users"
+                                VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                Margin="8,0,0,0"
-                Style="{StaticResource HomePageTitle}"
-                Text="{x:Static resx:AppStrings.SmsUyeliks}" />
+                            <Label
+                                Grid.Column="1"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource HomePageTitle}"
+                                Text="{x:Static resx:AppStrings.SmsUyeliks}" />
 
-              <ContentView
-                Grid.Row="0"
-                Grid.Column="2"
-                HorizontalOptions="End"
-                VerticalOptions="Center">
-                <Image Aspect="AspectFit" Source="big_arrow" />
-              </ContentView>
-            </Grid>
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer
-                Command="{Binding OpenPageCommand}"
-                CommandParameter="{x:Static helpers:Consts.SmsUsersPage}"
-                NumberOfTapsRequired="1" />
-            </Frame.GestureRecognizers>
-          </Frame>
+                            <ContentView
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="big_arrow" />
+                            </ContentView>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenPageCommand}"
+                                CommandParameter="{x:Static helpers:Consts.SmsUsersPage}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
-          <!--  Sms Şablonlar  -->
-          <Frame Grid.Row="5" Padding="8">
-            <Grid ColumnDefinitions="Auto, *, *">
-              <Image
-                Grid.Row="0"
-                Grid.Column="0"
-                Aspect="AspectFit"
-                HorizontalOptions="Start"
-                Source="d_templates"
-                VerticalOptions="Center" />
+                    <!--  Sms Şablonlar  -->
+                    <Frame Grid.Row="5" Padding="8">
+                        <Grid ColumnDefinitions="Auto, *, *">
+                            <Image
+                                Aspect="AspectFit"
+                                Grid.Column="0"
+                                Grid.Row="0"
+                                HorizontalOptions="Start"
+                                Source="d_templates"
+                                VerticalOptions="Center" />
 
-              <Label
-                Grid.Column="1"
-                Margin="8,0,0,0"
-                LineBreakMode="NoWrap"
-                Style="{StaticResource HomePageTitle}"
-                Text="{x:Static resx:AppStrings.SmsSablonlari}" />
+                            <Label
+                                Grid.Column="1"
+                                LineBreakMode="NoWrap"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource HomePageTitle}"
+                                Text="{x:Static resx:AppStrings.SmsSablonlari}" />
 
-              <ContentView
-                Grid.Row="0"
-                Grid.Column="2"
-                HorizontalOptions="End"
-                VerticalOptions="Center">
-                <Image Aspect="AspectFit" Source="big_arrow" />
-              </ContentView>
-            </Grid>
-            <Frame.GestureRecognizers>
-              <TapGestureRecognizer
-                Command="{Binding OpenPageCommand}"
-                CommandParameter="{x:Static helpers:Consts.SmsTemplatesPage}"
-                NumberOfTapsRequired="1" />
-            </Frame.GestureRecognizers>
-          </Frame>
+                            <ContentView
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center">
+                                <Image Aspect="AspectFit" Source="big_arrow" />
+                            </ContentView>
+                        </Grid>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding OpenPageCommand}"
+                                CommandParameter="{x:Static helpers:Consts.SmsTemplatesPage}"
+                                NumberOfTapsRequired="1" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
 
 
-        </Grid>
-      </VerticalStackLayout>
-    </ScrollView>
-  </ContentPage.Content>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 
 </services:ContentPageBase>

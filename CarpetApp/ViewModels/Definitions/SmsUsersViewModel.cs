@@ -72,7 +72,7 @@ public partial class SmsUsersViewModel(
             var filter = new BaseFilterModel
             {
                 Active = isActive,
-                Search = SearchText
+                Name = SearchText
             };
             SmsUsersList = await smsUserservice.GetAsync(filter);
         }

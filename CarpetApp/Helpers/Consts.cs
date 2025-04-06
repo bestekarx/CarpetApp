@@ -7,6 +7,12 @@ public static class Consts
     public const string LanguageCode = nameof(LanguageCode);
     public const string Type = nameof(Type);
 
+    #region Akavache Key
+
+    public const string UserData = nameof(UserData);
+
+    #endregion
+
     #region ParameterKey
 
     public const string ProductModel = nameof(ProductModel);
@@ -45,12 +51,6 @@ public static class Consts
     public const string SmsTemplatesPage = "SmsTemplates";
     public const string SmsTemplateDetail = "SmsTemplateDetail";
     public const string DataPage = "DataPage";
-
-    #endregion
-    
-    #region Akavache Key
-
-    public const string UserData = nameof(UserData);
 
     #endregion
 }

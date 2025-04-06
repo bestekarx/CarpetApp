@@ -3,6 +3,7 @@ using CarpetApp.Helpers;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Resources.Strings;
+using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
@@ -72,9 +73,19 @@ public partial class AreasViewModel(
             var filter = new BaseFilterModel
             {
                 Active = isActive,
-                Search = SearchText
+                Name = SearchText
             };
-            AreaList = await areaService.GetAsync(filter);
+
+            try
+            {
+                var result = await areaService.GetAsync(filter);
+                if (result != null)
+                    AreaList = result.Items;
+            }
+            catch (Exception e)
+            {
+                CarpetExceptionLogger.Instance.CrashLog(e);
+            }
         }
     }
 

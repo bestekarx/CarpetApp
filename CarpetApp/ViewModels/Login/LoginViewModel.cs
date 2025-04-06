@@ -1,4 +1,3 @@
-using CarpetApp.Helpers;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
@@ -23,8 +22,8 @@ public partial class LoginViewModel(
     [ObservableProperty] private decimal code;
 
     [ObservableProperty] private string password = "1q2w3E*";
-    [ObservableProperty] private string userName = "admin";
     [ObservableProperty] private string tenantName = "test_tenant";
+    [ObservableProperty] private string userName = "admin";
 
     [RelayCommand]
     private async Task Login()
@@ -37,11 +36,11 @@ public partial class LoginViewModel(
         try
         {
             _ = dialogService.Show();
-            
+
             Guard.IsNotNullOrWhiteSpace(UserName);
             Guard.IsNotNullOrWhiteSpace(Password);
-            
-            var request = new RequestLoginModel()
+
+            var request = new RequestLoginModel
             {
                 UserNameOrEmailAddress = UserName,
                 Password = Password
@@ -57,12 +56,12 @@ public partial class LoginViewModel(
             }
             else
             {
-                _= dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre yanlış!");
+                _ = dialogService.PromptAsync("Uyarı!", "Kullanıcı adı veya şifre yanlış!");
             }
             /*var response = await userService.GetTenant(TenantName);
             if(response != null && response.Success)
             {
-               
+
             }*/
         }
         catch (Exception e)
@@ -88,7 +87,7 @@ public partial class LoginViewModel(
 
         await _navigationService.NavigateMainPageAsync(AppShell.Route.HomePage, parameter);
         */
-        
+
         //Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
         _ = dialogService.Hide();
     }

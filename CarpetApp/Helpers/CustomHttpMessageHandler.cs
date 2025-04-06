@@ -1,11 +1,11 @@
-
 using System.Net;
 
 namespace CarpetApp.Helpers;
 
-public class CustomHttpMessageHandler() : DelegatingHandler
+public class CustomHttpMessageHandler : DelegatingHandler
 {
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         try
         {
@@ -18,7 +18,7 @@ public class CustomHttpMessageHandler() : DelegatingHandler
             {
             }
             else if (response.StatusCode == HttpStatusCode.BadRequest)
-            {   
+            {
             }
             else if (response.StatusCode == HttpStatusCode.OK)
             {

@@ -5,7 +5,7 @@ using CarpetApp.Services.API.Interfaces;
 namespace CarpetApp.Services.Entry;
 
 public class VehicleService(IBaseApiService apiService)
-    :  IVehicleService
+    : IVehicleService
 {
     public async Task<BaseListResponse<VehicleModel>> GetAsync(BaseFilterModel filter)
     {
@@ -18,7 +18,7 @@ public class VehicleService(IBaseApiService apiService)
         var result = await apiService.AddVehicle(model);
         return result != null;
     }
-    
+
     public async Task<bool> UpdateAsync(VehicleModel model)
     {
         var result = await apiService.UpdateVehicle(model.Id, model);

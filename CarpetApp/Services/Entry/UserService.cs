@@ -6,7 +6,7 @@ using CommunityToolkit.Diagnostics;
 
 namespace CarpetApp.Services.Entry;
 
-public class UserService(IBaseApiService apiService) :  IUserService
+public class UserService(IBaseApiService apiService) : IUserService
 {
     public Task<TenantModel> GetTenant(string tenantName)
     {

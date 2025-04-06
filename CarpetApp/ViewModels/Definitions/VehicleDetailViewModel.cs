@@ -7,7 +7,6 @@ using CarpetApp.Services.Entry;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 
 namespace CarpetApp.ViewModels.Definitions;
 
@@ -53,9 +52,9 @@ public partial class VehicleDetailViewModel(
 
     #region Properties
 
-    [ObservableProperty] private string _name;
+    [ObservableProperty] private string _vehicleName;
     [ObservableProperty] private bool _isNameError;
-    [ObservableProperty] private string _plate;
+    [ObservableProperty] private string _plateNumber;
     [ObservableProperty] private bool _isPlateError;
     [ObservableProperty] private int _dataTypeSelectedIndex;
     [ObservableProperty] private int _stateSelectedIndex;
@@ -79,9 +78,15 @@ public partial class VehicleDetailViewModel(
     {
         if (DetailPageType == DetailPageType.Edit && VehicleModel != null)
         {
-            Name = VehicleModel.Name;
-            Plate = VehicleModel.Plate;
+            VehicleName = VehicleModel.VehicleName;
+            PlateNumber = VehicleModel.PlateNumber;
             StateSelectedIndex = VehicleModel.Active ? 1 : 0;
+            SelectedState = VehicleModel.Active ? StateList[1] : StateList[0];
+        }
+        else
+        {
+            SelectedState = StateList[1];
+            StateSelectedIndex = 1;
         }
     }
 
@@ -93,24 +98,27 @@ public partial class VehicleDetailViewModel(
             return;
         }
 
+        PlateNumber = PlateNumber?.Replace(" ", "").ToUpper();
+
         if (DetailPageType == DetailPageType.Add)
         {
             VehicleModel = new VehicleModel
             {
-                Name = Name,
-                Plate = Plate
+                VehicleName = VehicleName,
+                PlateNumber = PlateNumber,
+                Active = true
             };
         }
         else
         {
-            VehicleModel.Name = Name;
-            VehicleModel.Plate = Plate;
+            VehicleModel.VehicleName = VehicleName;
+            VehicleModel.PlateNumber = PlateNumber;
             VehicleModel.Active = SelectedState.Value == 1;
         }
 
-        var result = (DetailPageType == DetailPageType.Add
+        var result = DetailPageType == DetailPageType.Add
             ? await vehicleService.SaveAsync(VehicleModel)
-            : await vehicleService.UpdateAsync(VehicleModel));
+            : await vehicleService.UpdateAsync(VehicleModel);
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
         _ = dialogService.ShowToast(message);
 
@@ -120,16 +128,16 @@ public partial class VehicleDetailViewModel(
 
     private bool ValidateInputs()
     {
-        IsNameError = string.IsNullOrWhiteSpace(Name);
-        IsPlateError = string.IsNullOrWhiteSpace(Plate);
+        IsNameError = string.IsNullOrWhiteSpace(VehicleName);
+        IsPlateError = string.IsNullOrWhiteSpace(PlateNumber);
 
         return !IsNameError || !IsPlateError;
     }
 
     private void ResetForm()
     {
-        Name = string.Empty;
-        Plate = string.Empty;
+        VehicleName = string.Empty;
+        PlateNumber = string.Empty;
     }
 
     #endregion

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <services:ContentPageBase
     BackgroundColor="{StaticResource MainBgColor}"
@@ -47,7 +47,6 @@
                     VerticalOptions="Center">
 
                     <VerticalStackLayout>
-
                         <!--  name  -->
                         <core:SfTextInputLayout
                             ContainerType="Outlined"
@@ -57,7 +56,7 @@
                             <core:SfTextInputLayout.HintLabelStyle>
                                 <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
                             </core:SfTextInputLayout.HintLabelStyle>
-                            <Entry ReturnType="Next" Text="{Binding Name}" />
+                            <Entry ReturnType="Next" Text="{Binding VehicleName}" />
                         </core:SfTextInputLayout>
 
                         <!--  Plate  -->
@@ -69,7 +68,11 @@
                             <core:SfTextInputLayout.HintLabelStyle>
                                 <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
                             </core:SfTextInputLayout.HintLabelStyle>
-                            <Entry ReturnType="Next" Text="{Binding Plate}" />
+                            <Entry
+                                ReturnType="Next"
+                                Text="{Binding PlateNumber}"
+                                TextChanged="OnPlateNumberTextChanged"
+                                x:Name="EntryPlateNumber" />
                         </core:SfTextInputLayout>
 
                         <!--  durum  -->

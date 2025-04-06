@@ -9,4 +9,12 @@ public partial class VehicleDetailPage
         InitializeComponent();
         BindingContext = model;
     }
+
+    public void OnPlateNumberTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var newText = e.NewTextValue;
+        newText = newText?.Replace(" ", "").ToUpper();
+        if (newText != null)
+            EntryPlateNumber.Text = newText;
+    }
 }

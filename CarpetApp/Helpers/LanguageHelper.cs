@@ -2,14 +2,7 @@ using System.Globalization;
 
 namespace CarpetApp.Helpers;
 
-public static class 
-    
-    
-    
-    
-    
-    
-    
+public static class
     LanguageHelper
 {
     public static void SwitchLanguage(CultureInfo culture)

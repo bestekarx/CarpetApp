@@ -33,14 +33,10 @@ public class SplashScreenViewModel(
         await MainThread.InvokeOnMainThreadAsync(async () =>
         {
             var userData = await CacheService.Instance.GetUserDataAsync<UserModel>();
-            if (userData != null) 
-            {
+            if (userData != null)
                 Application.Current!.MainPage = new AppShell(new AppShellViewModel(navigationService));
-            }
             else
-            {
-                Application.Current!.MainPage = new LoginPage(loginViewModel);    
-            }
+                Application.Current!.MainPage = new LoginPage(loginViewModel);
         });
     }
 }

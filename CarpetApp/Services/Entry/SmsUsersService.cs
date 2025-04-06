@@ -3,8 +3,7 @@ using CarpetApp.Models.API.Filter;
 
 namespace CarpetApp.Services.Entry;
 
-public class SmsUsersService()
-    :  ISmsUsersService
+public class SmsUsersService : ISmsUsersService
 {
     public async Task<List<SmsUsersModel>> GetAsync(BaseFilterModel filter)
     {

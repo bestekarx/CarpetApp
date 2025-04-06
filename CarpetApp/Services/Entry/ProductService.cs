@@ -2,12 +2,11 @@ using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.Products;
 using CarpetApp.Services.API.Interfaces;
-using Exception = Java.Lang.Exception;
 
 namespace CarpetApp.Services.Entry;
 
 public class ProductService(IBaseApiService apiService)
-    :  IProductService
+    : IProductService
 {
     public async Task<bool> UpdateAsync(ProductModel model)
     {

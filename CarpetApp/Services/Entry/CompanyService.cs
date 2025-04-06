@@ -3,8 +3,7 @@ using CarpetApp.Models.API.Filter;
 
 namespace CarpetApp.Services.Entry;
 
-public class CompanyService()
-    :  ICompanyService
+public class CompanyService : ICompanyService
 {
     public async Task<List<CompanyModel>> GetAsync(BaseFilterModel filter)
     {
@@ -29,12 +28,11 @@ public class CompanyService()
 
     public async Task<bool> SaveAsync(CompanyModel model)
     {
-
         return true;
     }
 }
 
-public interface ICompanyService 
+public interface ICompanyService
 {
     public Task<bool> SaveAsync(CompanyModel model);
     public Task<List<CompanyModel>> GetAsync(BaseFilterModel filter);

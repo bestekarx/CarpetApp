@@ -1,155 +1,155 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <services:ContentPageBase
-  x:Class="CarpetApp.Views.Definitions.ProductDetailPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-  xmlns:core="http://schemas.syncfusion.com/maui"
-  xmlns:myEnum="clr-namespace:CarpetApp.Enums"
-  xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
-  xmlns:services="clr-namespace:CarpetApp.Services"
-  xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-  xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
-  x:DataType="vm:ProductDetailViewModel"
-  BackgroundColor="{StaticResource MainBgColor}">
+    BackgroundColor="{StaticResource MainBgColor}"
+    x:Class="CarpetApp.Views.Definitions.ProductDetailPage"
+    x:DataType="vm:ProductDetailViewModel"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+    xmlns:core="http://schemas.syncfusion.com/maui"
+    xmlns:myEnum="clr-namespace:CarpetApp.Enums"
+    xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
+    xmlns:services="clr-namespace:CarpetApp.Services"
+    xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+    xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-  <Shell.TitleView>
-    <Label Style="{StaticResource NavBarTitleLabelStyle}">
-      <Label.Triggers>
-        <DataTrigger
-          Binding="{Binding DetailPageType}"
-          TargetType="Label"
-          Value="{x:Static myEnum:DetailPageType.Add}">
-          <Setter Property="Text" Value="{x:Static resx:AppStrings.UrunEkle}" />
-        </DataTrigger>
-        <DataTrigger
-          Binding="{Binding DetailPageType}"
-          TargetType="Label"
-          Value="{x:Static myEnum:DetailPageType.Edit}">
-          <Setter Property="Text" Value="{x:Static resx:AppStrings.UrunDuzenle}" />
-        </DataTrigger>
-      </Label.Triggers>
-    </Label>
-  </Shell.TitleView>
-
-  <ContentPage.Content>
-
-    <ScrollView>
-      <Grid RowDefinitions="Auto, Auto, Auto">
-
-        <Frame
-          Grid.Row="0"
-          Margin="16,24,16,16"
-          Padding="8"
-          BackgroundColor="White"
-          BorderColor="{StaticResource Gray400}"
-          VerticalOptions="Center">
-
-          <VerticalStackLayout>
-
-            <!--  ürün adı  -->
-            <core:SfTextInputLayout
-              ContainerType="Outlined"
-              HasError="{Binding IsNameError}"
-              Hint="{x:Static resx:AppStrings.UrunAdi}"
-              Style="{StaticResource DefaultInput}">
-              <core:SfTextInputLayout.HintLabelStyle>
-                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-              </core:SfTextInputLayout.HintLabelStyle>
-              <Entry ReturnType="Next" Text="{Binding Name}" />
-            </core:SfTextInputLayout>
-
-            <!--  ürün fiyatı  -->
-            <core:SfTextInputLayout
-              HasError="{Binding IsPriceError}"
-              Hint="{x:Static resx:AppStrings.Fiyat}"
-              Style="{StaticResource DefaultInput}">
-              <Entry
-                Keyboard="Numeric"
-                ReturnType="Next"
-                Text="{Binding Price}" />
-              <core:SfTextInputLayout.HintLabelStyle>
-                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-              </core:SfTextInputLayout.HintLabelStyle>
-            </core:SfTextInputLayout>
-
-            <!--  ürün tipi  -->
-            <core:SfTextInputLayout
-              HasError="{Binding IsProductTypeError}"
-              HeightRequest="60"
-              Hint="{x:Static resx:AppStrings.UrunTipi}"
-              Style="{StaticResource DefaultInput}">
-
-              <sfComboBox:SfComboBox
-                DisplayMemberPath="Name"
-                ItemsSource="{Binding ProductTypes}"
-                SelectedIndex="{Binding DataTypeSelectedIndex}"
-                SelectedItem="{Binding SelectedProductType}"
-                SelectedValuePath="Value"
-                Style="{StaticResource DefaultComboBox}" />
-
-              <core:SfTextInputLayout.HintLabelStyle>
-                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-              </core:SfTextInputLayout.HintLabelStyle>
-            </core:SfTextInputLayout>
-
-            <!--  durum  -->
-            <core:SfTextInputLayout
-              HeightRequest="60"
-              Hint="{x:Static resx:AppStrings.Durum}"
-              Style="{StaticResource DefaultInput}">
-
-              <sfComboBox:SfComboBox
-                DisplayMemberPath="Name"
-                ItemsSource="{Binding StateList}"
-                SelectedIndex="{Binding StateSelectedIndex}"
-                SelectedItem="{Binding SelectedState}"
-                SelectedValuePath="Value"
-                Style="{StaticResource DefaultComboBox}" />
-
-              <core:SfTextInputLayout.Triggers>
+    <Shell.TitleView>
+        <Label Style="{StaticResource NavBarTitleLabelStyle}">
+            <Label.Triggers>
                 <DataTrigger
-                  Binding="{Binding DetailPageType}"
-                  TargetType="core:SfTextInputLayout"
-                  Value="{x:Static myEnum:DetailPageType.Add}">
-                  <Setter Property="IsVisible" Value="False" />
+                    Binding="{Binding DetailPageType}"
+                    TargetType="Label"
+                    Value="{x:Static myEnum:DetailPageType.Add}">
+                    <Setter Property="Text" Value="{x:Static resx:AppStrings.UrunEkle}" />
                 </DataTrigger>
                 <DataTrigger
-                  Binding="{Binding DetailPageType}"
-                  TargetType="core:SfTextInputLayout"
-                  Value="{x:Static myEnum:DetailPageType.Edit}">
-                  <Setter Property="IsVisible" Value="True" />
+                    Binding="{Binding DetailPageType}"
+                    TargetType="Label"
+                    Value="{x:Static myEnum:DetailPageType.Edit}">
+                    <Setter Property="Text" Value="{x:Static resx:AppStrings.UrunDuzenle}" />
                 </DataTrigger>
-              </core:SfTextInputLayout.Triggers>
+            </Label.Triggers>
+        </Label>
+    </Shell.TitleView>
 
-              <core:SfTextInputLayout.HintLabelStyle>
-                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-              </core:SfTextInputLayout.HintLabelStyle>
-            </core:SfTextInputLayout>
+    <ContentPage.Content>
 
-          </VerticalStackLayout>
+        <ScrollView>
+            <Grid RowDefinitions="Auto, Auto, Auto">
 
-        </Frame>
+                <Frame
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource Gray400}"
+                    Grid.Row="0"
+                    Margin="16,24,16,16"
+                    Padding="8"
+                    VerticalOptions="Center">
 
-        <!--  tamamla  -->
-        <buttons:SfButton
-          Grid.Row="1"
-          Margin="16,0,16,0"
-          Command="{Binding CompleteCommand}"
-          Style="{StaticResource SaveButton}"
-          Text="{x:Static resx:AppStrings.Tamamla}"
-          TextColor="White" />
+                    <VerticalStackLayout>
 
-        <Label
-          Grid.Row="2"
-          Margin="16,8,16,0"
-          Style="{StaticResource InfoLabel}"
-          Text="{x:Static resx:AppStrings.UrunEkleNot}" />
+                        <!--  ürün adı  -->
+                        <core:SfTextInputLayout
+                            ContainerType="Outlined"
+                            HasError="{Binding IsNameError}"
+                            Hint="{x:Static resx:AppStrings.UrunAdi}"
+                            Style="{StaticResource DefaultInput}">
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                            <Entry ReturnType="Next" Text="{Binding Name}" />
+                        </core:SfTextInputLayout>
 
-      </Grid>
-    </ScrollView>
+                        <!--  ürün fiyatı  -->
+                        <core:SfTextInputLayout
+                            HasError="{Binding IsPriceError}"
+                            Hint="{x:Static resx:AppStrings.Fiyat}"
+                            Style="{StaticResource DefaultInput}">
+                            <Entry
+                                Keyboard="Numeric"
+                                ReturnType="Next"
+                                Text="{Binding Price}" />
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
 
-  </ContentPage.Content>
+                        <!--  ürün tipi  -->
+                        <core:SfTextInputLayout
+                            HasError="{Binding IsProductTypeError}"
+                            HeightRequest="60"
+                            Hint="{x:Static resx:AppStrings.UrunTipi}"
+                            Style="{StaticResource DefaultInput}">
+
+                            <sfComboBox:SfComboBox
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding ProductTypes}"
+                                SelectedIndex="{Binding DataTypeSelectedIndex}"
+                                SelectedItem="{Binding SelectedProductType}"
+                                SelectedValuePath="Value"
+                                Style="{StaticResource DefaultComboBox}" />
+
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
+
+                        <!--  durum  -->
+                        <core:SfTextInputLayout
+                            HeightRequest="60"
+                            Hint="{x:Static resx:AppStrings.Durum}"
+                            Style="{StaticResource DefaultInput}">
+
+                            <sfComboBox:SfComboBox
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding StateList}"
+                                SelectedIndex="{Binding StateSelectedIndex}"
+                                SelectedItem="{Binding SelectedState}"
+                                SelectedValuePath="Value"
+                                Style="{StaticResource DefaultComboBox}" />
+
+                            <core:SfTextInputLayout.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding DetailPageType}"
+                                    TargetType="core:SfTextInputLayout"
+                                    Value="{x:Static myEnum:DetailPageType.Add}">
+                                    <Setter Property="IsVisible" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding DetailPageType}"
+                                    TargetType="core:SfTextInputLayout"
+                                    Value="{x:Static myEnum:DetailPageType.Edit}">
+                                    <Setter Property="IsVisible" Value="True" />
+                                </DataTrigger>
+                            </core:SfTextInputLayout.Triggers>
+
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
+
+                    </VerticalStackLayout>
+
+                </Frame>
+
+                <!--  tamamla  -->
+                <buttons:SfButton
+                    Command="{Binding CompleteCommand}"
+                    Grid.Row="1"
+                    Margin="16,0,16,0"
+                    Style="{StaticResource SaveButton}"
+                    Text="{x:Static resx:AppStrings.Tamamla}"
+                    TextColor="White" />
+
+                <Label
+                    Grid.Row="2"
+                    Margin="16,8,16,0"
+                    Style="{StaticResource InfoLabel}"
+                    Text="{x:Static resx:AppStrings.UrunEkleNot}" />
+
+            </Grid>
+        </ScrollView>
+
+    </ContentPage.Content>
 
 </services:ContentPageBase>

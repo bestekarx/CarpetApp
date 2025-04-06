@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <services:ContentPageBase
-  x:Class="CarpetApp.Views.SplashScreenPage"
-  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-  xmlns:services="clr-namespace:CarpetApp.Services">
-  <ContentPage.Content>
-    <Label Text="Please wait.." />
-  </ContentPage.Content>
+    x:Class="CarpetApp.Views.SplashScreenPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:services="clr-namespace:CarpetApp.Services"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <Label Text="Please wait.." />
+    </ContentPage.Content>
 </services:ContentPageBase>

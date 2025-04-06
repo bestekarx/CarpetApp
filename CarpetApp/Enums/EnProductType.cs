@@ -1,6 +1,6 @@
 namespace CarpetApp.Enums;
 
-public enum EnProductType : int
+public enum EnProductType
 {
     Service = 0,
     Product = 1,

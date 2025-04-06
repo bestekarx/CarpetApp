@@ -72,7 +72,7 @@ public partial class SmsTemplatesViewModel(
             var filter = new BaseFilterModel
             {
                 Active = isActive,
-                Search = SearchText
+                Name = SearchText
             };
             SmsTemplateList = await smsTemplateservice.GetAsync(filter);
         }

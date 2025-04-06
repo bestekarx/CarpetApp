@@ -11,5 +11,5 @@ public class UserModel : AuditedEntity
     public bool IsExternal { get; set; }
     public bool HasPassword { get; set; }
     public string ConcurrencyStamp { get; set; }
-    public Dictionary<string, object> ExtraProperties { get; set; } = new Dictionary<string, object>();
+    public Dictionary<string, object> ExtraProperties { get; set; } = new();
 }

@@ -82,7 +82,7 @@ public partial class ProductsViewModel(
             {
                 Active = _isActive,
                 Type = _selectedProductType?.Value,
-                Search = SearchText
+                Name = SearchText
             };
 
             try

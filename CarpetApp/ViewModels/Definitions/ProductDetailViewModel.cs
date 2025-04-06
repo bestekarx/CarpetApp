@@ -1,4 +1,3 @@
-using AndroidX.Core.App.UnusedAppRestrictions;
 using CarpetApp.Enums;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
@@ -9,7 +8,6 @@ using CarpetApp.Services.Entry;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Newtonsoft.Json;
 
 namespace CarpetApp.ViewModels.Definitions;
 
@@ -91,7 +89,7 @@ public partial class ProductDetailViewModel(
         {
             Name = ProductModel.Name;
             Price = ProductModel.Price;
-            DataTypeSelectedIndex = (int)ProductModel.Type;
+            DataTypeSelectedIndex = ProductModel.Type;
             StateSelectedIndex = ProductModel.Active ? 1 : 0;
             SelectedState = ProductModel.Active ? StateList[1] : StateList[0];
         }
@@ -119,7 +117,7 @@ public partial class ProductDetailViewModel(
                 Name = Name,
                 Price = Price,
                 Type = SelectedProductType.Value,
-                Active = true,
+                Active = true
             };
         }
         else
@@ -130,15 +128,15 @@ public partial class ProductDetailViewModel(
             ProductModel.Active = SelectedState.Value == 1;
         }
 
-        var result = (DetailPageType == DetailPageType.Add
+        var result = DetailPageType == DetailPageType.Add
             ? await productService.SaveAsync(ProductModel)
-            : await productService.UpdateAsync(ProductModel));
+            : await productService.UpdateAsync(ProductModel);
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
         _ = dialogService.ShowToast(message);
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
-        
+
         await dialogService.Hide();
     }
 

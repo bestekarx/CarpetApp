@@ -72,7 +72,7 @@ public partial class CompaniesViewModel(
             var filter = new BaseFilterModel
             {
                 Active = isActive,
-                Search = SearchText
+                Name = SearchText
             };
             CompanyList = await companyService.GetAsync(filter);
         }

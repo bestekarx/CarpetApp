@@ -9,18 +9,26 @@ namespace CarpetApp.Services.API.Interfaces;
 
 public interface IBaseApiService
 {
+    [Post("/DataQueue/Save")]
+    Task<ApiResponse<BaseResponse<DataQueueModel>>> DataQueueSave(DataQueueModel req);
+
+    [Post("/PostData/")]
+    Task<BaseSyncRequest> PostData(BaseSyncRequest req);
+
+    [Post("/Authentication/")]
+    Task<AuthenticationResponseModel> Authentication(RequestLoginModel req);
+
     #region Account
 
-    
     [Get("/abp/multi-tenancy/tenants/by-name/{name}")]
     Task<TenantModel> GetTenant(string name);
-    
+
     [Post("/account/login")]
     Task<LoginResponse> Login(RequestLoginModel model);
-    
+
     [Get("/account/my-profile")]
     Task<UserModel> GetMyProfile();
-    
+
     [Get("/account/logout")]
     Task<bool> Logout();
 
@@ -30,10 +38,10 @@ public interface IBaseApiService
 
     [Get("/app/product/filtered-list")]
     Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filter);
-    
+
     [Post("/app/product")]
     Task<ProductModel> AddProduct(ProductModel model);
-    
+
     [Put("/app/product/{id}")]
     Task<ProductModel> UpdateProduct(Guid id, ProductModel model);
 
@@ -43,22 +51,25 @@ public interface IBaseApiService
 
     [Get("/app/vehicle/filtered-list")]
     Task<BaseListResponse<VehicleModel>> GetVehicleList(BaseFilterModel filter);
-    
+
     [Post("/app/vehicle")]
     Task<VehicleModel> AddVehicle(VehicleModel model);
-    
+
     [Put("/app/vehicle/{id}")]
     Task<VehicleModel> UpdateVehicle(Guid id, VehicleModel model);
 
+    #endregion
+
+    #region Area
+
+    [Get("/app/Area/filtered-list")]
+    Task<BaseListResponse<AreaModel>> GetAreaList(BaseFilterModel filter);
+
+    [Post("/app/area")]
+    Task<AreaModel> AddArea(AreaModel model);
+
+    [Put("/app/area/{id}")]
+    Task<AreaModel> UpdateArea(Guid id, AreaModel model);
 
     #endregion
-    
-    [Post("/DataQueue/Save")]
-    Task<ApiResponse<BaseResponse<DataQueueModel>>> DataQueueSave(DataQueueModel req);
-
-    [Post("/PostData/")]
-    Task<BaseSyncRequest> PostData(BaseSyncRequest req);
-
-    [Post("/Authentication/")]
-    Task<AuthenticationResponseModel> Authentication(RequestLoginModel req);
 }

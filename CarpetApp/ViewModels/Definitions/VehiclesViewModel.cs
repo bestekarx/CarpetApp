@@ -3,6 +3,7 @@ using CarpetApp.Helpers;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Resources.Strings;
+using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
@@ -26,7 +27,7 @@ public partial class VehiclesViewModel(
     [ObservableProperty] private List<NameValueModel> _stateList =
         [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
 
-    [ObservableProperty] private int? _stateSelectedIndex = -1;
+    [ObservableProperty] private int? _stateSelectedIndex = 1;
     [ObservableProperty] private NameValueModel? _selectedState;
 
     #endregion
@@ -72,9 +73,19 @@ public partial class VehiclesViewModel(
             var filter = new BaseFilterModel
             {
                 Active = isActive,
-                Search = SearchText
+                Name = SearchText
             };
-            VehicleList = await vehicleService.GetAsync(filter);
+
+            try
+            {
+                var result = await vehicleService.GetAsync(filter);
+                if (result != null)
+                    VehicleList = result.Items;
+            }
+            catch (Exception e)
+            {
+                CarpetExceptionLogger.Instance.CrashLog(e);
+            }
         }
     }
 
