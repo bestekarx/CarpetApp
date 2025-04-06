@@ -4,9 +4,9 @@ namespace CarpetApp.Views.Definitions;
 
 public partial class AreaDetailPage
 {
-    public AreaDetailPage(AreaDetailViewModel model)
-    {
-        InitializeComponent();
-        BindingContext = model;
-    }
+  public AreaDetailPage(AreaDetailViewModel model)
+  {
+    InitializeComponent();
+    BindingContext = model;
+  }
 }

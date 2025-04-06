@@ -4,8 +4,8 @@ namespace CarpetApp.Models;
 
 public class VehicleModel : AuditedEntity
 {
-    public string VehicleName { get; set; }
-    public string PlateNumber { get; set; }
+  public string VehicleName { get; set; }
+  public string PlateNumber { get; set; }
 
-    [JsonIgnore] public string DataText => $"{PlateNumber} - {VehicleName}";
+  [JsonIgnore] public string DataText => $"{PlateNumber} - {VehicleName}";
 }

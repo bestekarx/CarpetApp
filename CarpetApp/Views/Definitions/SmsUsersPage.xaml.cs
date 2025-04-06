@@ -5,15 +5,15 @@ namespace CarpetApp.Views.Definitions;
 
 public partial class SmsUsersPage
 {
-    public SmsUsersPage(SmsUsersViewModel viewModel)
-    {
-        InitializeComponent();
-        BindingContext = viewModel;
-    }
+  public SmsUsersPage(SmsUsersViewModel viewModel)
+  {
+    InitializeComponent();
+    BindingContext = viewModel;
+  }
 
-    private void IsActiveComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
-    {
-        var viewModel = (SmsUsersViewModel)BindingContext;
-        _ = viewModel.Init();
-    }
+  private void IsActiveComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+  {
+    var viewModel = (SmsUsersViewModel)BindingContext;
+    _ = viewModel.Init();
+  }
 }

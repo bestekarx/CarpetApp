@@ -2,12 +2,12 @@ namespace CarpetApp.Helpers;
 
 public class TokenService
 {
-    public string Token { get; set; }
-    public event Action TokenUpdated;
+  public string Token { get; set; }
+  public event Action TokenUpdated;
 
-    public void SetToken(string token)
-    {
-        Token = token;
-        TokenUpdated?.Invoke();
-    }
+  public void SetToken(string token)
+  {
+    Token = token;
+    TokenUpdated?.Invoke();
+  }
 }

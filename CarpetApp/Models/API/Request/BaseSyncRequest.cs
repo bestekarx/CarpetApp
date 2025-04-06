@@ -4,6 +4,6 @@ namespace CarpetApp.Models.API.Request;
 
 public abstract class BaseSyncRequest
 {
-    public EnSyncDataType SyncDataType { get; set; }
-    //public abstract object GetData();
+  public EnSyncDataType SyncDataType { get; set; }
+  //public abstract object GetData();
 }

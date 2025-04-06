@@ -16,143 +16,143 @@ using CommunityToolkit.Mvvm.Input;
 namespace CarpetApp.ViewModels.Definitions;
 
 public partial class ProductsViewModel(
-    INavigationService navigationService,
-    IProductService productService,
-    IDialogService dialogService) : ViewModelBase
+  INavigationService navigationService,
+  IProductService productService,
+  IDialogService dialogService) : ViewModelBase
 {
-    #region Fields
+  #region Fields
 
-    private bool _isActive = true;
-    private NameValueModel _selectedProductType;
-    private ProductFilterParameters _selectedFilter;
+  private bool _isActive = true;
+  private NameValueModel _selectedProductType;
+  private ProductFilterParameters _selectedFilter;
 
-    #endregion
+  #endregion
 
-    #region Properties
+  #region Properties
 
-    [ObservableProperty] private List<ProductModel> _productList;
+  [ObservableProperty] private List<ProductModel> _productList;
 
-    [ObservableProperty] private string _searchText;
+  [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private bool _isFilter;
+  [ObservableProperty] private bool _isFilter;
 
-    #endregion
+  #endregion
 
-    #region Commands
+  #region Commands
 
-    [RelayCommand]
-    private async Task ProductAdd()
+  [RelayCommand]
+  private async Task ProductAdd()
+  {
+    await IsBusyFor(OnProductAddTapped);
+  }
+
+  [RelayCommand]
+  private async Task OnFilter()
+  {
+    await IsBusyFor(OnFilterTapped);
+  }
+
+  [RelayCommand]
+  private async Task SelectedItem(ProductModel obj)
+  {
+    await navigationService.NavigateToAsync(Consts.ProductDetail,
+      new Dictionary<string, object>
+      {
+        { Consts.Type, DetailPageType.Edit },
+        { Consts.ProductModel, obj }
+      });
+  }
+
+  [RelayCommand]
+  private async Task Search(string text)
+  {
+    SearchText = text;
+    await Init();
+  }
+
+  #endregion
+
+  #region Methods
+
+  private async Task Init()
+  {
+    using (await dialogService.Show())
     {
-        await IsBusyFor(OnProductAddTapped);
+      var filter = new BaseFilterModel
+      {
+        Active = _isActive,
+        Type = _selectedProductType?.Value,
+        Name = SearchText
+      };
+
+      try
+      {
+        var result = await productService.GetAsync(filter);
+        if (result != null)
+          ProductList = result.Items;
+      }
+      catch (Exception e)
+      {
+        CarpetExceptionLogger.Instance.CrashLog(e);
+      }
     }
+  }
 
-    [RelayCommand]
-    private async Task OnFilter()
-    {
-        await IsBusyFor(OnFilterTapped);
-    }
+  public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
+  {
+    await Init();
+    base.OnViewNavigatedTo(args);
+  }
 
-    [RelayCommand]
-    private async Task SelectedItem(ProductModel obj)
-    {
-        await navigationService.NavigateToAsync(Consts.ProductDetail,
-            new Dictionary<string, object>
-            {
-                { Consts.Type, DetailPageType.Edit },
-                { Consts.ProductModel, obj }
-            });
-    }
+  private async Task OnProductAddTapped()
+  {
+    await navigationService.NavigateToAsync(Consts.ProductDetail,
+      new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+  }
 
-    [RelayCommand]
-    private async Task Search(string text)
-    {
-        SearchText = text;
-        await Init();
-    }
+  private async Task OnFilterTapped()
+  {
+    var bottomSheet = new ProductFilterPage();
+    if (_selectedFilter != null)
+      await bottomSheet.Init(_selectedFilter);
 
-    #endregion
+    bottomSheet.FilterApplied += OnFilterApplied;
+    await bottomSheet.ShowAsync();
+  }
 
-    #region Methods
+  private async void OnFilterApplied(ProductFilterParameters filterParameters)
+  {
+    var (isActive, selectedProductType) = ExtractFilterParameters(filterParameters);
+    _isActive = isActive;
+    _selectedProductType = selectedProductType;
+    await Init();
+  }
 
-    private async Task Init()
-    {
-        using (await dialogService.Show())
-        {
-            var filter = new BaseFilterModel
-            {
-                Active = _isActive,
-                Type = _selectedProductType?.Value,
-                Name = SearchText
-            };
+  private (bool isActive, NameValueModel selectedProductType) ExtractFilterParameters(
+    ProductFilterParameters filterParameters)
+  {
+    var isActive = true;
+    IsFilter = false;
+    _selectedFilter = filterParameters;
+    var selectedProductType = filterParameters?.ProductType;
 
-            try
-            {
-                var result = await productService.GetAsync(filter);
-                if (result != null)
-                    ProductList = result.Items;
-            }
-            catch (Exception e)
-            {
-                CarpetExceptionLogger.Instance.CrashLog(e);
-            }
-        }
-    }
+    if (filterParameters?.State != null)
+      switch (filterParameters.State.Value)
+      {
+        case 0:
+          isActive = false;
+          IsFilter = true;
+          break;
+        case 1:
+          IsFilter = true;
+          break;
+      }
 
-    public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
-    {
-        await Init();
-        base.OnViewNavigatedTo(args);
-    }
+    if (selectedProductType != null)
+      IsFilter = true;
 
-    private async Task OnProductAddTapped()
-    {
-        await navigationService.NavigateToAsync(Consts.ProductDetail,
-            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
-    }
+    return (isActive, selectedProductType);
+  }
 
-    private async Task OnFilterTapped()
-    {
-        var bottomSheet = new ProductFilterPage();
-        if (_selectedFilter != null)
-            await bottomSheet.Init(_selectedFilter);
-
-        bottomSheet.FilterApplied += OnFilterApplied;
-        await bottomSheet.ShowAsync();
-    }
-
-    private async void OnFilterApplied(ProductFilterParameters filterParameters)
-    {
-        var (isActive, selectedProductType) = ExtractFilterParameters(filterParameters);
-        _isActive = isActive;
-        _selectedProductType = selectedProductType;
-        await Init();
-    }
-
-    private (bool isActive, NameValueModel selectedProductType) ExtractFilterParameters(
-        ProductFilterParameters filterParameters)
-    {
-        var isActive = true;
-        IsFilter = false;
-        _selectedFilter = filterParameters;
-        var selectedProductType = filterParameters?.ProductType;
-
-        if (filterParameters?.State != null)
-            switch (filterParameters.State.Value)
-            {
-                case 0:
-                    isActive = false;
-                    IsFilter = true;
-                    break;
-                case 1:
-                    IsFilter = true;
-                    break;
-            }
-
-        if (selectedProductType != null)
-            IsFilter = true;
-
-        return (isActive, selectedProductType);
-    }
-
-    #endregion
+  #endregion
 }

@@ -4,9 +4,9 @@ namespace CarpetApp.Views.Definitions;
 
 public partial class CompanyDetailPage
 {
-    public CompanyDetailPage(CompanyDetailViewModel model)
-    {
-        InitializeComponent();
-        BindingContext = model;
-    }
+  public CompanyDetailPage(CompanyDetailViewModel model)
+  {
+    InitializeComponent();
+    BindingContext = model;
+  }
 }

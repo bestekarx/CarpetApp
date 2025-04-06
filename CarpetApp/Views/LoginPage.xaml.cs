@@ -4,9 +4,9 @@ namespace CarpetApp.Views;
 
 public partial class LoginPage
 {
-    public LoginPage(LoginViewModel model)
-    {
-        BindingContext = model;
-        InitializeComponent();
-    }
+  public LoginPage(LoginViewModel model)
+  {
+    BindingContext = model;
+    InitializeComponent();
+  }
 }

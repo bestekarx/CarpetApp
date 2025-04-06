@@ -6,23 +6,23 @@ namespace CarpetApp.ViewModels;
 
 public partial class AppShellViewModel(INavigationService navigationService) : ViewModelBase
 {
-    #region Commands
+  #region Commands
 
-    [RelayCommand]
-    private async Task OpenPage(string page)
-    {
-        await OpenPageTapped(page);
-    }
+  [RelayCommand]
+  private async Task OpenPage(string page)
+  {
+    await OpenPageTapped(page);
+  }
 
-    #endregion
+  #endregion
 
-    #region Methods
+  #region Methods
 
-    private async Task OpenPageTapped(string page)
-    {
-        Shell.Current.FlyoutIsPresented = false;
-        await navigationService.NavigateToAsync(page);
-    }
+  private async Task OpenPageTapped(string page)
+  {
+    Shell.Current.FlyoutIsPresented = false;
+    await navigationService.NavigateToAsync(page);
+  }
 
-    #endregion
+  #endregion
 }

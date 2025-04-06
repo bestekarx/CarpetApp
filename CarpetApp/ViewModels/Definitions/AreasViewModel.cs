@@ -14,92 +14,92 @@ using CommunityToolkit.Mvvm.Input;
 namespace CarpetApp.ViewModels.Definitions;
 
 public partial class AreasViewModel(
-    INavigationService navigationService,
-    IAreaService areaService,
-    IDialogService dialogService) : ViewModelBase
+  INavigationService navigationService,
+  IAreaService areaService,
+  IDialogService dialogService) : ViewModelBase
 {
-    #region Properties
+  #region Properties
 
-    [ObservableProperty] private List<AreaModel> _areaList;
+  [ObservableProperty] private List<AreaModel> _areaList;
 
-    [ObservableProperty] private string _searchText;
+  [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private List<NameValueModel> _stateList =
-        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+  [ObservableProperty] private List<NameValueModel> _stateList =
+    [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
 
-    [ObservableProperty] private int? _stateSelectedIndex = -1;
-    [ObservableProperty] private NameValueModel? _selectedState;
+  [ObservableProperty] private int? _stateSelectedIndex = -1;
+  [ObservableProperty] private NameValueModel? _selectedState;
 
-    #endregion
+  #endregion
 
-    #region Commands
+  #region Commands
 
-    [RelayCommand]
-    private async Task AreaAdd()
+  [RelayCommand]
+  private async Task AreaAdd()
+  {
+    await IsBusyFor(OnAreaAddTapped);
+  }
+
+  [RelayCommand]
+  private async Task SelectedItem(AreaModel obj)
+  {
+    await navigationService.NavigateToAsync(Consts.AreaDetail,
+      new Dictionary<string, object>
+      {
+        { Consts.Type, DetailPageType.Edit },
+        { Consts.AreaModel, obj }
+      });
+  }
+
+  [RelayCommand]
+  private async Task Search(string text)
+  {
+    SearchText = text;
+    await Init();
+  }
+
+  #endregion
+
+  #region Methods
+
+  public async Task Init()
+  {
+    using (await dialogService.Show())
     {
-        await IsBusyFor(OnAreaAddTapped);
+      var isActive = true;
+      if (SelectedState != null)
+        isActive = SelectedState.Value == 1;
+
+      var filter = new BaseFilterModel
+      {
+        Active = isActive,
+        Name = SearchText
+      };
+
+      try
+      {
+        var result = await areaService.GetAsync(filter);
+        if (result != null)
+          AreaList = result.Items;
+      }
+      catch (Exception e)
+      {
+        CarpetExceptionLogger.Instance.CrashLog(e);
+      }
     }
+  }
 
-    [RelayCommand]
-    private async Task SelectedItem(AreaModel obj)
-    {
-        await navigationService.NavigateToAsync(Consts.AreaDetail,
-            new Dictionary<string, object>
-            {
-                { Consts.Type, DetailPageType.Edit },
-                { Consts.AreaModel, obj }
-            });
-    }
+  public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
+  {
+    await Init();
+    base.OnViewNavigatedTo(args);
+  }
 
-    [RelayCommand]
-    private async Task Search(string text)
-    {
-        SearchText = text;
-        await Init();
-    }
+  private async Task OnAreaAddTapped()
+  {
+    await navigationService.NavigateToAsync(Consts.AreaDetail,
+      new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+  }
 
-    #endregion
-
-    #region Methods
-
-    public async Task Init()
-    {
-        using (await dialogService.Show())
-        {
-            var isActive = true;
-            if (SelectedState != null)
-                isActive = SelectedState.Value == 1;
-
-            var filter = new BaseFilterModel
-            {
-                Active = isActive,
-                Name = SearchText
-            };
-
-            try
-            {
-                var result = await areaService.GetAsync(filter);
-                if (result != null)
-                    AreaList = result.Items;
-            }
-            catch (Exception e)
-            {
-                CarpetExceptionLogger.Instance.CrashLog(e);
-            }
-        }
-    }
-
-    public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
-    {
-        await Init();
-        base.OnViewNavigatedTo(args);
-    }
-
-    private async Task OnAreaAddTapped()
-    {
-        await navigationService.NavigateToAsync(Consts.AreaDetail,
-            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
-    }
-
-    #endregion
+  #endregion
 }

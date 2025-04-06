@@ -6,5 +6,5 @@ namespace CarpetApp.Entities;
 [Table("vehicle")]
 public class VehicleEntity : Entry
 {
-    [Column("name")] public string Name { get; set; }
+  [Column("name")] public string Name { get; set; }
 }

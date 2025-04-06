@@ -14,92 +14,92 @@ using CommunityToolkit.Mvvm.Input;
 namespace CarpetApp.ViewModels.Definitions;
 
 public partial class CompaniesViewModel(
-    INavigationService navigationService,
-    ICompanyService companyService,
-    IDialogService dialogService) : ViewModelBase
+  INavigationService navigationService,
+  ICompanyService companyService,
+  IDialogService dialogService) : ViewModelBase
 {
-    #region Properties
+  #region Properties
 
-    [ObservableProperty] private List<CompanyModel> _companyList;
+  [ObservableProperty] private List<CompanyModel> _companyList;
 
-    [ObservableProperty] private string _searchText;
+  [ObservableProperty] private string _searchText;
 
-    [ObservableProperty] private List<NameValueModel> _stateList =
-        [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
+  [ObservableProperty] private List<NameValueModel> _stateList =
+    [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
 
-    [ObservableProperty] private int? _stateSelectedIndex = -1;
-    [ObservableProperty] private NameValueModel? _selectedState;
+  [ObservableProperty] private int? _stateSelectedIndex = -1;
+  [ObservableProperty] private NameValueModel? _selectedState;
 
-    #endregion
+  #endregion
 
-    #region Commands
+  #region Commands
 
-    [RelayCommand]
-    private async Task CompanyAdd()
+  [RelayCommand]
+  private async Task CompanyAdd()
+  {
+    await IsBusyFor(OnCompanyAddTapped);
+  }
+
+  [RelayCommand]
+  private async Task SelectedItem(CompanyModel obj)
+  {
+    await navigationService.NavigateToAsync(Consts.CompanyDetail,
+      new Dictionary<string, object>
+      {
+        { Consts.Type, DetailPageType.Edit },
+        { Consts.CompanyModel, obj }
+      });
+  }
+
+  [RelayCommand]
+  private async Task Search(string text)
+  {
+    SearchText = text;
+    await Init();
+  }
+
+  #endregion
+
+  #region Methods
+
+  public async Task Init()
+  {
+    using (await dialogService.Show())
     {
-        await IsBusyFor(OnCompanyAddTapped);
+      var isActive = true;
+      if (SelectedState != null)
+        isActive = SelectedState.Value == 1;
+
+      var filter = new BaseFilterModel
+      {
+        Active = isActive,
+        Name = SearchText
+      };
+
+      try
+      {
+        var result = await companyService.GetAsync(filter);
+        if (result != null)
+          CompanyList = result.Items;
+      }
+      catch (Exception e)
+      {
+        CarpetExceptionLogger.Instance.CrashLog(e);
+      }
     }
+  }
 
-    [RelayCommand]
-    private async Task SelectedItem(CompanyModel obj)
-    {
-        await navigationService.NavigateToAsync(Consts.CompanyDetail,
-            new Dictionary<string, object>
-            {
-                { Consts.Type, DetailPageType.Edit },
-                { Consts.CompanyModel, obj }
-            });
-    }
+  public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
+  {
+    await Init();
+    base.OnViewNavigatedTo(args);
+  }
 
-    [RelayCommand]
-    private async Task Search(string text)
-    {
-        SearchText = text;
-        await Init();
-    }
+  private async Task OnCompanyAddTapped()
+  {
+    await navigationService.NavigateToAsync(Consts.CompanyDetail,
+      new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+  }
 
-    #endregion
-
-    #region Methods
-
-    public async Task Init()
-    {
-        using (await dialogService.Show())
-        {
-            var isActive = true;
-            if (SelectedState != null)
-                isActive = SelectedState.Value == 1;
-
-            var filter = new BaseFilterModel
-            {
-                Active = isActive,
-                Name = SearchText
-            };
-
-            try
-            {
-                var result = await companyService.GetAsync(filter);
-                if (result != null)
-                    CompanyList = result.Items;
-            }
-            catch (Exception e)
-            {
-                CarpetExceptionLogger.Instance.CrashLog(e);
-            }
-        }
-    }
-
-    public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
-    {
-        await Init();
-        base.OnViewNavigatedTo(args);
-    }
-
-    private async Task OnCompanyAddTapped()
-    {
-        await navigationService.NavigateToAsync(Consts.CompanyDetail,
-            new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
-    }
-
-    #endregion
+  #endregion
 }

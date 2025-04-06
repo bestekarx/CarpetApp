@@ -4,9 +4,9 @@ namespace CarpetApp.Views.Definitions;
 
 public partial class SmsTemplateDetailPage
 {
-    public SmsTemplateDetailPage(SmsTemplateDetailViewModel model)
-    {
-        InitializeComponent();
-        BindingContext = model;
-    }
+  public SmsTemplateDetailPage(SmsTemplateDetailViewModel model)
+  {
+    InitializeComponent();
+    BindingContext = model;
+  }
 }

@@ -14,32 +14,32 @@ namespace CarpetApp.Helpers;
 
 public static class FormHandler
 {
-    public static void RemoveBorders()
+  public static void RemoveBorders()
+  {
+    EntryHandler.Mapper.AppendToMapping("Borderless", (handler, view) =>
     {
-        EntryHandler.Mapper.AppendToMapping("Borderless", (handler, view) =>
-        {
 #if ANDROID
-            handler.PlatformView.Background = null;
-            handler.PlatformView.SetBackgroundColor(Color.Transparent);
-            handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Colors.Transparent.ToAndroid());
+      handler.PlatformView.Background = null;
+      handler.PlatformView.SetBackgroundColor(Color.Transparent);
+      handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Colors.Transparent.ToAndroid());
 #elif IOS
             handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
             handler.PlatformView.Layer.BorderWidth = 0;
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
-        });
+    });
 
-        PickerHandler.Mapper.AppendToMapping("Borderless", (handler, view) =>
-        {
+    PickerHandler.Mapper.AppendToMapping("Borderless", (handler, view) =>
+    {
 #if ANDROID
-            handler.PlatformView.Background = null;
-            handler.PlatformView.SetBackgroundColor(Color.Transparent);
-            handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Colors.Transparent.ToAndroid());
+      handler.PlatformView.Background = null;
+      handler.PlatformView.SetBackgroundColor(Color.Transparent);
+      handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Colors.Transparent.ToAndroid());
 #elif IOS
             handler.PlatformView.BackgroundColor = UIKit.UIColor.Clear;
             handler.PlatformView.Layer.BorderWidth = 0;
             handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
 #endif
-        });
-    }
+    });
+  }
 }

@@ -4,17 +4,17 @@ namespace CarpetApp.Service;
 
 public class StaticConfigurationService : Service, IStaticConfigurationService
 {
-    public string AppWindowTitle
+  public string AppWindowTitle
+  {
+    get
     {
-        get
-        {
-            var title = AppStrings.AppName;
+      var title = AppStrings.AppName;
 #if DEBUG
-            title += " (DEV)";
+      title += " (DEV)";
 #endif
-            return title;
-        }
+      return title;
     }
+  }
 
-    public string MainDatabasePath => Path.Combine(FileSystem.AppDataDirectory, "MainDatabase.sqlite3");
+  public string MainDatabasePath => Path.Combine(FileSystem.AppDataDirectory, "MainDatabase.sqlite3");
 }

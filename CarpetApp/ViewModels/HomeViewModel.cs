@@ -10,41 +10,41 @@ namespace CarpetApp.ViewModels;
 [QueryProperty(nameof(UserModel), Consts.LoginPageParameter)]
 public partial class HomeViewModel(INavigationService navigationService) : ViewModelBase
 {
-    #region Fields
+  #region Fields
 
-    private UserModel _loginModel = new();
+  private UserModel _loginModel = new();
 
-    #endregion
+  #endregion
 
-    #region Properties
+  #region Properties
 
-    [ObservableProperty] private string _welcomeText;
+  [ObservableProperty] private string _welcomeText;
 
-    #endregion
+  #endregion
 
-    #region GetParameters
+  #region GetParameters
 
-    public UserModel UserModel
-    {
-        get => _loginModel;
-        set => SetProperty(ref _loginModel, value);
-    }
+  public UserModel UserModel
+  {
+    get => _loginModel;
+    set => SetProperty(ref _loginModel, value);
+  }
 
-    #endregion
+  #endregion
 
-    #region Commands
+  #region Commands
 
-    [RelayCommand]
-    private async Task Back()
-    {
-        await navigationService.GoBackAsync();
-    }
+  [RelayCommand]
+  private async Task Back()
+  {
+    await navigationService.GoBackAsync();
+  }
 
-    #endregion
+  #endregion
 
-    public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
-    {
-        base.OnViewNavigatedTo(args);
-        //WelcomeText = "hoşgeldin " + UserModel.FullName;
-    }
+  public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
+  {
+    base.OnViewNavigatedTo(args);
+    //WelcomeText = "hoşgeldin " + UserModel.FullName;
+  }
 }

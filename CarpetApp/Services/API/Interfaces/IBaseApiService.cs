@@ -9,80 +9,80 @@ namespace CarpetApp.Services.API.Interfaces;
 
 public interface IBaseApiService
 {
-    [Post("/DataQueue/Save")]
-    Task<ApiResponse<BaseResponse<DataQueueModel>>> DataQueueSave(DataQueueModel req);
+  [Post("/DataQueue/Save")]
+  Task<ApiResponse<BaseResponse<DataQueueModel>>> DataQueueSave(DataQueueModel req);
 
-    [Post("/PostData/")]
-    Task<BaseSyncRequest> PostData(BaseSyncRequest req);
+  [Post("/PostData/")]
+  Task<BaseSyncRequest> PostData(BaseSyncRequest req);
 
-    [Post("/Authentication/")]
-    Task<AuthenticationResponseModel> Authentication(RequestLoginModel req);
+  [Post("/Authentication/")]
+  Task<AuthenticationResponseModel> Authentication(RequestLoginModel req);
 
-    #region Account
+  #region Account
 
-    [Get("/abp/multi-tenancy/tenants/by-name/{name}")]
-    Task<TenantModel> GetTenant(string name);
+  [Get("/abp/multi-tenancy/tenants/by-name/{name}")]
+  Task<TenantModel> GetTenant(string name);
 
-    [Post("/account/login")]
-    Task<LoginResponse> Login(RequestLoginModel model);
+  [Post("/account/login")]
+  Task<LoginResponse> Login(RequestLoginModel model);
 
-    [Get("/account/my-profile")]
-    Task<UserModel> GetMyProfile();
+  [Get("/account/my-profile")]
+  Task<UserModel> GetMyProfile();
 
-    [Get("/account/logout")]
-    Task<bool> Logout();
+  [Get("/account/logout")]
+  Task<bool> Logout();
 
-    #endregion
+  #endregion
 
-    #region Product
+  #region Product
 
-    [Get("/app/product/filtered-list")]
-    Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filter);
+  [Get("/app/product/filtered-list")]
+  Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filter);
 
-    [Post("/app/product")]
-    Task<ProductModel> AddProduct(ProductModel model);
+  [Post("/app/product")]
+  Task<ProductModel> AddProduct(ProductModel model);
 
-    [Put("/app/product/{id}")]
-    Task<ProductModel> UpdateProduct(Guid id, ProductModel model);
+  [Put("/app/product/{id}")]
+  Task<ProductModel> UpdateProduct(Guid id, ProductModel model);
 
-    #endregion
+  #endregion
 
-    #region Vehicle
+  #region Vehicle
 
-    [Get("/app/vehicle/filtered-list")]
-    Task<BaseListResponse<VehicleModel>> GetVehicleList(BaseFilterModel filter);
+  [Get("/app/vehicle/filtered-list")]
+  Task<BaseListResponse<VehicleModel>> GetVehicleList(BaseFilterModel filter);
 
-    [Post("/app/vehicle")]
-    Task<VehicleModel> AddVehicle(VehicleModel model);
+  [Post("/app/vehicle")]
+  Task<VehicleModel> AddVehicle(VehicleModel model);
 
-    [Put("/app/vehicle/{id}")]
-    Task<VehicleModel> UpdateVehicle(Guid id, VehicleModel model);
+  [Put("/app/vehicle/{id}")]
+  Task<VehicleModel> UpdateVehicle(Guid id, VehicleModel model);
 
-    #endregion
+  #endregion
 
-    #region Area
+  #region Area
 
-    [Get("/app/Area/filtered-list")]
-    Task<BaseListResponse<AreaModel>> GetAreaList(BaseFilterModel filter);
+  [Get("/app/Area/filtered-list")]
+  Task<BaseListResponse<AreaModel>> GetAreaList(BaseFilterModel filter);
 
-    [Post("/app/area")]
-    Task<AreaModel> AddArea(AreaModel model);
+  [Post("/app/area")]
+  Task<AreaModel> AddArea(AreaModel model);
 
-    [Put("/app/area/{id}")]
-    Task<AreaModel> UpdateArea(Guid id, AreaModel model);
+  [Put("/app/area/{id}")]
+  Task<AreaModel> UpdateArea(Guid id, AreaModel model);
 
-    #endregion
+  #endregion
 
-    #region Company
+  #region Company
 
-    [Get("/app/Area/filtered-list")]
-    Task<BaseListResponse<CompanyModel>> GetCompanyList(BaseFilterModel filter);
+  [Get("/app/Area/filtered-list")]
+  Task<BaseListResponse<CompanyModel>> GetCompanyList(BaseFilterModel filter);
 
-    [Post("/app/company")]
-    Task<CompanyModel> AddCompany(CompanyModel model);
+  [Post("/app/company")]
+  Task<CompanyModel> AddCompany(CompanyModel model);
 
-    [Put("/app/company/{id}")]
-    Task<CompanyModel> UpdateCompany(Guid id, CompanyModel model);
+  [Put("/app/company/{id}")]
+  Task<CompanyModel> UpdateCompany(Guid id, CompanyModel model);
 
-    #endregion
+  #endregion
 }

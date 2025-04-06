@@ -5,20 +5,20 @@ namespace CarpetApp;
 
 public class AndroidHttpMessageHandler : IPlatformHttpMessageHandler
 {
-    public HttpMessageHandler GetHttpMessageHandler()
+  public HttpMessageHandler GetHttpMessageHandler()
+  {
+    return new AndroidMessageHandler
     {
-        return new AndroidMessageHandler
-        {
-            ServerCertificateCustomValidationCallback = (httpRequestMessage, certificate, chain, sslPolicyErrors) =>
-            {
-                // For development, we can allow all certificates
-                // In production, you should implement proper certificate validation
+      ServerCertificateCustomValidationCallback = (httpRequestMessage, certificate, chain, sslPolicyErrors) =>
+      {
+        // For development, we can allow all certificates
+        // In production, you should implement proper certificate validation
 #if DEBUG
-                return true; // Accept all certificates in DEBUG mode
+        return true; // Accept all certificates in DEBUG mode
 #else
                 return certificate?.Issuer == "CN=localhost" || sslPolicyErrors == SslPolicyErrors.None;
 #endif
-            }
-        };
-    }
+      }
+    };
+  }
 }
