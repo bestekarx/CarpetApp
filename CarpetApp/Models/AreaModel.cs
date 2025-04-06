@@ -1,6 +1,6 @@
 namespace CarpetApp.Models;
 
-public record AreaModel : AuditedEntity
+public class AreaModel : AuditedEntity
 {
     public string Name { get; set; }
 }

@@ -98,7 +98,6 @@ public static class MauiProgram
             .AddSingleton<ISmsUsersService, SmsUsersService>()
             .AddSingleton<ISmsTemplateService, SmsTemplateService>()
             .AddSingleton<TokenService>();
-
         return builder;
     }
 
@@ -159,60 +158,22 @@ public static class MauiProgram
         foreach (var type in types) builder.Services.AddTransient(type);
         return builder;
     }
-    
-    /*
-    private static void ConfigureRefit(IServiceCollection services)
-    {
-        var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-            ? "http://192.168.1.9:5244/api"
-            : "http://localhost:5244/api";
 
-        services.AddTransient(provider =>
-        {
-            var tokenService = provider.GetRequiredService<TokenService>();
-            var messageHandler = provider.GetRequiredService<IPlatformHttpMessageHandler>();
-
-            _httpClient = new HttpClient(new CustomHttpMessageHandler
-            {
-                /*InnerHandler = new SentryHttpMessageHandler
-                {
-                    InnerHandler = messageHandler.GetHttpMessageHandler()
-                }
-            })
-            {
-                BaseAddress = new Uri(baseUrl)
-            };
-
-            /*
-            _refitSettings = new RefitSettings
-            {
-              AuthorizationHeaderValueGetter = (_, _) => Task.FromResult(_httpClient.DefaultRequestHeaders.Authorization?.ToString())
-            };
-
-            tokenService.TokenUpdated += () =>
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", tokenService.Token);
-            };
-
-            return RestService.For<IBaseApiService>(_httpClient, _refitSettings);
-        });
-    }*/
-    
     private static void ConfigureRefit(IServiceCollection services)
     {
         services.AddRefitClient<IBaseApiService>(ConfigureRefitSettings).ConfigureHttpClient(SetHttpClient);
+        return;
 
         static RefitSettings ConfigureRefitSettings(IServiceProvider sp)
         {
             var messageHandler = sp.GetRequiredService<IPlatformHttpMessageHandler>();
             var tokenService = sp.GetRequiredService<TokenService>();
-            
+
             var platformHandler = messageHandler.GetHttpMessageHandler();
             var customHandler = new CustomHttpMessageHandler
             {
                 InnerHandler = platformHandler
             };
-            
             return new RefitSettings
             {
                 HttpMessageHandlerFactory = () => customHandler,
@@ -223,9 +184,10 @@ public static class MauiProgram
         static void SetHttpClient(HttpClient httpClient)
         {
             var baseUrl = DeviceInfo.Platform == DevicePlatform.Android
-                ? "http://192.168.1.2:44302/api"
+                ? "http://192.168.1.8:44302/api"
                 : "https://localhost:44302/api";
             httpClient.BaseAddress = new Uri(baseUrl);
+            httpClient.Timeout = TimeSpan.FromSeconds(30);
         }
     }
 }

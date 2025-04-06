@@ -83,7 +83,7 @@ public partial class SmsTemplateDetailViewModel(
         {
             Title = SmsTemplateModel.Title;
             Content = SmsTemplateModel.Content;
-            StateSelectedIndex = SmsTemplateModel.IsActive ? 1 : 0;
+            StateSelectedIndex = SmsTemplateModel.Active ? 1 : 0;
         }
     }
 
@@ -107,7 +107,7 @@ public partial class SmsTemplateDetailViewModel(
         {
             SmsTemplateModel.Title = Title;
             SmsTemplateModel.Content = Content;
-            SmsTemplateModel.IsActive = SelectedState.Value == 1;
+            SmsTemplateModel.Active = SelectedState.Value == 1;
         }
 
         var result = await smsTemplateService.SaveAsync(SmsTemplateModel);

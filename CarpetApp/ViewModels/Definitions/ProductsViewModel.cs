@@ -4,6 +4,7 @@ using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.FilterParameterModels;
 using CarpetApp.Models.Products;
+using CarpetApp.Service;
 using CarpetApp.Service.Dialog;
 using CarpetApp.Services.Entry;
 using CarpetApp.Services.Navigation;
@@ -83,9 +84,17 @@ public partial class ProductsViewModel(
                 Type = _selectedProductType?.Value,
                 Search = SearchText
             };
-            var result = await productService.GetAsync(filter);
-            if (result != null)
-                ProductList = result.Items;
+
+            try
+            {
+                var result = await productService.GetAsync(filter);
+                if (result != null)
+                    ProductList = result.Items;
+            }
+            catch (Exception e)
+            {
+                CarpetExceptionLogger.Instance.CrashLog(e);
+            }
         }
     }
 

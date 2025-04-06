@@ -1,6 +1,7 @@
 namespace CarpetApp.Models;
 
-public record VehicleModel : AuditedEntity
+public class VehicleModel : AuditedEntity
 {
     public string Name { get; set; }
+    public string Plate { get; set; }
 }

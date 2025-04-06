@@ -55,6 +55,8 @@ public partial class VehicleDetailViewModel(
 
     [ObservableProperty] private string _name;
     [ObservableProperty] private bool _isNameError;
+    [ObservableProperty] private string _plate;
+    [ObservableProperty] private bool _isPlateError;
     [ObservableProperty] private int _dataTypeSelectedIndex;
     [ObservableProperty] private int _stateSelectedIndex;
 
@@ -78,7 +80,8 @@ public partial class VehicleDetailViewModel(
         if (DetailPageType == DetailPageType.Edit && VehicleModel != null)
         {
             Name = VehicleModel.Name;
-            StateSelectedIndex = VehicleModel.IsActive ? 1 : 0;
+            Plate = VehicleModel.Plate;
+            StateSelectedIndex = VehicleModel.Active ? 1 : 0;
         }
     }
 
@@ -94,29 +97,22 @@ public partial class VehicleDetailViewModel(
         {
             VehicleModel = new VehicleModel
             {
-                Name = Name
+                Name = Name,
+                Plate = Plate
             };
         }
         else
         {
             VehicleModel.Name = Name;
-            VehicleModel.IsActive = SelectedState.Value == 1;
+            VehicleModel.Plate = Plate;
+            VehicleModel.Active = SelectedState.Value == 1;
         }
 
-        var result = await vehicleService.SaveAsync(VehicleModel);
+        var result = (DetailPageType == DetailPageType.Add
+            ? await vehicleService.SaveAsync(VehicleModel)
+            : await vehicleService.UpdateAsync(VehicleModel));
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
         _ = dialogService.ShowToast(message);
-
-        if (result)
-        {
-            var dataQueueModel = new DataQueueModel
-            {
-                Type = EnSyncDataType.Vehicle,
-                JsonData = JsonConvert.SerializeObject(VehicleModel),
-                Date = DateTime.Now
-            };
-            _ = dataQueueService.SaveAsync(dataQueueModel);
-        }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();
@@ -125,13 +121,15 @@ public partial class VehicleDetailViewModel(
     private bool ValidateInputs()
     {
         IsNameError = string.IsNullOrWhiteSpace(Name);
+        IsPlateError = string.IsNullOrWhiteSpace(Plate);
 
-        return !IsNameError;
+        return !IsNameError || !IsPlateError;
     }
 
     private void ResetForm()
     {
         Name = string.Empty;
+        Plate = string.Empty;
     }
 
     #endregion

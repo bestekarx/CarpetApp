@@ -1,3 +1,4 @@
+using AndroidX.Core.App.UnusedAppRestrictions;
 using CarpetApp.Enums;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
@@ -92,6 +93,12 @@ public partial class ProductDetailViewModel(
             Price = ProductModel.Price;
             DataTypeSelectedIndex = (int)ProductModel.Type;
             StateSelectedIndex = ProductModel.Active ? 1 : 0;
+            SelectedState = ProductModel.Active ? StateList[1] : StateList[0];
+        }
+        else
+        {
+            SelectedState = StateList[1];
+            StateSelectedIndex = 1;
         }
     }
 
@@ -111,33 +118,23 @@ public partial class ProductDetailViewModel(
             {
                 Name = Name,
                 Price = Price,
-                Type = (int)SelectedProductType.Value
+                Type = SelectedProductType.Value,
+                Active = true,
             };
         }
         else
         {
             ProductModel.Name = Name;
             ProductModel.Price = Price;
-            ProductModel.Type = (int)SelectedProductType.Value;
+            ProductModel.Type = SelectedProductType.Value;
             ProductModel.Active = SelectedState.Value == 1;
         }
 
-        var result = await productService.SaveAsync(ProductModel);
+        var result = (DetailPageType == DetailPageType.Add
+            ? await productService.SaveAsync(ProductModel)
+            : await productService.UpdateAsync(ProductModel));
         var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
         _ = dialogService.ShowToast(message);
-
-        if (result)
-        {
-            /*
-            var dataQueueModel = new DataQueueModel
-            {
-                Type = EnSyncDataType.Product,
-                JsonData = JsonConvert.SerializeObject(ProductModel),
-                Date = DateTime.Now
-            };
-            _ = dataQueueService.SaveAsync(dataQueueModel);
-            */
-        }
 
         if (result && DetailPageType == DetailPageType.Add)
             ResetForm();

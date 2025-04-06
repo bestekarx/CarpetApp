@@ -1,27 +1,34 @@
+
 using System.Net;
 
 namespace CarpetApp.Helpers;
 
-public class CustomHttpMessageHandler : DelegatingHandler
+public class CustomHttpMessageHandler() : DelegatingHandler
 {
-    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-        CancellationToken cancellationToken)
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        var response = await base.SendAsync(request, cancellationToken);
+        try
+        {
+            var response = await base.SendAsync(request, cancellationToken);
 
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
-        {
-            // 401 Unauthorized durum kodunu ele alın
+            /*if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+            }
+            else if (response.StatusCode == HttpStatusCode.Redirect)
+            {
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {   
+            }
+            else if (response.StatusCode == HttpStatusCode.OK)
+            {
+            }
+            */
+            return response;
         }
-        else if (response.StatusCode == HttpStatusCode.BadRequest)
+        catch (Exception e)
         {
-            // 400 Bad Request durum kodunu ele alın
+            return new HttpResponseMessage(HttpStatusCode.InternalServerError);
         }
-        else if (response.StatusCode == HttpStatusCode.OK)
-        {
-            // 200 OK durum kodunu ele alın
-        }
-
-        return response;
     }
 }

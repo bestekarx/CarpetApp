@@ -470,5 +470,11 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("Duzenle", resourceCulture);
             }
         }
+        
+        internal static string Plaka {
+            get {
+                return ResourceManager.GetString("Plaka", resourceCulture);
+            }
+        }
     }
 }

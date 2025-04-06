@@ -1,42 +1,34 @@
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
+using CarpetApp.Services.API.Interfaces;
 
 namespace CarpetApp.Services.Entry;
 
-public class VehicleService()
+public class VehicleService(IBaseApiService apiService)
     :  IVehicleService
 {
-    public async Task<List<VehicleModel>> GetAsync(BaseFilterModel filter)
+    public async Task<BaseListResponse<VehicleModel>> GetAsync(BaseFilterModel filter)
     {
-        /*
-        var result = await base.FindAllAsync(filter);
-        var query = result.AsQueryable();
-        if (filter.Active.HasValue)
-            query = query.Where(q => q.Active == filter.Active.Value);
-
-        if (!string.IsNullOrWhiteSpace(filter.Search))
-            query = query.Where(q => q.Name.ToLower().Contains(filter.Search.ToLower()));
-
-        if (filter.Types?.Any() == true)
-            query = filter.Types.Aggregate(query,
-                (current, itm) => current.Where(q => filter.Types.Select(t => t.Value).Contains(itm.Value)));
-
-        if (filter.IsSync.HasValue)
-            query = query.Where(q => q.IsSync == (int)filter.IsSync);
-
-        return query.ToList();
-        */
-        return new List<VehicleModel>();
+        var list = await apiService.GetVehicleList(filter);
+        return list;
     }
 
     public async Task<bool> SaveAsync(VehicleModel model)
     {
-        return true;
+        var result = await apiService.AddVehicle(model);
+        return result != null;
+    }
+    
+    public async Task<bool> UpdateAsync(VehicleModel model)
+    {
+        var result = await apiService.UpdateVehicle(model.Id, model);
+        return result != null;
     }
 }
 
 public interface IVehicleService
 {
     public Task<bool> SaveAsync(VehicleModel model);
-    public Task<List<VehicleModel>> GetAsync(BaseFilterModel filter);
+    public Task<bool> UpdateAsync(VehicleModel model);
+    public Task<BaseListResponse<VehicleModel>> GetAsync(BaseFilterModel filter);
 }

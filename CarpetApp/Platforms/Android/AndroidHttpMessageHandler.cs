@@ -1,4 +1,3 @@
-using System.Net.Security;
 using CarpetApp.Helpers;
 using Xamarin.Android.Net;
 

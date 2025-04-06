@@ -1,12 +1,9 @@
-using CarpetApp.Entities;
 using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
-using CarpetApp.Service;
 
 namespace CarpetApp.Services.Entry;
 
-public class SmsTemplateService()
-    :  ISmsTemplateService
+public class SmsTemplateService : ISmsTemplateService
 {
     public async Task<List<SmsTemplateModel>> GetAsync(BaseFilterModel filter)
     {

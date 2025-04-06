@@ -3,8 +3,7 @@ using CarpetApp.Models.API.Filter;
 
 namespace CarpetApp.Services.Entry;
 
-public class AreaService()
-    :  IAreaService
+public class AreaService : IAreaService
 {
     public async Task<List<AreaModel>> GetAsync(BaseFilterModel filter)
     {
@@ -30,7 +29,6 @@ public class AreaService()
 
     public async Task<bool> SaveAsync(AreaModel model)
     {
-
         return true;
     }
 }

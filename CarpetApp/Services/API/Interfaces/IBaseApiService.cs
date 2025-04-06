@@ -29,10 +29,27 @@ public interface IBaseApiService
     #region Product
 
     [Get("/app/product/filtered-list")]
-    Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filterProduct);
+    Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filter);
     
     [Post("/app/product")]
-    Task<ProductModel> AddProduct(ProductModel productModel);
+    Task<ProductModel> AddProduct(ProductModel model);
+    
+    [Put("/app/product/{id}")]
+    Task<ProductModel> UpdateProduct(Guid id, ProductModel model);
+
+    #endregion
+
+    #region Vehicle
+
+    [Get("/app/vehicle/filtered-list")]
+    Task<BaseListResponse<VehicleModel>> GetVehicleList(BaseFilterModel filter);
+    
+    [Post("/app/vehicle")]
+    Task<VehicleModel> AddVehicle(VehicleModel model);
+    
+    [Put("/app/vehicle/{id}")]
+    Task<VehicleModel> UpdateVehicle(Guid id, VehicleModel model);
+
 
     #endregion
     
