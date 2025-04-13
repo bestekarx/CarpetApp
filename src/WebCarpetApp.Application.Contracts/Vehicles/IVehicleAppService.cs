@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using WebCarpetApp.Vehicles.Dtos;
@@ -13,4 +14,5 @@ public interface IVehicleAppService :
         CreateUpdateVehicleDto,
         CreateUpdateVehicleDto>
 {
+    Task<PagedResultDto<VehicleDto>> GetFilteredListAsync(GetVehicleListFilterDto input);
 } 

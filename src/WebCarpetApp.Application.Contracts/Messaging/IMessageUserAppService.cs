@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using WebCarpetApp.Messaging.Dtos;
@@ -10,4 +11,7 @@ public interface IMessageUserAppService :
         MessageUserDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateMessageUserDto> {}
+        CreateUpdateMessageUserDto>
+{
+    Task<PagedResultDto<MessageUserDto>> GetFilteredListAsync(GetMessageUserListFilterDto input);
+}

@@ -61,7 +61,8 @@ public class WebCarpetAppApplicationAutoMapperProfile : Profile
 
         // Order Mappings - Enhanced
         CreateMap<Order, OrderDto>();
-        CreateMap<CreateUpdateOrderDto, Order>();
+        CreateMap<CreateUpdateOrderDto, Order>()
+            .ForMember(dest => dest.OrderStatus, opt => opt.MapFrom(src => src.OrderStatus));
         CreateMap<CreateOrderDto, Order>();
 
         // OrderedProduct Mappings - Enhanced
@@ -77,8 +78,10 @@ public class WebCarpetAppApplicationAutoMapperProfile : Profile
         CreateMap<Printer, PrinterDto>();
         CreateMap<CreateUpdatePrinterDto, Printer>();
 
-        CreateMap<Product, ProductDto>();
-        CreateMap<CreateUpdateProductDto, Product>();
+        CreateMap<Product, ProductDto>()
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.ProductType));
+        CreateMap<CreateUpdateProductDto, Product>()
+            .ForMember(dest => dest.ProductType, opt => opt.MapFrom(src => src.Type));
 
         CreateMap<Received, ReceivedDto>();
         CreateMap<CreateUpdateReceivedDto, Received>();

@@ -7,34 +7,22 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using WebCarpetApp.Permissions;
 using WebCarpetApp.Products.Dtos;
 
 namespace WebCarpetApp.Products;
 
 [RemoteService(IsEnabled = true)]
-public class ProductAppService :
+public class ProductAppService(IRepository<Product, Guid> repository) :
     CrudAppService<
         Product,
         ProductDto,
         Guid,
         PagedAndSortedResultRequestDto,
         CreateUpdateProductDto,
-        CreateUpdateProductDto>,
+        CreateUpdateProductDto>(repository),
     IProductAppService
 {
-    private readonly IRepository<Product, Guid> _repository;
-
-    public ProductAppService(IRepository<Product, Guid> repository)
-        : base(repository)
-    {
-        _repository = repository;
-        GetPolicyName = WebCarpetAppPermissions.Products.Default;
-        GetListPolicyName = WebCarpetAppPermissions.Products.Default;
-        CreatePolicyName = WebCarpetAppPermissions.Products.Create;
-        UpdatePolicyName = WebCarpetAppPermissions.Products.Edit;
-        DeletePolicyName = WebCarpetAppPermissions.Products.Delete;
-    }
+    private readonly IRepository<Product, Guid> _repository = repository;
 
     public async Task<PagedResultDto<ProductDto>> GetFilteredListAsync(GetProductListFilterDto input)
     {
@@ -51,9 +39,9 @@ public class ProductAppService :
             queryable = queryable.Where(x => x.ProductType == input.Type.Value);
         }
         
-        if (input.IsActive.HasValue)
+        if (input.Active.HasValue)
         {
-            queryable = queryable.Where(x => x.Active == input.IsActive.Value);
+            queryable = queryable.Where(x => x.Active == input.Active.Value);
         }
         
         var totalCount = await AsyncExecuter.CountAsync(queryable);
@@ -73,16 +61,20 @@ public class ProductAppService :
         return new PagedResultDto<ProductDto>(totalCount, dtos);
     }
 
-    protected override Task CheckCreatePolicyAsync()
-    {
-        // Politika kontrolünü atla
-        return Task.CompletedTask;
-    }
-    
     protected override Product MapToEntity(CreateUpdateProductDto createInput)
     {
         var entity = base.MapToEntity(createInput);
         entity.TenantId = CurrentTenant.Id;
         return entity;
+    }
+
+    public override async Task<ProductDto> UpdateAsync(Guid id, CreateUpdateProductDto input)
+    {
+        var entity = await GetEntityByIdAsync(id);
+        
+        MapToEntity(input, entity);
+        await Repository.UpdateAsync(entity, autoSave: true);
+
+        return await MapToGetOutputDtoAsync(entity);
     }
 } 

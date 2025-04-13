@@ -8,6 +8,6 @@ public class CreateUpdateProductDto
     public decimal Price { get; set; }
     [Required]
     public required string Name { get; set; }
-    public int Type { get; set; }
+    public ProductType Type { get; set; }
     public bool Active { get; set; }
 } 

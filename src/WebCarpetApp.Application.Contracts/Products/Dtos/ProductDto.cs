@@ -7,6 +7,6 @@ public class ProductDto : AuditedEntityDto<Guid>
 {
     public decimal Price { get; set; }
     public string Name { get; set; }
-    public int Type { get; set; }
+    public ProductType Type { get; set; }
     public bool Active { get; set; }
 } 

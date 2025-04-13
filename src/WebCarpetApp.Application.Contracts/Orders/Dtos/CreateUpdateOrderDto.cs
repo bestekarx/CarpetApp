@@ -16,7 +16,7 @@ public class CreateUpdateOrderDto
     public decimal OrderTotalPrice { get; set; }
 
     [Required]
-    public int OrderStatus { get; set; }
+    public OrderStatus OrderStatus { get; set; }
 
     public int OrderRowNumber { get; set; }
 
