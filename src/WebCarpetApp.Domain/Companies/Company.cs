@@ -7,7 +7,6 @@ namespace WebCarpetApp.Companies;
 public class Company : AuditedEntity<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; set; }
-    public Guid? MessageSettingsId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string Color { get; set; }
