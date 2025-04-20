@@ -1,9 +1,12 @@
 using System;
+using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using WebCarpetApp.Companies.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-using WebCarpetApp.Permissions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using WebCarpetApp.Companies.Dtos;
 
 namespace WebCarpetApp.Companies;
 
@@ -17,14 +20,41 @@ public class CompanyAppService :
         CreateUpdateCompanyDto>,
     ICompanyAppService
 {
+    private readonly IRepository<Company, Guid> _repository;
+
     public CompanyAppService(IRepository<Company, Guid> repository)
         : base(repository)
     {
-        GetPolicyName = WebCarpetAppPermissions.Companies.Default;
-        GetListPolicyName = WebCarpetAppPermissions.Companies.Default;
-        CreatePolicyName = WebCarpetAppPermissions.Companies.Create;
-        UpdatePolicyName = WebCarpetAppPermissions.Companies.Edit;
-        DeletePolicyName = WebCarpetAppPermissions.Companies.Delete;
+        _repository = repository;
+    }
+
+    public async Task<PagedResultDto<CompanyDto>> GetFilteredListAsync(GetCompanyListFilterDto input)
+    {
+        var queryable = await _repository.GetQueryableAsync();
+        
+        if (!string.IsNullOrEmpty(input.Name))
+        {
+            queryable = queryable.Where(x => x.Name.Contains(input.Name));
+        }
+        
+        if (input.Active.HasValue)
+        {
+            queryable = queryable.Where(x => x.Active == input.Active.Value);
+        }
+        
+        var totalCount = await AsyncExecuter.CountAsync(queryable);
+
+        var orderBy = !string.IsNullOrWhiteSpace(input.Sorting)
+            ? input.Sorting
+            : "CreationTime desc";
+        
+        queryable = queryable.OrderBy(orderBy);
+
+        queryable = queryable.PageBy(input.SkipCount, input.MaxResultCount);
+        var items = await AsyncExecuter.ToListAsync(queryable);
+
+        var dtos = ObjectMapper.Map<List<Company>, List<CompanyDto>>(items);
+        return new PagedResultDto<CompanyDto>(totalCount, dtos);
     }
 
     protected override Company MapToEntity(CreateUpdateCompanyDto createInput)

@@ -9,25 +9,15 @@ using WebCarpetApp.Permissions;
 
 namespace WebCarpetApp.Messaging;
 
-public class MessageTemplateAppService :
+public class MessageTemplateAppService(IRepository<MessageTemplate, Guid> repository) :
     CrudAppService<
         MessageTemplate,
         MessageTemplateDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateMessageTemplateDto>,
+        CreateUpdateMessageTemplateDto>(repository),
     IMessageTemplateAppService
 {
-    public MessageTemplateAppService(IRepository<MessageTemplate, Guid> repository)
-        : base(repository)
-    {
-        GetPolicyName = WebCarpetAppPermissions.MessageTemplates.Default;
-        GetListPolicyName = WebCarpetAppPermissions.MessageTemplates.Default;
-        CreatePolicyName = WebCarpetAppPermissions.MessageTemplates.Create;
-        UpdatePolicyName = WebCarpetAppPermissions.MessageTemplates.Edit;
-        DeletePolicyName = WebCarpetAppPermissions.MessageTemplates.Delete;
-    }
-
     protected override async Task<MessageTemplate> MapToEntityAsync(CreateUpdateMessageTemplateDto createInput)
     {
         return new MessageTemplate(

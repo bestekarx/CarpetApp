@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using WebCarpetApp.Companies.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Application.Dtos;
@@ -10,7 +11,7 @@ public interface ICompanyAppService :
         CompanyDto,
         Guid,
         PagedAndSortedResultRequestDto,
-        CreateUpdateCompanyDto,
         CreateUpdateCompanyDto>
 {
+    Task<PagedResultDto<CompanyDto>> GetFilteredListAsync(GetCompanyListFilterDto input);
 } 
