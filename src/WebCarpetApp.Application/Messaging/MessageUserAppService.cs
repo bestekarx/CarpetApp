@@ -30,26 +30,26 @@ public class MessageUserAppService :
 
     public async Task<PagedResultDto<MessageUserDto>> GetFilteredListAsync(GetMessageUserListFilterDto input)
     {
-        var queryable = await _repository.GetQueryableAsync();
-        
-        if (input.IsActive.HasValue)
+        try
         {
-            queryable = queryable.Where(x => x.Active == input.IsActive.Value);
+            var queryable = await _repository.GetQueryableAsync();
+        
+            if (input.IsActive.HasValue)
+            {
+                queryable = queryable.Where(x => x.IsActive == input.IsActive.Value);
+            }
+        
+            var totalCount = await AsyncExecuter.CountAsync(queryable);
+            var items = await AsyncExecuter.ToListAsync(queryable);
+
+            var dtos = ObjectMapper.Map<List<MessageUser>, List<MessageUserDto>>(items);
+            return new PagedResultDto<MessageUserDto>(totalCount, dtos);
         }
-        
-        var totalCount = await AsyncExecuter.CountAsync(queryable);
-
-        var orderBy = !string.IsNullOrWhiteSpace(input.Sorting)
-            ? input.Sorting
-            : "CreationTime desc";
-        
-        queryable = queryable.OrderBy(orderBy);
-
-        queryable = queryable.PageBy(input.SkipCount, input.MaxResultCount);
-        var items = await AsyncExecuter.ToListAsync(queryable);
-
-        var dtos = ObjectMapper.Map<List<MessageUser>, List<MessageUserDto>>(items);
-        return new PagedResultDto<MessageUserDto>(totalCount, dtos);
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     protected override MessageUser MapToEntity(CreateUpdateMessageUserDto createInput)
@@ -62,6 +62,6 @@ public class MessageUserAppService :
     protected override void MapToEntity(CreateUpdateMessageUserDto updateInput, MessageUser entity)
     {
         base.MapToEntity(updateInput, entity);
-        entity.Active = updateInput.IsActive;
+        entity.IsActive = updateInput.IsActive;
     }
 } 

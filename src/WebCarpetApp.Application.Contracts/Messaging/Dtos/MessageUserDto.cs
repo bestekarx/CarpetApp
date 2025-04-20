@@ -3,10 +3,10 @@ using Volo.Abp.Application.Dtos;
 
 namespace WebCarpetApp.Messaging.Dtos;
 
-public class MessageUserDto : AuditedEntityDto<Guid>
+public class MessageUserDto : EntityDto<Guid>
 {
-    public string ApiUsername { get; set; }
-    public string ApiPassword { get; set; }
-    public string ApiTitle { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public string Title { get; set; }
     public bool IsActive { get; set; }
 } 

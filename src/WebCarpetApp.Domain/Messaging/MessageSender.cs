@@ -27,7 +27,7 @@ namespace WebCarpetApp.Messaging
             {
                 // 1. MessageUser bilgilerini getir
                 var messageUser = await _messageUserRepository.GetAsync(messageUserId);
-                if (messageUser == null || !messageUser.Active)
+                if (messageUser == null || !messageUser.IsActive)
                 {
                     _logger.LogWarning("SMS gönderilemedi: Geçersiz MessageUser ID veya aktif değil. MessageUserId: {MessageUserId}", messageUserId);
                     return false;

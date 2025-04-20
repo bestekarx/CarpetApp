@@ -6,15 +6,15 @@ public class CreateUpdateMessageUserDto
 {
     [Required]
     [StringLength(100)]
-    public string ApiUsername { get; set; }
+    public string Username { get; set; }
 
     [Required]
     [StringLength(100)]
-    public string ApiPassword { get; set; }
+    public string Password { get; set; }
 
     [Required]
     [StringLength(100)]
-    public string ApiTitle { get; set; }
+    public string Title { get; set; }
 
     public bool IsActive { get; set; }
 } 
