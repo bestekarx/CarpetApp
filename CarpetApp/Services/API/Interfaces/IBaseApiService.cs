@@ -75,7 +75,7 @@ public interface IBaseApiService
 
   #region Company
 
-  [Get("/app/Area/filtered-list")]
+  [Get("/app/Company/filtered-list")]
   Task<BaseListResponse<CompanyModel>> GetCompanyList(BaseFilterModel filter);
 
   [Post("/app/company")]
@@ -83,6 +83,32 @@ public interface IBaseApiService
 
   [Put("/app/company/{id}")]
   Task<CompanyModel> UpdateCompany(Guid id, CompanyModel model);
+
+  #endregion
+
+  #region SmsUsers
+
+  [Get("/app/message-user/filtered-list")]
+  Task<BaseListResponse<SmsUsersModel>> GetSmsUserList(BaseFilterModel filter);
+
+  [Post("/app/message-user")]
+  Task<SmsUsersModel> AddSmsUser(SmsUsersModel model);
+
+  [Put("/app/message-user/{id}")]
+  Task<SmsUsersModel> UpdateSmsUser(Guid id, SmsUsersModel model);
+
+  #endregion
+
+  #region SmsConfiguration
+
+  [Get("/app/sms-configuration/filtered-list")]
+  Task<BaseListResponse<SmsConfigurationModel>> GetSmsConfigurationList(BaseFilterModel filter);
+
+  [Post("/app/sms-configuration")]
+  Task<SmsConfigurationModel> AddSmsConfiguration(SmsConfigurationModel model);
+
+  [Put("/app/sms-configuration/{id}")]
+  Task<SmsConfigurationModel> UpdateSmsConfiguration(Guid id, SmsConfigurationModel model);
 
   #endregion
 }

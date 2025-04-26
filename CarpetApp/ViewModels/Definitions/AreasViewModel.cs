@@ -66,13 +66,13 @@ public partial class AreasViewModel(
   {
     using (await dialogService.Show())
     {
-      var isActive = true;
+      var Active = true;
       if (SelectedState != null)
-        isActive = SelectedState.Value == 1;
+        Active = SelectedState.Value == 1;
 
       var filter = new BaseFilterModel
       {
-        Active = isActive,
+        Active = Active,
         Name = SearchText
       };
 

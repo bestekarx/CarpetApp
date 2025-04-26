@@ -104,7 +104,8 @@ public partial class SmsUserDetailViewModel(
       {
         Title = Title,
         UserName = Username,
-        Password = Password
+        Password = Password,
+        Active = true
       };
     }
     else
@@ -115,7 +116,10 @@ public partial class SmsUserDetailViewModel(
       SmsUserModel.Active = SelectedState.Value == 1;
     }
 
-    var result = await smsUserService.SaveAsync(SmsUserModel);
+    var result = DetailPageType == DetailPageType.Add
+      ? await smsUserService.SaveAsync(SmsUserModel)
+      : await smsUserService.UpdateAsync(SmsUserModel);
+    
     var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
     _ = dialogService.ShowToast(message);
 

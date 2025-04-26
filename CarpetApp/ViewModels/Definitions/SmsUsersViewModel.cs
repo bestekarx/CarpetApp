@@ -21,8 +21,6 @@ public partial class SmsUsersViewModel(
 
   [ObservableProperty] private List<SmsUsersModel> _smsUsersList;
 
-  [ObservableProperty] private string _searchText;
-
   [ObservableProperty] private List<NameValueModel> _stateList =
     [new() { Name = AppStrings.Pasif, Value = 0 }, new() { Name = AppStrings.Aktif, Value = 1 }];
 
@@ -50,13 +48,6 @@ public partial class SmsUsersViewModel(
       });
   }
 
-  [RelayCommand]
-  private async Task Search(string text)
-  {
-    SearchText = text;
-    await Init();
-  }
-
   #endregion
 
   #region Methods
@@ -72,7 +63,6 @@ public partial class SmsUsersViewModel(
       var filter = new BaseFilterModel
       {
         Active = isActive,
-        Name = SearchText
       };
       SmsUsersList = await smsUserservice.GetAsync(filter);
     }

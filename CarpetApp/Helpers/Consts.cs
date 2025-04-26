@@ -21,6 +21,7 @@ public static class Consts
   public const string CompanyModel = nameof(CompanyModel);
   public const string SmsUsersModel = nameof(SmsUsersModel);
   public const string SmsTemplateModel = nameof(SmsTemplateModel);
+  public const string SmsConfigurationModel = nameof(SmsConfigurationModel);
 
   #endregion
 
@@ -51,6 +52,8 @@ public static class Consts
   public const string SmsTemplatesPage = "SmsTemplates";
   public const string SmsTemplateDetail = "SmsTemplateDetail";
   public const string DataPage = "DataPage";
+  public const string SmsConfigurationsPage = "SmsConfigurations";
+  public const string SmsConfigurationDetail = "SmsConfigurationDetail";
 
   #endregion
 }

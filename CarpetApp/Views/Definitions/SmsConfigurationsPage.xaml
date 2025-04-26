@@ -2,9 +2,9 @@
 
 <services:ContentPageBase
     BackgroundColor="{StaticResource MainBgColor}"
-    x:Class="CarpetApp.Views.Definitions.SmsUsersPage"
-    x:DataType="definitions:SmsUsersViewModel"
-    x:Name="MessageUsersPageKey"
+    x:Class="CarpetApp.Views.Definitions.SmsConfigurationsPage"
+    x:DataType="definitions:SmsConfigurationsViewModel"
+    x:Name="SmsConfigurationPageKey"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:customControls="clr-namespace:CarpetApp.CustomControls"
@@ -18,7 +18,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Shell.TitleView>
-        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.SmsUyeliks}" />
+        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.SmsConfigurations}" />
     </Shell.TitleView>
 
     <ContentPage.Resources>
@@ -47,10 +47,36 @@
                     <Grid
                         ColumnDefinitions="Auto, *"
                         Grid.Column="0"
-                        Margin="16,0,0,0" />
+                        Margin="16,0,0,0">
+
+                        <Image Grid.Column="0" Source="search" />
+
+                        <Entry
+                            ClearButtonVisibility="WhileEditing"
+                            Grid.Column="1"
+                            Margin="4,0,0,0"
+                            Placeholder="Ara"
+                            ReturnType="Next"
+                            Text="{Binding SearchText}">
+                            <Entry.Behaviors>
+                                <toolkit:UserStoppedTypingBehavior
+                                    Command="{Binding Source={x:Reference SmsConfigurationPageKey}, Path=BindingContext.SearchCommand}"
+                                    ShouldDismissKeyboardAutomatically="True"
+                                    StoppedTypingTimeThreshold="1000" />
+                            </Entry.Behaviors>
+                        </Entry>
+
+                    </Grid>
+
+                    <BoxView
+                        Grid.Column="1"
+                        HeightRequest="50"
+                        HorizontalOptions="Fill"
+                        Style="{StaticResource Stroke}"
+                        VerticalOptions="Fill" />
 
                     <!--  filter  -->
-                    <ContentView Grid.Column="0" Margin="10,0,16,0">
+                    <ContentView Grid.Column="2" Margin="10,0,16,0">
                         <editors:SfComboBox
                             DisplayMemberPath="Name"
                             EnableAutoSize="True"
@@ -75,12 +101,12 @@
 
                 <sfListView:SfListView
                     Grid.Row="2"
-                    IsVisible="{Binding SmsUsersList, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
+                    IsVisible="{Binding SmsConfigurationList, Converter={StaticResource IsListNotNullOrEmptyConverter}}"
                     ItemSize="80"
-                    ItemsSource="{Binding SmsUsersList}"
+                    ItemsSource="{Binding SmsConfigurationList}"
                     Margin="0,16,0,0">
                     <sfListView:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:SmsUsersModel">
+                        <DataTemplate x:DataType="models:SmsConfigurationModel">
                             <Frame
                                 BorderColor="Transparent"
                                 CornerRadius="2"
@@ -90,12 +116,11 @@
                                     ColumnDefinitions="*, Auto, 24"
                                     ColumnSpacing="16"
                                     VerticalOptions="Center">
-
                                     <Label
                                         Grid.Column="0"
                                         Margin="8,0,0,0"
                                         Style="{StaticResource ListViewLabel}"
-                                        Text="{Binding Title}" />
+                                        Text="{Binding Name}" />
 
                                     <Image
                                         Aspect="AspectFit"
@@ -103,7 +128,7 @@
                                         Source="edit" />
                                 </Grid>
                                 <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference MessageUsersPageKey}, Path=BindingContext.SelectedItemCommand}" CommandParameter="{Binding .}" />
+                                    <TapGestureRecognizer Command="{Binding Source={x:Reference SmsConfigurationPageKey}, Path=BindingContext.SelectedItemCommand}" CommandParameter="{Binding .}" />
                                 </Frame.GestureRecognizers>
                             </Frame>
 
@@ -114,7 +139,7 @@
                 <customControls:CustomInfoView
                     Grid.Row="2"
                     ImageSource="data_not_found"
-                    IsVisible="{Binding SmsUsersList, Converter={StaticResource IsListNullOrEmptyConverter}}"
+                    IsVisible="{Binding SmsConfigurationList, Converter={StaticResource IsListNullOrEmptyConverter}}"
                     Title="{x:Static resx:AppStrings.VeriBulunamadi}"
                     VerticalOptions="Center" />
             </Grid>
@@ -122,7 +147,7 @@
             <buttons:SfButton
                 AbsoluteLayout.LayoutBounds="0.5,1,0.1,0.1"
                 AbsoluteLayout.LayoutFlags="All"
-                Command="{Binding SmsUsersAddCommand}"
+                Command="{Binding SmsConfigurationAddCommand}"
                 Style="{StaticResource CircleAddButton}" />
 
         </AbsoluteLayout>
