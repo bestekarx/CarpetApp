@@ -18,7 +18,7 @@ public class CreateUpdateMessageTemplateDto
     [Required]
     public Dictionary<string, string> PlaceholderMappings { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
 
     [Required]
     [StringLength(10)]

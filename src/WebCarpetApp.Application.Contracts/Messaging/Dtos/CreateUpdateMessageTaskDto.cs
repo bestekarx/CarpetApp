@@ -17,5 +17,5 @@ public class CreateUpdateMessageTaskDto
     [StringLength(1000)]
     public string CustomMessage { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
 } 

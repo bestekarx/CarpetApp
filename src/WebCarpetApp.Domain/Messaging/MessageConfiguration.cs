@@ -12,7 +12,7 @@ public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
     public Guid MessageUserId { get; private set; }
     public string Name { get; private set; }
     public string Description { get; private set; }
-    public bool IsActive { get; private set; }
+    public bool Active { get; private set; }
     
     private readonly List<MessageTask> _messageTasks;
     public IReadOnlyCollection<MessageTask> MessageTasks => _messageTasks.AsReadOnly();
@@ -33,7 +33,7 @@ public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
         MessageUserId = messageUserId;
         Name = name;
         Description = description;
-        IsActive = true;
+        Active = true;
         _messageTasks = new List<MessageTask>();
     }
 
@@ -60,9 +60,9 @@ public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
         }
     }
 
-    public void SetActive(bool isActive)
+    public void SetActive(bool active)
     {
-        IsActive = isActive;
+        Active = active;
     }
 
     public void UpdateMessageUser(Guid messageUserId)

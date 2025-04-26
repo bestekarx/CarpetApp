@@ -18,5 +18,5 @@ public class CreateUpdateMessageConfigurationDto
     [StringLength(500)]
     public string Description { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
 } 

@@ -5,7 +5,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Dynamic.Core;
+using Volo.Abp;
 using WebCarpetApp.Messaging.Dtos;
 
 namespace WebCarpetApp.Messaging;
@@ -34,9 +34,9 @@ public class MessageUserAppService :
         {
             var queryable = await _repository.GetQueryableAsync();
         
-            if (input.IsActive.HasValue)
+            if (input.Active.HasValue)
             {
-                queryable = queryable.Where(x => x.IsActive == input.IsActive.Value);
+                queryable = queryable.Where(x => x.Active == input.Active.Value);
             }
         
             var totalCount = await AsyncExecuter.CountAsync(queryable);
@@ -62,6 +62,16 @@ public class MessageUserAppService :
     protected override void MapToEntity(CreateUpdateMessageUserDto updateInput, MessageUser entity)
     {
         base.MapToEntity(updateInput, entity);
-        entity.IsActive = updateInput.IsActive;
+        entity.Active = updateInput.Active;
+    }
+
+    protected override async Task<MessageUser> GetEntityByIdAsync(Guid id)
+    {
+        var messageUser = await base.GetEntityByIdAsync(id);
+        if (messageUser == null || !messageUser.Active)
+        {
+            throw new UserFriendlyException(L["MessageUserNotFound"]);
+        }
+        return messageUser;
     }
 } 

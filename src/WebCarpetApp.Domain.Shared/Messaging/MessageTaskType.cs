@@ -2,12 +2,12 @@ namespace WebCarpetApp.Messaging;
 
 public enum MessageTaskType
 {
-    ReceivedCreated = 1,
-    ReceivedCancelled = 2,
-    OrderCreated = 3,
-    OrderCompleted = 4,
-    OrderCancelled = 5,
-    InvoiceCreated = 6,
-    InvoicePaid = 7
+    ReceivedCreated = 10,
+    ReceivedCancelled = 11,
+    OrderCreated = 20,
+    OrderCompleted = 21,
+    OrderCancelled = 22,
+    InvoiceCreated = 30,
+    InvoicePaid = 31
     // Yeni task'ler buraya eklenebilir
 } 

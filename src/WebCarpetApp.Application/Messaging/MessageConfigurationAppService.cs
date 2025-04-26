@@ -47,7 +47,7 @@ public class MessageConfigurationAppService :
     protected override async Task MapToEntityAsync(CreateUpdateMessageConfigurationDto updateInput, MessageConfiguration entity)
     {
         entity.UpdateMessageUser(updateInput.MessageUserId);
-        entity.SetActive(updateInput.IsActive);
+        entity.SetActive(updateInput.Active);
     }
 
     public async Task<MessageConfigurationDto> AddMessageTaskAsync(Guid id, CreateUpdateMessageTaskDto input)

@@ -8,13 +8,13 @@ namespace WebCarpetApp.UserTenants;
 public class UserTenantMapping : Entity<Guid>
 {
     public Guid UserId { get; set; }
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
     public DateTime CreationTime { get; set; }
 
     public UserTenantMapping()
     {
         CreationTime = DateTime.Now;
-        IsActive = true;
+        Active = true;
     }
 
     public Guid? CarpetTenantId { get; set; }

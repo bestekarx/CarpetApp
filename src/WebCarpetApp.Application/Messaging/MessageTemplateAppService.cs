@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using WebCarpetApp.Messaging.Dtos;
-using WebCarpetApp.Permissions;
 
 namespace WebCarpetApp.Messaging;
 
@@ -34,12 +34,16 @@ public class MessageTemplateAppService(IRepository<MessageTemplate, Guid> reposi
     {
         entity.UpdateTemplate(updateInput.Template);
         entity.UpdatePlaceholderMappings(updateInput.PlaceholderMappings);
-        entity.SetActive(updateInput.IsActive);
+        entity.SetActive(updateInput.Active);
     }
 
     public async Task<string> FormatMessageAsync(Guid id, Dictionary<string, object> values)
     {
         var template = await Repository.GetAsync(id);
+        if (template == null || !template.Active)
+        {
+            throw new UserFriendlyException(L["MessageTemplateNotFound"]);
+        }
         return template.FormatMessage(values);
     }
 
@@ -48,7 +52,7 @@ public class MessageTemplateAppService(IRepository<MessageTemplate, Guid> reposi
         var template = await Repository.FirstOrDefaultAsync(x => 
             x.TaskType == taskType && 
             x.CultureCode == cultureCode &&
-            x.IsActive);
+            x.Active);
 
         if (template == null)
         {
@@ -56,7 +60,12 @@ public class MessageTemplateAppService(IRepository<MessageTemplate, Guid> reposi
             template = await Repository.FirstOrDefaultAsync(x => 
                 x.TaskType == taskType && 
                 x.CultureCode == "tr-TR" &&
-                x.IsActive);
+                x.Active);
+        }
+
+        if (template == null || !template.Active)
+        {
+            throw new UserFriendlyException(L["MessageTemplateNotFound"]);
         }
 
         return ObjectMapper.Map<MessageTemplate, MessageTemplateDto>(template);

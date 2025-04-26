@@ -40,11 +40,11 @@ public interface ITenantUserManagementService
     /// Var olan bir kullanıcıyı var olan bir tenant ile ilişkilendirir.
     /// </summary>
     /// <param name="tenantId">Tenant ID</param>
-    /// <param name="userId">Kullanıcı ID</param>
-    /// <param name="isActive">Kullanıcı tenant ilişkisi aktif mi</param>
-    /// <returns>Oluşturulan mapping kaydının ID'si</returns>
+    /// <param name="userId">User ID</param>
+    /// <param name="active">Kullanıcı tenant ilişkisi aktif mi</param>
+    /// <returns>Oluşturulan mapping ID</returns>
     Task<Guid> MapUserToTenantAsync(
         Guid tenantId,
         Guid userId,
-        bool isActive = true);
+        bool active = true);
 } 

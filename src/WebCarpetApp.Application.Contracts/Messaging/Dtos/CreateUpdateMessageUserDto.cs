@@ -16,5 +16,5 @@ public class CreateUpdateMessageUserDto
     [StringLength(100)]
     public string Title { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
 } 

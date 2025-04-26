@@ -26,7 +26,7 @@ namespace WebCarpetApp.Messaging
         {
             var configuration = await _configurationRepository.FirstOrDefaultAsync(x => 
                 x.CompanyId == companyId && 
-                x.IsActive);
+                x.Active);
 
             if (configuration == null)
             {
@@ -36,7 +36,7 @@ namespace WebCarpetApp.Messaging
             var task = await _taskRepository.FirstOrDefaultAsync(x =>
                 x.MessageConfigurationId == configuration.Id &&
                 x.TaskType == taskType &&
-                x.IsActive);
+                x.Active);
 
             return task?.Behavior;
         }
@@ -69,7 +69,7 @@ namespace WebCarpetApp.Messaging
             // 1. İlgili görev tipi için mesaj şablonunu getir
             var template = await _templateRepository.FirstOrDefaultAsync(
                 t => t.TaskType == taskType && 
-                     t.IsActive &&
+                     t.Active &&
                      t.CultureCode == cultureCode);
             
             if (template == null)
@@ -77,7 +77,7 @@ namespace WebCarpetApp.Messaging
                 // Belirtilen dilde şablon yoksa varsayılan Türkçe şablonu dene
                 template = await _templateRepository.FirstOrDefaultAsync(
                     t => t.TaskType == taskType && 
-                         t.IsActive &&
+                         t.Active &&
                          t.CultureCode == "tr-TR");
                          
                 if (template == null)
@@ -95,7 +95,7 @@ namespace WebCarpetApp.Messaging
         {
             var configuration = await _configurationRepository.FirstOrDefaultAsync(x => 
                 x.CompanyId == companyId && 
-                x.IsActive);
+                x.Active);
                 
             return configuration?.MessageUserId;
         }

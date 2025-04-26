@@ -53,14 +53,14 @@ public class TenantManagementController : AbpControllerBase
     [HttpPost]
     [Route("map-user-to-tenant")]
     [Authorize(Roles = "admin")]
-    public async Task<IActionResult> MapUserToTenant(MapUserToTenantDto input)
+    public async Task<IActionResult> MapUserToTenant([FromBody] MapUserToTenantInput input)
     {
-        var mappingId = await _tenantUserManagementService.MapUserToTenantAsync(
+        await _tenantUserManagementService.MapUserToTenantAsync(
             input.TenantId,
             input.UserId,
-            input.IsActive);
+            input.Active);
 
-        return Ok(new { MappingId = mappingId });
+        return Ok();
     }
 
     public class CreateTenantWithAdminDto
@@ -100,14 +100,10 @@ public class TenantManagementController : AbpControllerBase
         public string UserName { get; set; }
     }
 
-    public class MapUserToTenantDto
+    public class MapUserToTenantInput
     {
-        [Required]
         public Guid TenantId { get; set; }
-
-        [Required]
         public Guid UserId { get; set; }
-
-        public bool IsActive { get; set; } = true;
+        public bool Active { get; set; } = true;
     }
 } 

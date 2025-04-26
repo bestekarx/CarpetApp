@@ -10,6 +10,6 @@ public class MessageConfigurationDto : AuditedEntityDto<Guid>
     public Guid MessageUserId { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public bool IsActive { get; set; }
-    public List<MessageTaskDto> MessageTasks { get; set; }
+    public bool Active { get; set; }
+    public ICollection<MessageTaskDto> MessageTasks { get; set; }
 } 

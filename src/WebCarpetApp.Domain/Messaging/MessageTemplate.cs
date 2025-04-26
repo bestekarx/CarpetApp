@@ -14,7 +14,7 @@ public class MessageTemplate : Entity<Guid>, IMultiTenant
     public string Name { get; private set; }
     public string Template { get; private set; }
     public Dictionary<string, string> PlaceholderMappings { get; private set; }
-    public bool IsActive { get; private set; }
+    public bool Active { get; private set; }
     public string CultureCode { get; private set; }
 
     protected MessageTemplate()
@@ -35,7 +35,7 @@ public class MessageTemplate : Entity<Guid>, IMultiTenant
         Template = template;
         PlaceholderMappings = placeholderMappings;
         CultureCode = cultureCode;
-        IsActive = true;
+        Active = true;
     }
 
     public void UpdateTemplate(string template)
@@ -48,9 +48,9 @@ public class MessageTemplate : Entity<Guid>, IMultiTenant
         PlaceholderMappings = mappings;
     }
 
-    public void SetActive(bool isActive)
+    public void SetActive(bool active)
     {
-        IsActive = isActive;
+        Active = active;
     }
 
     public string FormatMessage(Dictionary<string, object> values)

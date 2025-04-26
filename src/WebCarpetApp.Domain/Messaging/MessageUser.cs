@@ -10,6 +10,6 @@ public class MessageUser : Entity<Guid>, IMultiTenant
     public required string Username { get; set; }
     public required string Password { get; set; }
     public required string Title { get; set; }
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
     Guid? IMultiTenant.TenantId => TenantId;
 }

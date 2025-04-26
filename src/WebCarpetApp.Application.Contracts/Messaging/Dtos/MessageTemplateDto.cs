@@ -10,6 +10,6 @@ public class MessageTemplateDto : AuditedEntityDto<Guid>
     public string Name { get; set; }
     public string Template { get; set; }
     public Dictionary<string, string> PlaceholderMappings { get; set; }
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
     public string CultureCode { get; set; }
 } 

@@ -184,9 +184,9 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
             _logger.LogWarning("User {UserId} is already mapped to tenant {TenantId}", userId, tenantId);
 
             // Eğer isActive durumu değiştiyse güncelle
-            if (existingMapping.IsActive != isActive)
+            if (existingMapping.Active != isActive)
             {
-                existingMapping.IsActive = isActive;
+                existingMapping.Active = isActive;
                 await _userTenantRepository.UpdateAsync(existingMapping);
                 _logger.LogInformation(
                     "Updated existing mapping for user {UserId} and tenant {TenantId} with active status: {IsActive}",
@@ -200,7 +200,7 @@ public class TenantUserManagementService : ITenantUserManagementService, ITransi
         var userTenantMapping = new UserTenantMapping
         {
             UserId = userId,
-            IsActive = isActive,
+            Active = isActive,
             CarpetTenantId = tenantId
         };
 

@@ -9,7 +9,7 @@ public class MessageTask : Entity<Guid>
     public MessageTaskType TaskType { get; private set; }
     public MessageBehavior Behavior { get; private set; }
     public string CustomMessage { get; private set; }
-    public bool IsActive { get; private set; }
+    public bool Active { get; private set; }
 
     protected MessageTask() { }
 
@@ -24,7 +24,7 @@ public class MessageTask : Entity<Guid>
         TaskType = taskType;
         Behavior = behavior;
         CustomMessage = customMessage;
-        IsActive = true;
+        Active = true;
     }
 
     public  void UpdateBehavior(MessageBehavior newBehavior)
@@ -37,8 +37,8 @@ public class MessageTask : Entity<Guid>
         CustomMessage = newMessage;
     }
 
-    public  void SetActive(bool isActive)
+    public  void SetActive(bool active)
     {
-        IsActive = isActive;
+        Active = active;
     }
 } 

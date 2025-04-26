@@ -5,5 +5,5 @@ namespace WebCarpetApp.Messaging.Dtos;
 
 public class GetMessageUserListFilterDto
 {
-    public bool? IsActive { get; set; }
+    public bool? Active { get; set; }
 } 

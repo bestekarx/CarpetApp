@@ -9,5 +9,5 @@ public class MessageTaskDto : EntityDto<Guid>
     public MessageTaskType TaskType { get; set; }
     public MessageBehavior Behavior { get; set; }
     public string CustomMessage { get; set; }
-    public bool IsActive { get; set; }
+    public bool Active { get; set; }
 } 
