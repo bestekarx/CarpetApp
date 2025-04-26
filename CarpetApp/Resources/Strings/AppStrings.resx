@@ -240,4 +240,16 @@
     <data name="Plaka" xml:space="preserve">
         <value>Plaka</value>
     </data>
+    <data name="SmsConfigurationEkle" xml:space="preserve">
+        <value>SMS Yapılandırması Ekle</value>
+    </data>
+    <data name="SmsConfigurationDuzenle" xml:space="preserve">
+        <value>SMS Yapılandırması Düzenle</value>
+    </data>
+    <data name="SmsConfigurationAdi" xml:space="preserve">
+        <value>SMS Yapılandırması Adı</value>
+    </data>
+    <data name="SmsConfigurationAciklama" xml:space="preserve">
+        <value>SMS Yapılandırması Açıklaması</value>
+    </data>
 </root>

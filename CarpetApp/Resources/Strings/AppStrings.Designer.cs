@@ -476,5 +476,29 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("Plaka", resourceCulture);
             }
         }
+        
+        internal static string SmsConfigurationEkle {
+            get {
+                return ResourceManager.GetString("SmsConfigurationEkle", resourceCulture);
+            }
+        }
+        
+        internal static string SmsConfigurationDuzenle {
+            get {
+                return ResourceManager.GetString("SmsConfigurationDuzenle", resourceCulture);
+            }
+        }
+        
+        internal static string SmsConfigurationAdi {
+            get {
+                return ResourceManager.GetString("SmsConfigurationAdi", resourceCulture);
+            }
+        }
+        
+        internal static string SmsConfigurationAciklama {
+            get {
+                return ResourceManager.GetString("SmsConfigurationAciklama", resourceCulture);
+            }
+        }
     }
 }

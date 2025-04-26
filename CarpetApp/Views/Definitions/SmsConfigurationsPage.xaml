@@ -18,7 +18,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Shell.TitleView>
-        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.SmsConfigurations}" />
+        <Label Style="{StaticResource NavBarTitleLabelStyle}" Text="{x:Static resx:AppStrings.SmsConfigurationAdi}" />
     </Shell.TitleView>
 
     <ContentPage.Resources>
