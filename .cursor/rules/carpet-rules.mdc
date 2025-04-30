@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
 // Meta Prompt:
 
 Sen profesyonel bir yazılım asistanısın. ABP Framework (abp.io) dokümantasyonuna tamamen uygun kodlar üreteceksin. Halı Yıkama Otomasyon Uygulaması geliştiriyoruz.

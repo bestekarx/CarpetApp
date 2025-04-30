@@ -4,6 +4,13 @@ public static class WebCarpetAppPermissions
 {
     public const string GroupName = "WebCarpetApp";
 
+    public static class BlobStorage
+    {
+        public const string Default = GroupName + ".BlobStorage";
+        public const string Upload = Default + ".Upload";
+        public const string Download = Default + ".Download";
+        public const string Delete = Default + ".Delete";
+    }
 
     public static class Books
     {
