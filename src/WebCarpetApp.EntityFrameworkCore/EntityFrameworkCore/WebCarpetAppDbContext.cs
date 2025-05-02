@@ -159,7 +159,6 @@ public class WebCarpetAppDbContext :
         {
             b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageConfigurations", WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
-            b.HasMany(x => x.MessageTasks).WithOne().HasForeignKey(x => x.MessageConfigurationId);
         });
 
         builder.Entity<MessageTask>(b =>

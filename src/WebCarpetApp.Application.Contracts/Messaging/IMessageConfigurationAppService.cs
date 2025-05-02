@@ -13,7 +13,4 @@ public interface IMessageConfigurationAppService :
         PagedAndSortedResultRequestDto,
         CreateUpdateMessageConfigurationDto>
 {
-    Task<MessageConfigurationDto> AddMessageTaskAsync(Guid id, CreateUpdateMessageTaskDto input);
-    Task<MessageConfigurationDto> UpdateMessageTaskAsync(Guid id, Guid taskId, CreateUpdateMessageTaskDto input);
-    Task<MessageConfigurationDto> RemoveMessageTaskAsync(Guid id, Guid taskId);
 } 

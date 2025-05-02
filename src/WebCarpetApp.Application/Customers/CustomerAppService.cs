@@ -20,11 +20,6 @@ public class CustomerAppService :
     public CustomerAppService(IRepository<Customer, Guid> repository)
         : base(repository)
     {
-        GetPolicyName = WebCarpetAppPermissions.Customers.Default;
-        GetListPolicyName = WebCarpetAppPermissions.Customers.Default;
-        CreatePolicyName = WebCarpetAppPermissions.Customers.Create;
-        UpdatePolicyName = WebCarpetAppPermissions.Customers.Edit;
-        DeletePolicyName = WebCarpetAppPermissions.Customers.Delete;
     }
 
     protected override Customer MapToEntity(CreateUpdateCustomerDto createInput)

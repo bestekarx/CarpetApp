@@ -27,11 +27,6 @@ public class MessageUserAppService :
         : base(repository)
     {
         _repository = repository;
-        GetPolicyName = WebCarpetAppPermissions.MessageUsers.Default;
-        GetListPolicyName = WebCarpetAppPermissions.MessageUsers.Default;
-        CreatePolicyName = WebCarpetAppPermissions.MessageUsers.Create;
-        UpdatePolicyName = WebCarpetAppPermissions.MessageUsers.Edit;
-        DeletePolicyName = WebCarpetAppPermissions.MessageUsers.Delete;
     }
 
     public async Task<PagedResultDto<MessageUserDto>> GetFilteredListAsync(GetMessageUserListFilterDto input)

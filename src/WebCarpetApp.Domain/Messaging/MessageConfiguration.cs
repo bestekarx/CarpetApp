@@ -14,13 +14,6 @@ public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
     public string Description { get; private set; }
     public bool Active { get; private set; }
     
-    private readonly List<MessageTask> _messageTasks;
-    public IReadOnlyCollection<MessageTask> MessageTasks => _messageTasks.AsReadOnly();
-
-    protected MessageConfiguration()
-    {
-        _messageTasks = new List<MessageTask>();
-    }
 
     public MessageConfiguration(
         Guid id,
@@ -34,30 +27,6 @@ public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
         Name = name;
         Description = description;
         Active = true;
-        _messageTasks = new List<MessageTask>();
-    }
-
-    public void AddMessageTask(MessageTaskType taskType, MessageBehavior behavior, string customMessage = null)
-    {
-        _messageTasks.Add(new MessageTask(Guid.NewGuid(), Id, taskType, behavior, customMessage));
-    }
-
-    public void UpdateMessageTaskBehavior(Guid taskId, MessageBehavior newBehavior)
-    {
-        var task = _messageTasks.Find(x => x.Id == taskId);
-        if (task != null)
-        {
-            task.UpdateBehavior(newBehavior);
-        }
-    }
-
-    public void UpdateMessageTaskCustomMessage(Guid taskId, string newMessage)
-    {
-        var task = _messageTasks.Find(x => x.Id == taskId);
-        if (task != null)
-        {
-            task.UpdateCustomMessage(newMessage);
-        }
     }
 
     public void SetActive(bool active)
