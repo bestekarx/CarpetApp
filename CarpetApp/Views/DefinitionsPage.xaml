@@ -216,7 +216,7 @@
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer
                                 Command="{Binding OpenPageCommand}"
-                                CommandParameter="{x:Static helpers:Consts.SmsTemplatesPage}"
+                                CommandParameter="{x:Static helpers:Consts.SmsConfigurationsPage}"
                                 NumberOfTapsRequired="1" />
                         </Frame.GestureRecognizers>
                     </Frame>

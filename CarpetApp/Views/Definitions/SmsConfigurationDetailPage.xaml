@@ -7,6 +7,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:core="http://schemas.syncfusion.com/maui"
+    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
     xmlns:myEnum="clr-namespace:CarpetApp.Enums"
     xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
     xmlns:services="clr-namespace:CarpetApp.Services"
@@ -74,6 +75,30 @@
                             <Entry ReturnType="Next" Text="{Binding Description}" />
 
                         </core:SfTextInputLayout>
+
+                        <!--  Firma  -->
+                        <editors:SfComboBox
+                            DisplayMemberPath="Name"
+                            EnableAutoSize="True"
+                            ItemsSource="{Binding CompanyList}"
+                            SelectedIndex="{Binding CompanySelectedIndex}"
+                            SelectedItem="{Binding SelectedCompany}"
+                            SelectedValuePath="Id"
+                            ShowBorder="True"
+                            Stroke="Transparent"
+                            Style="{StaticResource DefaultComboBox}" />
+
+                        <!--  Sms Kullanıcısı  -->
+                        <editors:SfComboBox
+                            DisplayMemberPath="Title"
+                            EnableAutoSize="True"
+                            ItemsSource="{Binding SmsUserList}"
+                            SelectedIndex="{Binding SmsUserSelectedIndex}"
+                            SelectedItem="{Binding SelectedSmsUser}"
+                            SelectedValuePath="Id"
+                            ShowBorder="False"
+                            Stroke="Transparent"
+                            Style="{StaticResource DefaultComboBox}" />
 
                         <!--  durum  -->
                         <core:SfTextInputLayout

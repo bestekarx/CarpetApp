@@ -96,9 +96,9 @@ public partial class CompanyDetailViewModel(
     {
       Name = CompanyModel.Name;
       Description = CompanyModel.Description;
-      MoneyUnit = CompanyModel.MoneyUnit;
-      HmdProcess = CompanyModel.HmdProcess.ToString();
-      SelectedFirmColor = Color.FromArgb(CompanyModel.FirmColor);
+      //MoneyUnit = CompanyModel.C;
+      //HmdProcess = CompanyModel.HmdProcess.ToString();
+      SelectedFirmColor = Color.FromArgb(CompanyModel.Color);
       StateSelectedIndex = CompanyModel.Active ? 1 : 0;
     }
   }
@@ -117,18 +117,18 @@ public partial class CompanyDetailViewModel(
       {
         Name = Name,
         Description = Description,
-        MoneyUnit = MoneyUnit,
-        HmdProcess = Convert.ToInt32(HmdProcess),
-        FirmColor = SelectedFirmColor.ToRgbaHex()
+        //MoneyUnit = MoneyUnit,
+        //HmdProcess = Convert.ToInt32(HmdProcess),
+        Color = SelectedFirmColor.ToRgbaHex()
       };
     }
     else
     {
       CompanyModel.Name = Name;
       CompanyModel.Description = Description;
-      CompanyModel.MoneyUnit = MoneyUnit;
-      CompanyModel.HmdProcess = Convert.ToInt32(HmdProcess);
-      CompanyModel.FirmColor = SelectedFirmColor.ToRgbaHex();
+      //CompanyModel.MoneyUnit = MoneyUnit;
+      //CompanyModel.HmdProcess = Convert.ToInt32(HmdProcess);
+      CompanyModel.Color = SelectedFirmColor.ToRgbaHex();
       CompanyModel.Active = SelectedState.Value == 1;
     }
 

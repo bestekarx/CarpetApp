@@ -42,12 +42,13 @@ public partial class SmsTemplatesViewModel(
   [RelayCommand]
   private async Task SelectedItem(SmsTemplateModel obj)
   {
-    await navigationService.NavigateToAsync(Consts.SmsTemplateDetail,
+    /*await navigationService.NavigateToAsync(Consts.SmsTemplateDetail,
       new Dictionary<string, object>
       {
         { Consts.Type, DetailPageType.Edit },
         { Consts.SmsTemplateModel, obj }
       });
+      */
   }
 
   [RelayCommand]
@@ -86,8 +87,9 @@ public partial class SmsTemplatesViewModel(
 
   private async Task OnSmsTemplateAddTapped()
   {
-    await navigationService.NavigateToAsync(Consts.SmsTemplateDetail,
+    /*await navigationService.NavigateToAsync(Consts.SmsTemplateDetail,
       new Dictionary<string, object> { { Consts.Type, DetailPageType.Add } });
+      */
   }
 
   #endregion

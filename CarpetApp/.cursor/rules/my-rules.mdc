@@ -3,9 +3,111 @@ description:
 globs: 
 alwaysApply: true
 ---
+// Meta Prompt:
 
-# Your rule content
+You are a professional software assistant. We are developing a mobile application using .NET MAUI and Syncfusion components.
 
-- promptlarımda türkçe dilini kullan.
-- .net maui android&ios projesi geliştiriyorum.
-- var olan yapıyı ve business kurallarını bozma.
+Rules:
+- All development must strictly follow the existing design patterns and page structures (List, Search, Filter, Detail Update).
+- No new style files or different component libraries will be added.
+- Use existing Syncfusion components where necessary (e.g., SfListView, SfDataGrid, SfTextBox).
+- The source code must be written in **English**.
+- Only add short, clear comments in critical or complex parts of the code. Avoid unnecessary documentation or explanations.
+- Pages must be implemented in a simple, clean, and performant way following MVVM principles.
+- If an existing page, component, service, or ViewModel needs to be modified, **you must ask before changing it**.
+- No external NuGet packages or libraries will be added unless explicitly approved.
+- Directly perform the requested operations without asking additional questions or adding extra analysis (only ask if an important conflict or violation occurs).
+- Navigation between pages must use standard MAUI navigation techniques. 
+- Responsive design should be respected for different screen sizes (phones, tablets).
+- CRUD operations are limited to listing, searching, filtering, opening detail/edit pages, and saving updates via existing services.
+
+Language Rules:
+- All user interface text must be in Turkish
+- All resource strings must be added to both AppStrings.resx and AppStrings.Designer.cs
+- Resource string names should follow the pattern: [EntityName][Action/Property] (e.g., SmsConfigurationEkle, SmsConfigurationAdi)
+- When adding new strings:
+  1. Add to AppStrings.resx with Turkish translation
+  2. Add corresponding property to AppStrings.Designer.cs
+  3. Use the string in XAML with {x:Static resx:AppStrings.StringName}
+- Keep Turkish translations clear and professional
+- Maintain consistency in terminology across the application
+
+The goal is efficient, professional, production-quality development.
+
+--------------------------------------
+
+// Cursor Rules:
+
+// cursor: explain
+// Provide a short, clear explanation in English only for complex or critical code blocks. Do not explain trivial code.
+
+// cursor: optimize
+// Optimize View, ViewModel, or Service code for better performance without changing existing architecture or standards.
+
+// cursor: navigation
+// Implement navigation between pages using standard MAUI Shell Navigation or NavigationPage. No custom routing unless necessary.
+
+// cursor: binding
+// Set up proper XAML to ViewModel data bindings. Ensure minimal and efficient bindings, respecting BindingMode defaults.
+
+// cursor: command
+// Create ICommand implementations for user actions. Reuse existing command patterns if available.
+
+// cursor: service
+// Connect ViewModels to existing Services for data operations (CRUD). Do not create new services unless specified.
+
+// cursor: crud
+// Build UI flows for listing, searching, filtering, editing, and updating records using existing components and services. Use Syncfusion components if necessary.
+
+// cursor: validation
+// Add simple and effective input validation directly inside ViewModels. Use DataAnnotations or basic property validation if needed.
+
+// cursor: syncfusion
+// Use appropriate Syncfusion controls for lists, forms, and interactions. Follow Syncfusion best practices from the official documentation. No new styling; follow project conventions.
+
+# .cursorrule
+# Bu dosya, Cursor AI ile proje geliştirme sürecinde kullanılacak kuralları ve yönergeleri içerir.
+# Gerektiğinde bu dosyayı güncelleyebilirsiniz.
+
+[general]
+# Türkçe iletişim tercih edilir.
+language = tr
+
+# Kodda açıklama ve dökümantasyon önemlidir.
+documentation = true
+
+# Kod değişikliklerinde açıklama eklenmeli.
+commit_message_required = true
+
+# Kodda gereksiz dosya ve bağımlılıklardan kaçınılmalı.
+clean_code = true
+
+# AI önerileri manuel olarak gözden geçirilmeli.
+ai_review = true
+
+# CRUD sayfaları oluşturma kuralları
+[crud_pages]
+# 1. Model sınıfı oluşturulmalı (örn: SmsConfigurationModel.cs)
+# 2. Servis sınıfı ve interface'i oluşturulmalı (örn: SmsConfigurationService.cs)
+# 3. ViewModel sınıfları oluşturulmalı (örn: SmsConfigurationsViewModel.cs, SmsConfigurationDetailViewModel.cs)
+# 4. XAML sayfaları oluşturulmalı (örn: SmsConfigurationsPage.xaml, SmsConfigurationDetailPage.xaml)
+# 5. Code-behind dosyaları oluşturulmalı (örn: SmsConfigurationsPage.xaml.cs, SmsConfigurationDetailPage.xaml.cs)
+# 6. Consts.cs'e route ve model sabitleri eklenmeli
+# 7. AppStrings.cs'e string sabitleri eklenmeli
+# 8. IBaseApiService.cs'e API uçları eklenmeli
+# 9. Shell.xaml ve Shell.xaml.cs'e route'lar eklenmeli
+# 10. MauiProgram.cs'e servis kaydı eklenmeli
+
+# İsimlendirme kuralları
+[naming]
+# Model sınıfları: [EntityName]Model (örn: SmsConfigurationModel)
+# Servis sınıfları: [EntityName]Service (örn: SmsConfigurationService)
+# Servis interface'leri: I[EntityName]Service (örn: ISmsConfigurationService)
+# ViewModel sınıfları: [EntityName]sViewModel, [EntityName]DetailViewModel (örn: SmsConfigurationsViewModel, SmsConfigurationDetailViewModel)
+# XAML sayfaları: [EntityName]sPage, [EntityName]DetailPage (örn: SmsConfigurationsPage, SmsConfigurationDetailPage)
+# Consts sabitleri: [EntityName]Model, [EntityName]sPage, [EntityName]Detail (örn: SmsConfigurationModel, SmsConfigurationsPage, SmsConfigurationDetail)
+# AppStrings sabitleri: [EntityName]s, [EntityName]Ekle, [EntityName]Duzenle, [EntityName]Adi, [EntityName]Aciklama (örn: SmsConfigurations, SmsConfigurationEkle, SmsConfigurationDuzenle, SmsConfigurationAdi, SmsConfigurationAciklama)
+# API uçları: Get[EntityName]List, Add[EntityName], Update[EntityName] (örn: GetSmsConfigurationList, AddSmsConfiguration, UpdateSmsConfiguration)
+
+# Gerekirse ek kurallar buraya eklenebilir.
+

@@ -49,8 +49,8 @@ public static class Consts
   public const string CompanyDetail = "CompanyDetail";
   public const string SmsUsersPage = "SmsUsers";
   public const string SmsUserDetail = "SmsUserDetail";
-  public const string SmsTemplatesPage = "SmsTemplates";
-  public const string SmsTemplateDetail = "SmsTemplateDetail";
+  //public const string SmsTemplatesPage = "SmsTemplates";
+  //public const string SmsTemplateDetail = "SmsTemplateDetail";
   public const string DataPage = "DataPage";
   public const string SmsConfigurationsPage = "SmsConfigurations";
   public const string SmsConfigurationDetail = "SmsConfigurationDetail";

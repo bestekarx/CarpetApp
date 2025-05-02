@@ -66,19 +66,19 @@ public partial class SmsConfigurationsViewModel(
   {
     using (await dialogService.Show())
     {
-      var Active = true;
+      var active = true;
       if (SelectedState != null)
-        Active = SelectedState.Value == 1;
+        active = SelectedState.Value == 1;
 
       var filter = new BaseFilterModel
       {
-        Active = Active,
+        Active = active,
         Name = SearchText
       };
 
       try
       {
-        var result = await smsConfigurationService.GetAsync(filter);
+        var result = await smsConfigurationService.GetAsync();
         if (result != null)
           SmsConfigurationList = result.Items;
       }

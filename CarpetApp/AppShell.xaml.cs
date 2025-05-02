@@ -32,7 +32,9 @@ public partial class AppShell
     Routing.RegisterRoute(Consts.CompanyDetail, typeof(CompanyDetailPage));
     Routing.RegisterRoute(Consts.SmsUsersPage, typeof(SmsUsersPage));
     Routing.RegisterRoute(Consts.SmsUserDetail, typeof(SmsUserDetailPage));
-    Routing.RegisterRoute(Consts.SmsTemplatesPage, typeof(SmsTemplatesPage));
-    Routing.RegisterRoute(Consts.SmsTemplateDetail, typeof(SmsTemplateDetailPage));
+    Routing.RegisterRoute(Consts.SmsConfigurationsPage, typeof(SmsConfigurationsPage));
+    Routing.RegisterRoute(Consts.SmsConfigurationDetail, typeof(SmsConfigurationDetailPage));
+    //Routing.RegisterRoute(Consts.SmsTemplatesPage, typeof(SmsTemplatesPage));
+    //Routing.RegisterRoute(Consts.SmsTemplateDetail, typeof(SmsTemplateDetailPage));
   }
 }

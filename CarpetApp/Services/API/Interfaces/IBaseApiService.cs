@@ -101,13 +101,13 @@ public interface IBaseApiService
 
   #region SmsConfiguration
 
-  [Get("/app/sms-configuration/filtered-list")]
-  Task<BaseListResponse<SmsConfigurationModel>> GetSmsConfigurationList(BaseFilterModel filter);
+  [Get("/app/message-configuration")]
+  Task<BaseListResponse<SmsConfigurationModel>> GetSmsConfigurationList();
 
-  [Post("/app/sms-configuration")]
+  [Post("/app/message-configuration")]
   Task<SmsConfigurationModel> AddSmsConfiguration(SmsConfigurationModel model);
 
-  [Put("/app/sms-configuration/{id}")]
+  [Put("/app/message-configuration/{id}")]
   Task<SmsConfigurationModel> UpdateSmsConfiguration(Guid id, SmsConfigurationModel model);
 
   #endregion

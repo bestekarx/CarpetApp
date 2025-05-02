@@ -8,8 +8,8 @@ public partial class SmsConfigurationsPage : ContentPageBase
 {
   public SmsConfigurationsPage(SmsConfigurationsViewModel viewModel)
   {
-    InitializeComponent();
     BindingContext = viewModel;
+    InitializeComponent();
   }
 
   private void IsActiveComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs selectionChangedEventArgs)

@@ -1,4 +1,6 @@
+using CarpetApp.Services;
 using CarpetApp.ViewModels.Definitions;
+using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
 namespace CarpetApp.Views.Definitions;
 

@@ -6,9 +6,9 @@ namespace CarpetApp.Services.Entry;
 
 public class SmsConfigurationService(IBaseApiService apiService) : ISmsConfigurationService
 {
-  public async Task<BaseListResponse<SmsConfigurationModel>> GetAsync(BaseFilterModel filter)
+  public async Task<BaseListResponse<SmsConfigurationModel>> GetAsync()
   {
-    var list = await apiService.GetSmsConfigurationList(filter);
+    var list = await apiService.GetSmsConfigurationList();
     return list;
   }
 
@@ -29,5 +29,5 @@ public interface ISmsConfigurationService
 {
   public Task<bool> SaveAsync(SmsConfigurationModel model);
   public Task<bool> UpdateAsync(SmsConfigurationModel model);
-  public Task<BaseListResponse<SmsConfigurationModel>> GetAsync(BaseFilterModel filter);
+  public Task<BaseListResponse<SmsConfigurationModel>> GetAsync();
 }
