@@ -37,12 +37,19 @@
     <ContentPage.Content>
 
         <ScrollView>
-            <Grid RowDefinitions="Auto, Auto, Auto">
+            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="0">
+
+                <Label
+                    FontAttributes="Bold"
+                    Grid.Row="0"
+                    Margin="16,16,0,0"
+                    Style="{StaticResource MenuLabel}"
+                    Text="Mesaj Konfigurasyon" />
 
                 <Frame
                     BackgroundColor="White"
                     BorderColor="{StaticResource Gray400}"
-                    Grid.Row="0"
+                    Grid.Row="1"
                     Margin="16,24,16,16"
                     Padding="8"
                     VerticalOptions="Center">
@@ -77,28 +84,50 @@
                         </core:SfTextInputLayout>
 
                         <!--  Firma  -->
-                        <editors:SfComboBox
-                            DisplayMemberPath="Name"
-                            EnableAutoSize="True"
-                            ItemsSource="{Binding CompanyList}"
-                            SelectedIndex="{Binding CompanySelectedIndex}"
-                            SelectedItem="{Binding SelectedCompany}"
-                            SelectedValuePath="Id"
-                            ShowBorder="True"
-                            Stroke="Transparent"
-                            Style="{StaticResource DefaultComboBox}" />
+                        <core:SfTextInputLayout
+                            HeightRequest="60"
+                            Hint="{x:Static resx:AppStrings.Firmalar}"
+                            Style="{StaticResource DefaultInput}">
+
+
+                            <editors:SfComboBox
+                                DisplayMemberPath="Name"
+                                EnableAutoSize="True"
+                                ItemsSource="{Binding CompanyList}"
+                                SelectedIndex="{Binding CompanySelectedIndex}"
+                                SelectedItem="{Binding SelectedCompany}"
+                                SelectedValuePath="Id"
+                                ShowBorder="True"
+                                Stroke="Transparent"
+                                Style="{StaticResource DefaultComboBox}" />
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
+
 
                         <!--  Sms Kullanıcısı  -->
-                        <editors:SfComboBox
-                            DisplayMemberPath="Title"
-                            EnableAutoSize="True"
-                            ItemsSource="{Binding SmsUserList}"
-                            SelectedIndex="{Binding SmsUserSelectedIndex}"
-                            SelectedItem="{Binding SelectedSmsUser}"
-                            SelectedValuePath="Id"
-                            ShowBorder="False"
-                            Stroke="Transparent"
-                            Style="{StaticResource DefaultComboBox}" />
+                        <core:SfTextInputLayout
+                            HeightRequest="60"
+                            Hint="{x:Static resx:AppStrings.SmsUyeliks}"
+                            Style="{StaticResource DefaultInput}">
+
+                            <editors:SfComboBox
+                                DisplayMemberPath="Title"
+                                EnableAutoSize="True"
+                                ItemsSource="{Binding SmsUserList}"
+                                SelectedIndex="{Binding SmsUserSelectedIndex}"
+                                SelectedItem="{Binding SelectedSmsUser}"
+                                SelectedValuePath="Id"
+                                ShowBorder="False"
+                                Stroke="Transparent"
+                                Style="{StaticResource DefaultComboBox}" />
+
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
+
 
                         <!--  durum  -->
                         <core:SfTextInputLayout
@@ -138,13 +167,149 @@
 
                 </Frame>
 
+                <Label
+                    Grid.Row="2"
+                    Margin="16,0,0,0"
+                    Style="{StaticResource MenuLabel}"
+                    Text="Görev tipleri ve Sms Şablonları" />
+
+                <Frame
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource Gray400}"
+                    Grid.Row="3"
+                    Margin="16,24,16,16"
+                    Padding="8"
+                    VerticalOptions="Center" />
+
+                <Frame
+                    BackgroundColor="White"
+                    BorderColor="{StaticResource Gray400}"
+                    Grid.Row="3"
+                    Margin="16,24,16,16"
+                    Padding="8"
+                    VerticalOptions="Center">
+
+                    <VerticalStackLayout>
+
+                        <!--  Task Type  -->
+                        <core:SfTextInputLayout
+                            HeightRequest="60"
+                            Hint="{x:Static resx:AppStrings.GorevTipi}"
+                            Style="{StaticResource DefaultInput}">
+                            <editors:SfComboBox
+                                DisplayMemberPath="TaskTypeName"
+                                EnableAutoSize="True"
+                                ItemsSource="{Binding MessageTaskTypeList}"
+                                SelectedIndex="{Binding MessageTaskTypeSelectedIndex}"
+                                SelectedItem="{Binding SelectedMessageTaskType}"
+                                SelectedValuePath="TaskType"
+                                SelectionChanged="IsMessageTaskTypeComboBox_OnSelectionChanged"
+                                ShowBorder="True"
+                                Stroke="Transparent"
+                                Style="{StaticResource DefaultComboBox}" />
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
+
+                        <!--  task type description  -->
+                        <Label
+                            Margin="16,8,16,0"
+                            Style="{StaticResource InfoLabel}"
+                            Text="{Binding SelectedMessageTaskType.TaskTypeDescription}" />
+
+                        <!--  Task behaviour  -->
+                        <core:SfTextInputLayout
+                            HeightRequest="60"
+                            Hint="{x:Static resx:AppStrings.GorevDavranis}"
+                            Style="{StaticResource DefaultInput}">
+                            <editors:SfComboBox
+                                DisplayMemberPath="BehaviourName"
+                                EnableAutoSize="True"
+                                ItemsSource="{Binding MessageBehaviourList}"
+                                SelectedIndex="{Binding MessageBehaviourSelectedIndex}"
+                                SelectedItem="{Binding SelectedMessageBehaviour}"
+                                SelectedValuePath="Behaviour"
+                                ShowBorder="True"
+                                Stroke="Transparent"
+                                Style="{StaticResource DefaultComboBox}" />
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+                        </core:SfTextInputLayout>
+
+                        <!--  messagetask.name  -->
+                        <core:SfTextInputLayout
+                            ContainerType="Outlined"
+                            HasError="{Binding IsNameError}"
+                            Hint="Görev Adı"
+                            Style="{StaticResource DefaultInput}">
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+
+                            <Entry ReturnType="Next" Text="{Binding MessageTaskName}" />
+                        </core:SfTextInputLayout>
+
+                        <!--  Placeholder Buttons  -->
+                        <CollectionView HeightRequest="50" ItemsSource="{Binding PlaceholderButtons}">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout ItemSpacing="8" Orientation="Horizontal" />
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="vm:PlaceholderButtonModel">
+                                    <buttons:SfButton
+                                        Background="{StaticResource Primary}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=InsertPlaceholderCommand}"
+                                        CommandParameter="{Binding PlaceholderText}"
+                                        CornerRadius="20"
+                                        HeightRequest="40"
+                                        Text="{Binding DisplayText}"
+                                        TextColor="White" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <!--  messagetask.template  -->
+                        <core:SfTextInputLayout
+                            ContainerType="Outlined"
+                            HasError="{Binding IsNameError}"
+                            HeightRequest="200"
+                            Hint="Sms Şablonu"
+                            Padding="16"
+                            Style="{StaticResource DefaultInput}">
+
+                            <core:SfTextInputLayout.HintLabelStyle>
+                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                            </core:SfTextInputLayout.HintLabelStyle>
+
+                            <Editor
+                                AutoSize="TextChanges"
+                                HeightRequest="200"
+                                Text="{Binding MessageTaskTemplate}" />
+
+                        </core:SfTextInputLayout>
+
+                        <Grid ColumnDefinitions="7*, 3*">
+                            <buttons:SfButton
+                                Background="{StaticResource AddColor}"
+                                Grid.Column="1"
+                                Style="{StaticResource SaveButton}"
+                                Text="Ekle" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+
+
+                </Frame>
+
                 <!--  tamamla  -->
                 <buttons:SfButton
                     Command="{Binding CompleteCommand}"
-                    Grid.Row="1"
+                    Grid.Row="4"
                     Margin="16,0,16,0"
                     Style="{StaticResource SaveButton}"
-                    Text="{x:Static resx:AppStrings.Tamamla}"
+                    Text="{x:Static resx:AppStrings.DevamEt}"
                     TextColor="White" />
 
             </Grid>
@@ -152,4 +317,4 @@
 
     </ContentPage.Content>
 
-</services:ContentPageBase> 
+</services:ContentPageBase>

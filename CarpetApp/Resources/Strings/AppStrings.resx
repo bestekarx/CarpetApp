@@ -252,4 +252,16 @@
     <data name="SmsConfigurationAciklama" xml:space="preserve">
         <value>SMS Yapılandırması Açıklaması</value>
     </data>
+    <data name="DevamEt" xml:space="preserve">
+        <value>Devam Et</value>
+    </data>
+    <data name="GorevTipi" xml:space="preserve">
+        <value>Görev Tipi</value>
+    </data>
+    <data name="GorevDavranis" xml:space="preserve">
+        <value>Görev Davranışı</value>
+    </data>
+    <data name="ReceivedCreated" xml:space="preserve">
+        <value>Sipariş Oluşturunca</value>
+    </data>
 </root>

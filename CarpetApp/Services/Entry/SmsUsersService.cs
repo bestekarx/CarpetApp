@@ -17,7 +17,7 @@ public class SmsUsersService(IBaseApiService apiService) : ISmsUsersService
     var result = await apiService.AddSmsUser(model);
     return result != null;
   }
-  
+
   public async Task<bool> UpdateAsync(SmsUsersModel model)
   {
     var result = await apiService.UpdateSmsUser(model.Id, model);

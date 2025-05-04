@@ -119,7 +119,7 @@ public partial class SmsUserDetailViewModel(
     var result = DetailPageType == DetailPageType.Add
       ? await smsUserService.SaveAsync(SmsUserModel)
       : await smsUserService.UpdateAsync(SmsUserModel);
-    
+
     var message = result ? AppStrings.Basarili : AppStrings.Basarisiz;
     _ = dialogService.ShowToast(message);
 

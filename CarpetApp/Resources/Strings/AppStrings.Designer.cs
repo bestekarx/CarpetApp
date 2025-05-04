@@ -500,5 +500,29 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("SmsConfigurationAciklama", resourceCulture);
             }
         }
+        
+        internal static string DevamEt {
+            get {
+                return ResourceManager.GetString("DevamEt", resourceCulture);
+            }
+        }
+        
+        internal static string GorevTipi {
+            get {
+                return ResourceManager.GetString("GorevTipi", resourceCulture);
+            }
+        }
+        
+        internal static string GorevDavranis {
+            get {
+                return ResourceManager.GetString("GorevDavranis", resourceCulture);
+            }
+        }
+        
+        internal static string ReceivedCreated {
+            get {
+                return ResourceManager.GetString("ReceivedCreated", resourceCulture);
+            }
+        }
     }
 }

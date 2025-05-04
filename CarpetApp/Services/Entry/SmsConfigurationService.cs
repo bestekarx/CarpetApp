@@ -1,5 +1,4 @@
 using CarpetApp.Models;
-using CarpetApp.Models.API.Filter;
 using CarpetApp.Services.API.Interfaces;
 
 namespace CarpetApp.Services.Entry;

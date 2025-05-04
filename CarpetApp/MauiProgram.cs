@@ -125,7 +125,7 @@ public static class MauiProgram
       typeof(SmsTemplatesViewModel),
       typeof(SmsTemplateDetailViewModel),
       typeof(SmsConfigurationsViewModel),
-      typeof(SmsConfigurationDetailViewModel),
+      typeof(SmsConfigurationDetailViewModel)
     });
     return builder;
   }

@@ -11,4 +11,10 @@ public partial class SmsConfigurationDetailPage : ContentPageBase
     InitializeComponent();
     BindingContext = viewModel;
   }
-} 
+
+  private void IsMessageTaskTypeComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+  {
+    var viewModel = (SmsConfigurationDetailViewModel)BindingContext;
+    _ = viewModel.OnSelectedMessageTaskTypeChange(viewModel.SelectedMessageTaskType);
+  }
+}
