@@ -9,6 +9,10 @@ public partial class App
   {
     SyncfusionLicenseProvider.RegisterLicense(
       "MzUwMjc2MEAzMjM3MmUzMDJlMzBPNHNGMGpjcHJDVCs2ek5hb1pWQk9WVittNmdBTHZTcmxmbmtleGc1S1R3PQ==\n\n");
+    
+    // Uygulamayı her zaman light mode'da çalıştır
+    Application.Current.UserAppTheme = AppTheme.Light;
+    
     MainPage = splashScreenPage;
     InitializeComponent();
 

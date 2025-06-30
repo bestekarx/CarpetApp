@@ -32,6 +32,22 @@ Language Rules:
 - Keep Turkish translations clear and professional
 - Maintain consistency in terminology across the application
 
+Async/Await Best Practices Rules:
+- ALWAYS await every Task - never discard tasks with underscore (_ = Task.Run(...)) as this prevents exception handling
+- NEVER use .Wait() or .Result on tasks - these can cause deadlocks and thread pool starvation
+- Use async Task instead of async void for exception safety (except for event handlers)
+- Always provide and use CancellationToken parameters in async methods for proper cancellation support
+- Use ConfigureAwait(false) for library code and service layers that don't interact with UI
+- Keep default ConfigureAwait behavior only for UI component code that needs to update UI after awaiting
+- For constructor scenarios requiring async operations, use factory method pattern or SafeFireAndForget
+- Avoid using Task.Run for async I/O operations - use Task.Run only for CPU-bound work
+- If absolutely must block synchronously (rare), use GetAwaiter().GetResult() instead of .Wait()
+- Use IAsyncEnumerable<T> and await foreach for streaming scenarios where items should be processed as they arrive
+- Always handle exceptions properly in async methods - don't let them be swallowed
+- Keep async flow throughout the application - avoid mixing sync and async patterns
+- Use proper exception handling with try-catch blocks in async methods
+- Consider using AsyncAwaitBestPractices NuGet package for SafeFireAndForget when needed
+
 The goal is efficient, professional, production-quality development.
 
 --------------------------------------
@@ -65,6 +81,9 @@ The goal is efficient, professional, production-quality development.
 // cursor: syncfusion
 // Use appropriate Syncfusion controls for lists, forms, and interactions. Follow Syncfusion best practices from the official documentation. No new styling; follow project conventions.
 
+// cursor: async
+// Implement proper async/await patterns following best practices. Always await tasks, use ConfigureAwait appropriately, and handle exceptions properly.
+
 # .cursorrule
 # Bu dosya, Cursor AI ile proje geliştirme sürecinde kullanılacak kuralları ve yönergeleri içerir.
 # Gerektiğinde bu dosyayı güncelleyebilirsiniz.
@@ -84,6 +103,23 @@ clean_code = true
 
 # AI önerileri manuel olarak gözden geçirilmeli.
 ai_review = true
+
+# Async/Await kuralları
+[async_await]
+# Her Task'ı mutlaka await et - hiçbir zaman underscore ile discard etme (_ = Task.Run(...))
+# .Wait() veya .Result kullanma - deadlock ve thread pool starvation'a neden olabilir
+# async void yerine async Task kullan (event handler'lar hariç)
+# CancellationToken parametrelerini her zaman sağla ve kullan
+# UI ile etkileşim olmayan library ve service katmanlarında ConfigureAwait(false) kullan
+# UI component'lerinde sadece UI güncellemesi gereken yerlerde default ConfigureAwait davranışını koru
+# Constructor'da async operasyon gerekiyorsa factory method pattern veya SafeFireAndForget kullan
+# Async I/O operasyonları için Task.Run kullanma - sadece CPU-bound işler için kullan
+# Mutlaka senkron bloklama gerekiyorsa (nadir) .Wait() yerine GetAwaiter().GetResult() kullan
+# Streaming senaryoları için IAsyncEnumerable<T> ve await foreach kullan
+# Async method'larda exception handling'i düzgün yap - exception'ları yutma
+# Async flow'u uygulama boyunca koru - sync ve async pattern'leri karıştırma
+# Try-catch blokları ile proper exception handling yap
+# Gerektiğinde SafeFireAndForget için AsyncAwaitBestPractices NuGet package'ını kullan
 
 # CRUD sayfaları oluşturma kuralları
 [crud_pages]
