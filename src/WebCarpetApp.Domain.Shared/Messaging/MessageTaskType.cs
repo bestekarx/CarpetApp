@@ -10,4 +10,12 @@ public enum MessageTaskType
     InvoiceCreated = 30,
     InvoicePaid = 31
     // Yeni task'ler buraya eklenebilir
+    /*
+     * Sipariş oluşturunca
+       Sipariş alınca 
+       Evde yok sms gönderme 
+       Sipariş iptal sms 
+       Teslimat edince
+       Borç için iban gönderme
+     */
 } 

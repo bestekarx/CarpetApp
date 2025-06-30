@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebCarpetApp.Messaging.Dtos;
@@ -19,4 +20,6 @@ public class CreateUpdateMessageConfigurationDto
     public string Description { get; set; }
 
     public bool Active { get; set; }
+
+    public List<CreateUpdateMessageTaskDto> MessageTasks { get; set; }
 } 

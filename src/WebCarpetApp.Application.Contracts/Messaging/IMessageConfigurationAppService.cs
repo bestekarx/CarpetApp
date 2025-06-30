@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using WebCarpetApp.Messaging.Dtos;
@@ -13,4 +14,5 @@ public interface IMessageConfigurationAppService :
         PagedAndSortedResultRequestDto,
         CreateUpdateMessageConfigurationDto>
 {
+    Task<List<MessageTaskDto>> GetMessageTasksByConfigurationIdAsync(Guid configurationId);
 } 
