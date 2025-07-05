@@ -147,3 +147,31 @@ ai_review = true
 
 # Gerekirse ek kurallar buraya eklenebilir.
 
+# Popup kuralları
+[popup]
+# Yeni bir popup oluşturulacağı zaman:
+# 1. ProductFilterPage ve TaskEditPopup gibi BottomSheet tabanlı bir XAML ve code-behind dosyası oluştur.
+# 2. Her popup için bağımsız bir ViewModel oluştur.
+# 3. MauiProgram.cs ve AppShell.xaml.cs'ye view ve viewmodel referanslarını ekle.
+# 4. Consts.cs'ye route sabiti ekle.
+# 5. Açma/kapama işlemlerini ShowBottomSheetAsync ile yap.
+# 6. Tüm popup UI metinleri AppStrings üzerinden Türkçe ve profesyonel olmalı.
+# 7. Her popup reusable ve MVVM uyumlu olmalı.
+
+# Popup açma ve veri alışverişi kuralı
+[popup_opening]
+# Yeni bir popup (BottomSheet) açarken:
+# 1. new ile popup instance oluştur.
+# 2. Gerekirse Init() fonksiyonu ile parametre aktar.
+# 3. Veri dönüşü için event (ör. TaskSaved) kullan.
+# 4. await popup.ShowAsync() ile aç.
+# 5. Popup içinde veri dönerken event tetikle, kapatırken await DismissAsync() kullan.
+# Kod örneği:
+# var popup = new TaskEditPopup();
+# popup.Init(param); // opsiyonel
+# popup.TaskSaved += (s, data) => { ... };
+# await popup.ShowAsync();
+# // Popup içinde:
+# TaskSaved?.Invoke(this, data);
+# await DismissAsync();
+

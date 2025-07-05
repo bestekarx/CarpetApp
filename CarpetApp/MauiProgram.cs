@@ -125,7 +125,8 @@ public static class MauiProgram
       typeof(SmsTemplatesViewModel),
       typeof(SmsTemplateDetailViewModel),
       typeof(SmsConfigurationsViewModel),
-      typeof(SmsConfigurationDetailViewModel)
+      typeof(SmsConfigurationDetailViewModel),
+      typeof(TaskEditPopupViewModel)
     });
     return builder;
   }
@@ -153,7 +154,8 @@ public static class MauiProgram
       typeof(SmsTemplatesPage),
       typeof(SmsTemplateDetailPage),
       typeof(SmsConfigurationsPage),
-      typeof(SmsConfigurationDetailPage)
+      typeof(SmsConfigurationDetailPage),
+      typeof(TaskEditPopup)
     });
     return builder;
   }

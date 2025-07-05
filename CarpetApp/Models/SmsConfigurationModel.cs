@@ -6,4 +6,5 @@ public class SmsConfigurationModel : AuditedEntity
   public Guid MessageUserId { get; set; }
   public string Name { get; set; }
   public string Description { get; set; }
+  public List<MessageTaskModel> MessageTasks { get; set; } = new();
 }

@@ -57,5 +57,7 @@ public static class Consts
   public const string SmsConfigurationsPage = "SmsConfigurations";
   public const string SmsConfigurationDetail = "SmsConfigurationDetail";
 
+  public const string TaskEditPopup = nameof(TaskEditPopup);
+
   #endregion
 }

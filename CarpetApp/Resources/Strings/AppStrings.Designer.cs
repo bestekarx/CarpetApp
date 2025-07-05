@@ -524,5 +524,41 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("ReceivedCreated", resourceCulture);
             }
         }
+        
+        internal static string Gorevler {
+            get {
+                return ResourceManager.GetString("Gorevler", resourceCulture);
+            }
+        }
+        
+        internal static string EkliGorevler {
+            get {
+                return ResourceManager.GetString("EkliGorevler", resourceCulture);
+            }
+        }
+        
+        internal static string GorevAdi {
+            get {
+                return ResourceManager.GetString("GorevAdi", resourceCulture);
+            }
+        }
+        
+        internal static string SmsSablonu {
+            get {
+                return ResourceManager.GetString("SmsSablonu", resourceCulture);
+            }
+        }
+        
+        internal static string Kaydet {
+            get {
+                return ResourceManager.GetString("Kaydet", resourceCulture);
+            }
+        }
+        
+        internal static string Iptal {
+            get {
+                return ResourceManager.GetString("Iptal", resourceCulture);
+            }
+        }
     }
 }

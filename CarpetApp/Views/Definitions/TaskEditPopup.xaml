@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet
+  x:Class="CarpetApp.Views.Definitions.TaskEditPopup"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+  xmlns:core="http://schemas.syncfusion.com/maui"
+  xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:strings="clr-namespace:CarpetApp.Resources.Strings"
+  xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+  xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
+  x:DataType="vm:TaskEditPopupViewModel"
+  BackgroundColor="White"
+  HasBackdrop="True"
+  HasHandle="True">
+  <VerticalStackLayout Spacing="16" Padding="16">
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+      <buttons:SfButton
+        Grid.Column="0"
+        Text="{x:Static strings:AppStrings.Iptal}"
+        Clicked="OnCancelClicked"
+        Background="Transparent"
+        TextColor="{StaticResource ClearRed}" />
+      <buttons:SfButton
+        Grid.Column="1"
+        Text="{x:Static strings:AppStrings.Kaydet}"
+        Clicked="OnSaveClicked"
+        Background="{StaticResource Primary}"
+        TextColor="White" />
+    </Grid>
+    <core:SfTextInputLayout
+      HeightRequest="60"
+      Hint="{x:Static strings:AppStrings.GorevTipi}"
+      Style="{StaticResource DefaultInput}">
+      <editors:SfComboBox
+        DisplayMemberPath="TaskTypeName"
+        ItemsSource="{Binding MessageTaskTypeList}"
+        SelectedIndex="{Binding MessageTaskTypeSelectedIndex}"
+        SelectedItem="{Binding SelectedMessageTaskType}"
+        SelectedValuePath="TaskType"
+        Style="{StaticResource DefaultComboBox}" />
+      <core:SfTextInputLayout.HintLabelStyle>
+        <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+      </core:SfTextInputLayout.HintLabelStyle>
+    </core:SfTextInputLayout>
+    <core:SfTextInputLayout
+      HeightRequest="60"
+      Hint="{x:Static strings:AppStrings.GorevDavranis}"
+      Style="{StaticResource DefaultInput}">
+      <editors:SfComboBox
+        DisplayMemberPath="BehaviourName"
+        ItemsSource="{Binding MessageBehaviourList}"
+        SelectedIndex="{Binding MessageBehaviourSelectedIndex}"
+        SelectedItem="{Binding SelectedMessageBehaviour}"
+        SelectedValuePath="Behaviour"
+        Style="{StaticResource DefaultComboBox}" />
+      <core:SfTextInputLayout.HintLabelStyle>
+        <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+      </core:SfTextInputLayout.HintLabelStyle>
+    </core:SfTextInputLayout>
+    <core:SfTextInputLayout
+      ContainerType="Outlined"
+      Hint="{x:Static strings:AppStrings.GorevAdi}"
+      Style="{StaticResource DefaultInput}">
+      <Entry ReturnType="Next" Text="{Binding MessageTaskName}" />
+      <core:SfTextInputLayout.HintLabelStyle>
+        <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+      </core:SfTextInputLayout.HintLabelStyle>
+    </core:SfTextInputLayout>
+    <core:SfTextInputLayout
+      ContainerType="Outlined"
+      HeightRequest="120"
+      Hint="{x:Static strings:AppStrings.SmsSablonu}"
+      Style="{StaticResource DefaultInput}">
+      <Editor
+        AutoSize="TextChanges"
+        HeightRequest="120"
+        Text="{Binding MessageTaskTemplate}" />
+      <core:SfTextInputLayout.HintLabelStyle>
+        <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+      </core:SfTextInputLayout.HintLabelStyle>
+    </core:SfTextInputLayout>
+  </VerticalStackLayout>
+</the49:BottomSheet> 

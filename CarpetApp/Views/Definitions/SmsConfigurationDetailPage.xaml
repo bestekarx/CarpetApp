@@ -1,320 +1,284 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <services:ContentPageBase
-    BackgroundColor="{StaticResource MainBgColor}"
-    x:Class="CarpetApp.Views.Definitions.SmsConfigurationDetailPage"
-    x:DataType="vm:SmsConfigurationDetailViewModel"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-    xmlns:core="http://schemas.syncfusion.com/maui"
-    xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    xmlns:myEnum="clr-namespace:CarpetApp.Enums"
-    xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
-    xmlns:services="clr-namespace:CarpetApp.Services"
-    xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-    xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+  x:Class="CarpetApp.Views.Definitions.SmsConfigurationDetailPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+  xmlns:core="http://schemas.syncfusion.com/maui"
+  xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:models="clr-namespace:CarpetApp.Models"
+  xmlns:myEnum="clr-namespace:CarpetApp.Enums"
+  xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
+  xmlns:services="clr-namespace:CarpetApp.Services"
+  xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
+  x:DataType="vm:SmsConfigurationDetailViewModel"
+  BackgroundColor="{StaticResource MainBgColor}">
 
-    <Shell.TitleView>
-        <Label Style="{StaticResource NavBarTitleLabelStyle}">
-            <Label.Triggers>
-                <DataTrigger
+  <Shell.TitleView>
+    <Label Style="{StaticResource NavBarTitleLabelStyle}">
+      <Label.Triggers>
+        <DataTrigger
+          Binding="{Binding DetailPageType}"
+          TargetType="Label"
+          Value="{x:Static myEnum:DetailPageType.Add}">
+          <Setter Property="Text" Value="{x:Static resx:AppStrings.Sms}" />
+        </DataTrigger>
+        <DataTrigger
+          Binding="{Binding DetailPageType}"
+          TargetType="Label"
+          Value="{x:Static myEnum:DetailPageType.Edit}">
+          <Setter Property="Text" Value="{x:Static resx:AppStrings.SmsConfigurationDuzenle}" />
+        </DataTrigger>
+      </Label.Triggers>
+    </Label>
+  </Shell.TitleView>
+
+  <ContentPage.Content>
+    <Grid>
+      <ScrollView>
+        <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="0">
+
+          <Label
+            Grid.Row="0"
+            Margin="16,16,0,0"
+            FontAttributes="Bold"
+            Style="{StaticResource MenuLabel}"
+            Text="Mesaj Konfigurasyon" />
+
+          <Frame
+            Grid.Row="1"
+            Margin="16,24,16,16"
+            Padding="8"
+            BackgroundColor="White"
+            BorderColor="{StaticResource Gray400}"
+            VerticalOptions="Center">
+
+            <VerticalStackLayout>
+
+              <!--  name  -->
+              <core:SfTextInputLayout
+                ContainerType="Outlined"
+                HasError="{Binding IsNameError}"
+                Hint="{x:Static resx:AppStrings.SmsConfigurationAdi}"
+                Style="{StaticResource DefaultInput}">
+                <core:SfTextInputLayout.HintLabelStyle>
+                  <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                </core:SfTextInputLayout.HintLabelStyle>
+
+                <Entry ReturnType="Next" Text="{Binding Name}" />
+
+              </core:SfTextInputLayout>
+
+              <!--  description  -->
+              <core:SfTextInputLayout
+                ContainerType="Outlined"
+                Hint="{x:Static resx:AppStrings.SmsConfigurationAciklama}"
+                Style="{StaticResource DefaultInput}">
+                <core:SfTextInputLayout.HintLabelStyle>
+                  <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                </core:SfTextInputLayout.HintLabelStyle>
+
+                <Entry ReturnType="Next" Text="{Binding Description}" />
+
+              </core:SfTextInputLayout>
+
+              <!--  Firma  -->
+              <core:SfTextInputLayout
+                HeightRequest="60"
+                Hint="{x:Static resx:AppStrings.Firmalar}"
+                Style="{StaticResource DefaultInput}">
+
+
+                <editors:SfComboBox
+                  DisplayMemberPath="Name"
+                  EnableAutoSize="True"
+                  ItemsSource="{Binding CompanyList}"
+                  SelectedIndex="{Binding CompanySelectedIndex}"
+                  SelectedItem="{Binding SelectedCompany}"
+                  SelectedValuePath="Id"
+                  ShowBorder="True"
+                  Stroke="Transparent"
+                  Style="{StaticResource DefaultComboBox}" />
+                <core:SfTextInputLayout.HintLabelStyle>
+                  <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                </core:SfTextInputLayout.HintLabelStyle>
+              </core:SfTextInputLayout>
+
+
+              <!--  Sms Kullanıcısı  -->
+              <core:SfTextInputLayout
+                HeightRequest="60"
+                Hint="{x:Static resx:AppStrings.SmsUyeliks}"
+                Style="{StaticResource DefaultInput}">
+
+                <editors:SfComboBox
+                  DisplayMemberPath="Title"
+                  EnableAutoSize="True"
+                  ItemsSource="{Binding SmsUserList}"
+                  SelectedIndex="{Binding SmsUserSelectedIndex}"
+                  SelectedItem="{Binding SelectedSmsUser}"
+                  SelectedValuePath="Id"
+                  ShowBorder="False"
+                  Stroke="Transparent"
+                  Style="{StaticResource DefaultComboBox}" />
+
+                <core:SfTextInputLayout.HintLabelStyle>
+                  <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                </core:SfTextInputLayout.HintLabelStyle>
+              </core:SfTextInputLayout>
+
+
+              <!--  durum  -->
+              <core:SfTextInputLayout
+                HeightRequest="60"
+                Hint="{x:Static resx:AppStrings.Durum}"
+                Style="{StaticResource DefaultInput}">
+
+                <sfComboBox:SfComboBox
+                  DisplayMemberPath="Name"
+                  ItemsSource="{Binding StateList}"
+                  SelectedIndex="{Binding StateSelectedIndex}"
+                  SelectedItem="{Binding SelectedState}"
+                  SelectedValuePath="Value"
+                  Style="{StaticResource DefaultComboBox}" />
+
+                <core:SfTextInputLayout.Triggers>
+                  <DataTrigger
                     Binding="{Binding DetailPageType}"
-                    TargetType="Label"
+                    TargetType="core:SfTextInputLayout"
                     Value="{x:Static myEnum:DetailPageType.Add}">
-                    <Setter Property="Text" Value="{x:Static resx:AppStrings.Sms}" />
-                </DataTrigger>
-                <DataTrigger
+                    <Setter Property="IsVisible" Value="False" />
+                  </DataTrigger>
+                  <DataTrigger
                     Binding="{Binding DetailPageType}"
-                    TargetType="Label"
+                    TargetType="core:SfTextInputLayout"
                     Value="{x:Static myEnum:DetailPageType.Edit}">
-                    <Setter Property="Text" Value="{x:Static resx:AppStrings.SmsConfigurationDuzenle}" />
-                </DataTrigger>
-            </Label.Triggers>
-        </Label>
-    </Shell.TitleView>
+                    <Setter Property="IsVisible" Value="True" />
+                  </DataTrigger>
+                </core:SfTextInputLayout.Triggers>
 
-    <ContentPage.Content>
+                <core:SfTextInputLayout.HintLabelStyle>
+                  <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
+                </core:SfTextInputLayout.HintLabelStyle>
+              </core:SfTextInputLayout>
 
-        <ScrollView>
-            <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="0">
+            </VerticalStackLayout>
 
+          </Frame>
+
+          <!--  Görevler başlığı ve task listesi  -->
+          <Label
+            Grid.Row="2"
+            Margin="16,0,0,0"
+            Style="{StaticResource MenuLabel}"
+            Text="{x:Static resx:AppStrings.Gorevler}" />
+
+          <Frame
+            Grid.Row="3"
+            Margin="16,8,16,16"
+            Padding="8"
+            BackgroundColor="White"
+            BorderColor="{StaticResource Gray400}"
+            VerticalOptions="Center">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <!--  Görevler başlık ve + butonu  -->
+              <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
                 <Label
-                    FontAttributes="Bold"
-                    Grid.Row="0"
-                    Margin="16,16,0,0"
-                    Style="{StaticResource MenuLabel}"
-                    Text="Mesaj Konfigurasyon" />
-
-                <Frame
-                    BackgroundColor="White"
-                    BorderColor="{StaticResource Gray400}"
-                    Grid.Row="1"
-                    Margin="16,24,16,16"
-                    Padding="8"
-                    VerticalOptions="Center">
-
-                    <VerticalStackLayout>
-
-                        <!--  name  -->
-                        <core:SfTextInputLayout
-                            ContainerType="Outlined"
-                            HasError="{Binding IsNameError}"
-                            Hint="{x:Static resx:AppStrings.SmsConfigurationAdi}"
-                            Style="{StaticResource DefaultInput}">
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-
-                            <Entry ReturnType="Next" Text="{Binding Name}" />
-
-                        </core:SfTextInputLayout>
-
-                        <!--  description  -->
-                        <core:SfTextInputLayout
-                            ContainerType="Outlined"
-                            Hint="{x:Static resx:AppStrings.SmsConfigurationAciklama}"
-                            Style="{StaticResource DefaultInput}">
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-
-                            <Entry ReturnType="Next" Text="{Binding Description}" />
-
-                        </core:SfTextInputLayout>
-
-                        <!--  Firma  -->
-                        <core:SfTextInputLayout
-                            HeightRequest="60"
-                            Hint="{x:Static resx:AppStrings.Firmalar}"
-                            Style="{StaticResource DefaultInput}">
-
-
-                            <editors:SfComboBox
-                                DisplayMemberPath="Name"
-                                EnableAutoSize="True"
-                                ItemsSource="{Binding CompanyList}"
-                                SelectedIndex="{Binding CompanySelectedIndex}"
-                                SelectedItem="{Binding SelectedCompany}"
-                                SelectedValuePath="Id"
-                                ShowBorder="True"
-                                Stroke="Transparent"
-                                Style="{StaticResource DefaultComboBox}" />
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-                        </core:SfTextInputLayout>
-
-
-                        <!--  Sms Kullanıcısı  -->
-                        <core:SfTextInputLayout
-                            HeightRequest="60"
-                            Hint="{x:Static resx:AppStrings.SmsUyeliks}"
-                            Style="{StaticResource DefaultInput}">
-
-                            <editors:SfComboBox
-                                DisplayMemberPath="Title"
-                                EnableAutoSize="True"
-                                ItemsSource="{Binding SmsUserList}"
-                                SelectedIndex="{Binding SmsUserSelectedIndex}"
-                                SelectedItem="{Binding SelectedSmsUser}"
-                                SelectedValuePath="Id"
-                                ShowBorder="False"
-                                Stroke="Transparent"
-                                Style="{StaticResource DefaultComboBox}" />
-
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-                        </core:SfTextInputLayout>
-
-
-                        <!--  durum  -->
-                        <core:SfTextInputLayout
-                            HeightRequest="60"
-                            Hint="{x:Static resx:AppStrings.Durum}"
-                            Style="{StaticResource DefaultInput}">
-
-                            <sfComboBox:SfComboBox
-                                DisplayMemberPath="Name"
-                                ItemsSource="{Binding StateList}"
-                                SelectedIndex="{Binding StateSelectedIndex}"
-                                SelectedItem="{Binding SelectedState}"
-                                SelectedValuePath="Value"
-                                Style="{StaticResource DefaultComboBox}" />
-
-                            <core:SfTextInputLayout.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding DetailPageType}"
-                                    TargetType="core:SfTextInputLayout"
-                                    Value="{x:Static myEnum:DetailPageType.Add}">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger
-                                    Binding="{Binding DetailPageType}"
-                                    TargetType="core:SfTextInputLayout"
-                                    Value="{x:Static myEnum:DetailPageType.Edit}">
-                                    <Setter Property="IsVisible" Value="True" />
-                                </DataTrigger>
-                            </core:SfTextInputLayout.Triggers>
-
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-                        </core:SfTextInputLayout>
-
-                    </VerticalStackLayout>
-
-                </Frame>
-
-                <Label
-                    Grid.Row="2"
-                    Margin="16,0,0,0"
-                    Style="{StaticResource MenuLabel}"
-                    Text="Görev tipleri ve Sms Şablonları" />
-
-                <Frame
-                    BackgroundColor="White"
-                    BorderColor="{StaticResource Gray400}"
-                    Grid.Row="3"
-                    Margin="16,24,16,16"
-                    Padding="8"
-                    VerticalOptions="Center" />
-
-                <Frame
-                    BackgroundColor="White"
-                    BorderColor="{StaticResource Gray400}"
-                    Grid.Row="3"
-                    Margin="16,24,16,16"
-                    Padding="8"
-                    VerticalOptions="Center">
-
-                    <VerticalStackLayout>
-
-                        <!--  Task Type  -->
-                        <core:SfTextInputLayout
-                            HeightRequest="60"
-                            Hint="{x:Static resx:AppStrings.GorevTipi}"
-                            Style="{StaticResource DefaultInput}">
-                            <editors:SfComboBox
-                                DisplayMemberPath="TaskTypeName"
-                                EnableAutoSize="True"
-                                ItemsSource="{Binding MessageTaskTypeList}"
-                                SelectedIndex="{Binding MessageTaskTypeSelectedIndex}"
-                                SelectedItem="{Binding SelectedMessageTaskType}"
-                                SelectedValuePath="TaskType"
-                                SelectionChanged="IsMessageTaskTypeComboBox_OnSelectionChanged"
-                                ShowBorder="True"
-                                Stroke="Transparent"
-                                Style="{StaticResource DefaultComboBox}" />
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-                        </core:SfTextInputLayout>
-
-                        <!--  task type description  -->
-                        <Label
-                            Margin="16,8,16,0"
-                            Style="{StaticResource InfoLabel}"
-                            Text="{Binding SelectedMessageTaskType.TaskTypeDescription}" />
-
-                        <!--  Task behaviour  -->
-                        <core:SfTextInputLayout
-                            HeightRequest="60"
-                            Hint="{x:Static resx:AppStrings.GorevDavranis}"
-                            Style="{StaticResource DefaultInput}">
-                            <editors:SfComboBox
-                                DisplayMemberPath="BehaviourName"
-                                EnableAutoSize="True"
-                                ItemsSource="{Binding MessageBehaviourList}"
-                                SelectedIndex="{Binding MessageBehaviourSelectedIndex}"
-                                SelectedItem="{Binding SelectedMessageBehaviour}"
-                                SelectedValuePath="Behaviour"
-                                ShowBorder="True"
-                                Stroke="Transparent"
-                                Style="{StaticResource DefaultComboBox}" />
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-                        </core:SfTextInputLayout>
-
-                        <!--  messagetask.name  -->
-                        <core:SfTextInputLayout
-                            ContainerType="Outlined"
-                            HasError="{Binding IsNameError}"
-                            Hint="Görev Adı"
-                            Style="{StaticResource DefaultInput}">
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-
-                            <Entry ReturnType="Next" Text="{Binding MessageTaskName}" />
-                        </core:SfTextInputLayout>
-
-                        <!--  Placeholder Buttons  -->
-                        <CollectionView HeightRequest="50" ItemsSource="{Binding PlaceholderButtons}">
-                            <CollectionView.ItemsLayout>
-                                <LinearItemsLayout ItemSpacing="8" Orientation="Horizontal" />
-                            </CollectionView.ItemsLayout>
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="vm:PlaceholderButtonModel">
-                                    <buttons:SfButton
-                                        Background="{StaticResource Primary}"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=InsertPlaceholderCommand}"
-                                        CommandParameter="{Binding PlaceholderText}"
-                                        CornerRadius="20"
-                                        HeightRequest="40"
-                                        Text="{Binding DisplayText}"
-                                        TextColor="White" />
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-
-                        <!--  messagetask.template  -->
-                        <core:SfTextInputLayout
-                            ContainerType="Outlined"
-                            HasError="{Binding IsNameError}"
-                            HeightRequest="200"
-                            Hint="Sms Şablonu"
-                            Padding="16"
-                            Style="{StaticResource DefaultInput}">
-
-                            <core:SfTextInputLayout.HintLabelStyle>
-                                <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
-                            </core:SfTextInputLayout.HintLabelStyle>
-
-                            <Editor
-                                AutoSize="TextChanges"
-                                HeightRequest="200"
-                                Text="{Binding MessageTaskTemplate}" />
-
-                        </core:SfTextInputLayout>
-
-                        <Grid ColumnDefinitions="7*, 3*">
-                            <buttons:SfButton
-                                Background="{StaticResource AddColor}"
-                                Grid.Column="1"
-                                Style="{StaticResource SaveButton}"
-                                Text="Ekle" />
-                        </Grid>
-
-                    </VerticalStackLayout>
-
-
-                </Frame>
-
-                <!--  tamamla  -->
+                  Style="{StaticResource HomePageTitle}"
+                  Text="{x:Static resx:AppStrings.EkliGorevler}"
+                  VerticalOptions="Center" />
                 <buttons:SfButton
-                    Command="{Binding CompleteCommand}"
-                    Grid.Row="4"
-                    Margin="16,0,16,0"
-                    Style="{StaticResource SaveButton}"
-                    Text="{x:Static resx:AppStrings.DevamEt}"
-                    TextColor="White" />
-
+                  Grid.Column="1"
+                  Command="{Binding AddTaskCommand}"
+                  CornerRadius="18"
+                  HeightRequest="36"
+                  Style="{StaticResource CircleAddButton}"
+                  WidthRequest="36" />
+              </Grid>
+              <!--  Task Listesi  -->
+              <CollectionView
+                Grid.Row="1"
+                Margin="0,8,0,0"
+                EmptyView="{x:Static resx:AppStrings.VeriBulunamadi}"
+                ItemsSource="{Binding MessageTaskList}">
+                <CollectionView.ItemTemplate>
+                  <DataTemplate x:DataType="models:MessageTaskModel">
+                    <Frame
+                      Margin="0,4"
+                      Padding="8"
+                      BorderColor="{StaticResource Gray200}">
+                      <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto">
+                        <Label
+                          Grid.Row="0"
+                          Grid.Column="0"
+                          FontAttributes="Bold"
+                          Text="{Binding TaskTypeName}" />
+                        <Label
+                          Grid.Row="0"
+                          Grid.Column="1"
+                          Margin="8,0,0,0"
+                          Text="{Binding BehaviourName}" />
+                        <Label
+                          Grid.Row="0"
+                          Grid.Column="2"
+                          Margin="8,0,0,0"
+                          Text="{Binding Name}" />
+                        <Label
+                          Grid.Row="1"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          FontSize="12"
+                          Text="{Binding MessageTemplateShort}"
+                          TextColor="Gray" />
+                        <StackLayout
+                          Grid.Row="1"
+                          Grid.Column="2"
+                          Orientation="Horizontal"
+                          Spacing="8">
+                          <Image
+                            HeightRequest="24"
+                            Source="edit"
+                            WidthRequest="24">
+                            <Image.GestureRecognizers>
+                              <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=EditTaskCommand}" CommandParameter="{Binding .}" />
+                            </Image.GestureRecognizers>
+                          </Image>
+                          <Image
+                            HeightRequest="24"
+                            Source="delete"
+                            WidthRequest="24">
+                            <Image.GestureRecognizers>
+                              <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=DeleteTaskCommand}" CommandParameter="{Binding .}" />
+                            </Image.GestureRecognizers>
+                          </Image>
+                        </StackLayout>
+                      </Grid>
+                    </Frame>
+                  </DataTemplate>
+                </CollectionView.ItemTemplate>
+              </CollectionView>
             </Grid>
-        </ScrollView>
+          </Frame>
 
-    </ContentPage.Content>
+          <!--  Kaydet Butonu  -->
+          <buttons:SfButton
+            Grid.Row="4"
+            Margin="16,0,16,0"
+            Command="{Binding CompleteCommand}"
+            Style="{StaticResource SaveButton}"
+            Text="{x:Static resx:AppStrings.Kaydet}"
+            TextColor="White" />
+
+        </Grid>
+      </ScrollView>
+    </Grid>
+  </ContentPage.Content>
 
 </services:ContentPageBase>

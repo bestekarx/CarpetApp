@@ -264,4 +264,22 @@
     <data name="ReceivedCreated" xml:space="preserve">
         <value>Sipariş Oluşturunca</value>
     </data>
+    <data name="Gorevler" xml:space="preserve">
+        <value>Görevler</value>
+    </data>
+    <data name="EkliGorevler" xml:space="preserve">
+        <value>Ekli Görevler</value>
+    </data>
+    <data name="GorevAdi" xml:space="preserve">
+        <value>Görev Adı</value>
+    </data>
+    <data name="SmsSablonu" xml:space="preserve">
+        <value>Sms Şablonu</value>
+    </data>
+    <data name="Kaydet" xml:space="preserve">
+        <value>Kaydet</value>
+    </data>
+    <data name="Iptal" xml:space="preserve">
+        <value>İptal</value>
+    </data>
 </root>
