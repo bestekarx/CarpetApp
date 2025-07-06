@@ -560,5 +560,215 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("Iptal", resourceCulture);
             }
         }
+        
+        internal static string ReceivedCreatedDescription {
+            get {
+                return ResourceManager.GetString("ReceivedCreatedDescription", resourceCulture);
+            }
+        }
+        
+        internal static string ReceivedCancelledDescription {
+            get {
+                return ResourceManager.GetString("ReceivedCancelledDescription", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCreatedDescription {
+            get {
+                return ResourceManager.GetString("OrderCreatedDescription", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCompletedDescription {
+            get {
+                return ResourceManager.GetString("OrderCompletedDescription", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCancelledDescription {
+            get {
+                return ResourceManager.GetString("OrderCancelledDescription", resourceCulture);
+            }
+        }
+        
+        internal static string InvoiceCreatedDescription {
+            get {
+                return ResourceManager.GetString("InvoiceCreatedDescription", resourceCulture);
+            }
+        }
+        
+        internal static string InvoicePaidDescription {
+            get {
+                return ResourceManager.GetString("InvoicePaidDescription", resourceCulture);
+            }
+        }
+        
+        internal static string ReceivedCreatedSample {
+            get {
+                return ResourceManager.GetString("ReceivedCreatedSample", resourceCulture);
+            }
+        }
+        
+        internal static string ReceivedCancelledSample {
+            get {
+                return ResourceManager.GetString("ReceivedCancelledSample", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCreatedSample {
+            get {
+                return ResourceManager.GetString("OrderCreatedSample", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCompletedSample {
+            get {
+                return ResourceManager.GetString("OrderCompletedSample", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCancelledSample {
+            get {
+                return ResourceManager.GetString("OrderCancelledSample", resourceCulture);
+            }
+        }
+        
+        internal static string InvoiceCreatedSample {
+            get {
+                return ResourceManager.GetString("InvoiceCreatedSample", resourceCulture);
+            }
+        }
+        
+        internal static string InvoicePaidSample {
+            get {
+                return ResourceManager.GetString("InvoicePaidSample", resourceCulture);
+            }
+        }
+        
+        internal static string GorevTipiSeciniz {
+            get {
+                return ResourceManager.GetString("GorevTipiSeciniz", resourceCulture);
+            }
+        }
+        
+        internal static string GorevDavranisSeciniz {
+            get {
+                return ResourceManager.GetString("GorevDavranisSeciniz", resourceCulture);
+            }
+        }
+        
+        internal static string SablonBosOlamaz {
+            get {
+                return ResourceManager.GetString("SablonBosOlamaz", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCreated {
+            get {
+                return ResourceManager.GetString("OrderCreated", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCompleted {
+            get {
+                return ResourceManager.GetString("OrderCompleted", resourceCulture);
+            }
+        }
+        
+        internal static string OrderCancelled {
+            get {
+                return ResourceManager.GetString("OrderCancelled", resourceCulture);
+            }
+        }
+        
+        internal static string InvoiceCreated {
+            get {
+                return ResourceManager.GetString("InvoiceCreated", resourceCulture);
+            }
+        }
+        
+        internal static string InvoicePaid {
+            get {
+                return ResourceManager.GetString("InvoicePaid", resourceCulture);
+            }
+        }
+        
+        internal static string ReceivedCancelled {
+            get {
+                return ResourceManager.GetString("ReceivedCancelled", resourceCulture);
+            }
+        }
+        
+        internal static string TagIsim {
+            get {
+                return ResourceManager.GetString("TagIsim", resourceCulture);
+            }
+        }
+        
+        internal static string TagTarih {
+            get {
+                return ResourceManager.GetString("TagTarih", resourceCulture);
+            }
+        }
+        
+        internal static string TagFirmaAdi {
+            get {
+                return ResourceManager.GetString("TagFirmaAdi", resourceCulture);
+            }
+        }
+        
+        internal static string TagFirmaTelefonu {
+            get {
+                return ResourceManager.GetString("TagFirmaTelefonu", resourceCulture);
+            }
+        }
+        
+        internal static string TagIptalNedeni {
+            get {
+                return ResourceManager.GetString("TagIptalNedeni", resourceCulture);
+            }
+        }
+        
+        internal static string TagSiparisNo {
+            get {
+                return ResourceManager.GetString("TagSiparisNo", resourceCulture);
+            }
+        }
+        
+        internal static string TagAdet {
+            get {
+                return ResourceManager.GetString("TagAdet", resourceCulture);
+            }
+        }
+        
+        internal static string TagTutar {
+            get {
+                return ResourceManager.GetString("TagTutar", resourceCulture);
+            }
+        }
+        
+        internal static string TagFaturaNo {
+            get {
+                return ResourceManager.GetString("TagFaturaNo", resourceCulture);
+            }
+        }
+        
+        internal static string BehaviourAlwaysSend {
+            get {
+                return ResourceManager.GetString("BehaviourAlwaysSend", resourceCulture);
+            }
+        }
+        
+        internal static string BehaviourAskBeforeSend {
+            get {
+                return ResourceManager.GetString("BehaviourAskBeforeSend", resourceCulture);
+            }
+        }
+        
+        internal static string BehaviourNeverSend {
+            get {
+                return ResourceManager.GetString("BehaviourNeverSend", resourceCulture);
+            }
+        }
     }
 }

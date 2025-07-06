@@ -2,6 +2,7 @@ using CarpetApp.Models;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Models.API.Response;
+using CarpetApp.Models.MessageTaskModels;
 using CarpetApp.Models.Products;
 using Refit;
 

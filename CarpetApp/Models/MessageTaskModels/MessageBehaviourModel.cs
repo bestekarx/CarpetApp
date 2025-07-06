@@ -1,6 +1,6 @@
 using CarpetApp.Enums;
 
-namespace CarpetApp.Models;
+namespace CarpetApp.Models.MessageTaskModels;
 
 public class MessageBehaviourModel
 {

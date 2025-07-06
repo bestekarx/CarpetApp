@@ -1,7 +1,6 @@
 using CarpetApp.Enums;
 
-namespace CarpetApp.Models;
-
+namespace CarpetApp.Models.MessageTaskModels;
 public class MessageTaskTypeModel
 {
   public MessageTaskType TaskType { get; set; }

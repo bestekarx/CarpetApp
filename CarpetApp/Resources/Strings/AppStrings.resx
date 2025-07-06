@@ -262,7 +262,7 @@
         <value>Görev Davranışı</value>
     </data>
     <data name="ReceivedCreated" xml:space="preserve">
-        <value>Sipariş Oluşturunca</value>
+        <value>Alınacaklar görevi oluşturunca</value>
     </data>
     <data name="Gorevler" xml:space="preserve">
         <value>Görevler</value>
@@ -281,5 +281,110 @@
     </data>
     <data name="Iptal" xml:space="preserve">
         <value>İptal</value>
+    </data>
+    <data name="ReceivedCreatedDescription" xml:space="preserve">
+        <value>Alınacaklar listesine bir görev eklenince kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="ReceivedCancelledDescription" xml:space="preserve">
+        <value>Alınacaklar listesine eklenmiş olan görev iptal edilince kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="OrderCreatedDescription" xml:space="preserve">
+        <value>Sipariş oluşturunca, alınacaklar listesinde ki bir göreve ürün ekleyince kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="OrderCompletedDescription" xml:space="preserve">
+        <value>Sipariş tamamlanınca, görev teslim edilecekler listesine eklenince kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="OrderCancelledDescription" xml:space="preserve">
+        <value>Sipariş iptal edilip, görevi tekrar alınacaklar listesine çekince kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="InvoiceCreatedDescription" xml:space="preserve">
+        <value>Fatura oluşturulunca, görev teslim edilecekler listesine eklenince kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="InvoicePaidDescription" xml:space="preserve">
+        <value>Fatura ödendiğinde, görev tamamlanıp halıları teslim ettiğimizde kullanıcıya SMS gönderir.</value>
+    </data>
+    <data name="ReceivedCreatedSample" xml:space="preserve">
+        <value>Sayın {isim}, kaydınız {tarih} tarihinde alınmıştır. {companyName} {companyPhone}</value>
+    </data>
+    <data name="ReceivedCancelledSample" xml:space="preserve">
+        <value>Sayın {isim}, kaydınız iptal edilmiştir. İptal Nedeni: {iptalNedeni} - {companyName}</value>
+    </data>
+    <data name="OrderCreatedSample" xml:space="preserve">
+        <value>Sayın {isim}, {siparisNo} numaralı siparişiniz alınmıştır. {companyName} {companyPhone}</value>
+    </data>
+    <data name="OrderCompletedSample" xml:space="preserve">
+        <value>Sayın {isim}, {siparisNo} numaralı {siparisAdet} adet halınızın fiyatı {tutar} TL'dir. Gün içinde teslim edilecektir. {companyName}</value>
+    </data>
+    <data name="OrderCancelledSample" xml:space="preserve">
+        <value>Sayın {isim}, {siparisNo} numaralı siparişiniz iptal edilmiştir. İptal Nedeni: {iptalNedeni} - {companyName}</value>
+    </data>
+    <data name="InvoiceCreatedSample" xml:space="preserve">
+        <value>{faturaNo} numaralı faturanız oluşturulmuştur. Tutar: {tutar} TL. {companyName}</value>
+    </data>
+    <data name="InvoicePaidSample" xml:space="preserve">
+        <value>{faturaNo} numaralı faturanız ödenmiştir. Teşekkürler. {companyName}</value>
+    </data>
+    <data name="GorevTipiSeciniz" xml:space="preserve">
+        <value>Lütfen görev tipi seçiniz.</value>
+    </data>
+    <data name="GorevDavranisSeciniz" xml:space="preserve">
+        <value>Lütfen görev davranışı seçiniz.</value>
+    </data>
+    <data name="SablonBosOlamaz" xml:space="preserve">
+        <value>SMS şablonu boş olamaz.</value>
+    </data>
+    <data name="OrderCreated" xml:space="preserve">
+        <value>Sipariş Oluşturuldu</value>
+    </data>
+    <data name="OrderCompleted" xml:space="preserve">
+        <value>Sipariş Tamamlandı</value>
+    </data>
+    <data name="OrderCancelled" xml:space="preserve">
+        <value>Sipariş İptal Edildi</value>
+    </data>
+    <data name="InvoiceCreated" xml:space="preserve">
+        <value>Fatura Oluşturuldu</value>
+    </data>
+    <data name="InvoicePaid" xml:space="preserve">
+        <value>Fatura Ödendi</value>
+    </data>
+    <data name="ReceivedCancelled" xml:space="preserve">
+        <value>Alınacaklar görevi iptal edildi</value>
+    </data>
+    <data name="TagIsim" xml:space="preserve">
+        <value>İsim</value>
+    </data>
+    <data name="TagTarih" xml:space="preserve">
+        <value>Tarih</value>
+    </data>
+    <data name="TagFirmaAdi" xml:space="preserve">
+        <value>Firma Adı</value>
+    </data>
+    <data name="TagFirmaTelefonu" xml:space="preserve">
+        <value>Firma Telefonu</value>
+    </data>
+    <data name="TagIptalNedeni" xml:space="preserve">
+        <value>İptal Nedeni</value>
+    </data>
+    <data name="TagSiparisNo" xml:space="preserve">
+        <value>Sipariş No</value>
+    </data>
+    <data name="TagAdet" xml:space="preserve">
+        <value>Adet</value>
+    </data>
+    <data name="TagTutar" xml:space="preserve">
+        <value>Tutar</value>
+    </data>
+    <data name="TagFaturaNo" xml:space="preserve">
+        <value>Fatura No</value>
+    </data>
+    <data name="BehaviourAlwaysSend" xml:space="preserve">
+        <value>Her zaman gönder</value>
+    </data>
+    <data name="BehaviourAskBeforeSend" xml:space="preserve">
+        <value>Göndermeden önce sor</value>
+    </data>
+    <data name="BehaviourNeverSend" xml:space="preserve">
+        <value>Asla gönderme</value>
     </data>
 </root>

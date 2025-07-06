@@ -7,12 +7,11 @@
   xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
   xmlns:core="http://schemas.syncfusion.com/maui"
   xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-  xmlns:models="clr-namespace:CarpetApp.Models"
+  xmlns:messageTaskModels="clr-namespace:CarpetApp.Models.MessageTaskModels"
   xmlns:myEnum="clr-namespace:CarpetApp.Enums"
   xmlns:resx="clr-namespace:CarpetApp.Resources.Strings"
   xmlns:services="clr-namespace:CarpetApp.Services"
   xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
-  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
   xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
   x:DataType="vm:SmsConfigurationDetailViewModel"
   BackgroundColor="{StaticResource MainBgColor}">
@@ -170,11 +169,27 @@
           </Frame>
 
           <!--  Görevler başlığı ve task listesi  -->
-          <Label
-            Grid.Row="2"
-            Margin="16,0,0,0"
-            Style="{StaticResource MenuLabel}"
-            Text="{x:Static resx:AppStrings.Gorevler}" />
+
+          <Grid Grid.Row="2" ColumnDefinitions="*, Auto">
+
+            <Label
+              Grid.Column="0"
+              Margin="16,0,0,0"
+              Style="{StaticResource MenuLabel}"
+              Text="{x:Static resx:AppStrings.Gorevler}" />
+
+            <buttons:SfButton
+              Grid.Column="1"
+              Margin="0,0,32,0"
+              Command="{Binding OpenTaskEditPopupPageCommand}"
+              CornerRadius="18"
+              HeightRequest="36"
+              HorizontalOptions="End"
+              HorizontalTextAlignment="End"
+              Style="{StaticResource CircleAddButton}"
+              WidthRequest="36" />
+
+          </Grid>
 
           <Frame
             Grid.Row="3"
@@ -188,20 +203,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
-              <!--  Görevler başlık ve + butonu  -->
-              <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                <Label
-                  Style="{StaticResource HomePageTitle}"
-                  Text="{x:Static resx:AppStrings.EkliGorevler}"
-                  VerticalOptions="Center" />
-                <buttons:SfButton
-                  Grid.Column="1"
-                  Command="{Binding AddTaskCommand}"
-                  CornerRadius="18"
-                  HeightRequest="36"
-                  Style="{StaticResource CircleAddButton}"
-                  WidthRequest="36" />
-              </Grid>
+
               <!--  Task Listesi  -->
               <CollectionView
                 Grid.Row="1"
@@ -209,7 +211,7 @@
                 EmptyView="{x:Static resx:AppStrings.VeriBulunamadi}"
                 ItemsSource="{Binding MessageTaskList}">
                 <CollectionView.ItemTemplate>
-                  <DataTemplate x:DataType="models:MessageTaskModel">
+                  <DataTemplate x:DataType="messageTaskModels:MessageTaskModel">
                     <Frame
                       Margin="0,4"
                       Padding="8"
@@ -247,17 +249,20 @@
                             Source="edit"
                             WidthRequest="24">
                             <Image.GestureRecognizers>
-                              <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=EditTaskCommand}" CommandParameter="{Binding .}" />
+                              <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=OpenTaskEditPopupPageCommand}" CommandParameter="{Binding .}" />
                             </Image.GestureRecognizers>
                           </Image>
+
                           <Image
+                            BackgroundColor="Red"
                             HeightRequest="24"
-                            Source="delete"
+                            Source="white_delete"
                             WidthRequest="24">
                             <Image.GestureRecognizers>
                               <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SmsConfigurationDetailViewModel}}, Path=DeleteTaskCommand}" CommandParameter="{Binding .}" />
                             </Image.GestureRecognizers>
                           </Image>
+
                         </StackLayout>
                       </Grid>
                     </Frame>

@@ -1,12 +1,14 @@
+using System.Globalization;
 using The49.Maui.BottomSheet;
 using CarpetApp.ViewModels.Definitions;
 using CarpetApp.Models;
+using CarpetApp.Models.MessageTaskModels;
 
 namespace CarpetApp.Views.Definitions;
 
-public partial class TaskEditPopup : BottomSheet
+public partial class TaskEditPopup
 {
-    public event EventHandler<MessageTaskModel> TaskSaved;
+    public event EventHandler<TaskEditParameterModel> TaskSaved;
 
     public TaskEditPopup()
     {
@@ -17,8 +19,9 @@ public partial class TaskEditPopup : BottomSheet
     {
         if (BindingContext is TaskEditPopupViewModel vm)
         {
-            if (vm.SelectedMessageTaskType == null || vm.SelectedMessageBehaviour == null || string.IsNullOrWhiteSpace(vm.MessageTaskName))
+            if (!vm.Validate())
                 return;
+            
             var task = new MessageTaskModel
             {
                 TaskType = vm.SelectedMessageTaskType.TaskType,
@@ -26,9 +29,23 @@ public partial class TaskEditPopup : BottomSheet
                 Behaviour = vm.SelectedMessageBehaviour.Behaviour,
                 BehaviourName = vm.SelectedMessageBehaviour.BehaviourName,
                 Name = vm.MessageTaskName,
-                Template = vm.MessageTaskTemplate
+                Template = vm.MessageTaskTemplate,
             };
-            TaskSaved?.Invoke(this, task);
+            
+            var template = new MessageTemplate
+            {
+                TaskType = vm.SelectedMessageTaskType.TaskType,
+                Name = vm.MessageTaskName,
+                Template = vm.MessageTaskTemplate,
+                CultureCode = CultureInfo.DefaultThreadCurrentUICulture?.Name,
+            };
+            
+            var requestJoinModel = new TaskEditParameterModel()
+            {
+                Template = template,
+                Task = task
+            };
+            TaskSaved?.Invoke(this, requestJoinModel);
             await DismissAsync();
         }
     }

@@ -1,4 +1,5 @@
 using CarpetApp.Models;
+using CarpetApp.Models.MessageTaskModels;
 using CarpetApp.Services.API.Interfaces;
 
 namespace CarpetApp.Services.Entry;

@@ -4,29 +4,57 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+  xmlns:conv="clr-namespace:CarpetApp.CustomConverters"
   xmlns:core="http://schemas.syncfusion.com/maui"
   xmlns:editors="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:sfListView="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
   xmlns:strings="clr-namespace:CarpetApp.Resources.Strings"
   xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
-  xmlns:vm="clr-namespace:CarpetApp.ViewModels.Definitions"
-  x:DataType="vm:TaskEditPopupViewModel"
+  x:Name="RootPopup"
   BackgroundColor="White"
   HasBackdrop="True"
   HasHandle="True">
-  <VerticalStackLayout Spacing="16" Padding="16">
+
+  <the49:BottomSheet.Resources>
+    <conv:StringNotNullOrEmptyToBoolConverter x:Key="StringNotNullOrEmptyToBoolConverter" />
+  </the49:BottomSheet.Resources>
+  <the49:BottomSheet.Detents>
+    <!--  Stop at the height of the screen  -->
+    <!--  Stop at the height of the page content  -->
+    <the49:ContentDetent />
+    <!--  Stop at 120dp  -->
+    <the49:HeightDetent Height="50" />
+    <!--  Stop at 45% of the screen height  -->
+    <the49:RatioDetent Ratio="0.45" />
+    <!--  Stop at the height of the divider view  -->
+    <the49:AnchorDetent Anchor="{x:Reference divider}" />
+  </the49:BottomSheet.Detents>
+
+
+  <VerticalStackLayout Padding="16" Spacing="16">
+    <BoxView x:Name="divider" />
     <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+
       <buttons:SfButton
         Grid.Column="0"
-        Text="{x:Static strings:AppStrings.Iptal}"
-        Clicked="OnCancelClicked"
+        Margin="16,0,16,0"
         Background="Transparent"
-        TextColor="{StaticResource ClearRed}" />
+        Clicked="OnCancelClicked"
+        HorizontalOptions="Start"
+        Style="{StaticResource SaveButton}"
+        Text="{x:Static strings:AppStrings.Iptal}"
+        TextColor="{StaticResource ClearRed}"
+        WidthRequest="100" />
+
       <buttons:SfButton
         Grid.Column="1"
-        Text="{x:Static strings:AppStrings.Kaydet}"
+        Margin="16,0,16,0"
         Clicked="OnSaveClicked"
-        Background="{StaticResource Primary}"
-        TextColor="White" />
+        HorizontalOptions="End"
+        Style="{StaticResource SaveButton}"
+        Text="{x:Static strings:AppStrings.Kaydet}"
+        WidthRequest="100" />
+
     </Grid>
     <core:SfTextInputLayout
       HeightRequest="60"
@@ -43,6 +71,8 @@
         <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
       </core:SfTextInputLayout.HintLabelStyle>
     </core:SfTextInputLayout>
+
+    <!--  görev davranışı  -->
     <core:SfTextInputLayout
       HeightRequest="60"
       Hint="{x:Static strings:AppStrings.GorevDavranis}"
@@ -58,6 +88,8 @@
         <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
       </core:SfTextInputLayout.HintLabelStyle>
     </core:SfTextInputLayout>
+
+    <!--  task name  -->
     <core:SfTextInputLayout
       ContainerType="Outlined"
       Hint="{x:Static strings:AppStrings.GorevAdi}"
@@ -67,18 +99,58 @@
         <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
       </core:SfTextInputLayout.HintLabelStyle>
     </core:SfTextInputLayout>
+
+    <sfListView:SfListView
+      Margin="0,16,0,0"
+      HeightRequest="40"
+      ItemSpacing="8"
+      ItemsSource="{Binding PlaceholderButtons}"
+      Orientation="Horizontal">
+      <sfListView:SfListView.ItemTemplate>
+        <DataTemplate>
+
+          <buttons:SfButton
+            Background="{StaticResource Primary}"
+            Command="{Binding BindingContext.InsertPlaceholderCommand, Source={x:Reference Name=RootPopup}}"
+            CommandParameter="{Binding PlaceholderText}"
+            Style="{StaticResource SaveButton}"
+            Text="{Binding DisplayText}"
+            TextColor="White"
+            WidthRequest="100" />
+
+        </DataTemplate>
+      </sfListView:SfListView.ItemTemplate>
+    </sfListView:SfListView>
+
+    <!--  editor template  -->
     <core:SfTextInputLayout
       ContainerType="Outlined"
       HeightRequest="120"
       Hint="{x:Static strings:AppStrings.SmsSablonu}"
       Style="{StaticResource DefaultInput}">
       <Editor
+        Margin="8"
         AutoSize="TextChanges"
-        HeightRequest="120"
         Text="{Binding MessageTaskTemplate}" />
       <core:SfTextInputLayout.HintLabelStyle>
         <core:LabelStyle FontFamily="Comfortaa-Bold" FontSize="16" />
       </core:SfTextInputLayout.HintLabelStyle>
     </core:SfTextInputLayout>
+
+    <!--  Örnek şablon  -->
+    <Label
+      Margin="0,4,0,0"
+      FontSize="12"
+      Text="{Binding ExampleTemplate}"
+      TextColor="Gray" />
+    <Label
+      Margin="0,0,0,4"
+      FontSize="12"
+      IsVisible="{Binding ValidationError, Converter={StaticResource StringNotNullOrEmptyToBoolConverter}}"
+      Text="{Binding ValidationError}"
+      TextColor="Red" />
+
   </VerticalStackLayout>
-</the49:BottomSheet> 
+</the49:BottomSheet>
+
+

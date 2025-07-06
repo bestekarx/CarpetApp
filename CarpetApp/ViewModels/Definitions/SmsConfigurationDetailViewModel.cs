@@ -1,4 +1,3 @@
-using AndroidX.Core.Content;
 using CarpetApp.Enums;
 using CarpetApp.Helpers;
 using CarpetApp.Models;
@@ -11,12 +10,14 @@ using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using CarpetApp.Models.MessageTaskModels;
 using CarpetApp.Views.Definitions;
 
 namespace CarpetApp.ViewModels.Definitions;
 
 [QueryProperty(nameof(DetailPageType), Consts.Type)]
 [QueryProperty(nameof(SmsConfigurationModel), Consts.SmsConfigurationModel)]
+
 public partial class SmsConfigurationDetailViewModel(
   IDialogService dialogService,
   ISmsConfigurationService smsConfigurationService,
@@ -24,29 +25,7 @@ public partial class SmsConfigurationDetailViewModel(
   ISmsUsersService smsUsersService,
   INavigationService navigationService) : ViewModelBase
 {
-  #region Commands
-
-  [RelayCommand]
-  private async Task CompleteAsync()
-  {
-    await IsBusyFor(Complete);
-  }
-
-  [RelayCommand]
-  private void InsertPlaceholder(string placeholder)
-  {
-    MessageTaskTemplate += placeholder;
-  }
-
-  #endregion
-
-  #region Fields
-
-  private DetailPageType _detailPageType = DetailPageType.Add;
-  private SmsConfigurationModel _smsConfigurationModel;
-
-  #endregion
-
+  
   #region GetParameters
 
   public DetailPageType DetailPageType
@@ -62,6 +41,44 @@ public partial class SmsConfigurationDetailViewModel(
   }
 
   #endregion
+  
+  #region Commands
+
+  [RelayCommand]
+  private async Task CompleteAsync()
+  {
+    await IsBusyFor(Complete);
+  }
+  
+  [RelayCommand]
+  private async Task OpenTaskEditPopupPage(TaskEditParameterModel obj)
+  {
+    await IsBusyFor(() => OpenTaskEditPopupPageAsync(obj));
+  }
+  
+  [RelayCommand]
+  private async Task DeleteTask(TaskEditParameterModel obj)
+  {
+    await IsBusyFor(() => DeleteTaskAsync(obj));
+  }
+
+  [RelayCommand]
+  private void InsertPlaceholder(string placeholder)
+  {
+    MessageTaskTemplate += placeholder;
+  }
+  
+  #endregion
+
+  #region Fields
+
+  private DetailPageType _detailPageType = DetailPageType.Add;
+  private SmsConfigurationModel _smsConfigurationModel;
+  private List<MessageTemplate> _messageTemplateList;
+  private List<TaskEditParameterModel> _taskEditParameterList = [];
+  
+  #endregion
+
 
   #region Properties
 
@@ -100,8 +117,7 @@ public partial class SmsConfigurationDetailViewModel(
   [ObservableProperty] private ObservableCollection<PlaceholderButtonModel> _placeholderButtons = new();
 
   [ObservableProperty] private ObservableCollection<MessageTaskModel> _messageTaskList = new();
-  [ObservableProperty] private bool _isTaskPopupOpen;
-
+  
   [ObservableProperty] private List<MessageTaskTypeModel> _popupMessageTaskTypeList = [];
   [ObservableProperty] private MessageTaskTypeModel _popupSelectedMessageTaskType;
   [ObservableProperty] private int _popupMessageTaskTypeSelectedIndex = -1;
@@ -115,6 +131,9 @@ public partial class SmsConfigurationDetailViewModel(
 
   [ObservableProperty] private MessageTaskModel _selectedTask;
 
+  [ObservableProperty]
+  private string _exampleTemplate;
+  
   #endregion
 
   #region Methods
@@ -127,6 +146,9 @@ public partial class SmsConfigurationDetailViewModel(
 
   private async Task InitializeDetails()
   {
+    // MessageTemplateList'i initialize et
+    _messageTemplateList = new List<MessageTemplate>();
+    
     var filter = new BaseFilterModel
     {
       Active = true,
@@ -141,11 +163,11 @@ public partial class SmsConfigurationDetailViewModel(
 
     CompanyModel selectedComp = null;
 
-    if (CompanyList != null && CompanyList.Any() && SmsConfigurationModel != null)
+    if (CompanyList != null && CompanyList.Count != 0 && SmsConfigurationModel != null)
       selectedComp = CompanyList.FirstOrDefault(q => q.Id == SmsConfigurationModel.CompanyId);
 
     SmsUsersModel selectedSmsUser = null;
-    if (SmsUserList != null && SmsUserList.Any() && SmsConfigurationModel != null)
+    if (SmsUserList != null && SmsUserList.Count != 0 && SmsConfigurationModel != null)
       selectedSmsUser = SmsUserList.FirstOrDefault(q => q.Id == SmsConfigurationModel.MessageUserId);
 
     if (DetailPageType == DetailPageType.Edit && SmsConfigurationModel != null)
@@ -158,6 +180,8 @@ public partial class SmsConfigurationDetailViewModel(
         CompanySelectedIndex = CompanyList.IndexOf(selectedComp);
       if (selectedSmsUser != null)
         SmsUserSelectedIndex = SmsUserList.IndexOf(selectedSmsUser);
+      
+      //todo: görevler ekranını init et. messagetask ve messagetemplate datalarını getir.
     }
     else
     {
@@ -167,46 +191,8 @@ public partial class SmsConfigurationDetailViewModel(
       SmsUserSelectedIndex = -1;
     }
 
-    MessageTaskTypeList =
-    [
-      new()
-      {
-        TaskType = MessageTaskType.ReceivedCreated, TaskTypeName = AppStrings.ReceivedCreated,
-        TaskTypeDescription = "Alınacaklar listesine bir görev ekleyince kullanıcıya sms gönderir. "
-      },
-
-      new()
-      {
-        TaskType = MessageTaskType.ReceivedCancelled, TaskTypeName = "Sipariş İptal Edilince", TaskTypeDescription =
-          "Alınacaklar listesine eklenmiş olan görev iptal edilince kullanıcıya sms gönderir."
-      },
-
-      new()
-      {
-        TaskType = MessageTaskType.OrderCreated, TaskTypeName = "Sepet tamamlanınca",
-        TaskTypeDescription = "Alınacaklar listesinde ki bir göreve ürün eklenince kullanıcıya sms gönderir."
-      }
-    ];
-
-    MessageBehaviourList =
-    [
-      new MessageBehaviourModel()
-      {
-        Behaviour = MessageBehavior.AlwaysSend,
-        BehaviourName = "Her zaman gönder",
-      },
-      new MessageBehaviourModel()
-      {
-        Behaviour = MessageBehavior.AskBeforeSend,
-        BehaviourName = "Göndermeden önce sor",
-      },
-      
-      new MessageBehaviourModel()
-      {
-        Behaviour = MessageBehavior.NeverSend,
-        BehaviourName = "Asla gönderme",
-      },
-    ];
+    MessageTaskTypeList = Consts.MessageTaskTypeList;
+    MessageBehaviourList = Consts.MessageBehaviourList;
   }
 
   private async Task Complete()
@@ -216,7 +202,29 @@ public partial class SmsConfigurationDetailViewModel(
       _ = dialogService.ShowToast(AppStrings.TumunuDoldur);
       return;
     }
-
+    
+    // MessageTemplateList'i yeniden initialize et
+    _messageTemplateList = new List<MessageTemplate>();
+   
+    foreach (var itm in _taskEditParameterList)
+    {
+        // PlaceholderMappings'i TaskType'a göre oluştur
+        var placeholderMappings = GetPlaceholderMappingsForTaskType(itm.Task.TaskType);
+        
+        // MessageTemplate'i doğru şekilde oluştur
+        var messageTemplate = new MessageTemplate
+        {
+            Id = itm.Template?.Id ?? Guid.NewGuid(),
+            TaskType = itm.Task.TaskType,
+            Name = itm.Task.Name,
+            Template = itm.Task.Template,
+            PlaceholderMappings = placeholderMappings,
+            Active = true,
+            CultureCode = Thread.CurrentThread.CurrentUICulture.Name
+        };
+        _messageTemplateList.Add(messageTemplate);      
+    }
+    
     if (DetailPageType == DetailPageType.Add)
     {
       SmsConfigurationModel = new SmsConfigurationModel
@@ -226,7 +234,8 @@ public partial class SmsConfigurationDetailViewModel(
         CompanyId = SelectedCompany?.Id ?? Guid.Empty,
         MessageUserId = SelectedSmsUser?.Id ?? Guid.Empty,
         Active = true,
-        MessageTasks = MessageTaskList.ToList()
+        MessageTasks = MessageTaskList.ToList(),
+        MessageTemplates = _messageTemplateList.ToList(),
       };
     }
     else
@@ -237,6 +246,7 @@ public partial class SmsConfigurationDetailViewModel(
       SmsConfigurationModel.CompanyId = SelectedCompany?.Id ?? Guid.Empty;
       SmsConfigurationModel.Active = SelectedState?.Value == 1;
       SmsConfigurationModel.MessageTasks = MessageTaskList.ToList();
+      SmsConfigurationModel.MessageTemplates = _messageTemplateList.ToList();
     }
 
     bool result;
@@ -268,39 +278,37 @@ public partial class SmsConfigurationDetailViewModel(
     Description = string.Empty;
   }
 
+  private Dictionary<MessageTaskType, string> _taskTypeSampleTemplates = new()
+  {
+    { MessageTaskType.ReceivedCreated, AppStrings.ReceivedCreatedSample },
+    { MessageTaskType.ReceivedCancelled, AppStrings.ReceivedCancelledSample },
+    { MessageTaskType.OrderCreated, AppStrings.OrderCreatedSample },
+    { MessageTaskType.OrderCompleted, AppStrings.OrderCompletedSample },
+    { MessageTaskType.OrderCancelled, AppStrings.OrderCancelledSample },
+    { MessageTaskType.InvoiceCreated, AppStrings.InvoiceCreatedSample },
+    { MessageTaskType.InvoicePaid, AppStrings.InvoicePaidSample }
+  };
+
   public async Task OnSelectedMessageTaskTypeChange(MessageTaskTypeModel value)
   {
     if (value == null) return;
-    
     PlaceholderButtons.Clear();
     
-    // Add placeholder buttons based on task type
-    switch (value.TaskType)
-    {
-      case MessageTaskType.OrderCreated:
-      case MessageTaskType.ReceivedCreated:
-        PlaceholderButtons.Add(new PlaceholderButtonModel { DisplayText = "Ad Soyad", PlaceholderText = "{adsoyad}" });
-        PlaceholderButtons.Add(new PlaceholderButtonModel { DisplayText = "Tarih", PlaceholderText = "{tarih}" });
-        PlaceholderButtons.Add(new PlaceholderButtonModel { DisplayText = "Tutar", PlaceholderText = "{tutar}" });
-        break;
-      case MessageTaskType.OrderCancelled:
-      case MessageTaskType.ReceivedCancelled:
-        PlaceholderButtons.Add(new PlaceholderButtonModel { DisplayText = "Ad Soyad", PlaceholderText = "{adsoyad}" });
-        PlaceholderButtons.Add(new PlaceholderButtonModel { DisplayText = "İptal Nedeni", PlaceholderText = "{iptal_nedeni}" });
-        break;
-      // Add more cases as needed
-    }
+    // Dinamik olarak mevcut kültüre göre placeholder'ları al
+    var currentCultureCode = System.Globalization.CultureInfo.CurrentUICulture.Name;
+    var placeholders = Consts.GetPlaceholdersForTaskType(value.TaskType, currentCultureCode);
+    
+    foreach (var p in placeholders)
+        PlaceholderButtons.Add(p);
+    
+    // Örnek şablonu göster
+    ExampleTemplate = _taskTypeSampleTemplates.TryGetValue(value.TaskType, out var sample) ? sample : string.Empty;
   }
 
-  public IRelayCommand AddTaskCommand => new AsyncRelayCommand(OpenAddTaskPopupAsync);
-  public IRelayCommand<MessageTaskModel> EditTaskCommand => new AsyncRelayCommand<MessageTaskModel>(OpenEditTaskPopupAsync);
-  public IRelayCommand<MessageTaskModel> DeleteTaskCommand => new RelayCommand<MessageTaskModel>(DeleteTask);
-  public IRelayCommand SaveTaskCommand => new AsyncRelayCommand(SaveTaskAsync);
-  public IRelayCommand CloseTaskPopupCommand => new RelayCommand(CloseTaskPopup);
-
-  private async Task OpenAddTaskPopupAsync()
+  private async Task OpenTaskEditPopupPageAsync(TaskEditParameterModel obj)
   {
     var popup = new TaskEditPopup();
+      
     var popupVm = new TaskEditPopupViewModel
     {
         MessageTaskTypeList = MessageTaskTypeList,
@@ -308,14 +316,27 @@ public partial class SmsConfigurationDetailViewModel(
         MessageTaskName = string.Empty,
         MessageTaskTemplate = string.Empty,
         MessageTaskTypeSelectedIndex = -1,
-        MessageBehaviourSelectedIndex = -1
+        MessageBehaviourSelectedIndex = -1,
+        DetailPageType = DetailPageType.Add
     };
+    
+    if (obj != null)
+    {
+      popupVm.DetailPageType = DetailPageType.Edit;
+      popupVm.MessageTaskName = obj.Task.Name;
+      popupVm.MessageTaskTemplate = obj.Task.Template;
+      popupVm.MessageTaskTypeSelectedIndex = MessageTaskTypeList.FindIndex(x => x.TaskType == obj.Task.TaskType);
+      popupVm.MessageBehaviourSelectedIndex = MessageBehaviourList.FindIndex(x => x.Behaviour == obj.Task.Behaviour);
+      popupVm.SelectedMessageTaskType = MessageTaskTypeList.FirstOrDefault(x => x.TaskType == obj.Task.TaskType)!;
+      popupVm.SelectedMessageBehaviour = MessageBehaviourList.FirstOrDefault(x => x.Behaviour == obj.Task.Behaviour);
+    }
+    
     popup.BindingContext = popupVm;
     popup.TaskSaved += OnTaskPopupSave;
     await popup.ShowAsync();
   }
 
-  private async Task OpenEditTaskPopupAsync(MessageTaskModel task)
+  /*private async Task OpenEditTaskPopupAsync(TaskEditParameterModel task)
   {
     if (task == null) return;
     var popup = new TaskEditPopup();
@@ -323,78 +344,35 @@ public partial class SmsConfigurationDetailViewModel(
     {
         MessageTaskTypeList = MessageTaskTypeList,
         MessageBehaviourList = MessageBehaviourList,
-        MessageTaskName = task.Name,
-        MessageTaskTemplate = task.Template,
-        MessageTaskTypeSelectedIndex = MessageTaskTypeList.FindIndex(x => x.TaskType == task.TaskType),
-        MessageBehaviourSelectedIndex = MessageBehaviourList.FindIndex(x => x.Behaviour == task.Behaviour),
-        SelectedMessageTaskType = MessageTaskTypeList.FirstOrDefault(x => x.TaskType == task.TaskType),
-        SelectedMessageBehaviour = MessageBehaviourList.FirstOrDefault(x => x.Behaviour == task.Behaviour)
+        
     };
     popup.BindingContext = popupVm;
-    popup.TaskSaved += (sender, savedTask) => OnTaskPopupEditSave(task, savedTask);
+    popup.TaskSaved += (sender, savedTask) => OnTaskPopupEditSave(savedTask);
     await popup.ShowAsync();
-  }
+  } */
 
-  private void DeleteTask(MessageTaskModel task)
+  private async Task DeleteTaskAsync(TaskEditParameterModel task)
   {
     if (task == null) return;
-    MessageTaskList.Remove(task);
+    MessageTaskList.Remove(task.Task);
+    _taskEditParameterList.Remove(task);
   }
 
-  private void CloseTaskPopup()
-  {
-    IsTaskPopupOpen = false;
-  }
 
-  private async Task SaveTaskAsync()
-  {
-    if (PopupSelectedMessageTaskType == null || PopupSelectedMessageBehaviour == null || string.IsNullOrWhiteSpace(PopupMessageTaskTemplate))
-    {
-      await dialogService.ShowToast(AppStrings.TumunuDoldur);
-      return;
-    }
-    if (SelectedTask == null)
-    {
-      // Yeni task ekle
-      var newTask = new MessageTaskModel
-      {
-        TaskType = PopupSelectedMessageTaskType.TaskType,
-        TaskTypeName = PopupSelectedMessageTaskType.TaskTypeName,
-        Behaviour = PopupSelectedMessageBehaviour.Behaviour,
-        BehaviourName = PopupSelectedMessageBehaviour.BehaviourName,
-        Name = PopupMessageTaskName,
-        Template = PopupMessageTaskTemplate
-      };
-      MessageTaskList.Add(newTask);
-    }
-    else
-    {
-      // Düzenle
-      SelectedTask.TaskType = PopupSelectedMessageTaskType.TaskType;
-      SelectedTask.TaskTypeName = PopupSelectedMessageTaskType.TaskTypeName;
-      SelectedTask.Behaviour = PopupSelectedMessageBehaviour.Behaviour;
-      SelectedTask.BehaviourName = PopupSelectedMessageBehaviour.BehaviourName;
-      SelectedTask.Name = PopupMessageTaskName;
-      SelectedTask.Template = PopupMessageTaskTemplate;
-    }
-    IsTaskPopupOpen = false;
-  }
-
-  private void OnTaskPopupSave(object sender, MessageTaskModel savedTask)
+  private void OnTaskPopupSave(object sender, TaskEditParameterModel savedTask)
   {
     if (savedTask == null) return;
-    MessageTaskList.Add(savedTask);
+    
+    _taskEditParameterList.Add(savedTask);
+    MessageTaskList.Add(savedTask.Task);
   }
 
-  private void OnTaskPopupEditSave(MessageTaskModel originalTask, MessageTaskModel savedTask)
+  /// <summary>
+  /// TaskType'a göre PlaceholderMappings dictionary'sini oluşturur
+  /// </summary>
+  private Dictionary<string, string> GetPlaceholderMappingsForTaskType(MessageTaskType taskType)
   {
-    if (savedTask == null) return;
-    originalTask.TaskType = savedTask.TaskType;
-    originalTask.TaskTypeName = savedTask.TaskTypeName;
-    originalTask.Behaviour = savedTask.Behaviour;
-    originalTask.BehaviourName = savedTask.BehaviourName;
-    originalTask.Name = savedTask.Name;
-    originalTask.Template = savedTask.Template;
+    return Consts.GetPlaceholderMappingsForTaskType(taskType);
   }
 
   public string MessageTemplateShort => !string.IsNullOrEmpty(PopupMessageTaskTemplate) && PopupMessageTaskTemplate.Length > 30
@@ -402,10 +380,4 @@ public partial class SmsConfigurationDetailViewModel(
     : PopupMessageTaskTemplate;
 
   #endregion
-}
-
-public class PlaceholderButtonModel
-{
-    public string DisplayText { get; set; }
-    public string PlaceholderText { get; set; }
 }

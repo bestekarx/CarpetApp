@@ -96,6 +96,7 @@
 
     <ItemGroup>
         <Folder Include="Extensions\"/>
+        <Folder Include="Models\ParameterModels\" />
     </ItemGroup>
 
     <ItemGroup>
