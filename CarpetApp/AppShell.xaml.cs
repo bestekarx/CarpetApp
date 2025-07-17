@@ -1,6 +1,7 @@
 ﻿using CarpetApp.Helpers;
 using CarpetApp.ViewModels;
 using CarpetApp.Views;
+using CarpetApp.Views.Companies;
 using CarpetApp.Views.Definitions;
 using CarpetApp.Views.Filters;
 

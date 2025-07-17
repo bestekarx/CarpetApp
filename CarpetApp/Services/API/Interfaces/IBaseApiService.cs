@@ -112,4 +112,11 @@ public interface IBaseApiService
   Task<SmsConfigurationModel> UpdateSmsConfiguration(Guid id, SmsConfigurationModel model);
 
   #endregion
+
+  #region Received
+
+  [Get("/app/received/filtered-list")]
+  Task<BaseListResponse<ReceivedListItemModel>> GetReceivedList([Query] ReceivedFilterParameters filter);
+
+  #endregion
 }

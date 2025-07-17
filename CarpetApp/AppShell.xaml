@@ -256,5 +256,6 @@
     </Shell.FlyoutContent>
 
     <ShellContent ContentTemplate="{DataTemplate views:HomePage}" Route="Home" />
+    <ShellContent ContentTemplate="{DataTemplate views:ReceivedListPage}" Route="receivedlistpage" />
 
 </Shell>

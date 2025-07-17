@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<the49:BottomSheet
+  x:Class="CarpetApp.Views.Received.ReceivedAddPopupPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+  xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+  xmlns:strings="clr-namespace:CarpetApp.Resources.Strings"
+  xmlns:the49="https://schemas.the49.com/dotnet/2023/maui"
+  x:Name="RootPopup"
+  BackgroundColor="White"
+  HasBackdrop="True"
+  HasHandle="True">
+
+  <the49:BottomSheet.Detents>
+    <the49:ContentDetent />
+    <the49:HeightDetent Height="50" />
+    <the49:RatioDetent Ratio="0.45" />
+  </the49:BottomSheet.Detents>
+
+  <VerticalStackLayout Padding="16" Spacing="16">
+    <BoxView x:Name="divider" />
+    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto">
+      <buttons:SfButton
+        Grid.Column="0"
+        Margin="16,0,16,0"
+        Background="Transparent"
+        Clicked="OnCancelClicked"
+        HorizontalOptions="Start"
+        Style="{StaticResource SaveButton}"
+        Text="{x:Static strings:AppStrings.Iptal}"
+        TextColor="{StaticResource ClearRed}"
+        WidthRequest="100" />
+      <buttons:SfButton
+        Grid.Column="1"
+        Margin="16,0,16,0"
+        Clicked="OnSaveClicked"
+        HorizontalOptions="End"
+        Style="{StaticResource SaveButton}"
+        Text="{x:Static strings:AppStrings.Kaydet}"
+        WidthRequest="100" />
+    </Grid>
+    <dataForm:SfDataForm
+      x:Name="ReceivedDataForm"
+      AutoGenerateItems="True"
+      AutoGeneratingDataFormItem="OnAutoGeneratingDataFormItem"
+      DataObject="{Binding ReceivedAddModel}"
+      ValidationMode="LostFocus" />
+    <Label
+      Margin="0,0,0,4"
+      FontSize="12"
+      IsVisible="{Binding ValidationError, Converter={StaticResource StringNotNullOrEmptyToBoolConverter}}"
+      Text="{Binding ValidationError}"
+      TextColor="Red" />
+  </VerticalStackLayout>
+</the49:BottomSheet> 

@@ -27,4 +27,37 @@
     <data name="Plaka" xml:space="preserve">
         <value>Plate</value>
     </data>
+    <data name="Musteri" xml:space="preserve">
+        <value>Customer</value>
+    </data>
+    <data name="Arac" xml:space="preserve">
+        <value>Vehicle</value>
+    </data>
+    <data name="Bolge" xml:space="preserve">
+        <value>Area</value>
+    </data>
+    <data name="AlinmaTarihi" xml:space="preserve">
+        <value>Pickup Date</value>
+    </data>
+    <data name="TeslimTarihi" xml:space="preserve">
+        <value>Delivery Date</value>
+    </data>
+    <data name="Not" xml:space="preserve">
+        <value>Note</value>
+    </data>
+    <data name="MusteriSeciniz" xml:space="preserve">
+        <value>Please select a customer.</value>
+    </data>
+    <data name="AracSeciniz" xml:space="preserve">
+        <value>Please select a vehicle.</value>
+    </data>
+    <data name="BolgeSeciniz" xml:space="preserve">
+        <value>Please select an area.</value>
+    </data>
+    <data name="AlinmaTarihiSeciniz" xml:space="preserve">
+        <value>Please select pickup date.</value>
+    </data>
+    <data name="TeslimTarihiSeciniz" xml:space="preserve">
+        <value>Please select delivery date.</value>
+    </data>
 </root>

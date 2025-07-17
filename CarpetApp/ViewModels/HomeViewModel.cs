@@ -4,6 +4,8 @@ using CarpetApp.Services.Navigation;
 using CarpetApp.ViewModels.Base;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
+using CarpetApp.Views;
 
 namespace CarpetApp.ViewModels;
 
@@ -40,11 +42,18 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
     await navigationService.GoBackAsync();
   }
 
+  public ICommand NavigateToReceivedListCommand { get; }
+
   #endregion
 
   public override async void OnViewNavigatedTo(NavigatedToEventArgs args)
   {
     base.OnViewNavigatedTo(args);
     //WelcomeText = "hoşgeldin " + UserModel.FullName;
+  }
+
+  private async Task GoToReceivedList()
+  {
+    await Shell.Current.GoToAsync("receivedlistpage");
   }
 }

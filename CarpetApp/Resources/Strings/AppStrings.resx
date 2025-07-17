@@ -198,6 +198,39 @@
     <data name="TeslimatGunu" xml:space="preserve">
         <value>Teslimat Günü</value>
     </data>
+    <data name="Musteri" xml:space="preserve">
+        <value>Müşteri</value>
+    </data>
+    <data name="Arac" xml:space="preserve">
+        <value>Araç</value>
+    </data>
+    <data name="Bolge" xml:space="preserve">
+        <value>Bölge</value>
+    </data>
+    <data name="AlinmaTarihi" xml:space="preserve">
+        <value>Alınma Tarihi</value>
+    </data>
+    <data name="TeslimTarihi" xml:space="preserve">
+        <value>Teslim Tarihi</value>
+    </data>
+    <data name="Not" xml:space="preserve">
+        <value>Not</value>
+    </data>
+    <data name="MusteriSeciniz" xml:space="preserve">
+        <value>Müşteri seçiniz.</value>
+    </data>
+    <data name="AracSeciniz" xml:space="preserve">
+        <value>Araç seçiniz.</value>
+    </data>
+    <data name="BolgeSeciniz" xml:space="preserve">
+        <value>Bölge seçiniz.</value>
+    </data>
+    <data name="AlinmaTarihiSeciniz" xml:space="preserve">
+        <value>Alınma tarihi seçiniz.</value>
+    </data>
+    <data name="TeslimTarihiSeciniz" xml:space="preserve">
+        <value>Teslim tarihi seçiniz.</value>
+    </data>
     <data name="TeslimatGunuNot" xml:space="preserve">
         <value>Yeni 'Alınacak' görevi eklerken tahmini olarak kaç gün sonra teslim edilecek? Örn: Teslimat günü 7 olsun. X müşterisinden 1 Ocak tarihinde teslim alma görevi oluşturduğumuzda teslim alma tarihi: 1 OCAK Teslim Etme tarihi otomatik olarak 8 OCAK olacaktır. Teslim etme tarihini her koşulda değiştirebilirsiniz. Bu veri şablon veridir.</value>
     </data>

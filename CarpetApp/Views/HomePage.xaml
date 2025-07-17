@@ -81,6 +81,9 @@
                                     VerticalOptions="Center">
                                     <Image Aspect="AspectFit" Source="big_arrow" />
                                 </ContentView>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToReceivedListCommand}" />
+                                </Grid.GestureRecognizers>
                             </Grid>
                             <BoxView Grid.Row="1" Style="{StaticResource Stroke}" />
                             <!--  Yıkamada  -->

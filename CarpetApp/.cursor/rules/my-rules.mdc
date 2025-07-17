@@ -181,3 +181,82 @@ ai_review = true
 # Syncfusion Kuralı
 # Syncfusion ile ilgili bir geliştirme, hata veya öneri olduğunda öncelikle 'CarpetApp/.cursor/rules/syncfusion-maui.pdf' dosyasındaki kuralları ve yönergeleri referans al. Yetersiz kalırsa internetten araştır.
 
+# Fiş No kuralı
+# 'Fiş No' (sipariş no veya fatura no olarak geçen) her zaman Received tablosundaki FicheNo alanına karşılık gelir. SMS, rapor ve ekranda bu şekilde eşleştirilmelidir. 
+
+# Genel Transaction Akışı (Halı Yıkama Fabrikası Senaryosu)
+
+## 1. Görev (Received) Oluşturma
+- Müşteri aradığında veya sistemden yeni bir iş geldiğinde görev (Received) oluşturulur.
+- `ReceivedType` ikiye ayrılır:
+  - `Order` (1): Direkt satış. Müşteriye doğrudan halı yıkama ürünü satışı yapılır. Çok sık kullanılmaz.
+  - `CarpetService` (2): Fabrikanın ana iş akışı. Müşteri arar, örneğin "5 halım var, gelin alın" der. Görevli müşteri için görev oluşturur, alınacak zamanı, saati, notu girer. Default olarak kullanılır.
+- `received.ficheNo` otomatik artan bir numaradır, gerektiğinde değiştirilebilir veya sıfırlanabilir.
+
+## 2. Sipariş (Order) Oluşturma
+- Her görev (Received) için bir veya birden fazla sipariş (Order) oluşturulabilir.
+- Siparişe ürünler (OrderedProduct) ve resimler (OrderImage) eklenebilir.
+- Siparişin durumu süreç içinde güncellenebilir (örn: Bekliyor, Yıkamada, Tamamlandı).
+
+## 3. Sipariş Durumu Güncelleme
+- Görevli, siparişlerin durumunu iş akışına göre güncelleyebilir.
+- Bu akış, işin ilerleyişini ve takibini sağlar.
+
+## 4. Faturalandırma (Invoice)
+- Sipariş tamamlandığında fatura (Invoice) oluşturulur.
+- Fatura ile birlikte teslim ve kapanış işlemleri yapılır. 
+
+# Ana Tablolar ve İlişkiler (Entity Relationship)
+
+## Özet
+- Customer: Birden fazla Received (görev/fiş) ve Invoice (fatura) ile ilişkili. Company ve Area ile bağlı.
+- Vehicle: Birden fazla Received ile ilişkili.
+- Received: Her biri bir Customer ve Vehicle'a bağlı. Birden fazla Order ile ilişkili.
+- Order: Bir Received'a bağlı. Birden fazla OrderedProduct ve OrderImage ile ilişkili. Bir Invoice ile ilişkili.
+- OrderedProduct: Bir Order ve bir Product'a bağlı.
+- OrderImage: Bir Order'a bağlı.
+- Invoice: Bir Order ve bir Customer'a bağlı.
+- Product: Birden fazla OrderedProduct ile ilişkili.
+- Company: Birden fazla Customer ve MessageConfiguration ile ilişkili.
+- MessageConfiguration: Bir Company ve bir MessageUser'a bağlı. Birden fazla MessageTask ve MessageTemplate ile ilişkili.
+- MessageUser: Birden fazla MessageConfiguration ile ilişkili.
+- UserTenantMapping: Kullanıcı ve opsiyonel olarak Customer/Company ile ilişkili.
+
+## Mermaid ER Diyagramı
+
+```mermaid
+erDiagram
+    Customer ||--o{ Received : "has"
+    Vehicle ||--o{ Received : "has"
+    Received ||--o{ Order : "has"
+    Order ||--o{ OrderedProduct : "has"
+    Order ||--o{ OrderImage : "has"
+    Order ||--|{ Invoice : "has"
+    Product ||--o{ OrderedProduct : "has"
+    Company ||--o{ Customer : "has"
+    Company ||--o{ MessageConfiguration : "has"
+    MessageConfiguration ||--o{ MessageTask : "has"
+    MessageConfiguration ||--o{ MessageTemplate : "has"
+    MessageUser ||--o{ MessageConfiguration : "has"
+    UserTenantMapping ||--o{ Customer : "has (optional)"
+    UserTenantMapping ||--o{ Company : "has (optional)"
+``` 
+
+# UI ve ViewModel Kuralları
+
+- Tüm sayfa ve ViewModel'lerde loading göstergesi için ShowLoading/HideLoading metotları kullanılmalı, doğrudan ActivityIndicator eklenmemeli.
+- API çağrılarında ve async işlemlerde try-catch bloklarında genel hata yönetimi için mevcut global error handler veya ShowError metodu kullanılmalı.
+- Filtreleme yapılan sayfalarda, sayfa açılışında bugünün verisiyle otomatik başlatılır, filtreler değiştikçe API'ye güncel filtre modeli gönderilir.
+- SfComboBox ile filtrelerde araç ve bölge gibi seçimler yapılır, ItemsSource ve SelectedItem bindingleri ViewModel'deki koleksiyonlara bağlanır. 
+
+# ViewModelBase ve InitializeAsync Kuralı
+- ViewModelBase.cs'de public virtual Task InitializeAsync() metodu bulunur.
+- Tüm ViewModel'ler bu base'den türemelidir.
+- ContentPage.Behaviors ile EventToCommandBehavior ve InitializeAsyncCommand kullanımı gereksizdir, eklenmemelidir. 
+
+# Multilanguage Kuralları
+- Tüm text stringler her zaman resources'a eklenmelidir.
+- Değişken adı Türkçe karakterler olmadan yazılmalıdır (örnek: "Bölge" → "Bolge").
+- İngilizce çevirisi de AppStrings.en.resx dosyasına eklenmelidir.
+- XAML'da {x:Static strings:AppStrings.DeğişkenAdı} formatı kullanılmalıdır.
+- ViewModel'de Resources.Strings.AppStrings.DeğişkenAdı formatı kullanılmalıdır. 
