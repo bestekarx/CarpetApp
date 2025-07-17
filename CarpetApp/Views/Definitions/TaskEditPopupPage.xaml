@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <the49:BottomSheet
-  x:Class="CarpetApp.Views.Definitions.TaskEditPopup"
+  x:Class="CarpetApp.Views.Definitions.TaskEditPopupPage"
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
@@ -101,23 +101,21 @@
     </core:SfTextInputLayout>
 
     <sfListView:SfListView
-      Margin="0,16,0,0"
-      HeightRequest="40"
+      HeightRequest="80"
       ItemSpacing="8"
       ItemsSource="{Binding PlaceholderButtons}"
       Orientation="Horizontal">
       <sfListView:SfListView.ItemTemplate>
         <DataTemplate>
-
           <buttons:SfButton
             Background="{StaticResource Primary}"
             Command="{Binding BindingContext.InsertPlaceholderCommand, Source={x:Reference Name=RootPopup}}"
             CommandParameter="{Binding PlaceholderText}"
+            FontSize="8"
             Style="{StaticResource SaveButton}"
             Text="{Binding DisplayText}"
             TextColor="White"
-            WidthRequest="100" />
-
+            WidthRequest="150" />
         </DataTemplate>
       </sfListView:SfListView.ItemTemplate>
     </sfListView:SfListView>

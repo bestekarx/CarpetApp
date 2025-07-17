@@ -1,8 +1,3 @@
----
-description: 
-globs: 
-alwaysApply: true
----
 // Meta Prompt:
 
 You are a professional software assistant. We are developing a mobile application using .NET MAUI and Syncfusion components.
@@ -174,4 +169,15 @@ ai_review = true
 # // Popup içinde:
 # TaskSaved?.Invoke(this, data);
 # await DismissAsync();
+
+# Fiş No kuralı
+# 'Fiş No' (sipariş no veya fatura no olarak geçen) her zaman Received tablosundaki FicheNo alanına karşılık gelir. SMS, rapor ve ekranda bu şekilde eşleştirilmelidir.
+
+
+# // Popup içinde:
+# TaskSaved?.Invoke(this, data);
+# await DismissAsync();
+
+# Syncfusion Kuralı
+# Syncfusion ile ilgili bir geliştirme, hata veya öneri olduğunda öncelikle 'CarpetApp/.cursor/rules/syncfusion-maui.pdf' dosyasındaki kuralları ve yönergeleri referans al. Yetersiz kalırsa internetten araştır.
 

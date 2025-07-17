@@ -247,10 +247,10 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{isim}", "CustomerName" },
-            { "{tarih}", "ReceivedDate" },
-            { "{companyName}", "CompanyName" },
-            { "{companyPhone}", "CompanyPhone" }
+            { "{isim}", "FullName" },
+            { "{tarih}", "PickupDate" },
+            { "{companyName}", "Name" },
+            { "{companyPhone}", "Description" }
           }
         },
         {
@@ -288,9 +288,9 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{isim}", "CustomerName" },
+            { "{isim}", "FullName" },
             { "{iptalNedeni}", "CancellationReason" },
-            { "{companyName}", "CompanyName" }
+            { "{companyName}", "Name" }
           }
         },
         {
@@ -325,10 +325,10 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{isim}", "CustomerName" },
-            { "{siparisNo}", "OrderNumber" },
-            { "{companyName}", "CompanyName" },
-            { "{companyPhone}", "CompanyPhone" }
+            { "{isim}", "FullName" },
+            { "{siparisNo}", "FicheNo" }, // Fiş No = Received.FicheNo
+            { "{companyName}", "Name" },
+            { "{companyPhone}", "Description" }
           }
         },
         {
@@ -366,11 +366,11 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{isim}", "CustomerName" },
-            { "{siparisNo}", "OrderNumber" },
-            { "{siparisAdet}", "OrderQuantity" },
-            { "{tutar}", "OrderAmount" },
-            { "{companyName}", "CompanyName" }
+            { "{isim}", "FullName" },
+            { "{siparisNo}", "FicheNo" }, // Fiş No = Received.FicheNo
+            { "{siparisAdet}", "Number" },
+            { "{tutar}", "OrderTotalPrice" },
+            { "{companyName}", "Name" }
           }
         },
         {
@@ -411,10 +411,10 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{isim}", "CustomerName" },
-            { "{siparisNo}", "OrderNumber" },
+            { "{isim}", "FullName" },
+            { "{siparisNo}", "FicheNo" }, // Fiş No = Received.FicheNo
             { "{iptalNedeni}", "CancellationReason" },
-            { "{companyName}", "CompanyName" }
+            { "{companyName}", "Name" }
           }
         },
         {
@@ -452,9 +452,9 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{faturaNo}", "InvoiceNumber" },
-            { "{tutar}", "InvoiceAmount" },
-            { "{companyName}", "CompanyName" }
+            { "{faturaNo}", "FicheNo" }, // Fiş No = Received.FicheNo
+            { "{tutar}", "TotalPrice" },
+            { "{companyName}", "Name" }
           }
         },
         {
@@ -489,9 +489,9 @@ public static class Consts
         {
           "tr-TR", new Dictionary<string, string>
           {
-            { "{faturaNo}", "InvoiceNumber" },
-            { "{tutar}", "InvoiceAmount" },
-            { "{companyName}", "CompanyName" }
+            { "{faturaNo}", "FicheNo" }, // Fiş No = Received.FicheNo
+            { "{tutar}", "TotalPrice" },
+            { "{companyName}", "Name" }
           }
         },
         {

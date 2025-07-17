@@ -307,7 +307,7 @@ public partial class SmsConfigurationDetailViewModel(
 
   private async Task OpenTaskEditPopupPageAsync(TaskEditParameterModel obj)
   {
-    var popup = new TaskEditPopup();
+    var popup = new TaskEditPopupPage();
       
     var popupVm = new TaskEditPopupViewModel
     {
@@ -362,9 +362,36 @@ public partial class SmsConfigurationDetailViewModel(
   private void OnTaskPopupSave(object sender, TaskEditParameterModel savedTask)
   {
     if (savedTask == null) return;
-    
-    _taskEditParameterList.Add(savedTask);
-    MessageTaskList.Add(savedTask.Task);
+    var existingParam = _taskEditParameterList.FirstOrDefault(x => x.Task.Id == savedTask.Task.Id);
+    if (existingParam != null)
+    {
+      // Update the existing TaskEditParameterModel
+      existingParam.Task.TaskType = savedTask.Task.TaskType;
+      existingParam.Task.TaskTypeName = savedTask.Task.TaskTypeName;
+      existingParam.Task.Behaviour = savedTask.Task.Behaviour;
+      existingParam.Task.BehaviourName = savedTask.Task.BehaviourName;
+      existingParam.Task.Name = savedTask.Task.Name;
+      existingParam.Task.Template = savedTask.Task.Template;
+      existingParam.Task.CustomMessage = savedTask.Task.CustomMessage;
+      existingParam.Template = savedTask.Template;
+      // Update MessageTaskList as well
+      var existingTask = MessageTaskList.FirstOrDefault(x => x.Id == savedTask.Task.Id);
+      if (existingTask != null)
+      {
+        existingTask.TaskType = savedTask.Task.TaskType;
+        existingTask.TaskTypeName = savedTask.Task.TaskTypeName;
+        existingTask.Behaviour = savedTask.Task.Behaviour;
+        existingTask.BehaviourName = savedTask.Task.BehaviourName;
+        existingTask.Name = savedTask.Task.Name;
+        existingTask.Template = savedTask.Task.Template;
+        existingTask.CustomMessage = savedTask.Task.CustomMessage;
+      }
+    }
+    else
+    {
+      _taskEditParameterList.Add(savedTask);
+      MessageTaskList.Add(savedTask.Task);
+    }
   }
 
   /// <summary>

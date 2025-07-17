@@ -62,7 +62,7 @@ public partial class TaskEditPopupViewModel : ViewModelBase
         foreach (var p in placeholders)
             PlaceholderButtons.Add(p);
         
-        if (TaskTypeSampleTemplates.TryGetValue(value.TaskType, out var sample) && string.IsNullOrWhiteSpace(MessageTaskTemplate))
+        if (TaskTypeSampleTemplates.TryGetValue(value.TaskType, out var sample))
         {
             MessageTaskTemplate = sample;
         }

@@ -12,4 +12,5 @@ public class MessageTaskModel
     public string Template { get; set; }
     public string CustomMessage { get; set; } = string.Empty;
     public string MessageTemplateShort => !string.IsNullOrEmpty(Template) && Template.Length > 30 ? Template.Substring(0, 30) + "..." : Template;
+    public TaskEditParameterModel AsTaskEditParameterModel => new TaskEditParameterModel { Task = this };
 } 

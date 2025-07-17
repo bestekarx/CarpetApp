@@ -155,7 +155,7 @@ public static class MauiProgram
       typeof(SmsTemplateDetailPage),
       typeof(SmsConfigurationsPage),
       typeof(SmsConfigurationDetailPage),
-      typeof(TaskEditPopup)
+      typeof(TaskEditPopupPage)
     });
     return builder;
   }

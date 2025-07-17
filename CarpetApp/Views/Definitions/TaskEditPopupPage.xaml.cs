@@ -6,11 +6,11 @@ using CarpetApp.Models.MessageTaskModels;
 
 namespace CarpetApp.Views.Definitions;
 
-public partial class TaskEditPopup
+public partial class TaskEditPopupPage
 {
     public event EventHandler<TaskEditParameterModel> TaskSaved;
 
-    public TaskEditPopup()
+    public TaskEditPopupPage()
     {
         InitializeComponent();
     }
