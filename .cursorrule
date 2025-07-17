@@ -77,3 +77,16 @@ erDiagram
 - İngilizce çevirisi de AppStrings.en.resx dosyasına eklenmelidir.
 - XAML'da {x:Static strings:AppStrings.DeğişkenAdı} formatı kullanılmalıdır.
 - ViewModel'de Resources.Strings.AppStrings.DeğişkenAdı formatı kullanılmalıdır. 
+- Resource dosyasına (AppStrings.resx, AppStrings.en.resx) yeni bir anahtar eklenirse, mutlaka AppStrings.Designer.cs dosyasına da property olarak eklenmelidir. 
+
+# Command ve Navigation Kuralları
+- XAML'da bir Command kullanılıyorsa, ViewModel'de [RelayCommand] attribute'u ile bir async Task metodu tanımlanmalıdır. (Ör: [RelayCommand] private async Task Login())
+- Eğer komut bir görev (işlem, API çağrısı, vs.) içeriyorsa, ana komut metodu içinde await IsBusyFor(GorevTask) çağrılır ve asıl iş yükü ayrı bir private async Task GorevTask() metodunda toplanır.
+- Navigation işlemlerinde, eğer bir görev yoksa doğrudan await navigationService.NavigateToAsync(...) kullanılmalıdır. Shell.Current.GoToAsync doğrudan kullanılmaz.
+- Yeni bir sayfa/route ekleniyorsa, route ismi mutlaka Consts.cs dosyasına sabit olarak eklenmelidir. Navigation işlemlerinde bu sabit kullanılmalıdır.
+- Yeni bir sayfa/route ekleniyorsa, hem Consts.cs dosyasına sabit olarak eklenmeli hem de AppShell.xaml.cs'de InitializeRouting metodunda Routing.RegisterRoute ile kaydedilmelidir.
+- navigationService.NavigateToAsync ile parametre gönderilecekse, Dictionary<string, object> ile parametreler gönderilir.
+- Tüm navigation ve command yapıları, projedeki mevcut örneklerle tutarlı olmalıdır. 
+- Yeni bir XAML sayfası oluşturuluyorsa, mutlaka .xaml.cs code-behind dosyası da oluşturulmalı ve ViewModel bindingi yapılmalı. AreasPage.xaml.cs gibi constructor'da ViewModel parametreli binding yapılmalı. 
+- ViewModel'de XAML ile haberleşecek her property için [ObservableProperty] attribute'u kullanılmalı. Property isimleri _selectedArea gibi private field ile başlar, public property otomatik olarak oluşturulur. Elle property yazmak yerine [ObservableProperty] ile tanımlanmalı.
+- Yeni sayfa, ViewModel veya servis oluşturulduğunda mutlaka MauiProgram.cs dosyasında register edilmesi gerektiği kuralı eklendi: RegisterServices metodunda servisler, RegisterViewModels metodunda ViewModel'ler, RegisterViews metodunda View'lar ve ConfigureRefit metodunda API servisleri register edilmelidir. 
