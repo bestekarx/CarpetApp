@@ -10,6 +10,7 @@ namespace WebCarpetApp.Messaging;
 public class MessageTemplate : Entity<Guid>, IMultiTenant
 {
     public Guid? TenantId { get; private set; }
+    public Guid MessageConfigurationId { get; private set; }
     public MessageTaskType TaskType { get; private set; }
     public string Name { get; private set; }
     public string Template { get; private set; }
@@ -24,12 +25,14 @@ public class MessageTemplate : Entity<Guid>, IMultiTenant
 
     public MessageTemplate(
         Guid id,
+        Guid messageConfigurationId,
         MessageTaskType taskType,
         string name,
         string template,
         Dictionary<string, string> placeholderMappings,
         string cultureCode = "tr-TR") : base(id)
     {
+        MessageConfigurationId = messageConfigurationId;
         TaskType = taskType;
         Name = name;
         Template = template;

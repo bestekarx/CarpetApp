@@ -15,6 +15,7 @@ public class MessageConfiguration : AggregateRoot<Guid>, IMultiTenant
     public bool Active { get; private set; }
     
     public ICollection<MessageTask> MessageTasks { get; set; }
+    public ICollection<MessageTemplate> MessageTemplates { get; set; }
 
     public MessageConfiguration(
         Guid id,

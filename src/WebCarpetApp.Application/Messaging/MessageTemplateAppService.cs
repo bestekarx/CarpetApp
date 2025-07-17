@@ -22,6 +22,7 @@ public class MessageTemplateAppService(IRepository<MessageTemplate, Guid> reposi
     {
         return new MessageTemplate(
             GuidGenerator.Create(),
+            createInput.MessageConfigurationId,
             createInput.TaskType,
             createInput.Name,
             createInput.Template,

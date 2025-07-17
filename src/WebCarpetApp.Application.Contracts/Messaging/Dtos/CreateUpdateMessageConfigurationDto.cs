@@ -22,4 +22,6 @@ public class CreateUpdateMessageConfigurationDto
     public bool Active { get; set; }
 
     public List<CreateUpdateMessageTaskDto> MessageTasks { get; set; }
+
+    public List<CreateUpdateMessageTemplateDto> MessageTemplates { get; set; }
 } 

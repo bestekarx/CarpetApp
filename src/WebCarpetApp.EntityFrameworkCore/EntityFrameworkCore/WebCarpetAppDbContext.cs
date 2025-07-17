@@ -165,6 +165,12 @@ public class WebCarpetAppDbContext :
         {
             b.ToTable(WebCarpetAppConsts.DbTablePrefix + "MessageTasks", WebCarpetAppConsts.DbSchema);
             b.ConfigureByConvention();
+            
+            // MessageConfiguration ile ilişki
+            b.HasOne<MessageConfiguration>()
+                .WithMany(mc => mc.MessageTasks)
+                .HasForeignKey(mt => mt.MessageConfigurationId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         builder.Entity<MessageUser>(b =>
@@ -245,6 +251,12 @@ public class WebCarpetAppDbContext :
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                 v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions)null));
             b.Property(x => x.CultureCode).IsRequired().HasMaxLength(10);
+            
+            // MessageConfiguration ile ilişki
+            b.HasOne<MessageConfiguration>()
+                .WithMany(mc => mc.MessageTemplates)
+                .HasForeignKey(mt => mt.MessageConfigurationId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

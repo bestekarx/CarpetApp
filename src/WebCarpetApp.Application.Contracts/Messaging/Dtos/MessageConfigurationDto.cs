@@ -12,4 +12,5 @@ public class MessageConfigurationDto : AuditedEntityDto<Guid>
     public string Description { get; set; }
     public bool Active { get; set; }
     public ICollection<MessageTaskDto> MessageTasks { get; set; }
+    public ICollection<MessageTemplateDto> MessageTemplates { get; set; }
 } 

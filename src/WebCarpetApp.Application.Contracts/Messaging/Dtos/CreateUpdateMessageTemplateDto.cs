@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -5,6 +6,9 @@ namespace WebCarpetApp.Messaging.Dtos;
 
 public class CreateUpdateMessageTemplateDto
 {
+    [Required]
+    public Guid MessageConfigurationId { get; set; }
+
     [Required]
     public MessageTaskType TaskType { get; set; }
 

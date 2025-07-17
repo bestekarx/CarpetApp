@@ -119,6 +119,7 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         ConfigureBundles();
         ConfigureBlobStoring(configuration);
         ConfigureConventionalControllers();
+        ConfigureAntiforgery(context);
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
@@ -196,6 +197,15 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         Configure<AbpAspNetCoreMvcOptions>(options =>
         {
             options.ConventionalControllers.Create(typeof(WebCarpetAppApplicationModule).Assembly);
+        });
+    }
+    
+    private void ConfigureAntiforgery(ServiceConfigurationContext context)
+    {
+        Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(options =>
+        {
+            // Antiforgery token doğrulamasını tüm API controller'larda devre dışı bırak
+            options.Filters.Add(new Microsoft.AspNetCore.Mvc.IgnoreAntiforgeryTokenAttribute());
         });
     }
 

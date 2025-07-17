@@ -6,6 +6,7 @@ namespace WebCarpetApp.Messaging.Dtos;
 
 public class MessageTemplateDto : AuditedEntityDto<Guid>
 {
+    public Guid MessageConfigurationId { get; set; }
     public MessageTaskType TaskType { get; set; }
     public string Name { get; set; }
     public string Template { get; set; }

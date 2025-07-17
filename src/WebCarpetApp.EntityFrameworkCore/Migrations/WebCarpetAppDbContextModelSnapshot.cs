@@ -2216,6 +2216,9 @@ namespace WebCarpetApp.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
+                    b.Property<Guid>("MessageConfigurationId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -2237,6 +2240,8 @@ namespace WebCarpetApp.Migrations
                         .HasColumnName("TenantId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MessageConfigurationId");
 
                     b.ToTable("MessageTemplates", (string)null);
                 });
@@ -2774,6 +2779,15 @@ namespace WebCarpetApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebCarpetApp.Messaging.MessageTemplate", b =>
+                {
+                    b.HasOne("WebCarpetApp.Messaging.MessageConfiguration", null)
+                        .WithMany("MessageTemplates")
+                        .HasForeignKey("MessageConfigurationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
                     b.Navigation("Actions");
@@ -2817,6 +2831,8 @@ namespace WebCarpetApp.Migrations
             modelBuilder.Entity("WebCarpetApp.Messaging.MessageConfiguration", b =>
                 {
                     b.Navigation("MessageTasks");
+
+                    b.Navigation("MessageTemplates");
                 });
 #pragma warning restore 612, 618
         }
