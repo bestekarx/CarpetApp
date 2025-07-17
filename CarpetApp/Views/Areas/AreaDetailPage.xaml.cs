@@ -1,6 +1,6 @@
 using CarpetApp.ViewModels.Definitions;
 
-namespace CarpetApp.Views.Definitions;
+namespace CarpetApp.Views.Areas;
 
 public partial class AreaDetailPage
 {

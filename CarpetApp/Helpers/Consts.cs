@@ -54,6 +54,7 @@ public static class Consts
   public const string SmsUsersPage = "SmsUsers";
 
   public const string SmsUserDetail = "SmsUserDetail";
+  public const string ReceivedListPage = "ReceivedListPage";
 
   //public const string SmsTemplatesPage = "SmsTemplates";
   //public const string SmsTemplateDetail = "SmsTemplateDetail";

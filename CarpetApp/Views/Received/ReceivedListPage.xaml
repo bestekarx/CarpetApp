@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<services:ContentPageBase
+  x:Class="CarpetApp.Views.Received.ReceivedListPage"
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:services="clr-namespace:CarpetApp.Services"
+  xmlns:sfComboBox="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+  xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+  BackgroundColor="{StaticResource MainBgColor}">
+  <ContentPage.Content>
+    <Grid>
+      <VerticalStackLayout>
+        <!--  Filtreler  -->
+        <Grid Padding="10" ColumnSpacing="10">
+          <DatePicker x:Name="DateFilter" Date="{Binding SelectedDate}" />
+          <sfComboBox:SfComboBox
+            Grid.Column="1"
+            DisplayMemberPath="DataText"
+            ItemsSource="{Binding VehicleList}"
+            Placeholder="Araç seçin"
+            SelectedItem="{Binding SelectedVehicle}"
+            Style="{StaticResource DefaultComboBox}" />
+          <sfComboBox:SfComboBox
+            Grid.Column="2"
+            DisplayMemberPath="Name"
+            ItemsSource="{Binding AreaList}"
+            Placeholder="Bölge seçin"
+            SelectedItem="{Binding SelectedArea}"
+            Style="{StaticResource DefaultComboBox}" />
+        </Grid>
+        <!--  Liste  -->
+        <CollectionView
+          x:Name="ReceivedList"
+          IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+          ItemsSource="{Binding ReceivedItems}"
+          SelectionMode="None">
+          <CollectionView.ItemTemplate>
+            <DataTemplate>
+              <Frame
+                Margin="10,5"
+                Padding="10"
+                BackgroundColor="White"
+                CornerRadius="10"
+                HasShadow="True">
+                <VerticalStackLayout>
+                  <Label
+                    FontAttributes="Bold"
+                    FontSize="18"
+                    Text="{Binding CustomerName}" />
+                  <Label FontSize="14" Text="{Binding PickupDate, StringFormat='Alınma: {0:dd.MM.yyyy HH:mm}'}" />
+                  <Label FontSize="14" Text="{Binding Note}" />
+                  <Label FontSize="14" Text="{Binding Address}" />
+                  <HorizontalStackLayout>
+                    <Label FontSize="13" Text="{Binding AreaName}" />
+                    <Label
+                      Margin="10,0,0,0"
+                      FontSize="13"
+                      Text="{Binding VehicleName}" />
+                  </HorizontalStackLayout>
+                </VerticalStackLayout>
+              </Frame>
+            </DataTemplate>
+          </CollectionView.ItemTemplate>
+        </CollectionView>
+      </VerticalStackLayout>
+      <ActivityIndicator
+        HorizontalOptions="Center"
+        IsRunning="{Binding IsLoading}"
+        IsVisible="{Binding IsLoading}"
+        VerticalOptions="Center"
+        Color="DarkGray" />
+    </Grid>
+  </ContentPage.Content>
+  <!--  ContentPage.Behaviors ve EventToCommandBehavior kaldırıldı  -->
+</services:ContentPageBase> 

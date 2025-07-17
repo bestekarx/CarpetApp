@@ -37,12 +37,16 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
   #region Commands
 
   [RelayCommand]
+  private async Task NavigateToReceivedList()
+  {
+    await navigationService.NavigateToAsync(Consts.ReceivedListPage);
+  }
+
+  [RelayCommand]
   private async Task Back()
   {
     await navigationService.GoBackAsync();
   }
-
-  public ICommand NavigateToReceivedListCommand { get; }
 
   #endregion
 
@@ -50,10 +54,5 @@ public partial class HomeViewModel(INavigationService navigationService) : ViewM
   {
     base.OnViewNavigatedTo(args);
     //WelcomeText = "hoşgeldin " + UserModel.FullName;
-  }
-
-  private async Task GoToReceivedList()
-  {
-    await Shell.Current.GoToAsync("receivedlistpage");
   }
 }

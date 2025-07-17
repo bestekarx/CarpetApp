@@ -1,6 +1,6 @@
 using CarpetApp.ViewModels.Definitions;
 
-namespace CarpetApp.Views.Definitions;
+namespace CarpetApp.Views.Sms;
 
 public partial class SmsUserDetailPage
 {

@@ -770,5 +770,31 @@ namespace CarpetApp.Resources.Strings {
                 return ResourceManager.GetString("BehaviourNeverSend", resourceCulture);
             }
         }
+        
+        internal static string MusteriSeciniz {
+            get {
+                return ResourceManager.GetString("MusteriSeciniz", resourceCulture);
+            }
+        }
+        internal static string AracSeciniz {
+            get {
+                return ResourceManager.GetString("AracSeciniz", resourceCulture);
+            }
+        }
+        internal static string BolgeSeciniz {
+            get {
+                return ResourceManager.GetString("BolgeSeciniz", resourceCulture);
+            }
+        }
+        internal static string AlinmaTarihiSeciniz {
+            get {
+                return ResourceManager.GetString("AlinmaTarihiSeciniz", resourceCulture);
+            }
+        }
+        internal static string TeslimTarihiSeciniz {
+            get {
+                return ResourceManager.GetString("TeslimTarihiSeciniz", resourceCulture);
+            }
+        }
     }
 }

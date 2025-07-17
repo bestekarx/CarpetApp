@@ -4,7 +4,7 @@ using CarpetApp.ViewModels.Definitions;
 using CarpetApp.Models;
 using CarpetApp.Models.MessageTaskModels;
 
-namespace CarpetApp.Views.Definitions;
+namespace CarpetApp.Views.Sms;
 
 public partial class TaskEditPopupPage
 {

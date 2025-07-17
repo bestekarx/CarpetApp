@@ -1,9 +1,13 @@
 ﻿using CarpetApp.Helpers;
 using CarpetApp.ViewModels;
 using CarpetApp.Views;
+using CarpetApp.Views.Areas;
 using CarpetApp.Views.Companies;
-using CarpetApp.Views.Definitions;
 using CarpetApp.Views.Filters;
+using CarpetApp.Views.Products;
+using CarpetApp.Views.Received;
+using CarpetApp.Views.Sms;
+using CarpetApp.Views.Vehicles;
 
 namespace CarpetApp;
 
@@ -35,6 +39,7 @@ public partial class AppShell
     Routing.RegisterRoute(Consts.SmsUserDetail, typeof(SmsUserDetailPage));
     Routing.RegisterRoute(Consts.SmsConfigurationsPage, typeof(SmsConfigurationsPage));
     Routing.RegisterRoute(Consts.SmsConfigurationDetail, typeof(SmsConfigurationDetailPage));
+    Routing.RegisterRoute(Consts.ReceivedListPage, typeof(ReceivedListPage));
     //Routing.RegisterRoute(Consts.SmsTemplatesPage, typeof(SmsTemplatesPage));
     //Routing.RegisterRoute(Consts.SmsTemplateDetail, typeof(SmsTemplateDetailPage));
   }

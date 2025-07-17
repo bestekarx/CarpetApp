@@ -11,7 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 using CarpetApp.Models.MessageTaskModels;
-using CarpetApp.Views.Definitions;
+using CarpetApp.Views.Sms;
 
 namespace CarpetApp.ViewModels.Definitions;
 

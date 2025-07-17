@@ -43,7 +43,6 @@
     <dataForm:SfDataForm
       x:Name="ReceivedDataForm"
       AutoGenerateItems="True"
-      AutoGeneratingDataFormItem="OnAutoGeneratingDataFormItem"
       DataObject="{Binding ReceivedAddModel}"
       ValidationMode="LostFocus" />
     <Label

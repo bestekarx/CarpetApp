@@ -1,7 +1,7 @@
 using CarpetApp.ViewModels.Definitions;
 using SelectionChangedEventArgs = Syncfusion.Maui.Inputs.SelectionChangedEventArgs;
 
-namespace CarpetApp.Views.Definitions;
+namespace CarpetApp.Views.Areas;
 
 public partial class AreasPage
 {
