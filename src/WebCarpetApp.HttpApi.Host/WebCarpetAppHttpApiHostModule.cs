@@ -123,7 +123,6 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         ConfigureBlobStoring(configuration);
         ConfigureConventionalControllers();
         ConfigureAntiforgery(context);
-        ConfigureMvcLibs();
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
@@ -213,13 +212,7 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         });
     }
 
-    private void ConfigureMvcLibs()
-    {
-        Configure<Volo.Abp.AspNetCore.Mvc.UI.Packages.AbpMvcLibsOptions>(options =>
-        {
-            options.CheckLibs = false;
-        });
-    }
+    // Libs check disabled for API-only usage
 
     private static void ConfigureSwagger(ServiceConfigurationContext context, IConfiguration configuration)
     {
