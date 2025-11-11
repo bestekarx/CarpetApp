@@ -1,0 +1,22 @@
+﻿{
+  "applications": {
+    "WebCarpetApp.HttpApi.Host": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44302",
+      "path": "../../../src/WebCarpetApp.HttpApi.Host/WebCarpetApp.HttpApi.Host.csproj",
+      "kubernetesService": ".*-httpapihost$",
+      "execution": {
+        "order": 4
+      }
+    },
+    "WebCarpetApp.Blazor": {
+      "type": "dotnet-project",
+      "launchUrl": "https://localhost:44339",
+      "path": "../../../src/WebCarpetApp.Blazor/WebCarpetApp.Blazor.csproj",
+      "kubernetesService": ".*-blazor$",
+      "execution": {
+        "order": 2
+      }
+    }
+  }
+}

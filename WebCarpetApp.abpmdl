@@ -1,0 +1,109 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.BasicTheme": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.Account": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.Identity": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.TenantManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "9.0.4",
+      "isInstalled": true
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "WebCarpetApp.Application": {
+      "path": "src/WebCarpetApp.Application/WebCarpetApp.Application.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.Application.Tests": {
+      "path": "test/WebCarpetApp.Application.Tests/WebCarpetApp.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "WebCarpetApp.Domain.Shared": {
+      "path": "src/WebCarpetApp.Domain.Shared/WebCarpetApp.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.Application.Contracts": {
+      "path": "src/WebCarpetApp.Application.Contracts/WebCarpetApp.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.HttpApi": {
+      "path": "src/WebCarpetApp.HttpApi/WebCarpetApp.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.HttpApi.Client": {
+      "path": "src/WebCarpetApp.HttpApi.Client/WebCarpetApp.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.EntityFrameworkCore.Tests": {
+      "path": "test/WebCarpetApp.EntityFrameworkCore.Tests/WebCarpetApp.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "WebCarpetApp.EntityFrameworkCore": {
+      "path": "src/WebCarpetApp.EntityFrameworkCore/WebCarpetApp.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.TestBase": {
+      "path": "test/WebCarpetApp.TestBase/WebCarpetApp.TestBase.abppkg",
+      "folder": "test"
+    },
+    "WebCarpetApp.Domain.Tests": {
+      "path": "test/WebCarpetApp.Domain.Tests/WebCarpetApp.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "WebCarpetApp.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/WebCarpetApp.HttpApi.Client.ConsoleTestApp/WebCarpetApp.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "WebCarpetApp.DbMigrator": {
+      "path": "src/WebCarpetApp.DbMigrator/WebCarpetApp.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.HttpApi.Host": {
+      "path": "src/WebCarpetApp.HttpApi.Host/WebCarpetApp.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.Blazor": {
+      "path": "src/WebCarpetApp.Blazor/WebCarpetApp.Blazor.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.Blazor.Client": {
+      "path": "src/WebCarpetApp.Blazor.Client/WebCarpetApp.Blazor.Client.abppkg",
+      "folder": "src"
+    },
+    "WebCarpetApp.Domain": {
+      "path": "src/WebCarpetApp.Domain/WebCarpetApp.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

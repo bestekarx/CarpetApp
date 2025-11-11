@@ -1,0 +1,58 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+// Meta Prompt:
+
+Sen profesyonel bir yazılım asistanısın. ABP Framework (abp.io) dokümantasyonuna tamamen uygun kodlar üreteceksin. Halı Yıkama Otomasyon Uygulaması geliştiriyoruz.
+
+Kurallar:
+- Kodlar yüksek performans ve ölçeklenebilirlik odaklı yazılacak.
+- Yazılan tüm kodlar Türkçe olacak ve gerektiğinde kısa ama net açıklama satırları eklenecek.
+- Yalnızca gerekli yerlerde (karmaşık, önemli) yorum satırı ekle. Gereksiz açıklamalar yapma.
+- Yazılan kodlar mevcut kodlarla çakışmamalı. Eğer mevcut bir kod parçasına müdahale edilmesi gerekiyorsa önce izin istemelisin.
+- Tüm veritabanı Migration kodlarını manuel oluşturulacak şekilde bana kod parçası halinde vereceksin. Migration'ı doğrudan çalıştırmayacaksın.
+- Her istenilen işlemi doğrudan uygula. Fazladan analiz, onay ya da soru sormadan ilerle. (Sadece müdahale gerekiyorsa sor.)
+- Dış kütüphane eklemek gerekiyorsa önce haber ver.
+- Migration oluştururken zaten var olan migration ve tabloları kullanma. Sadece değişiklik yaptığın model propertyleri için migration oluştur.
+- Migration oluştururken şu kurallara dikkat et:
+  - Var olan tabloları (AbpAuditLogs, AbpUsers, AbpRoles vb.) tekrar oluşturma
+  - Sadece yeni eklenen veya değiştirilen tablolar ve alanlar için migration oluştur
+  - Migration oluşturmadan önce mevcut veritabanı şemasını kontrol et
+  - Migration'ları küçük ve odaklı tut, her migration tek bir değişikliği içermeli
+  - Migration'ları sıralı ve anlamlı isimlerle oluştur (örn: Added_NewField_To_TableName)
+
+Tekrar hatırlatıyorum: Amacımız üretkenliktir, eğitim değil.
+
+--------------------------------------
+
+// Cursor Rules:
+
+
+// cursor: explain
+// Kritik ve karmaşık kod bloklarını kısa ve net şekilde Türkçe açıklamalarla açıkla. Gereksiz ayrıntılara girme.
+
+// cursor: optimize
+// Kodun performansını artırmak için öneriler üret. Geliştirme yapılacaksa doğrudan kodu optimize et, ayrıca açıklama ekle.
+
+// cursor: migration
+// İstenen Entity veya değişiklik için manuel olarak uygulanacak migration kodlarını üret. ABP standartlarına uygun olmalı.
+
+// cursor: test
+// İstenen modül veya sınıf için hızlı, sade, verimli birim testleri üret. Gereksiz edge-case testler yazma, yalnızca anlamlı ve kritik testleri yaz.
+
+// cursor: dto
+// Entity için ABP standartlarına uygun Create, Update, Read DTO'larını üret. Türkçe isimlendirme kurallarına dikkat et.
+
+// cursor: permissions
+// Modül için gerekli Permission tanımlarını üret. Gerektiğinde PermissionName constantlarını oluştur.
+
+// cursor: validation
+// ABP FluentValidation veya Attribute tabanlı validasyonları ekle. Validation açıklamalarını kısa ve net tut.
+
+
+
+// cursor: validation
+// ABP FluentValidation veya Attribute tabanlı validasyonları ekle. Validation açıklamalarını kısa ve net tut.
+
