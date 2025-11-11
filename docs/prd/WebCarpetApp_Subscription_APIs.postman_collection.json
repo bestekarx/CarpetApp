@@ -1,0 +1,729 @@
+{
+	"info": {
+		"_postman_id": "12345678-1234-1234-1234-123456789abc",
+		"name": "WebCarpetApp - Subscription System APIs",
+		"description": "Complete API collection for WebCarpetApp Subscription System\n\n🚀 **SaaS Multi-Tenant Subscription Platform**\n\n**Features:**\n- Trial subscription creation (7 days)\n- Multi-tier pricing plans\n- Team management with invitations\n- User limit enforcement\n- Subscription validation middleware\n- Automatic billing and upgrades\n\n**Base URL:** https://localhost:5001",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🔐 Authentication",
+			"description": "Enhanced authentication with subscription validation",
+			"item": [
+				{
+					"name": "Login with Subscription Validation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userNameOrEmailAddress\": \"admin@webcarpetapp.com\",\n  \"password\": \"123qwe\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register New Tenant with Trial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenantName\": \"Yeni Halı Yıkama Ltd\",\n  \"ownerEmail\": \"yeni@company.com\",\n  \"ownerName\": \"Mehmet Yılmaz\",\n  \"password\": \"SecurePass123!\",\n  \"tenantDescription\": \"Professional halı yıkama hizmetleri\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/register-with-trial",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register-with-trial"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/login-status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"login-status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "💳 Subscription Management",
+			"description": "Subscription plans, upgrades, and billing",
+			"item": [
+				{
+					"name": "Get All Subscription Plans",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/plans",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"plans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Subscription",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/my-subscription",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"my-subscription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Trial Subscription",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenantName\": \"Örnek Şirket\",\n  \"ownerEmail\": \"test@example.com\",\n  \"ownerName\": \"Test User\",\n  \"password\": \"Test123!\",\n  \"tenantDescription\": \"Test amaçlı şirket\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/register-with-trial",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"register-with-trial"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade to Starter Plan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscriptionPlanId\": \"22222222-2222-2222-2222-222222222222\",\n  \"paymentTransactionId\": \"stripe_pi_123456789\",\n  \"notes\": \"Upgrade to Starter plan for growing business\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/upgrade",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"upgrade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade to Professional Plan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscriptionPlanId\": \"33333333-3333-3333-3333-333333333333\",\n  \"paymentTransactionId\": \"stripe_pi_987654321\",\n  \"notes\": \"Upgrade to Professional for advanced features\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/upgrade",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"upgrade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade to Enterprise Plan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscriptionPlanId\": \"44444444-4444-4444-4444-444444444444\",\n  \"paymentTransactionId\": \"stripe_pi_enterprise_123\",\n  \"notes\": \"Upgrade to Enterprise for unlimited users\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/upgrade",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"upgrade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Subscription Usage",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/usage",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"usage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Can Add User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/can-add-user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"can-add-user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "👥 Team Management",
+			"description": "User invitations and team member management",
+			"item": [
+				{
+					"name": "Get Team Members",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/members",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invite User to Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"newteam@company.com\",\n  \"roleNames\": [\"User\", \"OrderManager\"],\n  \"invitationMessage\": \"Merhaba! Takımımıza katılmanız için sizi davet ediyoruz. WebCarpetApp üzerinden halı yıkama işlemlerinizi yönetebilirsiniz.\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/invite",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"invite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pending Invitations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/invitations",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"invitations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validate Invitation Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/validate-invitation?invitationToken=sample_token_123456789",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"validate-invitation"
+							],
+							"query": [
+								{
+									"key": "invitationToken",
+									"value": "sample_token_123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Accept Invitation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"invitationToken\": \"sample_token_123456789\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/accept-invitation",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"accept-invitation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Invitation",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/invitations/{{INVITATION_ID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"invitations",
+								"{{INVITATION_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Team Member",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/members/{{USER_ID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"members",
+								"{{USER_ID}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🧪 Testing Scenarios",
+			"description": "Complete user journey testing scenarios",
+			"item": [
+				{
+					"name": "Scenario 1: New Company Registration",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenantName\": \"Premium Halı Temizlik\",\n  \"ownerEmail\": \"owner@premiumhali.com\",\n  \"ownerName\": \"Ahmet Kaya\",\n  \"password\": \"PremiumPass123!\",\n  \"tenantDescription\": \"İstanbul'da premium halı yıkama hizmetleri\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/register-with-trial",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"register-with-trial"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scenario 2: Check Trial Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/usage",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"usage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scenario 3: Invite First Employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"employee1@premiumhali.com\",\n  \"roleNames\": [\"User\"],\n  \"invitationMessage\": \"Şirketimizin yeni sistemine hoş geldiniz!\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/invite",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"invite"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scenario 4: Upgrade to Paid Plan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscriptionPlanId\": \"22222222-2222-2222-2222-222222222222\",\n  \"paymentTransactionId\": \"payment_premium_123\",\n  \"notes\": \"Trial süresi dolduğu için Starter plana geçiş\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/upgrade",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"upgrade"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Scenario 5: Growing Business - Professional Plan",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscriptionPlanId\": \"33333333-3333-3333-3333-333333333333\",\n  \"paymentTransactionId\": \"payment_professional_456\",\n  \"notes\": \"İş büyüyor, daha fazla kullanıcı gerekiyor\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/upgrade",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"upgrade"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "https://localhost:5001",
+			"type": "string"
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		},
+		{
+			"key": "INVITATION_ID",
+			"value": "sample-invitation-guid",
+			"type": "string"
+		},
+		{
+			"key": "USER_ID",
+			"value": "sample-user-guid",
+			"type": "string"
+		}
+	]
+}

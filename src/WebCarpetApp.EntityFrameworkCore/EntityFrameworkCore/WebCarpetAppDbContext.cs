@@ -27,6 +27,7 @@ using WebCarpetApp.Products;
 using WebCarpetApp.Receiveds;
 using WebCarpetApp.UserTenants;
 using WebCarpetApp.Vehicles;
+using WebCarpetApp.Subscriptions;
 using System.Text.Json;
 
 namespace WebCarpetApp.EntityFrameworkCore;
@@ -57,6 +58,13 @@ public class WebCarpetAppDbContext :
     public DbSet<Received> Receiveds { get; set; }
     public DbSet<UserTenantMapping> UserTenantMappings { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
+
+    // Subscription entities
+    public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
+    public DbSet<TenantSubscription> TenantSubscriptions { get; set; }
+    public DbSet<TenantOwner> TenantOwners { get; set; }
+    public DbSet<UserInvitation> UserInvitations { get; set; }
+    public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
 
     #region Entities from the modules
 
@@ -251,11 +259,81 @@ public class WebCarpetAppDbContext :
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
                 v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, (JsonSerializerOptions)null));
             b.Property(x => x.CultureCode).IsRequired().HasMaxLength(10);
-            
+
             // MessageConfiguration ile ilişki
             b.HasOne<MessageConfiguration>()
                 .WithMany(mc => mc.MessageTemplates)
                 .HasForeignKey(mt => mt.MessageConfigurationId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Subscription entity configurations
+        builder.Entity<SubscriptionPlan>(b =>
+        {
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "SubscriptionPlans", WebCarpetAppConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Name).IsRequired().HasMaxLength(100);
+            b.Property(x => x.DisplayName).IsRequired().HasMaxLength(200);
+            b.Property(x => x.Description).HasMaxLength(500);
+            b.Property(x => x.Currency).IsRequired().HasMaxLength(3);
+            b.Property(x => x.Price).HasColumnType("decimal(18,2)");
+            b.Property(x => x.Features).HasMaxLength(2000);
+            b.Property(x => x.ExternalPlanId).HasMaxLength(100);
+        });
+
+        builder.Entity<TenantSubscription>(b =>
+        {
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "TenantSubscriptions", WebCarpetAppConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Currency).IsRequired().HasMaxLength(3);
+            b.Property(x => x.Amount).HasColumnType("decimal(18,2)");
+            b.Property(x => x.ExternalSubscriptionId).HasMaxLength(100);
+            b.Property(x => x.PaymentTransactionId).HasMaxLength(100);
+            b.Property(x => x.Notes).HasMaxLength(500);
+
+            // Foreign key to SubscriptionPlan
+            b.HasOne(x => x.SubscriptionPlan)
+                .WithMany()
+                .HasForeignKey(x => x.SubscriptionPlanId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<TenantOwner>(b =>
+        {
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "TenantOwners", WebCarpetAppConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Notes).HasMaxLength(500);
+        });
+
+        builder.Entity<UserInvitation>(b =>
+        {
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "UserInvitations", WebCarpetAppConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Email).IsRequired().HasMaxLength(256);
+            b.Property(x => x.InvitationToken).IsRequired().HasMaxLength(500);
+            b.Property(x => x.RoleNames).HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                v => JsonSerializer.Deserialize<string[]>(v, (JsonSerializerOptions)null));
+            b.Property(x => x.InvitationMessage).HasMaxLength(1000);
+            b.Property(x => x.Notes).HasMaxLength(500);
+        });
+
+        builder.Entity<SubscriptionHistory>(b =>
+        {
+            b.ToTable(WebCarpetAppConsts.DbTablePrefix + "SubscriptionHistories", WebCarpetAppConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.Action).IsRequired().HasMaxLength(100);
+            b.Property(x => x.OldValue).HasMaxLength(2000);
+            b.Property(x => x.NewValue).HasMaxLength(2000);
+            b.Property(x => x.Reason).HasMaxLength(500);
+            b.Property(x => x.Notes).HasMaxLength(500);
+            b.Property(x => x.Amount).HasColumnType("decimal(18,2)");
+            b.Property(x => x.PaymentTransactionId).HasMaxLength(100);
+
+            // Foreign key to TenantSubscription
+            b.HasOne(x => x.TenantSubscription)
+                .WithMany()
+                .HasForeignKey(x => x.TenantSubscriptionId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }

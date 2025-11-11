@@ -31,6 +31,8 @@ using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.Bundling;
+using Volo.Abp.AspNetCore.Mvc.UI.Packages;
+using Volo.Abp.AspNetCore.Mvc.UI;
 using Microsoft.AspNetCore.Hosting;
 using WebCarpetApp.HealthChecks;
 using Volo.Abp.AspNetCore.Serilog;
@@ -43,6 +45,7 @@ using Volo.Abp.Security.Claims;
 using WebCarpetApp.BlobStoring;
 using Volo.Abp.BlobStoring.Database;
 using WebCarpetApp.Middleware;
+using WebCarpetApp.Authentication;
 
 namespace WebCarpetApp;
 
@@ -120,6 +123,7 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         ConfigureBlobStoring(configuration);
         ConfigureConventionalControllers();
         ConfigureAntiforgery(context);
+        ConfigureMvcLibs();
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
@@ -209,6 +213,14 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         });
     }
 
+    private void ConfigureMvcLibs()
+    {
+        Configure<Volo.Abp.AspNetCore.Mvc.UI.Packages.AbpMvcLibsOptions>(options =>
+        {
+            options.CheckLibs = false;
+        });
+    }
+
     private static void ConfigureSwagger(ServiceConfigurationContext context, IConfiguration configuration)
     {
         context.Services.AddAbpSwaggerGenWithOidc(
@@ -291,6 +303,9 @@ public class WebCarpetAppHttpApiHostModule : AbpModule
         app.UseUnitOfWork();
         app.UseDynamicClaims();
         app.UseAuthorization();
+
+        // Add subscription validation middleware
+        app.UseMiddleware<SubscriptionValidationMiddleware>();
 
         app.UseSwagger();
         app.UseAbpSwaggerUI(options =>
