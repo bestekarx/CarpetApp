@@ -1,0 +1,2123 @@
+{
+	"info": {
+		"_postman_id": "carpet-business-scenarios-2024",
+		"name": "WebCarpetApp - Complete Business Scenarios",
+		"description": "🧪 **End-to-End Business Scenario Testing**\n\nBu collection gerçek iş akışlarını test eder:\n\n**📋 Senaryolar:**\n1. 🏢 Yeni Şirket Açılışı (Trial + Setup)\n2. 📞 İlk Müşteri Kaydı\n3. 🚚 Halı Alım İşlemi\n4. 🧼 Yıkama Süreci\n5. 🚗 GPS ile Teslimat Optimizasyonu\n6. 💰 Fatura ve Tahsilat **+ 🆕 Borç Ödeme**\n7. 👥 Ekip Büyütme\n8. 📊 Raporlama **+ 🆕 Dashboard Stats & Sipariş İptal**\n9. 📱 **Offline Mode & Sync** 🆕\n\n**🆕 Yeni Özellikler:**\n- ✅ Borç Ödeme (PayDebt) - Tam ve kısmi ödemeler\n- ✅ Dashboard İstatistikleri - Günlük özet\n- ✅ Sipariş İptal (CancelOrder)\n- ✅ **Offline Sync** - Data download, operation sync, conflict detection\n\n**⚙️ Kullanım:**\n1. Environment dosyasını import et\n2. Senaryoları sırayla çalıştır\n3. Her adım bir sonrakine veri sağlar\n\n**Base URL:** https://localhost:5001",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "🏢 SENARYO 1: Yeni Şirket Açılışı",
+			"description": "Yeni bir halı yıkama firması sisteme kaydoluyor ve ilk kurulumunu yapıyor",
+			"item": [
+				{
+					"name": "1.1 - Trial Subscription ile Kayıt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Response'u parse et",
+									"var jsonData = pm.response.json();",
+									"",
+									"// Access token'ı kaydet",
+									"if (jsonData.accessToken) {",
+									"    pm.environment.set('ACCESS_TOKEN', jsonData.accessToken);",
+									"    console.log('✅ Access token kaydedildi');",
+									"}",
+									"",
+									"// Tenant ID'yi kaydet",
+									"if (jsonData.data && jsonData.data.tenantId) {",
+									"    pm.environment.set('TENANT_ID', jsonData.data.tenantId);",
+									"    console.log('✅ Tenant ID kaydedildi: ' + jsonData.data.tenantId);",
+									"}",
+									"",
+									"// Test: Başarılı kayıt",
+									"pm.test('Kayıt başarılı', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"});",
+									"",
+									"pm.test('Access token alındı', function () {",
+									"    pm.expect(jsonData.accessToken).to.exist;",
+									"});",
+									"",
+									"pm.test('Trial subscription aktif', function () {",
+									"    pm.expect(jsonData.isTrialActive).to.be.true;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tenantName\": \"İstanbul Elite Halı Yıkama\",\n  \"ownerEmail\": \"admin@elitehali.com\",\n  \"ownerName\": \"Mehmet Yılmaz\",\n  \"password\": \"Elite2024!\",\n  \"tenantDescription\": \"İstanbul Anadolu yakasında premium halı yıkama hizmetleri\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/subscription-account/register-with-trial",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"subscription-account",
+								"register-with-trial"
+							]
+						},
+						"description": "**Senaryo:** Mehmet Bey yeni bir halı yıkama şirketi açıyor.\n\n**Beklenen:**\n- 30 günlük trial subscription\n- Admin kullanıcı oluşturulur\n- JWT token alınır"
+					},
+					"response": []
+				},
+				{
+					"name": "1.2a - Find Tenant (Step 1 of Login)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"// Tenant bilgilerini kaydet",
+									"if (jsonData.tenantId) {",
+									"    pm.environment.set('TENANT_ID', jsonData.tenantId);",
+									"    pm.environment.set('TENANT_NAME', jsonData.tenantName);",
+									"    console.log('✅ Tenant ID kaydedildi: ' + jsonData.tenantId);",
+									"    console.log('✅ Tenant Name kaydedildi: ' + jsonData.tenantName);",
+									"}",
+									"",
+									"pm.test('Tenant bulundu', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.userFound).to.be.true;",
+									"    pm.expect(jsonData.tenantId).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@elitehali.com\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/subscription-account/find-tenant",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"subscription-account",
+								"find-tenant"
+							]
+						},
+						"description": "**Step 1:** Find which tenant the user belongs to based on email.\n\nBu endpoint email'e göre kullanıcının hangi tenant'a ait olduğunu bulur."
+					},
+					"response": []
+				},
+				{
+					"name": "1.2b - OAuth Login (Step 2 of Login)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"// Access token'ı kaydet",
+									"if (jsonData.access_token) {",
+									"    pm.environment.set('ACCESS_TOKEN', jsonData.access_token);",
+									"    console.log('✅ OAuth Access token kaydedildi');",
+									"}",
+									"",
+									"// Refresh token'ı kaydet",
+									"if (jsonData.refresh_token) {",
+									"    pm.environment.set('REFRESH_TOKEN', jsonData.refresh_token);",
+									"    console.log('✅ Refresh token kaydedildi');",
+									"}",
+									"",
+									"pm.test('Login başarılı', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.access_token).to.exist;",
+									"});",
+									"",
+									"pm.test('Token type Bearer', function () {",
+									"    pm.expect(jsonData.token_type).to.eql('Bearer');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "__tenant",
+								"value": "{{TENANT_ID}}",
+								"description": "Tenant context for multi-tenancy"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "WebCarpetApp_App",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin@elitehali.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Elite2024!",
+									"type": "text"
+								},
+								{
+									"key": "scope",
+									"value": "WebCarpetApp offline_access",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/connect/token",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"connect",
+								"token"
+							]
+						},
+						"description": "**Step 2:** ABP'nin standard OAuth endpoint'i ile gerçek JWT token al.\n\nBu ABP.IO'nun OpenIddict tabanlı OAuth sistemidir."
+					},
+					"response": []
+				},
+				{
+					"name": "1.3 - Şirket Bilgisi Oluştur",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('COMPANY_ID', jsonData.id);",
+									"    console.log('✅ Company ID: ' + jsonData.id);",
+									"}",
+									"pm.test('Company oluşturuldu', function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Elite Halı Yıkama Merkezi\",\n  \"description\": \"Profesyonel halı, koltuk ve perde yıkama hizmetleri\",\n  \"color\": \"#2563eb\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/company",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"company"
+							]
+						},
+						"description": "**Senaryo:** Şirket bilgilerini sisteme giriyor.\n\n**Kullanım:**\n- SMS, fatura vb. işlemler için"
+					},
+					"response": []
+				},
+				{
+					"name": "1.4 - İlk Bölge Oluştur (Kadıköy)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('AREA_KADIKOY_ID', jsonData.id);",
+									"}",
+									"pm.test('Bölge oluşturuldu', function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Kadıköy\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/area",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"area"
+							]
+						},
+						"description": "Hizmet bölgesi tanımlama"
+					},
+					"response": []
+				},
+				{
+					"name": "1.5 - İkinci Bölge (Üsküdar)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('AREA_USKUDAR_ID', jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Üsküdar\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/area",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"area"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "1.6 - Araç Ekle (Volkswagen Transporter)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('VEHICLE_ID', jsonData.id);",
+									"    console.log('✅ Vehicle ID: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleName\": \"VW Transporter 1\",\n  \"plateNumber\": \"34 ELT 123\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/vehicle",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"vehicle"
+							]
+						},
+						"description": "Teslimat aracı tanımlama"
+					},
+					"response": []
+				},
+				{
+					"name": "1.7 - Ürün Ekle (Standart Halı Yıkama)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('PRODUCT_STANDARD_ID', jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Standart Halı Yıkama\",\n  \"price\": 35.00,\n  \"productType\": 0,\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/product",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"product"
+							]
+						},
+						"description": "**Ürün Tipi:**\n- 0: Normal halı (m² başına)\n- 1: Premium halı\n- 2: Koltuk yıkama"
+					},
+					"response": []
+				},
+				{
+					"name": "1.8 - Ürün Ekle (Premium Halı)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('PRODUCT_PREMIUM_ID', jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Premium İpek Halı Yıkama\",\n  \"price\": 60.00,\n  \"productType\": 1,\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/product",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📞 SENARYO 2: İlk Müşteri Kaydı",
+			"description": "Bir müşteri arayıp halı yıkama talebi yapıyor",
+			"item": [
+				{
+					"name": "2.1 - Yeni Müşteri Ekle (Ahmet Yılmaz)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('CUSTOMER_1_ID', jsonData.id);",
+									"    console.log('✅ Customer 1 ID: ' + jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"areaId\": \"{{AREA_KADIKOY_ID}}\",\n  \"companyId\": \"{{COMPANY_ID}}\",\n  \"fullName\": \"Ahmet Yılmaz\",\n  \"phone\": \"02165551234\",\n  \"countryCode\": \"+90\",\n  \"gsm\": \"05551234567\",\n  \"address\": \"Caferağa Mahallesi, Moda Caddesi No:45 Daire:3, Kadıköy/İstanbul\",\n  \"coordinate\": \"40.9875,29.0236\",\n  \"balance\": 0,\n  \"active\": true,\n  \"companyPermission\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/customer",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"customer"
+							]
+						},
+						"description": "**Senaryo:**\nAhmet Bey telefon ediyor:\n- 3 adet standart halısı var\n- Kadıköy Moda'da oturuyor\n- GPS koordinatları alınıyor"
+					},
+					"response": []
+				},
+				{
+					"name": "2.2 - İkinci Müşteri (Ayşe Demir - Üsküdar)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('CUSTOMER_2_ID', jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"areaId\": \"{{AREA_USKUDAR_ID}}\",\n  \"companyId\": \"{{COMPANY_ID}}\",\n  \"fullName\": \"Ayşe Demir\",\n  \"phone\": \"02165559876\",\n  \"countryCode\": \"+90\",\n  \"gsm\": \"05559876543\",\n  \"address\": \"Kısıklı Mahallesi, Çamlık Sokak No:12, Üsküdar/İstanbul\",\n  \"coordinate\": \"41.0251,29.0461\",\n  \"balance\": 0,\n  \"active\": true,\n  \"companyPermission\": true\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/customer",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2.3 - GPS Koordinat Güncelle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 40.9881,\n  \"longitude\": 29.0242\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/customer/{{CUSTOMER_1_ID}}/location",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"customer",
+								"{{CUSTOMER_1_ID}}",
+								"location"
+							]
+						},
+						"description": "**Senaryo:** Şoför müşterinin kapısına vardığında daha hassas konum alıyor"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🚚 SENARYO 3: Halı Alım İşlemi",
+			"description": "Müşteriden halılar toplanıyor",
+			"item": [
+				{
+					"name": "3.1 - Alınacak Kaydı Oluştur (Ahmet Bey)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('RECEIVED_1_ID', jsonData.id);",
+									"    console.log('✅ Received 1 ID: ' + jsonData.id);",
+									"}",
+									"if (jsonData.ficheNo) {",
+									"    pm.environment.set('FICHE_NO_1', jsonData.ficheNo);",
+									"    console.log('📝 Fiş No: ' + jsonData.ficheNo);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{VEHICLE_ID}}\",\n  \"customerId\": \"{{CUSTOMER_1_ID}}\",\n  \"note\": \"3 adet standart halı, salon halısı biraz lekeli\",\n  \"type\": 0,\n  \"rowNumber\": 1,\n  \"pickupDate\": \"2024-11-12T10:00:00Z\",\n  \"deliveryDate\": \"2024-11-15T14:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/received",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"received"
+							]
+						},
+						"description": "**Senaryo:**\n- Şoför müşteriden 3 halı alıyor\n- Fiş numarası otomatik oluşuyor\n- Status: Waiting (0)\n- Type: Normal (0)"
+					},
+					"response": []
+				},
+				{
+					"name": "3.2 - İkinci Alınacak (Ayşe Hanım)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('RECEIVED_2_ID', jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"vehicleId\": \"{{VEHICLE_ID}}\",\n  \"customerId\": \"{{CUSTOMER_2_ID}}\",\n  \"note\": \"2 adet premium ipek halı, çok hassas\",\n  \"type\": 1,\n  \"rowNumber\": 2,\n  \"pickupDate\": \"2024-11-12T11:30:00Z\",\n  \"deliveryDate\": \"2024-11-16T16:00:00Z\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/received",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"received"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3.3 - Alınacakları Listele (Araç Bazlı)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/received/filtered-list?vehicleId={{VEHICLE_ID}}&status=0&active=true&sorting=RowNumber asc",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"received",
+								"filtered-list"
+							],
+							"query": [
+								{
+									"key": "vehicleId",
+									"value": "{{VEHICLE_ID}}"
+								},
+								{
+									"key": "status",
+									"value": "0",
+									"description": "0=Waiting"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								},
+								{
+									"key": "sorting",
+									"value": "RowNumber asc"
+								}
+							]
+						},
+						"description": "Bugün toplanacak halıları listele"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🧼 SENARYO 4: Yıkama Süreci",
+			"description": "Toplanan halılar fabrikaya geldi, yıkama başladı",
+			"item": [
+				{
+					"name": "4.1 - Order Oluştur (Ahmet Bey - 3 Halı)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('ORDER_1_ID', jsonData.id);",
+									"    console.log('✅ Order 1 ID: ' + jsonData.id);",
+									"}",
+									"if (jsonData.orderRowNumber) {",
+									"    console.log('📋 Order No: ' + jsonData.orderRowNumber);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"receivedId\": \"{{RECEIVED_1_ID}}\",\n  \"orderDiscount\": 0,\n  \"orderAmount\": 315.00,\n  \"orderStatus\": 0,\n  \"active\": true,\n  \"calculatedUsed\": false,\n  \"products\": [\n    {\n      \"productId\": \"{{PRODUCT_STANDARD_ID}}\",\n      \"productName\": \"Standart Halı Yıkama\",\n      \"productPrice\": 35.00,\n      \"number\": 1,\n      \"squareMeter\": 3\n    },\n    {\n      \"productId\": \"{{PRODUCT_STANDARD_ID}}\",\n      \"productName\": \"Standart Halı Yıkama\",\n      \"productPrice\": 35.00,\n      \"number\": 1,\n      \"squareMeter\": 4\n    },\n    {\n      \"productId\": \"{{PRODUCT_STANDARD_ID}}\",\n      \"productName\": \"Standart Halı Yıkama\",\n      \"productPrice\": 35.00,\n      \"number\": 1,\n      \"squareMeter\": 2\n    }\n  ],\n  \"images\": []\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order"
+							]
+						},
+						"description": "**Senaryo:**\n- Halılar fabrikaya geldi\n- 3 adet halı (3m², 4m², 2m²)\n- Total: 315 TL (9m² × 35 TL)\n- OrderStatus: 0 (Pending)\n- Received.Status otomatik PickedUp(1) oldu ✅"
+					},
+					"response": []
+				},
+				{
+					"name": "4.2 - Order Oluştur (Ayşe Hanım - Premium)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.id) {",
+									"    pm.environment.set('ORDER_2_ID', jsonData.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"receivedId\": \"{{RECEIVED_2_ID}}\",\n  \"orderDiscount\": 10,\n  \"orderAmount\": 480.00,\n  \"orderStatus\": 0,\n  \"active\": true,\n  \"calculatedUsed\": false,\n  \"products\": [\n    {\n      \"productId\": \"{{PRODUCT_PREMIUM_ID}}\",\n      \"productName\": \"Premium İpek Halı Yıkama\",\n      \"productPrice\": 60.00,\n      \"number\": 1,\n      \"squareMeter\": 5\n    },\n    {\n      \"productId\": \"{{PRODUCT_PREMIUM_ID}}\",\n      \"productName\": \"Premium İpek Halı Yıkama\",\n      \"productPrice\": 60.00,\n      \"number\": 1,\n      \"squareMeter\": 3\n    }\n  ],\n  \"images\": []\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order"
+							]
+						},
+						"description": "**Premium halı:**\n- 2 adet ipek halı (5m² + 3m²)\n- 8m² × 60 TL = 480 TL\n- %10 indirim (sadece gösterim, fiyat hesaplı)"
+					},
+					"response": []
+				},
+				{
+					"name": "4.3 - Order Durumu Güncelle (Yıkanıyor)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{ORDER_1_ID}}\",\n  \"orderStatus\": 1\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"status"
+							]
+						},
+						"description": "**OrderStatus değerleri:**\n- 0: Pending (Beklemede)\n- 1: InProgress (Yıkanıyor) ← Bu\n- 2: Completed (Yıkandı)\n- 3: ReadyForDelivery (Teslimata Hazır)\n- 4: Delivered (Teslim Edildi)"
+					},
+					"response": []
+				},
+				{
+					"name": "4.4 - Yıkama Tamamlandı",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{ORDER_1_ID}}\",\n  \"orderStatus\": 2\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.5 - Teslimata Hazır",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{ORDER_1_ID}}\",\n  \"orderStatus\": 3\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"status"
+							]
+						},
+						"description": "Halılar paketlendi, teslimata hazır"
+					},
+					"response": []
+				},
+				{
+					"name": "4.6 - İkinci Siparişi de Hazırla",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"{{ORDER_2_ID}}\",\n  \"orderStatus\": 3\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/status",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "🚗 SENARYO 5: GPS Teslimat Optimizasyonu",
+			"description": "Şoför en yakın teslimatları buluyor",
+			"item": [
+				{
+					"name": "5.1 - Yakından Uzağa Teslimat Listesi",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/nearest-ready-for-delivery?userLatitude=40.9900&userLongitude=29.0250&vehicleId={{VEHICLE_ID}}&skipCount=0&maxResultCount=20",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"nearest-ready-for-delivery"
+							],
+							"query": [
+								{
+									"key": "userLatitude",
+									"value": "40.9900",
+									"description": "Şoförün şu anki konumu (Kadıköy merkez)"
+								},
+								{
+									"key": "userLongitude",
+									"value": "29.0250"
+								},
+								{
+									"key": "vehicleId",
+									"value": "{{VEHICLE_ID}}"
+								},
+								{
+									"key": "skipCount",
+									"value": "0"
+								},
+								{
+									"key": "maxResultCount",
+									"value": "20"
+								}
+							]
+						},
+						"description": "**GPS Proximity Sorting! 🎯**\n\n**Senaryo:**\nŞoför Kadıköy merkezde. Hangi müşteriye önce gitmeli?\n\n**Özellikler:**\n- Haversine formula ile mesafe hesaplama\n- Yakından uzağa otomatik sıralama\n- Customer bilgileri denormalized (performance)\n- Distance in KM gösteriliyor\n\n**Beklenen sıralama:**\n1. Ahmet Bey (Moda) - ~1.2 km\n2. Ayşe Hanım (Üsküdar) - ~4.8 km"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "💰 SENARYO 6: Fatura ve Tahsilat",
+			"description": "Teslimat tamamlandı, ödeme alınıyor",
+			"item": [
+				{
+					"name": "6.1 - Teslimatı Tamamla (Tam Ödeme)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.incomeInvoiceId) {",
+									"    pm.environment.set('INVOICE_1_ID', jsonData.incomeInvoiceId);",
+									"    console.log('💰 Income Invoice: ' + jsonData.incomeInvoiceId);",
+									"}",
+									"if (jsonData.debtInvoiceId) {",
+									"    console.log('📝 Debt Invoice: ' + jsonData.debtInvoiceId);",
+									"}",
+									"console.log('💵 Debt Amount: ' + jsonData.debtAmount + ' TL');",
+									"console.log('💳 New Balance: ' + jsonData.newCustomerBalance + ' TL');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"orderId\": \"{{ORDER_1_ID}}\",\n  \"totalPrice\": 315.00,\n  \"paidPrice\": 315.00,\n  \"paymentType\": 0,\n  \"invoiceNote\": \"Nakit ödeme, tam tahsilat\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice/complete-delivery",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice",
+								"complete-delivery"
+							]
+						},
+						"description": "**CompleteDelivery V1 Transaction Logic! 🎯**\n\n**Senaryo:**\nAhmet Bey 315 TL'nin tamamını nakit ödedi.\n\n**Backend işlemler:**\n1. ✅ Income Invoice oluşturuldu (Type=1)\n2. ✅ Order.Status = Delivered\n3. ✅ Customer.Balance = 0 (borç yok)\n4. ❌ Debt Invoice oluşturulmadı (tam ödeme)\n\n**PaymentType:**\n- 0: Nakit\n- 1: Kredi Kartı\n- 2: Havale/EFT"
+					},
+					"response": []
+				},
+				{
+					"name": "6.2 - Kısmi Ödeme (Borç Kaydı)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.incomeInvoiceId) {",
+									"    console.log('💰 Income Invoice: ' + jsonData.incomeInvoiceId);",
+									"}",
+									"if (jsonData.debtInvoiceId) {",
+									"    pm.environment.set('DEBT_INVOICE_ID', jsonData.debtInvoiceId);",
+									"    console.log('📝 Debt Invoice: ' + jsonData.debtInvoiceId);",
+									"}",
+									"console.log('💵 Debt Amount: ' + jsonData.debtAmount + ' TL');",
+									"console.log('💳 New Balance: ' + jsonData.newCustomerBalance + ' TL');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"orderId\": \"{{ORDER_2_ID}}\",\n  \"totalPrice\": 480.00,\n  \"paidPrice\": 200.00,\n  \"paymentType\": 1,\n  \"invoiceNote\": \"Kredi kartı ile kısmi ödeme, kalan 280 TL borç\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice/complete-delivery",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice",
+								"complete-delivery"
+							]
+						},
+						"description": "**Otomatik Borç Takibi! 💡**\n\n**Senaryo:**\nAyşe Hanım 480 TL'den sadece 200 TL ödedi.\n\n**Backend işlemler:**\n1. ✅ Income Invoice (Type=1, 200 TL)\n2. ✅ Debt Invoice (Type=2, 280 TL) - Otomatik!\n3. ✅ Customer.Balance = -280 TL (borçlandı)\n4. ✅ Order.Status = Delivered\n\n**V1 Logic:**\nKısmi ödeme durumunda:\n- Tahsilat faturası (paidPrice)\n- Borç faturası (totalPrice - paidPrice)\n- Customer balance güncellendi"
+					},
+					"response": []
+				},
+				{
+					"name": "6.3 - Faturaları Listele",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice?skipCount=0&maxResultCount=20&sorting=CreationTime desc",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice"
+							],
+							"query": [
+								{
+									"key": "skipCount",
+									"value": "0"
+								},
+								{
+									"key": "maxResultCount",
+									"value": "20"
+								},
+								{
+									"key": "sorting",
+									"value": "CreationTime desc"
+								}
+							]
+						},
+						"description": "Tüm faturaları listele (Income + Debt)"
+					},
+					"response": []
+				},
+				{
+					"name": "6.4 - Sadece Borç Faturaları",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice/filtered-list?type=2&active=true",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice",
+								"filtered-list"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "2",
+									"description": "2=Debt (Borç)"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								}
+							]
+						},
+						"description": "**InvoiceType Filter:**\n- 1: Income (Gelir)\n- 2: Debt (Borç)\n- 3: Expense (Gider)"
+					},
+					"response": []
+				},
+				{
+					"name": "6.5 - Müşteri Bakiyesini Görüntüle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/customer/{{CUSTOMER_2_ID}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"customer",
+								"{{CUSTOMER_2_ID}}"
+							]
+						},
+						"description": "Ayşe Hanım'ın balance kontrolü\n\n**Beklenen:** balance = -280"
+					},
+					"response": []
+				},
+				{
+					"name": "6.6 - Borç Ödemesi (Kısmi)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.incomeInvoiceId) {",
+									"    console.log('💰 Income Invoice: ' + jsonData.incomeInvoiceId);",
+									"}",
+									"",
+									"console.log('✅ Fully Paid: ' + jsonData.isFullyPaid);",
+									"console.log('💵 Paid Amount: ' + jsonData.paidAmount + ' TL');",
+									"console.log('💳 Remaining Debt: ' + jsonData.remainingDebt + ' TL');",
+									"console.log('📊 New Balance: ' + jsonData.newCustomerBalance + ' TL');",
+									"",
+									"pm.test('Payment successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.isFullyPaid).to.be.false;",
+									"    pm.expect(jsonData.remainingDebt).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"debtInvoiceId\": \"{{DEBT_INVOICE_ID}}\",\n  \"paidAmount\": 100.00,\n  \"paymentType\": 0,\n  \"note\": \"Nakit kısmi ödeme - 100 TL\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice/pay-debt",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice",
+								"pay-debt"
+							]
+						},
+						"description": "**🆕 Borç Ödeme - Kısmi Ödeme 💵**\n\n**Senaryo:**\nAyşe Hanım'ın 280 TL borcu var. Sadece 100 TL ödüyor.\n\n**Backend işlemler:**\n1. ✅ Income Invoice oluşturulur (100 TL)\n2. ✅ Debt Invoice güncellenir (PaidPrice = 180 TL)\n3. ✅ Customer.Balance güncellenir (+100 TL)\n4. ✅ isFullyPaid = false\n5. ✅ remainingDebt = 180 TL"
+					},
+					"response": []
+				},
+				{
+					"name": "6.7 - Borç Ödemesi (Tam)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.incomeInvoiceId) {",
+									"    console.log('💰 Income Invoice: ' + jsonData.incomeInvoiceId);",
+									"}",
+									"",
+									"console.log('✅ Fully Paid: ' + jsonData.isFullyPaid);",
+									"console.log('💵 Paid Amount: ' + jsonData.paidAmount + ' TL');",
+									"console.log('💳 Remaining Debt: ' + jsonData.remainingDebt + ' TL');",
+									"console.log('📊 New Balance: ' + jsonData.newCustomerBalance + ' TL');",
+									"",
+									"pm.test('Payment successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.isFullyPaid).to.be.true;",
+									"    pm.expect(jsonData.remainingDebt).to.equal(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"debtInvoiceId\": \"{{DEBT_INVOICE_ID}}\",\n  \"paidAmount\": 180.00,\n  \"paymentType\": 0,\n  \"note\": \"Kalan borç tamamlandı\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice/pay-debt",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice",
+								"pay-debt"
+							]
+						},
+						"description": "**🆕 Borç Ödeme - Tam Ödeme 💰**\n\n**Senaryo:**\nAyşe Hanım kalan 180 TL'yi de ödüyor. Borç kapanıyor.\n\n**Backend işlemler:**\n1. ✅ Income Invoice oluşturulur (180 TL)\n2. ✅ Debt Invoice kapanır (Active=false)\n3. ✅ Customer.Balance = 0 (borç sıfırlandı)\n4. ✅ isFullyPaid = true\n5. ✅ remainingDebt = 0"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "👥 SENARYO 7: Ekip Büyütme",
+			"description": "İş büyüdü, yeni çalışan ekleniyor",
+			"item": [
+				{
+					"name": "7.1 - Şoför Davet Et",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.invitationToken) {",
+									"    pm.environment.set('INVITATION_TOKEN', jsonData.invitationToken);",
+									"    console.log('📧 Invitation Token: ' + jsonData.invitationToken);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"driver@elitehali.com\",\n  \"roleNames\": [\"Driver\"],\n  \"invitationMessage\": \"Ekibimize hoş geldiniz! WebCarpetApp'e giriş yaparak teslimat işlemlerinizi yönetebilirsiniz.\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/team/invite",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"team",
+								"invite"
+							]
+						},
+						"description": "**User limit kontrolü:**\n- Subscription plan kontrol edilir\n- Limit aşılırsa hata verir\n- Invitation email gönderilir"
+					},
+					"response": []
+				},
+				{
+					"name": "7.2 - Subscription Usage Kontrol",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/usage",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"usage"
+							]
+						},
+						"description": "**Kontrol edilenler:**\n- Kaç kullanıcı var?\n- Plan limiti ne?\n- Trial süresi doldu mu?\n- Kalan gün?"
+					},
+					"response": []
+				},
+				{
+					"name": "7.3 - Professional Plan'a Geç",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"subscriptionPlanId\": \"33333333-3333-3333-3333-333333333333\",\n  \"paymentTransactionId\": \"stripe_payment_elite_001\",\n  \"notes\": \"İş büyüyor, 10 kullanıcılı plan gerekli\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/account/subscriptions/upgrade",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"subscriptions",
+								"upgrade"
+							]
+						},
+						"description": "**Professional Plan:**\n- 10 users\n- 799 TL/ay\n- Advanced features"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📊 SENARYO 8: Raporlama",
+			"description": "İstatistikler ve raporlar",
+			"item": [
+				{
+					"name": "8.1 - Bugünkü Tüm Siparişler",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/filtered-list?active=true&sorting=OrderRowNumber asc",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"filtered-list"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true"
+								},
+								{
+									"key": "sorting",
+									"value": "OrderRowNumber asc"
+								}
+							]
+						},
+						"description": "**N+1 Query Fix Aktif! ⚡**\n\nEager loading sayesinde:\n- Products included\n- Images included\n- Single query"
+					},
+					"response": []
+				},
+				{
+					"name": "8.2 - Teslim Edilenler",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/filtered-list?orderStatus=4&active=true",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"filtered-list"
+							],
+							"query": [
+								{
+									"key": "orderStatus",
+									"value": "4",
+									"description": "4=Delivered"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8.3 - Günlük Gelir Raporu",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/invoice/filtered-list?type=1&active=true",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"invoice",
+								"filtered-list"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "1",
+									"description": "1=Income"
+								},
+								{
+									"key": "active",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Sadece tahsilat faturaları (Income)"
+					},
+					"response": []
+				},
+				{
+					"name": "8.4 - Borçlu Müşteriler",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/customer?skipCount=0&maxResultCount=100",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"customer"
+							],
+							"query": [
+								{
+									"key": "skipCount",
+									"value": "0"
+								},
+								{
+									"key": "maxResultCount",
+									"value": "100"
+								}
+							]
+						},
+						"description": "Balance < 0 olanları frontend'de filtrele"
+					},
+					"response": []
+				},
+				{
+					"name": "8.5 - Dashboard İstatistikleri 🆕",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"console.log('📅 Today: ' + jsonData.today);",
+									"console.log('📦 Today Receiveds: ' + jsonData.todayReceivedsCount);",
+									"console.log('📋 Today Orders: ' + jsonData.todayOrdersCount);",
+									"console.log('💰 Today Income: ' + jsonData.todayTotalIncome + ' TL');",
+									"console.log('💸 Today Expense: ' + jsonData.todayTotalExpense + ' TL');",
+									"console.log('💳 Total Outstanding Debt: ' + jsonData.totalOutstandingDebt + ' TL');",
+									"console.log('🚚 Pending Delivery: ' + jsonData.pendingDeliveryCount);",
+									"console.log('🧼 In Process: ' + jsonData.inProcessOrdersCount);",
+									"",
+									"pm.test('Dashboard stats retrieved', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.today).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/dashboard/dashboard-stats",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"dashboard",
+								"dashboard-stats"
+							]
+						},
+						"description": "**🆕 Dashboard İstatistikleri 📊**\n\n**Gösterilen İstatistikler:**\n\n**Bugünkü İşlemler:**\n- 📦 Alım sayısı (Received)\n- 📋 Sipariş sayısı (Order)\n- 💰 Toplam gelir (Income invoices)\n- 💸 Toplam gider (Expense invoices)\n\n**Genel Durum:**\n- 💳 Toplam aktif borç (Active Debt invoices)\n- 🚚 Teslimat bekleyen siparişler (ReadyForDelivery)\n- 🧼 Yıkamada olan siparişler (InProcess)\n\n**Kullanım:**\nDashboard ekranında günlük özet için kullanılır."
+					},
+					"response": []
+				},
+				{
+					"name": "8.6 - Sipariş İptal 🆕",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"console.log('✅ Success: ' + jsonData.success);",
+									"console.log('📝 Message: ' + jsonData.message);",
+									"console.log('🔄 New Status: ' + jsonData.newStatus);",
+									"",
+									"pm.test('Order cancelled successfully', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.success).to.be.true;",
+									"    pm.expect(jsonData.newStatus).to.equal(6);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"orderId\": \"{{ORDER_1_ID}}\",\n  \"cancellationReason\": \"Test amaçlı iptal - müşteri isteği\"\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/order/cancel",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"order",
+								"cancel"
+							]
+						},
+						"description": "**🆕 Sipariş İptal ❌**\n\n**Senaryo:**\nBir sipariş iptal ediliyor (örn: müşteri vazgeçti).\n\n**Backend işlemler:**\n1. ✅ Order.OrderStatus = Cancelled (6)\n2. ✅ Order.Active = false\n3. ❌ Delivered siparişler iptal edilemez\n4. ❌ Zaten iptal edilmiş siparişler tekrar iptal edilemez\n\n**OrderStatus:**\n- 0: Passive\n- 1: Active\n- 2: InProcess (Yıkamada)\n- 3: Completed (Tamamlandı)\n- 4: ReadyForDelivery (Teslimata Hazır)\n- 5: Delivered (Teslim Edildi)\n- 6: Cancelled (İptal)\n\n**NOT:** Bu endpoint'i kullanırken dikkatli olun. Teslim edilmiş siparişler için kullanmayın."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "📱 SENARYO 9: Offline Mode & Sync",
+			"description": "Mobil kullanıcı offline çalışıp sonra sync ediyor",
+			"item": [
+				{
+					"name": "9.1 - Download Data (Initial Sync) 🆕",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"console.log('📊 Sync Timestamp: ' + jsonData.syncTimestamp);",
+									"console.log('👥 Customers: ' + jsonData.dataPackage.customers.length);",
+									"console.log('📦 Receiveds: ' + jsonData.dataPackage.receiveds.length);",
+									"console.log('📋 Orders: ' + jsonData.dataPackage.orders.length);",
+									"console.log('🛍️ Products: ' + jsonData.dataPackage.products.length);",
+									"console.log('🚗 Vehicles: ' + jsonData.dataPackage.vehicles.length);",
+									"console.log('📈 Total Records: ' + jsonData.metadata.totalRecords);",
+									"",
+									"pm.test('Download successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.syncTimestamp).to.exist;",
+									"    pm.expect(jsonData.dataPackage).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"mobile-device-12345\",\n  \"lastSyncTimestamp\": null,\n  \"dataTypes\": [\"customers\", \"receiveds\", \"orders\", \"products\", \"vehicles\"],\n  \"includeDeleted\": false\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/offline-sync/download-data",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"offline-sync",
+								"download-data"
+							]
+						},
+						"description": "**🆕 Offline Mode: Initial Data Download 📥**\n\n**Senaryo:**\nMobil çalışan \"Offline Mode\"a geçiyor. Uygulama tüm gerekli verileri indiriyor.\n\n**Backend işlemler:**\n1. ✅ User'ın permission'larına göre data filtrele\n2. ✅ Customers, Receiveds, Orders, Products, Vehicles ver\n3. ✅ LastSync timestamp'i kaydet\n4. ✅ Delta sync için hazırlan\n\n**Mobile'da:**\n- Veriler local SQLite'a kaydedilecek\n- Offline çalışmaya hazır\n\n**NOT:** lastSyncTimestamp null ise full sync, değer varsa delta sync."
+					},
+					"response": []
+				},
+				{
+					"name": "9.2 - Sync Operations (Create Customer + Received) 🆕",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"console.log('🔄 Session ID: ' + jsonData.syncSessionId);",
+									"console.log('✅ Status: ' + jsonData.status);",
+									"console.log('⏱️ Duration: ' + jsonData.duration);",
+									"console.log('📊 Success: ' + jsonData.statistics.successful);",
+									"console.log('❌ Failed: ' + jsonData.statistics.failed);",
+									"console.log('⚠️ Conflicts: ' + jsonData.statistics.conflicts);",
+									"",
+									"// Save ID mappings",
+									"if (jsonData.idMappings && jsonData.idMappings['temp-customer-offline-1']) {",
+									"    pm.environment.set('OFFLINE_CUSTOMER_ID', jsonData.idMappings['temp-customer-offline-1']);",
+									"    console.log('💾 Customer ID: ' + jsonData.idMappings['temp-customer-offline-1']);",
+									"}",
+									"if (jsonData.idMappings && jsonData.idMappings['temp-received-offline-1']) {",
+									"    pm.environment.set('OFFLINE_RECEIVED_ID', jsonData.idMappings['temp-received-offline-1']);",
+									"    console.log('💾 Received ID: ' + jsonData.idMappings['temp-received-offline-1']);",
+									"}",
+									"",
+									"pm.test('Sync successful', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.statistics.successful).to.equal(2);",
+									"    pm.expect(jsonData.statistics.failed).to.equal(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"mobile-device-12345\",\n  \"deviceModel\": \"Samsung Galaxy S21\",\n  \"appVersion\": \"1.0.5\",\n  \"platform\": \"Android\",\n  \"operations\": [\n    {\n      \"clientOperationId\": \"op-offline-001\",\n      \"sequenceNumber\": 1,\n      \"timestamp\": \"2024-01-15T12:00:00Z\",\n      \"operationType\": \"CreateCustomer\",\n      \"entityType\": \"Customer\",\n      \"clientTempId\": \"temp-customer-offline-1\",\n      \"dependsOn\": [],\n      \"payload\": {\n        \"fullName\": \"Offline Test Müşteri\",\n        \"gsm\": \"5551112233\",\n        \"phone\": \"2161234567\",\n        \"address\": \"Beşiktaş, İstanbul\",\n        \"coordinate\": \"41.0425,29.0096\"\n      }\n    },\n    {\n      \"clientOperationId\": \"op-offline-002\",\n      \"sequenceNumber\": 2,\n      \"timestamp\": \"2024-01-15T12:05:00Z\",\n      \"operationType\": \"CreateReceived\",\n      \"entityType\": \"Received\",\n      \"clientTempId\": \"temp-received-offline-1\",\n      \"dependsOn\": [\"temp-customer-offline-1\"],\n      \"payload\": {\n        \"customerId\": \"temp-customer-offline-1\",\n        \"vehicleId\": \"{{VEHICLE_ID}}\",\n        \"status\": 0,\n        \"type\": 0,\n        \"address\": \"Beşiktaş ev adresi\",\n        \"coordinate\": \"41.0425,29.0096\",\n        \"note\": \"Offline oluşturuldu - 3 halı alınacak\"\n      }\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/offline-sync/sync-operations",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"offline-sync",
+								"sync-operations"
+							]
+						},
+						"description": "**🆕 Offline Sync: Customer + Received Creation 📤**\n\n**Senaryo:**\nMobil çalışan offline olarak:\n1. Yeni müşteri ekledi (temp-customer-offline-1)\n2. Bu müşteri için halı alımı kaydetti (temp-received-offline-1)\n\nOnline olunca bu işlemler senkronize ediliyor.\n\n**Backend işlemler:**\n1. ✅ Sync session oluştur\n2. ✅ Operation logları kaydet\n3. ✅ İşlemleri sırayla işle (dependency resolution)\n4. ✅ Temp ID'leri real ID'lerle değiştir\n5. ✅ ID mappings döndür\n\n**Dependency Resolution:**\n- Operation 2, Operation 1'e depend ediyor\n- Customer önce oluşturulur\n- Received oluştururken temp-customer-offline-1 → real ID'ye çevrilir\n\n**Mobile:**\n- ID mappings ile local veritabanını günceller\n- Temp ID'leri real ID'lerle değiştirir"
+					},
+					"response": []
+				},
+				{
+					"name": "9.3 - Sync with Conflict (Update Received Status) 🆕",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"console.log('🔄 Session ID: ' + jsonData.syncSessionId);",
+									"console.log('⚠️ Status: ' + jsonData.status);",
+									"console.log('📊 Conflicts: ' + jsonData.statistics.conflicts);",
+									"",
+									"// Find conflict result",
+									"var conflictResult = jsonData.results.find(r => r.status === 'Conflict');",
+									"if (conflictResult) {",
+									"    console.log('⚠️ Conflict detected!');",
+									"    console.log('🆔 Operation: ' + conflictResult.clientOperationId);",
+									"    console.log('📝 Message: ' + conflictResult.message);",
+									"    console.log('🔧 Server Data: ' + JSON.stringify(conflictResult.serverData));",
+									"}",
+									"",
+									"pm.test('Conflict detected', function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.expect(jsonData.statistics.conflicts).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ACCESS_TOKEN}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"deviceId\": \"mobile-device-12345\",\n  \"deviceModel\": \"Samsung Galaxy S21\",\n  \"appVersion\": \"1.0.5\",\n  \"platform\": \"Android\",\n  \"operations\": [\n    {\n      \"clientOperationId\": \"op-conflict-001\",\n      \"sequenceNumber\": 1,\n      \"timestamp\": \"2024-01-15T13:00:00Z\",\n      \"operationType\": \"UpdateReceivedStatus\",\n      \"entityType\": \"Received\",\n      \"entityId\": \"{{RECEIVED_1_ID}}\",\n      \"entityVersion\": 1,\n      \"dependsOn\": [],\n      \"payload\": {\n        \"status\": 1,\n        \"note\": \"Offline update - Halılar toplandı\"\n      }\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/app/offline-sync/sync-operations",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"app",
+								"offline-sync",
+								"sync-operations"
+							]
+						},
+						"description": "**🆕 Offline Sync: Conflict Detection ⚠️**\n\n**Senaryo:**\nMobil çalışan offline olarak Received status'ünü güncelledi.\nAma bu sırada başka bir kullanıcı aynı received'ı güncellemiş.\n\n**Conflict Detection:**\n- Mobile: entityVersion = 1 gönderiyor\n- Server: Mevcut version > 1\n- ⚠️ VERSION CONFLICT!\n\n**Backend işlemler:**\n1. ✅ Entity'yi bul\n2. ✅ Version'ları karşılaştır\n3. ❌ Version uyuşmazlığı tespit edildi\n4. ✅ Conflict kaydı oluştur\n5. ✅ Server data'yı döndür\n\n**Response:**\n- Status: \"Conflict\"\n- ServerData: Güncel server verisi\n- Message: Conflict açıklaması\n\n**Mobile'da:**\n- Kullanıcıya conflict gösterilir\n- \"Server'ı tut\" veya \"Benimkini tut\" seçeneği sunulur\n- Manual resolution\n\n**TEST İÇİN:**\n1. Önce 9.2'yi çalıştır (customer + received oluştur)\n2. RECEIVED_1_ID'yi manuel olarak başka bir received ID ile değiştir\n3. Bu isteği gönder\n4. Conflict göreceksin"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global pre-request script",
+					"console.log('🚀 Request starting...');",
+					"console.log('📍 Endpoint: ' + pm.request.url.toString());"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Global test script",
+					"pm.test('Response time < 5s', function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+					"});",
+					"",
+					"if (pm.response.code !== 200) {",
+					"    console.error('❌ Error: ' + pm.response.code);",
+					"    console.error(pm.response.text());",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "https://localhost:5001",
+			"type": "string"
+		},
+		{
+			"key": "ACCESS_TOKEN",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "TENANT_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "COMPANY_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "AREA_KADIKOY_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "AREA_USKUDAR_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "VEHICLE_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "PRODUCT_STANDARD_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "PRODUCT_PREMIUM_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "CUSTOMER_1_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "CUSTOMER_2_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RECEIVED_1_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "RECEIVED_2_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "FICHE_NO_1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ORDER_1_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "ORDER_2_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "INVOICE_1_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "DEBT_INVOICE_ID",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "INVITATION_TOKEN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
