@@ -1,122 +1,414 @@
-using CarpetApp.Models;
+using CarpetApp.Models.API.Dto;
 using CarpetApp.Models.API.Filter;
 using CarpetApp.Models.API.Request;
 using CarpetApp.Models.API.Response;
-using CarpetApp.Models.MessageTaskModels;
-using CarpetApp.Models.Products;
 using Refit;
 
 namespace CarpetApp.Services.API.Interfaces;
 
+/// <summary>
+/// Main API service interface for all backend endpoints
+/// </summary>
 public interface IBaseApiService
 {
-  [Post("/DataQueue/Save")]
-  Task<ApiResponse<BaseResponse<DataQueueModel>>> DataQueueSave(DataQueueModel req);
+    #region Authentication & Account
 
-  [Post("/PostData/")]
-  Task<BaseSyncRequest> PostData(BaseSyncRequest req);
+    /// <summary>
+    /// OAuth2 token generation (ABP Framework standard)
+    /// </summary>
+    [Post("/connect/token")]
+    [Headers("Content-Type: application/x-www-form-urlencoded")]
+    Task<TokenResponse> GetToken([Body(BodySerializationMethod.UrlEncoded)] TokenRequest request);
 
-  [Post("/Authentication/")]
-  Task<AuthenticationResponseModel> Authentication(RequestLoginModel req);
+    /// <summary>
+    /// Register new tenant with trial subscription
+    /// </summary>
+    [Post("/api/subscription-account/register-with-trial")]
+    Task<ApiResult<RegisterWithTrialResponse>> RegisterWithTrial(RegisterWithTrialRequest request);
 
-  #region Account
+    /// <summary>
+    /// Find tenant by email address
+    /// </summary>
+    [Post("/api/subscription-account/find-tenant")]
+    Task<ApiResult<TenantDto>> FindTenant(FindTenantRequest request);
 
-  [Get("/abp/multi-tenancy/tenants/by-name/{name}")]
-  Task<TenantModel> GetTenant(string name);
+    /// <summary>
+    /// Get current user profile
+    /// </summary>
+    [Get("/api/account/my-profile")]
+    Task<ApiResult<UserDto>> GetMyProfile();
 
-  [Post("/account/login")]
-  Task<LoginResponse> Login(RequestLoginModel model);
+    /// <summary>
+    /// Logout current user
+    /// </summary>
+    [Post("/api/account/logout")]
+    Task<ApiResult<bool>> Logout();
 
-  [Get("/account/my-profile")]
-  Task<UserModel> GetMyProfile();
+    #endregion
 
-  [Get("/account/logout")]
-  Task<bool> Logout();
+    #region Subscription Management
 
-  #endregion
+    /// <summary>
+    /// Get all available subscription plans
+    /// </summary>
+    [Get("/api/account/subscriptions/plans")]
+    Task<ApiResult<List<SubscriptionPlanDto>>> GetSubscriptionPlans();
 
-  #region Product
+    /// <summary>
+    /// Get current subscription information
+    /// </summary>
+    [Get("/api/account/subscriptions/my-subscription")]
+    Task<ApiResult<SubscriptionDto>> GetMySubscription();
 
-  [Get("/app/product/filtered-list")]
-  Task<BaseListResponse<ProductModel>> GetProductList(BaseFilterModel filter);
+    /// <summary>
+    /// Get subscription usage statistics
+    /// </summary>
+    [Get("/api/account/subscriptions/usage")]
+    Task<ApiResult<SubscriptionUsageDto>> GetSubscriptionUsage();
 
-  [Post("/app/product")]
-  Task<ProductModel> AddProduct(ProductModel model);
+    /// <summary>
+    /// Check if can add new user
+    /// </summary>
+    [Get("/api/account/subscriptions/can-add-user")]
+    Task<ApiResult<bool>> CanAddUser();
 
-  [Put("/app/product/{id}")]
-  Task<ProductModel> UpdateProduct(Guid id, ProductModel model);
+    /// <summary>
+    /// Upgrade subscription plan
+    /// </summary>
+    [Put("/api/account/subscriptions/upgrade")]
+    Task<ApiResult<SubscriptionDto>> UpgradeSubscription(UpgradeSubscriptionRequest request);
 
-  #endregion
+    #endregion
 
-  #region Vehicle
+    #region Team Management
 
-  [Get("/app/vehicle/filtered-list")]
-  Task<BaseListResponse<VehicleModel>> GetVehicleList(BaseFilterModel filter);
+    /// <summary>
+    /// Get all team members
+    /// </summary>
+    [Get("/api/account/team/members")]
+    Task<ApiResult<List<TeamMemberDto>>> GetTeamMembers();
 
-  [Post("/app/vehicle")]
-  Task<VehicleModel> AddVehicle(VehicleModel model);
+    /// <summary>
+    /// Invite new team member
+    /// </summary>
+    [Post("/api/account/team/invite")]
+    Task<ApiResult<InvitationDto>> InviteTeamMember(InviteTeamMemberRequest request);
 
-  [Put("/app/vehicle/{id}")]
-  Task<VehicleModel> UpdateVehicle(Guid id, VehicleModel model);
+    /// <summary>
+    /// Get pending invitations
+    /// </summary>
+    [Get("/api/account/team/invitations")]
+    Task<ApiResult<List<InvitationDto>>> GetPendingInvitations();
 
-  #endregion
+    /// <summary>
+    /// Validate invitation token
+    /// </summary>
+    [Get("/api/account/team/validate-invitation")]
+    Task<ApiResult<InvitationDto>> ValidateInvitation([Query] string invitationToken);
 
-  #region Area
+    /// <summary>
+    /// Accept team invitation
+    /// </summary>
+    [Post("/api/account/team/accept-invitation")]
+    Task<ApiResult<bool>> AcceptInvitation(AcceptInvitationRequest request);
 
-  [Get("/app/Area/filtered-list")]
-  Task<BaseListResponse<AreaModel>> GetAreaList(BaseFilterModel filter);
+    /// <summary>
+    /// Cancel pending invitation
+    /// </summary>
+    [Delete("/api/account/team/invitations/{invitationId}")]
+    Task<ApiResult<bool>> CancelInvitation(Guid invitationId);
 
-  [Post("/app/area")]
-  Task<AreaModel> AddArea(AreaModel model);
+    /// <summary>
+    /// Remove team member
+    /// </summary>
+    [Delete("/api/account/team/members/{userId}")]
+    Task<ApiResult<bool>> RemoveTeamMember(Guid userId);
 
-  [Put("/app/area/{id}")]
-  Task<AreaModel> UpdateArea(Guid id, AreaModel model);
+    #endregion
 
-  #endregion
+    #region Company Management
 
-  #region Company
+    /// <summary>
+    /// Get companies with filtering
+    /// </summary>
+    [Get("/api/app/company")]
+    Task<ApiResult<PagedResult<CompanyDto>>> GetCompanies([Query] FilterParameters filter);
 
-  [Get("/app/Company/filtered-list")]
-  Task<BaseListResponse<CompanyModel>> GetCompanyList(BaseFilterModel filter);
+    /// <summary>
+    /// Create new company
+    /// </summary>
+    [Post("/api/app/company")]
+    Task<ApiResult<CompanyDto>> CreateCompany(CreateCompanyRequest request);
 
-  [Post("/app/company")]
-  Task<CompanyModel> AddCompany(CompanyModel model);
+    /// <summary>
+    /// Update existing company
+    /// </summary>
+    [Put("/api/app/company/{id}")]
+    Task<ApiResult<CompanyDto>> UpdateCompany(Guid id, UpdateCompanyRequest request);
 
-  [Put("/app/company/{id}")]
-  Task<CompanyModel> UpdateCompany(Guid id, CompanyModel model);
+    /// <summary>
+    /// Delete company
+    /// </summary>
+    [Delete("/api/app/company/{id}")]
+    Task<ApiResult<bool>> DeleteCompany(Guid id);
 
-  #endregion
+    #endregion
 
-  #region SmsUsers
+    #region Area Management
 
-  [Get("/app/message-user/filtered-list")]
-  Task<BaseListResponse<SmsUsersModel>> GetSmsUserList(BaseFilterModel filter);
+    /// <summary>
+    /// Get areas with filtering
+    /// </summary>
+    [Get("/api/app/area/filtered-list")]
+    Task<ApiResult<PagedResult<AreaDto>>> GetAreas([Query] FilterParameters filter);
 
-  [Post("/app/message-user")]
-  Task<SmsUsersModel> AddSmsUser(SmsUsersModel model);
+    /// <summary>
+    /// Create new area
+    /// </summary>
+    [Post("/api/app/area")]
+    Task<ApiResult<AreaDto>> CreateArea(CreateAreaRequest request);
 
-  [Put("/app/message-user/{id}")]
-  Task<SmsUsersModel> UpdateSmsUser(Guid id, SmsUsersModel model);
+    /// <summary>
+    /// Update existing area
+    /// </summary>
+    [Put("/api/app/area/{id}")]
+    Task<ApiResult<AreaDto>> UpdateArea(Guid id, UpdateAreaRequest request);
 
-  #endregion
+    /// <summary>
+    /// Delete area
+    /// </summary>
+    [Delete("/api/app/area/{id}")]
+    Task<ApiResult<bool>> DeleteArea(Guid id);
 
-  #region SmsConfiguration
+    #endregion
 
-  [Get("/app/message-configuration")]
-  Task<BaseListResponse<SmsConfigurationModel>> GetSmsConfigurationList();
+    #region Vehicle Management
 
-  [Post("/app/message-configuration")]
-  Task<SmsConfigurationModel> AddSmsConfiguration(SmsConfigurationModel model);
+    /// <summary>
+    /// Get vehicles with filtering
+    /// </summary>
+    [Get("/api/app/vehicle/filtered-list")]
+    Task<ApiResult<PagedResult<VehicleDto>>> GetVehicles([Query] FilterParameters filter);
 
-  [Put("/app/message-configuration/{id}")]
-  Task<SmsConfigurationModel> UpdateSmsConfiguration(Guid id, SmsConfigurationModel model);
+    /// <summary>
+    /// Create new vehicle
+    /// </summary>
+    [Post("/api/app/vehicle")]
+    Task<ApiResult<VehicleDto>> CreateVehicle(CreateVehicleRequest request);
 
-  #endregion
+    /// <summary>
+    /// Update existing vehicle
+    /// </summary>
+    [Put("/api/app/vehicle/{id}")]
+    Task<ApiResult<VehicleDto>> UpdateVehicle(Guid id, UpdateVehicleRequest request);
 
-  #region Received
+    /// <summary>
+    /// Delete vehicle
+    /// </summary>
+    [Delete("/api/app/vehicle/{id}")]
+    Task<ApiResult<bool>> DeleteVehicle(Guid id);
 
-  [Get("/app/received/filtered-list")]
-  Task<BaseListResponse<ReceivedListItemModel>> GetReceivedList([Query] ReceivedFilterParameters filter);
+    #endregion
 
-  #endregion
+    #region Product Management
+
+    /// <summary>
+    /// Get products with filtering
+    /// </summary>
+    [Get("/api/app/product/filtered-list")]
+    Task<ApiResult<PagedResult<ProductDto>>> GetProducts([Query] FilterParameters filter);
+
+    /// <summary>
+    /// Create new product
+    /// </summary>
+    [Post("/api/app/product")]
+    Task<ApiResult<ProductDto>> CreateProduct(CreateProductRequest request);
+
+    /// <summary>
+    /// Update existing product
+    /// </summary>
+    [Put("/api/app/product/{id}")]
+    Task<ApiResult<ProductDto>> UpdateProduct(Guid id, UpdateProductRequest request);
+
+    /// <summary>
+    /// Delete product
+    /// </summary>
+    [Delete("/api/app/product/{id}")]
+    Task<ApiResult<bool>> DeleteProduct(Guid id);
+
+    #endregion
+
+    #region Customer Management
+
+    /// <summary>
+    /// Get customers with filtering
+    /// </summary>
+    [Get("/api/app/customer")]
+    Task<ApiResult<PagedResult<CustomerDto>>> GetCustomers([Query] FilterParameters filter);
+
+    /// <summary>
+    /// Get single customer by ID
+    /// </summary>
+    [Get("/api/app/customer/{id}")]
+    Task<ApiResult<CustomerDto>> GetCustomer(Guid id);
+
+    /// <summary>
+    /// Create new customer
+    /// </summary>
+    [Post("/api/app/customer")]
+    Task<ApiResult<CustomerDto>> CreateCustomer(CreateCustomerRequest request);
+
+    /// <summary>
+    /// Update existing customer
+    /// </summary>
+    [Put("/api/app/customer/{id}")]
+    Task<ApiResult<CustomerDto>> UpdateCustomer(Guid id, UpdateCustomerRequest request);
+
+    /// <summary>
+    /// Update customer GPS location
+    /// </summary>
+    [Put("/api/app/customer/{id}/location")]
+    Task<ApiResult<CustomerDto>> UpdateCustomerLocation(Guid id, UpdateLocationRequest request);
+
+    /// <summary>
+    /// Delete customer
+    /// </summary>
+    [Delete("/api/app/customer/{id}")]
+    Task<ApiResult<bool>> DeleteCustomer(Guid id);
+
+    #endregion
+
+    #region Received (Pickup) Operations
+
+    /// <summary>
+    /// Get received list with filtering
+    /// </summary>
+    [Get("/api/app/received/filtered-list")]
+    Task<ApiResult<PagedResult<ReceivedDto>>> GetReceivedList([Query] ReceivedFilterParameters filter);
+
+    /// <summary>
+    /// Get single received record by ID
+    /// </summary>
+    [Get("/api/app/received/{id}")]
+    Task<ApiResult<ReceivedDto>> GetReceived(Guid id);
+
+    /// <summary>
+    /// Create new received/pickup record
+    /// </summary>
+    [Post("/api/app/received")]
+    Task<ApiResult<ReceivedDto>> CreateReceived(CreateReceivedRequest request);
+
+    /// <summary>
+    /// Update existing received record
+    /// </summary>
+    [Put("/api/app/received/{id}")]
+    Task<ApiResult<ReceivedDto>> UpdateReceived(Guid id, UpdateReceivedRequest request);
+
+    /// <summary>
+    /// Delete received record
+    /// </summary>
+    [Delete("/api/app/received/{id}")]
+    Task<ApiResult<bool>> DeleteReceived(Guid id);
+
+    #endregion
+
+    #region Order Management
+
+    /// <summary>
+    /// Get orders with filtering
+    /// </summary>
+    [Get("/api/app/order/filtered-list")]
+    Task<ApiResult<PagedResult<OrderDto>>> GetOrders([Query] OrderFilterParameters filter);
+
+    /// <summary>
+    /// Get single order by ID
+    /// </summary>
+    [Get("/api/app/order/{id}")]
+    Task<ApiResult<OrderDto>> GetOrder(Guid id);
+
+    /// <summary>
+    /// Create new laundry order
+    /// </summary>
+    [Post("/api/app/order")]
+    Task<ApiResult<OrderDto>> CreateOrder(CreateOrderRequest request);
+
+    /// <summary>
+    /// Update order workflow status
+    /// </summary>
+    [Put("/api/app/order/status")]
+    Task<ApiResult<OrderDto>> UpdateOrderStatus(UpdateOrderStatusRequest request);
+
+    /// <summary>
+    /// Cancel an order
+    /// </summary>
+    [Post("/api/app/order/cancel")]
+    Task<ApiResult<OrderDto>> CancelOrder(CancelOrderRequest request);
+
+    /// <summary>
+    /// Get nearest orders ready for delivery (GPS-based)
+    /// </summary>
+    [Get("/api/app/order/nearest-ready-for-delivery")]
+    Task<ApiResult<List<OrderDto>>> GetNearestReadyForDelivery([Query] LocationParameters location);
+
+    #endregion
+
+    #region Invoice & Payment
+
+    /// <summary>
+    /// Get all invoices
+    /// </summary>
+    [Get("/api/app/invoice")]
+    Task<ApiResult<PagedResult<InvoiceDto>>> GetInvoices([Query] FilterParameters filter);
+
+    /// <summary>
+    /// Get filtered invoices
+    /// </summary>
+    [Get("/api/app/invoice/filtered-list")]
+    Task<ApiResult<PagedResult<InvoiceDto>>> GetFilteredInvoices([Query] InvoiceFilterParameters filter);
+
+    /// <summary>
+    /// Get single invoice by ID
+    /// </summary>
+    [Get("/api/app/invoice/{id}")]
+    Task<ApiResult<InvoiceDto>> GetInvoice(Guid id);
+
+    /// <summary>
+    /// Complete delivery and generate invoices
+    /// </summary>
+    [Post("/api/app/invoice/complete-delivery")]
+    Task<ApiResult<CompleteDeliveryResponse>> CompleteDelivery(CompleteDeliveryRequest request);
+
+    /// <summary>
+    /// Pay debt on invoice
+    /// </summary>
+    [Post("/api/app/invoice/pay-debt")]
+    Task<ApiResult<PaymentResultDto>> PayDebt(PayDebtRequest request);
+
+    #endregion
+
+    #region Dashboard & Analytics
+
+    /// <summary>
+    /// Get dashboard statistics
+    /// </summary>
+    [Get("/api/app/dashboard/dashboard-stats")]
+    Task<ApiResult<DashboardStatsDto>> GetDashboardStats();
+
+    #endregion
+
+    #region Offline Sync
+
+    /// <summary>
+    /// Download initial data for offline use
+    /// </summary>
+    [Post("/api/app/offline-sync/download-data")]
+    Task<ApiResult<OfflineDataPackage>> DownloadOfflineData(DownloadDataRequest request);
+
+    /// <summary>
+    /// Sync offline operations with server
+    /// </summary>
+    [Post("/api/app/offline-sync/sync-operations")]
+    Task<ApiResult<SyncResultDto>> SyncOfflineOperations(SyncOperationsRequest request);
+
+    #endregion
 }

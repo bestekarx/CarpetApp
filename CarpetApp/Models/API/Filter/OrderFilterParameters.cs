@@ -1,29 +1,24 @@
+using CarpetApp.Models.API.Request;
 using Refit;
 
 namespace CarpetApp.Models.API.Filter;
 
 /// <summary>
-/// Filter parameters for received/pickup list
+/// Filter parameters for order list
 /// </summary>
-public class ReceivedFilterParameters : FilterParameters
+public class OrderFilterParameters : FilterParameters
 {
-    /// <summary>
-    /// Filter by vehicle
-    /// </summary>
-    [AliasAs("vehicleId")]
-    public Guid? VehicleId { get; set; }
-
-    /// <summary>
-    /// Filter by area
-    /// </summary>
-    [AliasAs("areaId")]
-    public Guid? AreaId { get; set; }
-
     /// <summary>
     /// Filter by customer
     /// </summary>
     [AliasAs("customerId")]
     public Guid? CustomerId { get; set; }
+
+    /// <summary>
+    /// Filter by order status
+    /// </summary>
+    [AliasAs("status")]
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// Filter from date
@@ -38,8 +33,8 @@ public class ReceivedFilterParameters : FilterParameters
     public DateTime? ToDate { get; set; }
 
     /// <summary>
-    /// Filter by status
+    /// Include cancelled orders
     /// </summary>
-    [AliasAs("status")]
-    public string Status { get; set; }
+    [AliasAs("includeCancelled")]
+    public bool IncludeCancelled { get; set; } = false;
 }
